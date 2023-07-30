@@ -16,7 +16,7 @@ function Footer() {
         <p className="text-xs lg:ml-8 ml-0">
           Copyright © 2023 PetSmart Inc. All rights reserved.
         </p>
-        <div className="lg:ml-auto flex w-fit space-x-3 bg-white px-4 py-2 border text-sm rounded">
+        <div className="lg:ml-auto flex w-fit space-x-3 bg-white px-4 py-2 border text-xs rounded">
           <span>Status:</span>
           <div className="flex items-center space-x-2 text-blue-500">
             <iconify-icon icon="material-symbols:circle"></iconify-icon>
