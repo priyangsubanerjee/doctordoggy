@@ -122,7 +122,37 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
         <p className="font-medium tracking-wider text-xs">WHAT PEOPLE SAY</p>
-        <div></div>
+        <div className="flex mt-10">
+          <div className="lg:w-[500px] bg-neutral-50 rounded p-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+                className="h-12 w-12 rounded-full object-cover"
+                alt=""
+              />
+              <div className="ml-4">
+                <p className="font-medium">Jane Doe</p>
+                <span className="text-[10px]">12 July, 2023</span>
+              </div>
+            </div>
+            <p className="text-xs leading-6 font-light mt-4">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis
+              vitae deserunt tenetur qui! Nulla impedit error suscipit harum,
+              dolore soluta deserunt atque repudiandae placeat ratione
+              reprehenderit velit ipsa tempore expedita.
+            </p>
+            <div className="mt-4 text-yellow-500 space-x-2">
+              {[...Array(5)].map((_, i) => {
+                return (
+                  <iconify-icon
+                    key={i}
+                    icon="solar:star-bold-duotone"
+                  ></iconify-icon>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
