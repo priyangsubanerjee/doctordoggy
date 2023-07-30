@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
 function Navbar() {
