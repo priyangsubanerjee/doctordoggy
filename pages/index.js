@@ -18,7 +18,7 @@ export default function Home() {
           </div>
         </div>
         <div className="lg:w-1/2">
-          <h1 className="text-3xl lg:text-6xl lg:leading-[1.4] leading-[1.7] font-semibold mt-6 font-popins">
+          <h1 className="text-3xl lg:text-6xl lg:leading-[1.4] leading-[1.7] font-semibold mt-6 font-popins text-neutral-900">
             Digitialize Your Pet&apos;s Health Records.
           </h1>
           <div className="mt-3 lg:mt-7 text-neutral-700">
@@ -121,7 +121,12 @@ export default function Home() {
       </div>
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
-        <p className="font-medium tracking-wider text-xs">WHAT PEOPLE SAY</p>
+        <div className="flex items-center justify-between">
+          <p className="font-medium tracking-wider text-xs">WHAT PEOPLE SAY</p>
+          <button className="font-semibold tracking-wide88 text-xs text-blue-900">
+            WRITE A REVIEW
+          </button>
+        </div>
         <div className="flex mt-10">
           <div className="lg:w-[500px] bg-neutral-50 rounded p-6">
             <div className="flex items-center space-x-4">
