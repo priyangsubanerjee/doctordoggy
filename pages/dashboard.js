@@ -22,7 +22,11 @@ export async function getServerSideProps(context) {
 }
 
 function Dashboard() {
-  return <div className="min-h-screen">Dashboard</div>;
+  return (
+    <div className="min-h-screen">
+      <button>Send update</button>
+    </div>
+  );
 }
 
 export default Dashboard;

@@ -1,10 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 
 function Sidebar({ open, setOpen }) {
   const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setOpen(false);
+    });
+  }, [router]);
+
   return (
     <>
       {open && (
