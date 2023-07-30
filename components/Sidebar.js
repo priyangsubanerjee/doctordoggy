@@ -14,6 +14,12 @@ function Sidebar({ open, setOpen }) {
     });
   }, [router]);
 
+  useEffect(() => {
+    open
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+  }, [open]);
+
   return (
     <>
       {open && (
