@@ -1,7 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
 
 function Navbar() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <div className="px-6 py-3 lg:px-20 lg:py-6 shadow-2xl shadow-black/5 flex items-center justify-between">
       <div className="flex items-center space-x-3 relative w-fit">
@@ -20,7 +22,7 @@ function Navbar() {
           <iconify-icon
             height="24"
             width="24"
-            icon="dashicons:pets"
+            icon="ph:paw-print"
           ></iconify-icon>
           <span>About us</span>
         </li>
@@ -56,10 +58,11 @@ function Navbar() {
         </button>
       </div>
       <div className="lg:hidden">
-        <button>
+        <button onClick={() => setSidebarOpen(true)}>
           <iconify-icon height="24" icon="basil:menu-solid"></iconify-icon>
         </button>
       </div>
+      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
     </div>
   );
 }
