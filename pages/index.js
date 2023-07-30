@@ -45,7 +45,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-100">
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-100 relative">
         <p className="font-medium tracking-wider text-xs">WHY CHOOSE US?</p>
         <h2 className="text-2xl font-medium font-popins mt-10">
           We are the best in the business. Lorem ipsum dolor sit amet
@@ -58,37 +58,16 @@ export default function Home() {
           Quis earum, culpa cum quaerat rem omnis inventore fugiat, beatae hic
           dignissimos eius?
         </p>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/9784/9784121.png"
+          className="absolute top-10 left-0 -translate-x-[45%] h-32 hidden lg:block"
+          alt=""
+        />
+      </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 mt-10 w-full gap-4">
-          <div className="h-32 bg-white flex items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
-              alt=""
-              className="h-16"
-            />
-          </div>
-          <div className="h-32 bg-white flex items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
-              alt=""
-              className="h-16"
-            />
-          </div>{" "}
-          <div className="h-32 bg-white flex items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
-              alt=""
-              className="h-16"
-            />
-          </div>{" "}
-          <div className="h-32 bg-white flex items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
-              alt=""
-              className="h-16"
-            />
-          </div>
-        </div>
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28">
+        <p className="font-medium tracking-wider text-xs">WHAT PEOPLE SAY</p>
+        <div></div>
       </div>
     </main>
   );
