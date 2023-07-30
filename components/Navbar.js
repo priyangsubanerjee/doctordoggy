@@ -9,7 +9,7 @@ function Navbar() {
   const session = useSession();
 
   return (
-    <div className="px-6 py-4 lg:px-20 lg:py-6 shadow-2xl shadow-black/5 flex items-center justify-between lg:sticky lg:top-0 lg:inset-x-0 z-20 bg-white">
+    <div className="px-6 py-4 lg:px-20 lg:py-4 shadow-xl shadow-black/[0.018] flex items-center justify-between lg:sticky lg:top-0 lg:inset-x-0 z-20 bg-white">
       <Link href="/">
         <div className="flex items-center space-x-3 relative w-fit">
           <img

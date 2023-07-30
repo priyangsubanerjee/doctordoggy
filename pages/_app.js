@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -13,7 +14,9 @@ export default function App({
       <>
         <NextProgress height={"3px"} options={{ showSpinner: false }} />
         <Navbar />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
         <Footer />
       </>
     </SessionProvider>

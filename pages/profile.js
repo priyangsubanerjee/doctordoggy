@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
 
 function Profile() {
   return (
-    <div>
+    <div className="min-h-screen">
       <button onClick={() => signOut()}>Logout</button>
     </div>
   );
