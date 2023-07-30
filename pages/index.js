@@ -19,7 +19,7 @@ export default function Home() {
         </div>
         <div className="lg:w-1/2">
           <h1 className="text-3xl lg:text-6xl lg:leading-[1.4] leading-[1.7] font-semibold mt-6 font-popins text-neutral-900">
-            Digitialize Your Pet&apos;s Health Records.
+            Digitialize your pet&apos;s health records.
           </h1>
           <div className="mt-3 lg:mt-7 text-neutral-700">
             <p className="leading-7 text-sm">
