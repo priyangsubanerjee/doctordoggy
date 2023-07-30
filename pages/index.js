@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <Navbar />
 
-      <div className="px-6 lg:px-[100px] py-10 lg:py-28 lg:flex">
+      <div className="px-6 lg:px-[100px] py-16 lg:py-28 lg:flex">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
           <div className="relative h-fit w-[60%]">
             <img
@@ -45,7 +45,51 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="py-20 bg-neutral-100"></div>
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-100">
+        <p className="font-medium tracking-wider text-xs">WHY CHOOSE US?</p>
+        <h2 className="text-2xl font-medium font-popins mt-10">
+          We are the best in the business. Lorem ipsum dolor sit amet
+        </h2>
+        <p className="mt-4 text-sm leading-7">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
+          alias similique laboriosam fugiat odit vero nemo libero fugit, unde
+          aliquid suscipit cupiditate laborum ipsa perspiciatis ex corporis, a
+          minima corrupti eligendi illum ipsum omnis deleniti porro accusantium?
+          Quis earum, culpa cum quaerat rem omnis inventore fugiat, beatae hic
+          dignissimos eius?
+        </p>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 mt-10 w-full gap-4">
+          <div className="h-32 bg-white flex items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
+              alt=""
+              className="h-16"
+            />
+          </div>
+          <div className="h-32 bg-white flex items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
+              alt=""
+              className="h-16"
+            />
+          </div>{" "}
+          <div className="h-32 bg-white flex items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
+              alt=""
+              className="h-16"
+            />
+          </div>{" "}
+          <div className="h-32 bg-white flex items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2171/2171990.png"
+              alt=""
+              className="h-16"
+            />
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
