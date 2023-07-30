@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <Navbar />
 
-      <div className="px-6 lg:px-[100px] py-16 lg:py-28 lg:flex">
+      <div className="px-6 lg:px-[100px] py-12 lg:py-28 lg:flex">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
           <div className="h-fit w-[90%]">
             <img
