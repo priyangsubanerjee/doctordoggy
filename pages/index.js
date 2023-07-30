@@ -45,9 +45,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-100 relative">
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-50 relative">
         <p className="font-medium tracking-wider text-xs">WHY CHOOSE US?</p>
-        <h2 className="text-2xl font-medium font-popins mt-10">
+        <h2 className="text-2xl font-medium font-popins mt-10 leading-[1.6]">
           We are the best in the business. Lorem ipsum dolor sit amet
         </h2>
         <p className="mt-4 text-sm leading-7">
