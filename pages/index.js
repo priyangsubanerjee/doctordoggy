@@ -5,10 +5,10 @@ import { useSession, signIn, signOut } from "next-auth/react";
 export default function Home() {
   const { data: session, status } = useSession();
   return (
-    <main className="">
+    <main>
       <Navbar />
 
-      <div className="px-6 lg:px-[100px] py-10 lg:py-16 lg:flex">
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28 lg:flex">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
           <div className="relative h-fit w-[60%]">
             <img
@@ -18,7 +18,7 @@ export default function Home() {
           </div>
         </div>
         <div className="lg:w-1/2">
-          <h1 className="text-3xl lg:text-6xl lg:leading-[1.3] leading-[1.6] font-semibold mt-6 font-popins">
+          <h1 className="text-3xl lg:text-6xl lg:leading-[1.4] leading-[1.7] font-semibold mt-6 font-popins">
             Digitialize Your Pet&apos;s Health Records.
           </h1>
           <div className="mt-3 lg:mt-7 text-neutral-700">
@@ -44,6 +44,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <div className="py-20 bg-neutral-100"></div>
     </main>
   );
 }
