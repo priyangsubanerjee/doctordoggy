@@ -63,6 +63,61 @@ export default function Home() {
           className="absolute top-10 left-0 -translate-x-[45%] h-32 hidden lg:block"
           alt=""
         />
+
+        <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white shadow-xl shadow-black/[0.01] rounded flex flex-col items-center justify-center px-4 py-6">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/10711/10711322.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="font-medium font-popins mt-7 text-sm text-center">
+              Secure and Reliable
+            </h2>
+            <p className="text-[10px] mt-2 font-light text-center text-neutral-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            </p>
+          </div>
+          <div className="bg-white shadow-xl shadow-black/[0.01] rounded flex flex-col items-center justify-center px-4 py-6">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/10061/10061171.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="font-medium font-popins mt-7 text-sm text-center">
+              Cloud Storage
+            </h2>
+            <p className="text-[10px] mt-2 font-light text-center text-neutral-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            </p>
+          </div>
+          <div className="bg-white shadow-xl shadow-black/[0.01] rounded flex flex-col items-center justify-center px-4 py-6">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/9769/9769561.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="font-medium font-popins mt-7 text-sm text-center">
+              Handsfree Visits
+            </h2>
+            <p className="text-[10px] mt-2 font-light text-center text-neutral-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            </p>
+          </div>
+          <div className="bg-white shadow-xl shadow-black/[0.01] rounded flex flex-col items-center justify-center px-4 py-6">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/9769/9769705.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="font-medium font-popins mt-7 text-sm text-center">
+              Many more
+            </h2>
+            <p className="text-[10px] mt-2 font-light text-center text-neutral-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
