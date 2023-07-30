@@ -3,7 +3,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <div className="bg-neutral-100 px-6 lg:px-[100px] py-10">
+    <div className="bg-neutral-100 px-6 lg:px-[100px] py-10 mt-20">
       <div className="lg:flex items-center lg:space-y-0 space-y-6">
         <div className="flex items-center space-x-4">
           <img
