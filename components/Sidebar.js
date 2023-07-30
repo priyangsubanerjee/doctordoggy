@@ -1,6 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 
 function Sidebar({ open, setOpen }) {
+  const session = useSession();
   return (
     <>
       {open && (
@@ -49,12 +53,46 @@ function Sidebar({ open, setOpen }) {
               </li>
             </ul>
             <div className="px-6 mt-10">
-              <button className="w-full text-sm bg-neutral-100 px-3 py-3 lg:py-3 lg:px-6 text-black rounded flex items-center justify-center space-x-3">
-                <iconify-icon height="20" icon="devicon:google"></iconify-icon>
-                <span>Get Started</span>
-              </button>
+              {session.status === "authenticated" ? (
+                <Link href="/profile">
+                  <div className="flex items-center space-x-3 px-3 py-2 hover:bg-neutral-100 rounded-md">
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src={session.data.user.image}
+                      alt=""
+                    />
+                    <div>
+                      <h1 className="font-medium text-sm">
+                        {session.data.user.name}
+                      </h1>
+                      <span className="text-xs text-neutral-500">
+                        {session.data.user.email}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => signIn("google")}
+                  className="w-full text-sm bg-neutral-100 px-3 py-3 lg:py-3 lg:px-6 text-black rounded flex items-center justify-center space-x-3"
+                >
+                  <iconify-icon
+                    height="20"
+                    icon="devicon:google"
+                  ></iconify-icon>
+                  <span>Get Started</span>
+                </button>
+              )}
             </div>
-            <div className="flex items-center justify-center mt-16 space-x-4 text-xl text-neutral-700">
+
+            <div className="flex items-center whitespace-nowrap px-6 space-x-3 mt-10">
+              <div className="h-[1px] bg-black/20 w-full"></div>
+              <span className="text-[10px] text-neutral-500 tracking-widest">
+                FOLLOW US
+              </span>
+              <div className="h-[1px] bg-black/20 w-full"></div>
+            </div>
+            <div className="flex items-center justify-center mt-10 space-x-4 text-xl text-neutral-700">
               <iconify-icon icon="mdi:instagram"></iconify-icon>
               <iconify-icon icon="ic:baseline-facebook"></iconify-icon>
             </div>

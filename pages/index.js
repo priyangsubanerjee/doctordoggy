@@ -1,6 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
 import Navbar from "@/components/Navbar";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  // if redirect is false, then the user is not logged in
+
+  if (context.query.redirect === "false") {
+    return {
+      props: {
+        session,
+      },
+    };
+  }
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -27,7 +58,10 @@ export default function Home() {
               voluptatibus ex dolore similique
               <br />
             </p>
-            <button className="text-sm bg-neutral-100 px-3 py-4 lg:py-4 lg:px-6 text-black rounded flex items-center justify-center space-x-3 mt-10 lg:w-1/2 w-full">
+            <button
+              onClick={() => signIn("google")}
+              className="text-sm bg-neutral-100 px-3 py-4 lg:py-4 lg:px-6 text-black rounded flex items-center justify-center space-x-3 mt-10 lg:w-1/2 w-full"
+            >
               <iconify-icon height="20" icon="devicon:google"></iconify-icon>
               <span>Get Started</span>
             </button>
