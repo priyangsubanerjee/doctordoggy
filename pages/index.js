@@ -10,9 +10,9 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-16 lg:py-28 lg:flex">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
-          <div className="relative h-fit w-[60%]">
+          <div className="h-fit w-[90%]">
             <img
-              src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1690698833/Personal/Frame_1_z1zucl.png"
+              src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1690706013/Personal/Frame_2_yfmzoc.png"
               alt=""
             />
           </div>
