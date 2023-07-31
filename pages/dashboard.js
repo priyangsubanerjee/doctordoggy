@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
 
 function Dashboard() {
   return (
-    <div className="min-h-screen px-6 py-6 lg:py-16 lg:px-[100px]">
+    <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
         <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
           Registered <span className="text-pink-500">pet&apos;s</span>
