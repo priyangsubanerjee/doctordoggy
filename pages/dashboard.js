@@ -35,22 +35,14 @@ function Dashboard() {
         </p>
       </div>
 
-      <div className="mt-10 lg:mt-16 grid grid-cols-2 lg:grid-cols-5 gap-5 place-content-center place-items-center">
-        <div className="flex flex-col items-center">
-          <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/3307/3307591.png"
-              className="bg-gray-50 rounded-full p-3 grayscale"
-              alt=""
-            />
-          </div>
-          <p className="text-center text-neutral-700f font-medium mt-3 text-sm">
-            Register a pet
-          </p>
-          <button className="text-[10px] tracking-wider font-medium bg-blue-50 text-blue-500 mt-3 px-4 py-1 font-popins rounded-full">
-            NEW
-          </button>
-        </div>
+      <button className="h-12 px-6 font-medium shadow-xl bg-black text-white rounded-full text-sm fixed bottom-7 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+        <span className="text-white text-xl">
+          <iconify-icon icon="cil:dog"></iconify-icon>
+        </span>
+        <span>Add pet</span>{" "}
+      </button>
+
+      <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
         <Petcard />
       </div>
     </div>
