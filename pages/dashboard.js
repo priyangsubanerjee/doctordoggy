@@ -35,11 +35,11 @@ function Dashboard() {
         </p>
       </div>
 
-      <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-black text-white rounded-full text-sm fixed bottom-7 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+      <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
         <span className="text-white text-xl">
           <iconify-icon icon="cil:dog"></iconify-icon>
         </span>
-        <span>Add pet</span>{" "}
+        <span>Add pet</span>
       </button>
 
       <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
