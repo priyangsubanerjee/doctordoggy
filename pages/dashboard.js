@@ -2,6 +2,7 @@
 import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
+import Petcard from "@/components/Dashboard/Petcard";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -50,6 +51,7 @@ function Dashboard() {
             NEW
           </button>
         </div>
+        <Petcard />
       </div>
     </div>
   );
