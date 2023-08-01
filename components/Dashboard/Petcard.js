@@ -6,7 +6,7 @@ function Petcard() {
       <div className="absolute top-2 right-1 text-2xl text-blue-500">
         <iconify-icon icon="ic:twotone-male"></iconify-icon>
       </div>
-      <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center">
+      <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
         <img
           src="https://cdn-icons-png.flaticon.com/512/3307/3307591.png"
           className="bg-gray-50 rounded-full p-3"
