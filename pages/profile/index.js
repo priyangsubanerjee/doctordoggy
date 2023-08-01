@@ -36,7 +36,7 @@ function Profile() {
         </p>
       </div>
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-6">
+      <div className="mt-8 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-6">
         <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">
             Name
@@ -96,17 +96,18 @@ function Profile() {
           <textarea
             name=""
             className="resize-none w-full h-full border px-4 py-3 mt-2"
-            placeholder="11/6 Saradapally, 54 Foot"
+            placeholder="11 A - Circuit Road"
+            value={"11 A - Circuit Road"}
             id=""
           ></textarea>
         </div>
       </div>
 
       <div className="mt-20 flex items-center space-x-5">
-        <button className="px-5 py-4 rounded bg-neutral-800 text-white text-sm">
+        <button className="lg:px-5 px-3 py-4 rounded bg-neutral-800 text-white text-sm">
           Edit profile
         </button>
-        <button className="px-5 py-4 rounded bg-neutral-100 text-black text-sm">
+        <button className="lg:px-5 px-3 py-4 rounded bg-neutral-100 text-black text-sm">
           Need assistance? Contact us
         </button>
       </div>
