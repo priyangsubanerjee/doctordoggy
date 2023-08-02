@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
-export async function middleware(request) {
+export function middleware(request) {
   //   let path = request.nextUrl.pathname;
   //   if (path == "/dashboard") {
   //     if (request.cookies.get("user") == null) {
