@@ -52,6 +52,29 @@ function Profile() {
     }
   };
 
+  const saveUser = async () => {
+    if (phone == "" || pincode == "") {
+      alert("Phone & pincode are mandatory fields");
+      return;
+    }
+    let res = await fetch("/api/user/save", {
+      method: "POST",
+      body: JSON.stringify({
+        name: session.data.user.name,
+        email: session.data.user.email,
+        phone: phone,
+        pincode: pincode,
+        address: address,
+      }),
+    });
+    let data = await res.json();
+    if (data.success) {
+      router.push("/");
+    } else {
+      alert("Something went wrong, please try again");
+    }
+  };
+
   useEffect(() => {
     retrieveUser();
     document.getElementById("phoneInput").focus();
@@ -150,26 +173,7 @@ function Profile() {
 
       <div className="mt-20">
         <button
-          onClick={async () => {
-            if (phone == "" || pincode == "") {
-              alert("Phone & pincode are mandatory fields");
-              return;
-            }
-            let res = await fetch("/api/user/save", {
-              method: "POST",
-              body: JSON.stringify({
-                name: session.data.user.name,
-                email: session.data.user.email,
-                phone: phone,
-                pincode: pincode,
-                address: address,
-              }),
-            });
-            let data = await res.json();
-            if (data.success) {
-              router.push("/");
-            }
-          }}
+          onClick={() => saveUser()}
           className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
         >
           <iconify-icon
