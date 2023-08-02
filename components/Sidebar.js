@@ -8,17 +8,17 @@ function Sidebar({ open, setOpen }) {
   const session = useSession();
   const router = useRouter();
 
-  //   useEffect(() => {
-  //     router.events.on("routeChangeStart", () => {
-  //       setOpen(false);
-  //     });
-  //   }, [router]);
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      setOpen(false);
+    });
+  }, [router]);
 
-  //   useEffect(() => {
-  //     open
-  //       ? (document.body.style.overflow = "hidden")
-  //       : (document.body.style.overflow = "auto");
-  //   }, [open]);
+  useEffect(() => {
+    open
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto");
+  }, [open]);
 
   return (
     <>
