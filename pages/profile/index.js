@@ -43,14 +43,14 @@ function Profile() {
     }
   }, [router]);
 
-  useEffect(() => {
-    if (Cookies.get("user")) {
-      let userObj = JSON.parse(Cookies.get("user"));
-      setPhone(userObj.phone);
-      setPincode(userObj.pincode);
-      setAddress(userObj.address);
-    }
-  }, []);
+  //   useEffect(() => {
+  //     if (Cookies.get("user")) {
+  //       let userObj = JSON.parse(Cookies.get("user"));
+  //       setPhone(userObj.phone);
+  //       setPincode(userObj.pincode);
+  //       setAddress(userObj.address);
+  //     }
+  //   }, []);
 
   return (
     <div className="min-h-screen h-fit px-6 py-8 lg:py-16 lg:px-[100px]">
