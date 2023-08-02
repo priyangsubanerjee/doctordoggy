@@ -28,7 +28,6 @@ export async function getServerSideProps(context) {
 
 function Profile() {
   const session = useSession();
-  const [mode, setMode] = useState("view");
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
@@ -55,6 +54,7 @@ function Profile() {
 
   useEffect(() => {
     retrieveUser();
+    document.getElementById("phoneInput").focus();
   }, []);
 
   return (
@@ -62,7 +62,7 @@ function Profile() {
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-            Your <span className="text-pink-500">account</span>
+            Setup your <span className="text-pink-500">account</span>
           </h2>
         </div>
         <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
@@ -112,7 +112,6 @@ function Profile() {
           <input
             id="phoneInput"
             type="tel"
-            readOnly={mode == "view"}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="px-4 py-3 border w-full mt-2"
@@ -126,7 +125,6 @@ function Profile() {
           </label>
           <input
             type="tel"
-            readOnly={mode == "view"}
             className="px-4 py-3 border w-full mt-2"
             placeholder="71XXXXX"
             value={pincode}
@@ -141,7 +139,6 @@ function Profile() {
           </label>
           <textarea
             name=""
-            readOnly={mode == "view"}
             className="resize-none w-full h-full border px-4 py-3 mt-2"
             placeholder="Your address here"
             value={address}
@@ -152,37 +149,35 @@ function Profile() {
       </div>
 
       <div className="mt-20">
-        {mode == "edit" && (
-          <button
-            onClick={async () => {
-              if (phone == "" || pincode == "") {
-                alert("Phone & pincode are mandatory fields");
-                return;
-              }
-              let res = await fetch("/api/user/save", {
-                method: "POST",
-                body: JSON.stringify({
-                  name: session.data.user.name,
-                  email: session.data.user.email,
-                  phone: phone,
-                  pincode: pincode,
-                  address: address,
-                }),
-              });
-              let data = await res.json();
-              if (data.success) {
-                router.push("/");
-              }
-            }}
-            className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
-          >
-            <iconify-icon
-              height="20"
-              icon="icon-park-solid:check-one"
-            ></iconify-icon>
-            <span>Save changes & proceed</span>
-          </button>
-        )}
+        <button
+          onClick={async () => {
+            if (phone == "" || pincode == "") {
+              alert("Phone & pincode are mandatory fields");
+              return;
+            }
+            let res = await fetch("/api/user/save", {
+              method: "POST",
+              body: JSON.stringify({
+                name: session.data.user.name,
+                email: session.data.user.email,
+                phone: phone,
+                pincode: pincode,
+                address: address,
+              }),
+            });
+            let data = await res.json();
+            if (data.success) {
+              router.push("/");
+            }
+          }}
+          className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
+        >
+          <iconify-icon
+            height="20"
+            icon="icon-park-solid:check-one"
+          ></iconify-icon>
+          <span>Save changes & proceed</span>
+        </button>
       </div>
     </div>
   );

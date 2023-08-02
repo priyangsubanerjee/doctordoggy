@@ -17,14 +17,29 @@ export async function middleware(request) {
         return NextResponse.next();
       }
     } else {
-      return NextResponse.redirect(
-        new URL("/profile?setup=true&focus=phone", request.url)
-      );
+      return NextResponse.redirect(new URL("/profile/setup", request.url));
+    }
+  } else if (request.nextUrl.pathname == "/profile") {
+    if (request.cookies.get("user")) {
+      let decodeUrl = new URL("/api/user/decode", request.url);
+      let res = await fetch(decodeUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          token: request.cookies.get("user").value,
+        }),
+      });
+      let data = await res.json();
+      console.log(data.user);
+      if (data.status == "success") {
+        return NextResponse.next();
+      }
+    } else {
+      return NextResponse.redirect(new URL("/profile/setup", request.url));
     }
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: ["/dashboard", "/profile"],
 };
