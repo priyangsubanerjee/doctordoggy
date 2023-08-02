@@ -57,6 +57,7 @@ function Profile() {
       alert("Phone & pincode are mandatory fields");
       return;
     }
+
     let res = await fetch("/api/user/save", {
       method: "POST",
       body: JSON.stringify({

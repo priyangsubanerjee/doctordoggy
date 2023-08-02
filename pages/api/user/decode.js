@@ -6,7 +6,7 @@ import { setCookie } from "cookies-next";
 
 export default function handler(req, res) {
   const { token } = JSON.parse(req.body);
-  const user = jwt.verify(token, "hello");
+  const user = jwt.verify(token, process.env.USER_SECRET);
 
   res.status(200).json({ success: true, user });
 }

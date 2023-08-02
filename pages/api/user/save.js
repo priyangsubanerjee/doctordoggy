@@ -1,6 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { setCookie } from "cookies-next";
 
@@ -13,7 +11,7 @@ export default function handler(req, res) {
     pincode,
     address,
   };
-  let token = jwt.sign(userObj, "hello");
+  let token = jwt.sign(userObj, process.env.USER_SECRET);
 
   setCookie("user", token, {
     req,
