@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { encrypt } from "@/helper/crypto";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -148,21 +149,25 @@ function Profile() {
       <div className="mt-20">
         {mode == "edit" && (
           <button
-            onClick={() => {
+            onClick={async () => {
               if (phone == "" || pincode == "") {
                 alert("Phone & pincode are mandatory fields");
                 return;
               }
-              let userObj = {
-                name: session.data.user.name,
-                email: session.data.user.email,
-                phone: phone,
-                pincode: pincode,
-                address: address,
-              };
-
-              Cookies.set("user", JSON.stringify(userObj));
-              router.push("/dashboard");
+              let res = await fetch("/api/user/save", {
+                method: "POST",
+                body: JSON.stringify({
+                  name: session.data.user.name,
+                  email: session.data.user.email,
+                  phone: phone,
+                  pincode: pincode,
+                  address: address,
+                }),
+              });
+              let data = await res.json();
+              if (data.success) {
+                router.push("/");
+              }
             }}
             className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
           >
