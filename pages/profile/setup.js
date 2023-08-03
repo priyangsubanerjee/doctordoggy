@@ -166,6 +166,7 @@ function Profile() {
       });
       let dataSaveCookie = await resSaveCookie.json();
       if (dataSaveCookie.success) {
+        console.log("success save cookie");
         router.push("/dashboard");
       }
     } else {
