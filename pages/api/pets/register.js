@@ -20,10 +20,10 @@ export default async function handler(req, res) {
       name,
       family,
       sex,
-      dateOfBirth,
+      dateOfBirth: dateOfBirth.toString(),
       breed,
       color,
-      weight,
+      weight: weight.toString(),
       complications,
       parentEmail,
     });
