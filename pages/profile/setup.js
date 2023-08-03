@@ -63,6 +63,8 @@ function Profile() {
           return;
         }
 
+        console.log(data.user);
+
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
         setAddress(data.user.address);
@@ -158,6 +160,11 @@ function Profile() {
         address: address,
       }),
     });
+    const data = await res.json();
+    if (data.success) {
+      setOnBoarding(true);
+      setOnBoardingDonee(true);
+    }
   };
 
   useEffect(() => {

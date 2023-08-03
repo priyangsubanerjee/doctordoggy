@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   const { name, email, phone, pincode, address } = JSON.parse(req.body);
 
   try {
-    let account = await account.findOneAndUpdate(
+    let account_ = await account.findOneAndUpdate(
       { email: email },
       {
         phone: phone,
