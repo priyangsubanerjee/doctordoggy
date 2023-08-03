@@ -60,7 +60,7 @@ function Profile() {
       });
       let dataUpdate = await resUpdate.json();
       if (dataUpdate.success) {
-        toast.success("Updated your profile");
+        toast("Updated your profile");
         let resSaveCookie = await fetch("/api/user/saveToCookie", {
           method: "POST",
           body: JSON.stringify({
