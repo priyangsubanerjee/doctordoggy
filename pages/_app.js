@@ -19,7 +19,19 @@ export default function App({
           <Component {...pageProps} />
         </Layout>
         <Footer />
-        <Toaster position="bottom-right" />
+        <Toaster
+          position="bottom-right"
+          containerStyle={{
+            bottom: 50,
+            right: 50,
+          }}
+          toastOptions={{
+            style: {
+              background: "#333",
+              color: "#fff",
+            },
+          }}
+        />
       </>
     </SessionProvider>
   );

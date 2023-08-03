@@ -60,7 +60,6 @@ function Profile() {
       });
       let dataUpdate = await resUpdate.json();
       if (dataUpdate.success) {
-        toast("Updated your profile");
         let resSaveCookie = await fetch("/api/user/saveToCookie", {
           method: "POST",
           body: JSON.stringify({
@@ -181,7 +180,22 @@ function Profile() {
         </div>
       </div>
 
-      <div className="border border-red-200 rounded-md p-8 mt-28 lg:max-w-4xl">
+      <div className="border border-neutral-200 rounded-md p-8 mt-28 lg:max-w-4xl">
+        <h2 className="text-xl font-semibold">Update account</h2>
+        <p className="text-sm mt-2 text-neutral-500">
+          You can update your account details here.
+        </p>
+        <button
+          className="text-white bg-neutral-800 px-6 py-2 rounded mt-7 text-sm shadow-md"
+          onClick={async () => {
+            router.push("/profile/setup?edit=true");
+          }}
+        >
+          Edit account details
+        </button>
+      </div>
+
+      <div className="border border-red-200 rounded-md p-8 mt-8 lg:max-w-4xl">
         <h2 className="text-xl font-semibold">Danger zone</h2>
         <p className="text-sm mt-2 text-neutral-500">
           This action is irreversible. You will be logged out of your current
@@ -191,7 +205,7 @@ function Profile() {
           className="text-white bg-red-500 px-6 py-2 rounded mt-7 text-sm shadow-md"
           onClick={async () => {
             await signOut();
-            await deleteCookie("user");
+            deleteCookie("user");
             router.push("/");
           }}
         >

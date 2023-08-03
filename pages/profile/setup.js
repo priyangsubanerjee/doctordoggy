@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { set } from "mongoose";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -35,23 +36,23 @@ function Profile() {
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
   const [onBoarding, setOnBoarding] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const router = useRouter();
 
   const retrieveUser = async () => {
     if (getCookie("user")) {
-      // local cookie exists
-
       var token = getCookie("user");
-
-      // decode the token to get the user data
       var res = await fetch("/api/user/decode", {
         method: "POST",
         body: JSON.stringify({
           token: token,
         }),
       });
+
       var data = await res.json();
+
       if (data.success) {
         if (data.user.phone == null) {
           document.getElementById("phoneInput").focus();
@@ -66,15 +67,17 @@ function Profile() {
         setPincode(data.user.pincode);
         setAddress(data.user.address);
       }
-      let resUpdate = await fetch("/api/user/updateLocal", {
+
+      var resUpdate = await fetch("/api/user/updateLocal", {
         method: "POST",
         body: JSON.stringify({
           email: session.data.user.email,
         }),
       });
-      let dataUpdate = await resUpdate.json();
+
+      var dataUpdate = await resUpdate.json();
       if (dataUpdate.success) {
-        let resSaveCookie = await fetch("/api/user/saveToCookie", {
+        var resSaveCookie = await fetch("/api/user/saveToCookie", {
           method: "POST",
           body: JSON.stringify({
             name: session.data.user.name,
@@ -84,7 +87,9 @@ function Profile() {
             address: dataUpdate.user.address,
           }),
         });
-        let dataSaveCookie = await resSaveCookie.json();
+
+        var dataSaveCookie = await resSaveCookie.json();
+
         if (dataSaveCookie.success) {
           setPhone(dataUpdate.user.phone);
           setPincode(dataUpdate.user.pincode);
@@ -98,7 +103,9 @@ function Profile() {
           email: session.data.user.email,
         }),
       });
+
       var dataBackup = await resBackup.json();
+
       if (dataBackup.success) {
         if (dataBackup.user.phone == null) {
           document.getElementById("phoneInput").focus();
@@ -132,6 +139,7 @@ function Profile() {
             name: session.data.user.name,
           }),
         });
+
         var dataCreate = await resCreate.json();
         if (dataCreate.success) {
           document.getElementById("phoneInput").focus();
@@ -147,6 +155,7 @@ function Profile() {
       return;
     }
 
+    setLoading(true);
     const res = await fetch("/api/user/updateDb", {
       method: "POST",
       body: JSON.stringify({
@@ -159,6 +168,7 @@ function Profile() {
     });
     const data = await res.json();
     if (data.success) {
+      toast.success("Account updated successfully");
       await fetch("/api/user/saveToCookie", {
         method: "POST",
         body: JSON.stringify({
@@ -169,12 +179,19 @@ function Profile() {
           address: address,
         }),
       });
-      onBoarding && router.push("/profile/onboardingSuccess");
+      onBoarding
+        ? router.push("/profile/onboardingSuccess")
+        : router.push("/profile");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     retrieveUser();
+    if (router.query.edit == "true") {
+      setEdit(true);
+      document.getElementById("phoneInput").focus();
+    }
   }, []);
 
   return (
@@ -182,7 +199,8 @@ function Profile() {
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-            Setup your <span className="text-pink-500">account</span>
+            {edit ? "Edit" : "Setup"} your{" "}
+            <span className="text-pink-500">account</span>
           </h2>
         </div>
         <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
@@ -268,15 +286,20 @@ function Profile() {
         </div>
       </div>
 
-      <div className="mt-20">
+      <div className="mt-20 flex items-center space-x-3">
         <button
+          disabled={loading}
           onClick={() => saveUser()}
-          className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
+          className="flex disabled:opacity-50 items-center justify-center space-x-2 w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
         >
-          <iconify-icon
-            height="20"
-            icon="icon-park-solid:check-one"
-          ></iconify-icon>
+          {loading ? (
+            <iconify-icon height="24" icon="eos-icons:loading"></iconify-icon>
+          ) : (
+            <iconify-icon
+              height="23"
+              icon="icon-park-solid:check-one"
+            ></iconify-icon>
+          )}
           <span>Save changes & proceed</span>
         </button>
       </div>

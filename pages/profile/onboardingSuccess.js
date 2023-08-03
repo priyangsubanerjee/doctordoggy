@@ -6,7 +6,7 @@ import React from "react";
 function OnboardingSuccess() {
   const session = useSession();
   return (
-    <div className="inset-0 fixed inset-0 z-30 bg-neutral-100 lg:p-16 text-center lg:pt-32 flex justify-center">
+    <div className="inset-0 fixed z-30 bg-neutral-100 lg:p-16 text-center lg:pt-32 flex justify-center">
       <div className="max-w-xl bg-white border h-fit px-8 pt-16 pb-8 rounded-md">
         <img
           src="https://cdn-icons-png.flaticon.com/512/2437/2437643.png"
@@ -14,7 +14,7 @@ function OnboardingSuccess() {
           alt=""
         />
         <h2 className="mt-10 text-neutral-500 text-sm">
-          Good evening,{" "}
+          Happy parenting,{" "}
           <span className="text-neutral-700 font-medium">
             {session?.data?.user?.name}
           </span>
