@@ -6,7 +6,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { encrypt } from "@/helper/crypto";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -187,9 +187,9 @@ function Profile() {
         </p>
         <button
           className="text-white bg-red-500 px-6 py-2 rounded mt-7 text-sm shadow-md"
-          onClick={() => {
-            signOut();
-            Cookies.remove("user");
+          onClick={async () => {
+            await signOut();
+            await deleteCookie("user");
             router.push("/");
           }}
         >
