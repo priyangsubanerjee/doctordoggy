@@ -148,7 +148,7 @@ function Profile() {
       return;
     }
 
-    let resSaveDb = await fetch("/api/user/saveToDb", {
+    let resSaveDb = await fetch("/api/user/updateDb", {
       method: "POST",
       body: JSON.stringify({
         name: session.data.user.name,
@@ -160,7 +160,8 @@ function Profile() {
     });
     let dataSaveDb = await resSaveDb.json();
     if (dataSaveDb.success) {
-      let resSaveCookie = await fetch("/api/user/saveToCookie", {
+      setOnBoardingDonee(true);
+      await fetch("/api/user/saveToCookie", {
         method: "POST",
         body: JSON.stringify({
           name: session.data.user.name,
@@ -170,11 +171,6 @@ function Profile() {
           address: address,
         }),
       });
-      let dataSaveCookie = await resSaveCookie.json();
-      if (dataSaveCookie.success) {
-        console.log("success save cookie");
-        setOnBoardingDonee(true);
-      }
     } else {
       alert("Something went wrong, please try again");
     }
