@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
@@ -6,6 +8,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import { set } from "mongoose";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -31,6 +34,8 @@ function Profile() {
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
+  const [onBoarding, setOnBoarding] = useState(false);
+  const [onBoardingDone, setOnBoardingDonee] = useState(false);
 
   const router = useRouter();
 
@@ -120,6 +125,7 @@ function Profile() {
           alert("Something went wrong, please try again");
         }
       } else {
+        setOnBoarding(true);
         let resCreate = await fetch("/api/user/createDb", {
           method: "POST",
           body: JSON.stringify({
@@ -167,8 +173,7 @@ function Profile() {
       let dataSaveCookie = await resSaveCookie.json();
       if (dataSaveCookie.success) {
         console.log("success save cookie");
-        // open dashboard in new tab
-        window.open("/dashboard", "_blank");
+        setOnBoardingDonee(true);
       }
     } else {
       alert("Something went wrong, please try again");
@@ -282,6 +287,57 @@ function Profile() {
           <span>Save changes & proceed</span>
         </button>
       </div>
+
+      {onBoarding == true ? (
+        onBoardingDone == true ? (
+          <div className="h-screen w-screen fixed inset-0 z-30 bg-neutral-100 lg:p-16 text-center lg:pt-32 flex justify-center">
+            <div className="max-w-xl bg-white border h-fit px-8 pt-16 pb-8 rounded-md">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2437/2437643.png"
+                className="mx-auto h-20"
+                alt=""
+              />
+              <h2 className="mt-10 text-neutral-600">
+                Welcome, {session.data.user.name}
+              </h2>
+              <h1 className="text-4xl font-bold mt-3 text-neutral-800">
+                Onboarding <span className="text-pink-500">success</span>
+              </h1>
+              <p className="text-sm leading-7 mt-4 text-neutral-500">
+                You have successfully completed the onboarding process. You can
+                now register your pets in the dashboard & start using the app.
+              </p>
+
+              <div className="grid grid-cols-2 mt-10 gap-2">
+                <button className="w-full">
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center justify-center space-x-2 w-full lg:px-5 px-5 py-3 rounded bg-blue-500 text-white text-sm"
+                  >
+                    <iconify-icon
+                      height="20"
+                      icon="icon-park-solid:check-one"
+                    ></iconify-icon>
+                    <span>Proceed to dashboard</span>
+                  </Link>
+                </button>
+                <button className="w-full">
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center justify-center space-x-2 w-full lg:px-5 px-5 py-3 rounded bg-neutral-100 text-neutral-700 text-sm"
+                  >
+                    <iconify-icon
+                      height="20"
+                      icon="icon-park-solid:check-one"
+                    ></iconify-icon>
+                    <span>Need help? Contact us</span>
+                  </Link>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null
+      ) : null}
     </div>
   );
 }
