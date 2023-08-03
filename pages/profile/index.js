@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";

@@ -75,7 +75,7 @@ function Profile() {
         }
       }
     } else {
-      var resBackup = await fetch("/api/user/backup", {
+      var resBackup = await fetch("/api/user/findBackup", {
         method: "POST",
         body: JSON.stringify({
           email: session.data.user.email,
