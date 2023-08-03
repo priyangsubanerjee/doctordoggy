@@ -305,17 +305,17 @@ function Profile() {
               </p>
 
               <div className="grid grid-cols-2 mt-10 gap-2">
-                <button className="w-full">
-                  <Link
-                    href="/dashboard"
-                    className="flex items-center justify-center space-x-2 w-full lg:px-5 px-5 py-3 rounded bg-blue-500 text-white text-sm"
-                  >
-                    <iconify-icon
-                      height="20"
-                      icon="icon-park-solid:check-one"
-                    ></iconify-icon>
-                    <span>Proceed to dashboard</span>
-                  </Link>
+                <button
+                  onClick={() => {
+                    window.open("/dashboard", "_self");
+                  }}
+                  className="w-full"
+                >
+                  <iconify-icon
+                    height="20"
+                    icon="icon-park-solid:check-one"
+                  ></iconify-icon>
+                  <span>Proceed to dashboard</span>
                 </button>
                 <button className="w-full">
                   <a
