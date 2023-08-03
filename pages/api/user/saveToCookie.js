@@ -11,6 +11,7 @@ export default function handler(req, res) {
     pincode,
     address,
   };
+
   let token = jwt.sign(userObj, process.env.USER_SECRET);
 
   setCookie("user", token, {

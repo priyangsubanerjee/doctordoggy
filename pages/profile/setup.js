@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import { encrypt } from "@/helper/crypto";
 import { getCookie } from "cookies-next";
+import { set } from "mongoose";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -31,23 +30,70 @@ function Profile() {
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
+  const [user, setUser] = useState(null);
 
   const router = useRouter();
 
   const retrieveUser = async () => {
     if (getCookie("user")) {
-      let token = getCookie("user");
-      let res = await fetch("/api/user/decode", {
+      var token = getCookie("user");
+      var res = await fetch("/api/user/decode", {
         method: "POST",
         body: JSON.stringify({
           token: token,
         }),
       });
-      let data = await res.json();
+      var data = await res.json();
       if (data.success) {
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
         setAddress(data.user.address);
+      }
+    } else {
+      var resBackup = await fetch("/api/user/backup", {
+        method: "POST",
+        body: JSON.stringify({
+          email: session.data.user.email,
+        }),
+      });
+      var dataBackup = await resBackup.json();
+      if (dataBackup.success) {
+        if (dataBackup.user.phone == null) {
+          document.getElementById("phoneInput").focus();
+          return;
+        } else if (dataBackup.user.pincode == null) {
+          document.getElementById("pincodeInput").focus();
+          return;
+        }
+        let resSaveCookie = await fetch("/api/user/saveToCookie", {
+          method: "POST",
+          body: JSON.stringify({
+            name: session.data.user.name,
+            email: session.data.user.email,
+            phone: dataBackup.user.phone,
+            pincode: dataBackup.user.pincode,
+            address: dataBackup.user.address,
+          }),
+        });
+        let dataSaveCookie = await resSaveCookie.json();
+        if (dataSaveCookie.success) {
+          router.push("/dashboard");
+        } else {
+          alert("Something went wrong, please try again");
+        }
+      } else {
+        let resCreate = await fetch("/api/user/createDb", {
+          method: "POST",
+          body: JSON.stringify({
+            email: session.data.user.email,
+            name: session.data.user.name,
+          }),
+        });
+        var dataCreate = await resCreate.json();
+        if (dataCreate.success) {
+          document.getElementById("phoneInput").focus();
+        } else {
+        }
       }
     }
   };
@@ -58,7 +104,7 @@ function Profile() {
       return;
     }
 
-    let res = await fetch("/api/user/save", {
+    let res = await fetch("/api/user/saveToDb", {
       method: "POST",
       body: JSON.stringify({
         name: session.data.user.name,
@@ -70,7 +116,20 @@ function Profile() {
     });
     let data = await res.json();
     if (data.success) {
-      router.push("/");
+      let resSaveCookie = await fetch("/api/user/saveToCookie", {
+        method: "POST",
+        body: JSON.stringify({
+          name: session.data.user.name,
+          email: session.data.user.email,
+          phone: phone,
+          pincode: pincode,
+          address: address,
+        }),
+      });
+      let dataSaveCookie = await resSaveCookie.json();
+      if (dataSaveCookie.success) {
+        router.push("/dashboard");
+      }
     } else {
       alert("Something went wrong, please try again");
     }
@@ -154,7 +213,7 @@ function Profile() {
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
             name=""
-            id=""
+            id="pincodeInput"
           />
         </div>
         <div className="lg:col-span-2">
