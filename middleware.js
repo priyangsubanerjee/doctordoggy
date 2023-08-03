@@ -12,7 +12,6 @@ export async function middleware(request) {
         }),
       });
       let data = await res.json();
-      console.log(data.user);
       if (data.status == "success") {
         return NextResponse.next();
       }
@@ -29,7 +28,6 @@ export async function middleware(request) {
         }),
       });
       let data = await res.json();
-      console.log(data.user);
       if (data.status == "success") {
         return NextResponse.next();
       }

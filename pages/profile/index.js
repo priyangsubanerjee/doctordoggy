@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { encrypt } from "@/helper/crypto";
 import { deleteCookie, getCookie } from "cookies-next";
+import { toast } from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -59,6 +60,7 @@ function Profile() {
       });
       let dataUpdate = await resUpdate.json();
       if (dataUpdate.success) {
+        toast.success("Updated your profile");
         let resSaveCookie = await fetch("/api/user/saveToCookie", {
           method: "POST",
           body: JSON.stringify({

@@ -36,7 +36,11 @@ function Profile() {
 
   const retrieveUser = async () => {
     if (getCookie("user")) {
+      // local cookie exists
+
       var token = getCookie("user");
+
+      // decode the token to get the user data
       var res = await fetch("/api/user/decode", {
         method: "POST",
         body: JSON.stringify({
@@ -45,6 +49,15 @@ function Profile() {
       });
       var data = await res.json();
       if (data.success) {
+        if (data.user.phone == null) {
+          document.getElementById("phoneInput").focus();
+          return;
+        }
+        if (data.user.pincode == null) {
+          document.getElementById("pincodeInput").focus();
+          return;
+        }
+
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
         setAddress(data.user.address);
