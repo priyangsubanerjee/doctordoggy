@@ -43,7 +43,7 @@ function RegisterPet() {
                 className="object-cover mt-2 h-full w-full"
                 alt=""
               />
-              <button className="h-10 w-10 rounded-full text-black bg-white hover:bg-neutral-100 border shadow-md absolute bottom-0 right-0 z-20">
+              <button className="h-10 w-10 rounded-full text-black bg-white hover:bg-neutral-100 border shadow-md absolute bottom-0 right-0 z-0">
                 <iconify-icon icon="solar:camera-bold"></iconify-icon>
               </button>
             </div>
@@ -102,7 +102,10 @@ function RegisterPet() {
             <label className="font-medium text-xs shrink-0 text-neutral-500">
               D.O.B <span className="text-red-500 ml-1 text-xl">*</span>
             </label>
-            <div className="h-12 border w-full mt-2 rounded bg-transparent relative px-4">
+            <div
+              onClick={() => document.getElementById("dobInput").focus()}
+              className="h-12 border w-full mt-2 rounded bg-transparent relative px-4"
+            >
               <span
                 onClick={() => document.getElementById("dobInput").focus()}
                 className="absolute right-3 top-1/2 -translate-y-[30%] lg:hidden"
