@@ -60,7 +60,7 @@ function Dashboard({ pets }) {
         <div className="flex flex-col items-center justify-center w-full">
           <img
             src="https://img.freepik.com/free-vector/hand-drawn-illustration-people-with-pets_23-2148980837.jpg?w=2000"
-            className="h-[100px] lg:h-[250px]"
+            className="h-[200px] lg:h-[250px]"
             alt=""
           />
           <h2 className="text-lg font-semibold text-neutral-600">
