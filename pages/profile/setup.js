@@ -35,7 +35,7 @@ function Profile() {
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
   const [onBoarding, setOnBoarding] = useState(false);
-  const [onBoardingDone, setOnBoardingDonee] = useState(false);
+  const [onBoardingDone, setOnBoardingDone] = useState(false);
 
   const router = useRouter();
 
@@ -62,8 +62,6 @@ function Profile() {
           document.getElementById("pincodeInput").focus();
           return;
         }
-
-        console.log(data.user);
 
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
@@ -162,8 +160,17 @@ function Profile() {
     });
     const data = await res.json();
     if (data.success) {
-      setOnBoarding(true);
-      setOnBoardingDonee(true);
+      await fetch("/api/user/saveToCookie", {
+        method: "POST",
+        body: JSON.stringify({
+          name: session.data.user.name,
+          email: session.data.user.email,
+          phone: phone.toString(),
+          pincode: pincode.toString(),
+          address: address,
+        }),
+      });
+      setOnBoardingDone(true);
     }
   };
 
