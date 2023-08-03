@@ -2,7 +2,7 @@
 import jwt from "jsonwebtoken";
 import { setCookie } from "cookies-next";
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   const { name, email, phone, pincode, address } = JSON.parse(req.body);
   let userObj = {
     name,
@@ -12,13 +12,12 @@ export default function handler(req, res) {
     address,
   };
 
-  let token = jwt.sign(userObj, process.env.USER_SECRET);
+  let token = await jwt.sign(userObj, process.env.USER_SECRET);
 
-  setCookie("user", token, {
+  await setCookie("user", token, {
     req,
     res,
     maxAge: 60 * 60 * 24 * 7 * 50000, // 1 week
-    path: "/",
   });
 
   res.status(200).json({ success: true });
