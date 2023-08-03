@@ -34,8 +34,6 @@ export async function middleware(request) {
     } else {
       return NextResponse.redirect(new URL("/profile/setup", request.url));
     }
-  } else {
-    return NextResponse.next();
   }
 }
 
