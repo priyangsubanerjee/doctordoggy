@@ -179,38 +179,22 @@ function Profile() {
         </div>
       </div>
 
-      <div className="mt-20">
-        {mode == "edit" && (
-          <button
-            onClick={async () => {
-              if (phone == "" || pincode == "") {
-                alert("Phone & pincode are mandatory fields");
-                return;
-              }
-              let res = await fetch("/api/user/save", {
-                method: "POST",
-                body: JSON.stringify({
-                  name: session.data.user.name,
-                  email: session.data.user.email,
-                  phone: phone,
-                  pincode: pincode,
-                  address: address,
-                }),
-              });
-              let data = await res.json();
-              if (data.success) {
-                router.push("/");
-              }
-            }}
-            className="flex items-center justify-center space-x-2 w-full lg:w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
-          >
-            <iconify-icon
-              height="20"
-              icon="icon-park-solid:check-one"
-            ></iconify-icon>
-            <span>Save changes & proceed</span>
-          </button>
-        )}
+      <div className="border border-red-200 rounded-md p-8 mt-28 lg:max-w-4xl">
+        <h2 className="text-xl font-semibold">Danger zone</h2>
+        <p className="text-sm mt-2 text-neutral-500">
+          This action is irreversible. You will be logged out of your current
+          device.
+        </p>
+        <button
+          className="text-white bg-red-500 px-6 py-2 rounded mt-7 text-sm shadow-md"
+          onClick={() => {
+            signOut();
+            Cookies.remove("user");
+            router.push("/");
+          }}
+        >
+          Sign Out
+        </button>
       </div>
     </div>
   );
