@@ -1,6 +1,8 @@
+import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 
 export default async function handler(req, res) {
+  await connectDatabase();
   const { email } = JSON.parse(req.body);
   try {
     let pets = await pet.find({ email: email });

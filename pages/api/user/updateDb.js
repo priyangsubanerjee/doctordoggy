@@ -1,6 +1,8 @@
+import connectDatabase from "@/db/connect";
 import account from "@/db/models/account";
 
 export default async function handler(req, res) {
+  await connectDatabase();
   const { name, email, phone, pincode, address } = JSON.parse(req.body);
 
   try {
