@@ -142,6 +142,17 @@ function Profile() {
       return;
     }
 
+    await fetch("/api/user/saveToCookie", {
+      method: "POST",
+      body: JSON.stringify({
+        name: session.data.user.name,
+        email: session.data.user.email,
+        phone: phone,
+        pincode: pincode,
+        address: address,
+      }),
+    });
+
     let resSaveDb = await fetch("/api/user/saveToDb", {
       method: "POST",
       body: JSON.stringify({
