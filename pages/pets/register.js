@@ -81,28 +81,42 @@ function RegisterPet() {
             </div>
           </div>
           <div>
-            <label className="font-medium text-xs shrink-0 text-neutral-500">
-              Phone <span className="text-red-500 ml-1 text-xl">*</span>
+            <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
+              Sex <span className="text-red-500 text-lg">*</span>
             </label>
-            <input
-              id="phoneInput"
-              type="tel"
-              className="px-4 py-3 border w-full mt-2"
-              placeholder="Phone number"
-              name=""
-            />
+            <div className="relative">
+              <span className="absolute right-3 top-1/2 -translate-y-[30%]">
+                <iconify-icon icon="icon-park-outline:down"></iconify-icon>
+              </span>
+              <select
+                className="px-4 h-12 border w-full mt-2 appearance-none rounded bg-transparent"
+                name=""
+                id=""
+              >
+                <option value="">Male</option>
+                <option value="">Female</option>
+              </select>
+            </div>
           </div>
           <div>
             <label className="font-medium text-xs shrink-0 text-neutral-500">
-              Pincode <span className="text-red-500 ml-1 text-xl">*</span>
+              D.O.B <span className="text-red-500 ml-1 text-xl">*</span>
             </label>
-            <input
-              type="tel"
-              className="px-4 py-3 border w-full mt-2"
-              placeholder="71XXXXX"
-              name=""
-              id="pincodeInput"
-            />
+            <div className="h-12 border w-full mt-2 rounded bg-transparent relative px-4">
+              <span
+                onClick={() => document.getElementById("dobInput").focus()}
+                className="absolute right-3 top-1/2 -translate-y-[30%] lg:hidden"
+              >
+                <iconify-icon icon="solar:calendar-outline"></iconify-icon>
+              </span>
+              <input
+                type="date"
+                placeholder="Date of birth"
+                className="appearance-none w-fit lg:w-full h-full bg-transparent  outline-none"
+                name=""
+                id="dobInput"
+              />
+            </div>
           </div>
           <div className="lg:col-span-2">
             <label className="font-medium text-xs shrink-0 text-neutral-500">
