@@ -148,32 +148,16 @@ function Profile() {
       return;
     }
 
-    let resSaveDb = await fetch("/api/user/updateDb", {
+    const res = await fetch("/api/user/updateDb", {
       method: "POST",
       body: JSON.stringify({
         name: session.data.user.name,
         email: session.data.user.email,
-        phone: phone,
-        pincode: pincode,
+        phone: phone.toString(),
+        pincode: pincode.toString(),
         address: address,
       }),
     });
-    let dataSaveDb = await resSaveDb.json();
-    if (dataSaveDb.success) {
-      setOnBoardingDonee(true);
-      await fetch("/api/user/saveToCookie", {
-        method: "POST",
-        body: JSON.stringify({
-          name: session.data.user.name,
-          email: session.data.user.email,
-          phone: phone,
-          pincode: pincode,
-          address: address,
-        }),
-      });
-    } else {
-      alert("Something went wrong, please try again");
-    }
   };
 
   useEffect(() => {

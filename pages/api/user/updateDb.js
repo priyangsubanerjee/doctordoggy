@@ -4,25 +4,21 @@ export default async function handler(req, res) {
   const { name, email, phone, pincode, address } = JSON.parse(req.body);
 
   try {
-    let user = await account.findOneAndUpdate(
+    let account = await account.findOneAndUpdate(
+      { email: email },
       {
-        email,
-      },
-      {
-        name,
-        email,
-        phone,
-        pincode,
-        address,
+        phone: phone,
+        pincode: pincode,
+        address: address,
       }
     );
-    if (user) {
-      res.status(200).json({ success: true, user });
-    } else {
-      res.status(200).json({ success: false });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, error });
+    res.status(200).json({ status: "success" });
+  } catch (err) {
+    console.log(err);
+    res.status(200).json({
+      status: "error",
+      message: "Something went wrong",
+      error: err.message,
+    });
   }
 }
