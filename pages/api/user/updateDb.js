@@ -12,11 +12,11 @@ export default async function handler(req, res) {
         address: address,
       }
     );
-    res.status(200).json({ status: "success" });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
     res.status(200).json({
-      status: "error",
+      success: false,
       message: "Something went wrong",
       error: err.message,
     });
