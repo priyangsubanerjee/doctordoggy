@@ -3,6 +3,7 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import Petcard from "@/components/Dashboard/Petcard";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -35,16 +36,18 @@ function Dashboard() {
         </p>
       </div>
 
-      <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
-        <span className="text-white text-xl">
-          <iconify-icon icon="cil:dog"></iconify-icon>
-        </span>
-        <span>Add pet</span>
-      </button>
-
       <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
         <Petcard />
       </div>
+
+      <Link href="/pets/register">
+        <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+          <span className="text-white text-xl">
+            <iconify-icon icon="cil:dog"></iconify-icon>
+          </span>
+          <span>Add pet</span>
+        </button>
+      </Link>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
