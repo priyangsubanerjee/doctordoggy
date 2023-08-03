@@ -55,14 +55,16 @@ function Navbar() {
             <span>Services</span>
           </li>
         </Link>
-        <li className="flex items-center space-x-2">
-          <iconify-icon
-            height="20"
-            width="20"
-            icon="iconoir:message-text"
-          ></iconify-icon>
-          <span>Feedback</span>
-        </li>
+        <Link href="/feedback">
+          <li className="flex items-center space-x-2">
+            <iconify-icon
+              height="20"
+              width="20"
+              icon="iconoir:message-text"
+            ></iconify-icon>
+            <span>Feedback</span>
+          </li>
+        </Link>
         <li className="flex items-center space-x-2">
           <iconify-icon
             height="23"

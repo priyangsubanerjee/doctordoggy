@@ -34,30 +34,48 @@ function Sidebar({ open, setOpen }) {
               </button>
             </div>
             <ul className="items-center space-y-9 text-sm text-neutral-700 px-6">
-              <li className="flex items-center space-x-2">
-                <iconify-icon
-                  height="24"
-                  width="24"
-                  icon="ph:paw-print"
-                ></iconify-icon>
-                <span>About us</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <iconify-icon
-                  height="20"
-                  width="20"
-                  icon="akar-icons:scissor"
-                ></iconify-icon>
-                <span>Services</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <iconify-icon
-                  height="20"
-                  width="20"
-                  icon="iconoir:message-text"
-                ></iconify-icon>
-                <span>Feedback</span>
-              </li>
+              {session.status === "authenticated" ? (
+                <Link href="/dashboard" className="block">
+                  <li className="flex items-center space-x-2">
+                    <iconify-icon
+                      height="22"
+                      width="22"
+                      icon="streamline:nature-ecology-dog-head-dog-pet-animals-canine"
+                    ></iconify-icon>
+                    <span>Dashboard</span>
+                  </li>
+                </Link>
+              ) : (
+                <li className="flex items-center space-x-2">
+                  <iconify-icon
+                    height="24"
+                    width="24"
+                    icon="ph:paw-print"
+                  ></iconify-icon>
+                  <span>About us</span>
+                </li>
+              )}
+
+              <Link href="/?redirect=false" className="block">
+                <li className="flex items-center space-x-2">
+                  <iconify-icon
+                    height="20"
+                    width="20"
+                    icon="akar-icons:scissor"
+                  ></iconify-icon>
+                  <span>Services</span>
+                </li>
+              </Link>
+              <Link href="/feedback" className="block">
+                <li className="flex items-center space-x-2">
+                  <iconify-icon
+                    height="20"
+                    width="20"
+                    icon="iconoir:message-text"
+                  ></iconify-icon>
+                  <span>Feedback</span>
+                </li>
+              </Link>
               <li className="flex items-center space-x-2">
                 <iconify-icon
                   height="23"

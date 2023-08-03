@@ -110,7 +110,7 @@ function Profile() {
           <input
             type="text"
             readOnly={true}
-            className="px-4 py-3 border w-full mt-2 rounded-none opacity-50"
+            className="px-4 py-3 border w-full mt-2 opacity-50 outline-none rounded"
             value={session.data.user.name}
             placeholder="Your name"
             name=""
@@ -127,7 +127,7 @@ function Profile() {
           <input
             type="text"
             readOnly={true}
-            className="px-4 py-3 border w-full mt-2 rounded-none opacity-50"
+            className="px-4 py-3 border w-full mt-2 rounded-none opacity-50 outline-none"
             value={session.data.user.email}
             placeholder="Your name"
             name=""
@@ -141,10 +141,10 @@ function Profile() {
           <input
             id="phoneInput"
             type="tel"
-            readOnly={mode == "view"}
+            readOnly={true}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="px-4 py-3 border w-full mt-2"
+            className="px-4 py-3 border w-full mt-2  outline-none rounded"
             placeholder="Phone number"
             name=""
           />
@@ -155,8 +155,8 @@ function Profile() {
           </label>
           <input
             type="tel"
-            readOnly={mode == "view"}
-            className="px-4 py-3 border w-full mt-2"
+            readOnly={true}
+            className="px-4 py-3 border w-full mt-2 outline-none rounded"
             placeholder="71XXXXX"
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
@@ -170,8 +170,8 @@ function Profile() {
           </label>
           <textarea
             name=""
-            readOnly={mode == "view"}
-            className="resize-none w-full h-full border px-4 py-3 mt-2"
+            readOnly={true}
+            className="resize-none w-full h-full border px-4 py-3 mt-2 outline-none rounded"
             placeholder="Your address here"
             value={address}
             onChange={(e) => setAddress(e.target.value)}

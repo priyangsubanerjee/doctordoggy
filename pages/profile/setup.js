@@ -290,7 +290,7 @@ function Profile() {
         <button
           disabled={loading}
           onClick={() => saveUser()}
-          className="flex disabled:opacity-50 items-center justify-center space-x-2 w-fit lg:px-5 px-5 py-4 rounded bg-blue-500 text-white text-sm"
+          className="flex disabled:opacity-50 items-center justify-center space-x-2 w-fit lg:px-5 px-5 py-3 rounded bg-blue-500 text-white text-sm"
         >
           {loading ? (
             <iconify-icon height="24" icon="eos-icons:loading"></iconify-icon>
