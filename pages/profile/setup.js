@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
@@ -30,7 +31,6 @@ function Profile() {
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
-  const [user, setUser] = useState(null);
 
   const router = useRouter();
 
@@ -48,6 +48,31 @@ function Profile() {
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
         setAddress(data.user.address);
+      }
+      let resUpdate = await fetch("/api/user/updateLocal", {
+        method: "POST",
+        body: JSON.stringify({
+          email: session.data.user.email,
+        }),
+      });
+      let dataUpdate = await resUpdate.json();
+      if (dataUpdate.success) {
+        let resSaveCookie = await fetch("/api/user/saveToCookie", {
+          method: "POST",
+          body: JSON.stringify({
+            name: session.data.user.name,
+            email: session.data.user.email,
+            phone: dataUpdate.user.phone,
+            pincode: dataUpdate.user.pincode,
+            address: dataUpdate.user.address,
+          }),
+        });
+        let dataSaveCookie = await resSaveCookie.json();
+        if (dataSaveCookie.success) {
+          setPhone(dataUpdate.user.phone);
+          setPincode(dataUpdate.user.pincode);
+          setAddress(dataUpdate.user.address);
+        }
       }
     } else {
       var resBackup = await fetch("/api/user/backup", {
@@ -137,7 +162,6 @@ function Profile() {
 
   useEffect(() => {
     retrieveUser();
-    document.getElementById("phoneInput").focus();
   }, []);
 
   return (

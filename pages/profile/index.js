@@ -37,19 +37,46 @@ function Profile() {
 
   const retrieveUser = async () => {
     if (getCookie("user")) {
-      let token = getCookie("user");
-      let res = await fetch("/api/user/decode", {
+      var token = getCookie("user");
+      var res = await fetch("/api/user/decode", {
         method: "POST",
         body: JSON.stringify({
           token: token,
         }),
       });
-      let data = await res.json();
+      var data = await res.json();
       if (data.success) {
         setPhone(data.user.phone);
         setPincode(data.user.pincode);
         setAddress(data.user.address);
       }
+      let resUpdate = await fetch("/api/user/updateLocal", {
+        method: "POST",
+        body: JSON.stringify({
+          email: session.data.user.email,
+        }),
+      });
+      let dataUpdate = await resUpdate.json();
+      if (dataUpdate.success) {
+        let resSaveCookie = await fetch("/api/user/saveToCookie", {
+          method: "POST",
+          body: JSON.stringify({
+            name: session.data.user.name,
+            email: session.data.user.email,
+            phone: dataUpdate.user.phone,
+            pincode: dataUpdate.user.pincode,
+            address: dataUpdate.user.address,
+          }),
+        });
+        let dataSaveCookie = await resSaveCookie.json();
+        if (dataSaveCookie.success) {
+          setPhone(dataUpdate.user.phone);
+          setPincode(dataUpdate.user.pincode);
+          setAddress(dataUpdate.user.address);
+        }
+      }
+    } else {
+      router.push("/profile/setup");
     }
   };
 
