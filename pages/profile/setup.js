@@ -142,7 +142,7 @@ function Profile() {
       return;
     }
 
-    let res = await fetch("/api/user/saveToDb", {
+    let resSaveDb = await fetch("/api/user/saveToDb", {
       method: "POST",
       body: JSON.stringify({
         name: session.data.user.name,
@@ -152,8 +152,8 @@ function Profile() {
         address: address,
       }),
     });
-    let data = await res.json();
-    if (data.success) {
+    let dataSaveDb = await resSaveDb.json();
+    if (dataSaveDb.success) {
       let resSaveCookie = await fetch("/api/user/saveToCookie", {
         method: "POST",
         body: JSON.stringify({
