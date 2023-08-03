@@ -13,18 +13,21 @@ function OnboardingSuccess() {
           className="mx-auto h-20"
           alt=""
         />
-        <h2 className="mt-10 text-neutral-600">
-          Welcome, {session?.data?.user?.name}
+        <h2 className="mt-10 text-neutral-500 text-sm">
+          Good evening,{" "}
+          <span className="text-neutral-700 font-medium">
+            {session?.data?.user?.name}
+          </span>
         </h2>
-        <h1 className="text-4xl font-bold mt-3 text-neutral-800">
+        <h1 className="text-4xl font-bold mt-6 text-neutral-800">
           Onboarding <span className="text-pink-500">success</span>
         </h1>
-        <p className="text-sm leading-7 mt-4 text-neutral-500">
+        <p className="text-sm leading-7 mt-6 text-neutral-500">
           You have successfully completed the onboarding process. You can now
           register your pets in the dashboard & start using the app.
         </p>
 
-        <div className="grid grid-cols-2 mt-10 gap-2">
+        <div className="grid grid-cols-2 mt-16 gap-2">
           <button
             onClick={() => {
               window.open("/dashboard", "_self");
