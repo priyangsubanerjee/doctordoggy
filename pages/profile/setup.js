@@ -322,7 +322,7 @@ function Profile() {
                   </Link>
                 </button>
                 <button className="w-full">
-                  <Link
+                  <a
                     href="/dashboard"
                     className="flex items-center justify-center space-x-2 w-full lg:px-5 px-5 py-3 rounded bg-neutral-100 text-neutral-700 text-sm"
                   >
@@ -331,7 +331,7 @@ function Profile() {
                       icon="icon-park-solid:check-one"
                     ></iconify-icon>
                     <span>Need help? Contact us</span>
-                  </Link>
+                  </a>
                 </button>
               </div>
             </div>
