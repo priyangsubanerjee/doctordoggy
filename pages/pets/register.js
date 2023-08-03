@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
@@ -23,6 +23,17 @@ export async function getServerSideProps(context) {
 }
 
 function RegisterPet() {
+  const [pet, setPet] = useState({
+    name: "",
+    family: "",
+    sex: "",
+    dateOfBirth: "",
+    breed: "",
+    color: "",
+    weight: "",
+    complications: "",
+  });
+
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -142,6 +153,19 @@ function RegisterPet() {
               type="text"
               className="px-4 h-12 border w-full mt-2 rounded"
               placeholder="Color of your pet"
+              name=""
+              id=""
+            />
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Body weight
+              <span className="text-red-500/0 text-lg">*</span>
+            </label>
+            <input
+              type="tel"
+              className="px-4 h-12 border w-full mt-2 rounded"
+              placeholder="Weight of your pet in kg"
               name=""
               id=""
             />
