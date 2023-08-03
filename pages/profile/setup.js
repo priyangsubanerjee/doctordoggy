@@ -142,17 +142,6 @@ function Profile() {
       return;
     }
 
-    await fetch("/api/user/saveToCookie", {
-      method: "POST",
-      body: JSON.stringify({
-        name: session.data.user.name,
-        email: session.data.user.email,
-        phone: phone,
-        pincode: pincode,
-        address: address,
-      }),
-    });
-
     let resSaveDb = await fetch("/api/user/saveToDb", {
       method: "POST",
       body: JSON.stringify({
@@ -178,7 +167,7 @@ function Profile() {
       let dataSaveCookie = await resSaveCookie.json();
       if (dataSaveCookie.success) {
         console.log("success save cookie");
-        location.reload();
+        router.replace("/dashboard");
       }
     } else {
       alert("Something went wrong, please try again");
