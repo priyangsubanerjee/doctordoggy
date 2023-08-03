@@ -167,7 +167,7 @@ function Profile() {
       let dataSaveCookie = await resSaveCookie.json();
       if (dataSaveCookie.success) {
         console.log("success save cookie");
-        router.push("/dashboard");
+        location.reload();
       }
     } else {
       alert("Something went wrong, please try again");

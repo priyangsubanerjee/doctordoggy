@@ -6,7 +6,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { encrypt } from "@/helper/crypto";
-import { deleteCookie, getCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { toast } from "react-hot-toast";
 
 export async function getServerSideProps(context) {
