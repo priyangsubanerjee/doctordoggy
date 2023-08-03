@@ -33,7 +33,7 @@ const petSchema = new Schema({
     type: Array,
   },
   historyOfComplications: {
-    type: Array,
+    type: String,
   },
   parentEmail: {
     type: String,

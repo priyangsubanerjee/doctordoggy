@@ -118,14 +118,39 @@ function RegisterPet() {
               />
             </div>
           </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Breed <span className="text-red-500 text-lg">*</span>
+            </label>
+            <input
+              type="text"
+              className="px-4 h-12 border w-full mt-2 rounded"
+              placeholder="Breed of your pet"
+              name=""
+              id=""
+            />
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Color specification{" "}
+              <span className="text-red-500/0 text-lg">*</span>
+            </label>
+            <input
+              type="text"
+              className="px-4 h-12 border w-full mt-2 rounded"
+              placeholder="Color of your pet"
+              name=""
+              id=""
+            />
+          </div>
           <div className="lg:col-span-2">
             <label className="font-medium text-xs shrink-0 text-neutral-500">
-              Address
+              Previous complications
             </label>
             <textarea
               name=""
               className="resize-none w-full h-full border px-4 py-3 mt-2"
-              placeholder="Your address here"
+              placeholder="Your text here"
               id=""
             ></textarea>
           </div>
