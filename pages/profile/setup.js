@@ -41,6 +41,27 @@ function Profile() {
 
   const router = useRouter();
 
+  const getLocalCookie = async () => {
+    if (getCookie("user")) {
+      var token = getCookie("user");
+      var res = await fetch("/api/user/decode", {
+        method: "POST",
+        body: JSON.stringify({
+          token: token,
+        }),
+      });
+
+      var data = await res.json();
+      if (data.success) {
+        return data.user;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  };
+
   const retrieveUser = async () => {
     if (getCookie("user")) {
       var token = getCookie("user");
@@ -131,7 +152,6 @@ function Profile() {
           alert("Something went wrong, please try again");
         }
       } else {
-        setOnBoarding(true);
         let resCreate = await fetch("/api/user/createDb", {
           method: "POST",
           body: JSON.stringify({
@@ -193,6 +213,12 @@ function Profile() {
       document.getElementById("phoneInput").focus();
     }
   }, []);
+
+  useEffect(() => {
+    if (router.query.onboarding == "true") {
+      setOnBoarding(true);
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen h-fit px-6 py-8 lg:py-16 lg:px-[100px]">

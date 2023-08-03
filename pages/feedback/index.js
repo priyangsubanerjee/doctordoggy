@@ -68,7 +68,7 @@ function Feedback() {
             </button>
           </div>
         </div>
-      ) : (
+      ) : session.status == "unauthenticated" ? (
         <div>
           <div className="min-h-screen h-fit px-6 py-8 lg:py-20 lg:px-[100px]">
             <h1 className="text-3xl font-bold font-popins text-neutral-800">
@@ -87,7 +87,7 @@ function Feedback() {
             </button>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

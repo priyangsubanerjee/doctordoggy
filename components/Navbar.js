@@ -95,7 +95,7 @@ function Navbar() {
           </Link>
         ) : (
           <button
-            onClick={() => signIn("google")}
+            onClick={async () => await signIn("google")}
             className="text-sm bg-neutral-100 px-3 py-2 lg:py-3 lg:px-6 text-black rounded flex items-center space-x-3"
           >
             <iconify-icon height="20" icon="devicon:google"></iconify-icon>
