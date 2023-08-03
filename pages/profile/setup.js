@@ -167,7 +167,8 @@ function Profile() {
       let dataSaveCookie = await resSaveCookie.json();
       if (dataSaveCookie.success) {
         console.log("success save cookie");
-        router.replace("/dashboard");
+        // open dashboard in new tab
+        window.open("/dashboard", "_blank");
       }
     } else {
       alert("Something went wrong, please try again");
