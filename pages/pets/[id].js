@@ -319,8 +319,8 @@ function PetProfile({ pet }) {
                     <span className="text-xs text-neutral-700 tracking-wider">
                       12-12-2021
                     </span>
-                    <span className="text-xs text-neutral-700 tracking-wide">
-                      Dr. Souradeep ...
+                    <span className="text-xs text-neutral-700">
+                      Dr. Souradeep
                     </span>
                   </div>
                   <h2 className="font-semibold mt-3 text-neutral-800">
@@ -334,8 +334,11 @@ function PetProfile({ pet }) {
                     <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md">
                       Open file
                     </button>
-                    <button className="px-4 py-2 ml-2 flex items-center justify-center font-medium text-sm bg-neutral-50 text-neutral-900 rounded-md">
-                      <iconify-icon icon="lucide:info"></iconify-icon>
+                    <button className="px-4 py-2 ml-2 flex items-center justify-center font-medium bg-neutral-50 text-neutral-900 rounded-md">
+                      <iconify-icon
+                        height="20"
+                        icon="ant-design:edit-outlined"
+                      ></iconify-icon>
                     </button>
                     <button className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto">
                       Delete
