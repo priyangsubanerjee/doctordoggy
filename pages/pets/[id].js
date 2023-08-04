@@ -307,9 +307,59 @@ function PetProfile({ pet }) {
           </div>
         </div>
       ) : state == "prescriptions" ? (
-        <div></div>
+        <div className="mt-8 lg:mt-16 gap-4 mx-auto">
+          <div className="">
+            <div className="mt-5">
+              <h2 className="font-semibold text-neutral-700 text-sm">
+                All prescriptions & medical records
+              </h2>
+              <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="w-full rounded-md border border-neutral-200 p-3 shrink-0">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-neutral-700 tracking-wider">
+                      12-12-2021
+                    </span>
+                    <span className="text-xs text-neutral-700 tracking-wide">
+                      Dr. Souradeep ...
+                    </span>
+                  </div>
+                  <h2 className="font-semibold mt-3 text-neutral-800">
+                    Fungal infection treatment
+                  </h2>
+                  <p className="text-xs mt-2 leading-5 text-neutral-600">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Minus, debitis.
+                  </p>
+                  <div className="flex mt-4 w-full">
+                    <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md">
+                      Open file
+                    </button>
+                    <button className="px-4 py-2 ml-2 flex items-center justify-center font-medium text-sm bg-neutral-50 text-neutral-900 rounded-md">
+                      <iconify-icon icon="lucide:info"></iconify-icon>
+                    </button>
+                    <button className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <div></div>
+      )}
+
+      {state == "prescriptions" && (
+        <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+          <span className="text-white">
+            <iconify-icon
+              height="20"
+              icon="solar:document-medicine-broken"
+            ></iconify-icon>
+          </span>
+          <span>Upload</span>
+        </button>
       )}
     </div>
   );
