@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -384,15 +385,17 @@ function PetProfile({ pet }) {
       )}
 
       {state == "prescriptions" && (
-        <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
-          <span className="text-white">
-            <iconify-icon
-              height="20"
-              icon="solar:document-medicine-broken"
-            ></iconify-icon>
-          </span>
-          <span>Upload</span>
-        </button>
+        <Link href={`/pets/${pet._id}/UploadPrescription`}>
+          <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+            <span className="text-white">
+              <iconify-icon
+                height="20"
+                icon="solar:document-medicine-broken"
+              ></iconify-icon>
+            </span>
+            <span>Upload</span>
+          </button>
+        </Link>
       )}
     </div>
   );
