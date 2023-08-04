@@ -10,6 +10,7 @@ import { getCookie } from "cookies-next";
 import { set } from "mongoose";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { data } from "autoprefixer";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -59,6 +60,76 @@ function Profile() {
       }
     } else {
       return null;
+    }
+  };
+
+  const requestUserData = async () => {
+    var resUpdate = await fetch("/api/user/updateLocal", {
+      method: "POST",
+      body: JSON.stringify({
+        email: session.data.user.email,
+      }),
+    });
+
+    var dataUpdate = await resUpdate.json();
+    if (dataUpdate.success) {
+      return data.user;
+    } else {
+      return null;
+    }
+  };
+
+  const saveLocalCookie = async (user) => {
+    var res = await fetch("/api/user/saveToCookie", {
+      method: "POST",
+      body: JSON.stringify({
+        name: session.data.user.name,
+        email: session.data.user.email,
+        phone: user.phone,
+        pincode: user.pincode,
+        address: user.address,
+      }),
+    });
+
+    var data = await res.json();
+    if (data.success) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const findBackUp = async () => {
+    var res = await fetch("/api/user/findBackup", {
+      method: "POST",
+      body: JSON.stringify({
+        email: session.data.user.email,
+      }),
+    });
+
+    var data = await res.json();
+
+    if (data.success) {
+      return data.user;
+    } else {
+      return null;
+    }
+  };
+
+  const createFreshAccount = async () => {
+    let res = await fetch("/api/user/createDb", {
+      method: "POST",
+      body: JSON.stringify({
+        email: session.data.user.email,
+        name: session.data.user.name,
+      }),
+    });
+
+    var data = await res.json();
+    if (data.success) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -169,6 +240,37 @@ function Profile() {
     }
   };
 
+  const retrieveUserCopy = async () => {
+    let user = await getLocalCookie();
+    if (user) {
+      setPhone(user.phone);
+      setPincode(user.pincode);
+      setAddress(data.user.address);
+      user = await requestUserData();
+      if (user) {
+        await saveLocalCookie(user);
+      }
+    } else {
+      let backupUser = await findBackUp();
+      if (backupUser) {
+        if (
+          backupUser.phone == "" ||
+          backupUser.pincode == "" ||
+          backupUser.phone == null ||
+          backupUser.pincode == null
+        ) {
+          document.getElementById("phoneInput").focus();
+          return;
+        } else {
+          await saveLocalCookie(backupUser);
+        }
+      } else {
+        await createFreshAccount();
+        document.getElementById("phoneInput").focus();
+      }
+    }
+  };
+
   const saveUser = async () => {
     if (phone == "" || pincode == "") {
       alert("Phone & pincode are mandatory fields");
@@ -207,7 +309,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    retrieveUser();
+    retrieveUserCopy();
     if (router.query.edit == "true") {
       setEdit(true);
       document.getElementById("phoneInput").focus();

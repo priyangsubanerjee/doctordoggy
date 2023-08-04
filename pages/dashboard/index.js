@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import Petcard from "@/components/Dashboard/Petcard";
 import Link from "next/link";
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
-  let pets = [];
   const session = await getServerSession(context.req, context.res, authOptions);
 
   if (!session) {
@@ -18,25 +18,18 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
-  } else {
-    let email = session.user.email;
-    await connectDatabase();
-    pets = await pet.find({ parentEmail: email });
-    pets = JSON.parse(JSON.stringify(pets));
-    if (pets.length === 0) {
-      pets = [];
-    }
   }
 
   return {
     props: {
       session,
-      pets: pets || [],
     },
   };
 }
 
-function Dashboard({ pets }) {
+function Dashboard() {
+  const { pets } = useContext(GlobalStates);
+
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -48,7 +41,7 @@ function Dashboard({ pets }) {
         </p>
       </div>
 
-      {pets.length > 0 && (
+      {(pets && pets.length) > 0 && (
         <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
           {pets.map((pet, index) => {
             return <Petcard key={index} pet={pet} />;
@@ -56,7 +49,7 @@ function Dashboard({ pets }) {
         </div>
       )}
 
-      {pets.length == 0 && (
+      {(pets && pets.length) == 0 && (
         <div className="flex flex-col items-center justify-center w-full">
           <img
             src="https://img.freepik.com/free-vector/hand-drawn-illustration-people-with-pets_23-2148980837.jpg?w=2000"
@@ -80,7 +73,7 @@ function Dashboard({ pets }) {
         </div>
       )}
 
-      {pets.length > 0 && (
+      {pets && pets.length > 0 && (
         <Link href="/pets/register">
           <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
             <span className="text-white text-xl">
@@ -89,6 +82,24 @@ function Dashboard({ pets }) {
             <span>Add pet</span>
           </button>
         </Link>
+      )}
+
+      {pets == null && (
+        <div className="fixed inset-0 h-full w-full bg-black/50 flex items-center justify-center z-30">
+          <div className="flex flex-col items-center justify-center w-fit bg-white px-16 pt-8 pb-16 rounded-lg">
+            <img
+              src="https://mir-s3-cdn-cf.behance.net/project_modules/max_632/04de2e31234507.564a1d23645bf.gif"
+              className="h-[200px] lg:h-[200px]"
+              alt=""
+            />
+            <h2 className="text-lg mt-5 font-semibold text-neutral-600">
+              Loading registerd pets
+            </h2>
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
+              You can add a pet by clicking the button below.
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
