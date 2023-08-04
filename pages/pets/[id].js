@@ -122,127 +122,195 @@ function PetProfile({ pet }) {
         <p className="text-xs text-neutral-500 mt-2">{calculateAge()}</p>
       </div>
       <div className="flex items-center border border-neutral-200 rounded-full text-sm px-1 justify-between mt-7 py-1 max-w-sm mx-auto">
-        <button className="px-5 py-1 bg-sky-50 rounded-full">
+        <button
+          onClick={() => setState("general")}
+          className={`px-5 py-1 ${
+            state == "general" && "bg-sky-50"
+          } rounded-full`}
+        >
           <span>General</span>
         </button>
-        <button className="px-5 py-1 bg-sky-50/0 rounded-full">
+        <button
+          onClick={() => setState("vaccination")}
+          className={`px-5 py-1 ${
+            state == "vaccination" && "bg-green-50"
+          } rounded-full`}
+        >
           <span>Vaccination</span>
         </button>
-        <button className="px-5 py-1 bg-sky-50/0 rounded-full">
+        <button
+          onClick={() => setState("prescriptions")}
+          className={`px-5 py-1 ${
+            state == "prescriptions" && "bg-pink-50"
+          } rounded-full`}
+        >
           <span>Prescriptions</span>
         </button>
       </div>
-      <div className="mt-8 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-4 lg:gap-6 mx-auto">
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Name
-          </label>
-          <input
-            type="text"
-            value={pet.name}
-            readOnly
-            className="px-4 h-12 border w-full mt-2 rounded outline-none"
-            placeholder="How would you like to call your pet?"
-            name=""
-            id=""
-          />
+
+      {state == "general" ? (
+        <div className="mt-8 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-4 lg:gap-6 mx-auto">
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Name
+            </label>
+            <input
+              type="text"
+              value={pet.name}
+              readOnly
+              className="px-4 h-12 border w-full mt-2 rounded outline-none"
+              placeholder="How would you like to call your pet?"
+              name=""
+              id=""
+            />
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
+              Family
+            </label>
+            <div className="relative">
+              <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
+                {pet.family}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
+              Sex
+            </label>
+            <div className="relative">
+              <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
+                {pet.sex}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              D.O.B
+            </label>
+            <div className="relative">
+              <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
+                {pet.dateOfBirth}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Age
+            </label>
+            <div className="relative">
+              <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
+                {calculateAge()}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Breed
+            </label>
+            <input
+              type="text"
+              value={pet.breed}
+              readOnly
+              className="px-4 h-12 border w-full mt-2 rounded outline-none"
+              placeholder="Breed of your pet"
+              name=""
+              id=""
+            />
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Color specification{" "}
+            </label>
+            <input
+              type="text"
+              value={pet.color}
+              readOnly
+              className="px-4 h-12 border w-full mt-2 rounded outline-none"
+              placeholder="Color of your pet"
+              name=""
+              id=""
+            />
+          </div>
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Body weight
+            </label>
+            <input
+              type="tel"
+              value={pet.weight}
+              readOnly
+              className="px-4 h-12 border w-full mt-2 rounded outline-none"
+              placeholder="Weight of your pet in kg"
+              name=""
+              id=""
+            />
+          </div>
+          <div className="lg:col-span-2">
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Previous complications
+            </label>
+            <textarea
+              name=""
+              readOnly
+              value={pet.historyOfComplications || "No complications"}
+              className="resize-none w-full h-full border px-4 py-3 mt-2 outline-none"
+              placeholder="Your text here"
+              id=""
+            ></textarea>
+          </div>
         </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
-            Family
-          </label>
-          <div className="relative">
-            <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
-              {pet.family}
+      ) : state == "vaccination" ? (
+        <div className="mt-8 lg:mt-16 lg:max-w-6xl gap-4 mx-auto">
+          <div className="">
+            <h2 className="font-semibold text-neutral-700 text-sm">Upcoming</h2>
+            <div className="mt-5 flex items-center whitespace-nowrap overflow-auto space-x-2">
+              <div className="w-full rounded-md border border-neutral-200 p-3 max-w-[300px] shrink-0">
+                <p className="text-xs text-neutral-700 tracking-wider">
+                  DUE 12-12-2021 | THURSDAY
+                </p>
+                <h2 className="font-semibold mt-3 text-neutral-800">
+                  Anti rabies booster vaccine
+                </h2>
+                <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mt-4">
+                  Get an appointment
+                </button>
+              </div>
+              <div className="w-full rounded-md border border-neutral-200 p-3 max-w-[300px] shrink-0">
+                <p className="text-xs text-neutral-700 tracking-wider">
+                  DUE 12-12-2021 | THURSDAY
+                </p>
+                <h2 className="font-semibold mt-3 text-neutral-800">
+                  Anti rabies booster vaccine
+                </h2>
+                <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mt-4">
+                  Get an appointment
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10">
+            <h2 className="font-semibold text-neutral-700 text-sm">Older</h2>
+            <div className="mt-5 grid grid-cols-1 lg:grid-cols-4 gap-4">
+              <div className="w-full rounded-md border border-neutral-200 p-3 shrink-0">
+                <p className="text-xs text-neutral-700 tracking-wider">
+                  DUE 12-12-2021 | THURSDAY
+                </p>
+                <h2 className="font-semibold mt-3 text-neutral-800">
+                  Anti rabies booster vaccine
+                </h2>
+                <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mt-4">
+                  Review
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
-            Sex
-          </label>
-          <div className="relative">
-            <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
-              {pet.sex}
-            </div>
-          </div>
-        </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            D.O.B
-          </label>
-          <div className="relative">
-            <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
-              {pet.dateOfBirth}
-            </div>
-          </div>
-        </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Age
-          </label>
-          <div className="relative">
-            <div className="px-4 flex items-center h-12 border w-full mt-2 appearance-none rounded bg-transparent">
-              {calculateAge()}
-            </div>
-          </div>
-        </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Breed
-          </label>
-          <input
-            type="text"
-            value={pet.breed}
-            readOnly
-            className="px-4 h-12 border w-full mt-2 rounded outline-none"
-            placeholder="Breed of your pet"
-            name=""
-            id=""
-          />
-        </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Color specification{" "}
-          </label>
-          <input
-            type="text"
-            value={pet.color}
-            readOnly
-            className="px-4 h-12 border w-full mt-2 rounded outline-none"
-            placeholder="Color of your pet"
-            name=""
-            id=""
-          />
-        </div>
-        <div>
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Body weight
-          </label>
-          <input
-            type="tel"
-            value={pet.weight}
-            readOnly
-            className="px-4 h-12 border w-full mt-2 rounded outline-none"
-            placeholder="Weight of your pet in kg"
-            name=""
-            id=""
-          />
-        </div>
-        <div className="lg:col-span-2">
-          <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Previous complications
-          </label>
-          <textarea
-            name=""
-            readOnly
-            value={pet.historyOfComplications || "No complications"}
-            className="resize-none w-full h-full border px-4 py-3 mt-2 outline-none"
-            placeholder="Your text here"
-            id=""
-          ></textarea>
-        </div>
-      </div>
+      ) : state == "prescriptions" ? (
+        <div></div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
