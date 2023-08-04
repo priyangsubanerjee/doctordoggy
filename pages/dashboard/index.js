@@ -57,9 +57,9 @@ function Dashboard() {
             alt=""
           />
           <h2 className="text-lg font-semibold text-neutral-600">
-            You have not yet registered any pet&apos;s
+            You have no registered pet&apos;s
           </h2>
-          <p className="text-[11px] lg:text-xs text-neutral-500 mt-2">
+          <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
             You can add a pet by clicking the button below.
           </p>
           <Link href="/pets/register" className="mt-10">

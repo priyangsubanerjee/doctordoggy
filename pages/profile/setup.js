@@ -4,6 +4,8 @@
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
+import LinearProgress from "@material/react-linear-progress";
+import "@material/react-linear-progress/dist/linear-progress.css";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
@@ -39,6 +41,7 @@ function Profile() {
   const [onBoarding, setOnBoarding] = useState(false);
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [findingBackup, setFindingBackup] = useState(false);
 
   const router = useRouter();
 
@@ -245,12 +248,13 @@ function Profile() {
     if (user) {
       setPhone(user.phone);
       setPincode(user.pincode);
-      setAddress(data.user.address);
+      setAddress(user.address);
       user = await requestUserData();
       if (user) {
         await saveLocalCookie(user);
       }
     } else {
+      setFindingBackup(true);
       let backupUser = await findBackUp();
       if (backupUser) {
         if (
@@ -263,8 +267,10 @@ function Profile() {
           return;
         } else {
           await saveLocalCookie(backupUser);
+          router.push("/dashboard");
         }
       } else {
+        setFindingBackup(false);
         await createFreshAccount();
         document.getElementById("phoneInput").focus();
       }
@@ -431,6 +437,22 @@ function Profile() {
           <span>Save changes & proceed</span>
         </button>
       </div>
+
+      {findingBackup && (
+        <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
+          <div className="px-10 py-8 bg-white rounded-lg">
+            <h2 className="text-lg font-semibold text-neutral-700">
+              Searching for duplicate sessions
+            </h2>
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
+              This might take a few seconds
+            </p>
+            <div className="mt-8">
+              <LinearProgress indeterminate />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

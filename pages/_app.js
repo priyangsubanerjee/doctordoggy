@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import GlobalStates from "@/context/GlobalState";
 import "@/styles/globals.css";
+
 import { SessionProvider } from "next-auth/react";
 import NextProgress from "next-progress";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ export default function App({
   const [pets, setPets] = useState(null);
 
   const refreshPets = async () => {
-    let email = session.user.email;
+    let email = session?.user?.email || null;
     if (email) {
       let res = await fetch("/api/pets/all", {
         method: "POST",
