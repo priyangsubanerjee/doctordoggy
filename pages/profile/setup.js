@@ -2,8 +2,6 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
-import LinearProgress from "@material/react-linear-progress";
-import "@material/react-linear-progress/dist/linear-progress.css";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
@@ -443,9 +441,7 @@ function Profile() {
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
               This might take a few seconds
             </p>
-            <div className="mt-8">
-              <LinearProgress indeterminate />
-            </div>
+            <div className="mt-8"></div>
           </div>
         </div>
       )}
