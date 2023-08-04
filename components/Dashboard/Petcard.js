@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
 import React from "react";
 
 function Petcard({ pet }) {
@@ -63,30 +64,32 @@ function Petcard({ pet }) {
     return ageString;
   };
   return (
-    <div className="flex flex-col items-center relative">
-      {pet.sex.toLowerCase() == "male" ? (
-        <div className="absolute top-2 right-1 text-2xl text-blue-500">
-          <iconify-icon icon="ic:twotone-male"></iconify-icon>
+    <Link href={`/pets/${pet._id}`}>
+      <div className="flex flex-col items-center relative">
+        {pet.sex.toLowerCase() == "male" ? (
+          <div className="absolute top-2 right-1 text-3xl text-blue-500">
+            <iconify-icon icon="ic:twotone-male"></iconify-icon>
+          </div>
+        ) : (
+          <div className="absolute rotate-45 top-2 right-1 text-3xl text-pink-500">
+            <iconify-icon icon="ic:twotone-female"></iconify-icon>
+          </div>
+        )}
+        <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
+          <img
+            src={pet.image}
+            className="bg-gray-50 rounded-full p-3 h-full w-full object-center object-cover"
+            alt=""
+          />
         </div>
-      ) : (
-        <div className="absolute rotate-45 top-2 right-1 text-2xl text-pink-500">
-          <iconify-icon icon="ic:twotone-female"></iconify-icon>
-        </div>
-      )}
-      <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
-        <img
-          src={pet.image}
-          className="bg-gray-50 rounded-full p-3 h-full w-full object-center object-cover"
-          alt=""
-        />
+        <p className="text-center text-neutral-700 font-semibold mt-3 text-sm">
+          {pet.name}
+        </p>
+        <span className="text-[12px] mt-2 text-neutral-500">
+          {calculateAge()}
+        </span>
       </div>
-      <p className="text-center text-neutral-700 font-semibold mt-3 text-sm">
-        {pet.name}
-      </p>
-      <span className="text-[12px] mt-2 text-neutral-500">
-        {calculateAge()}
-      </span>
-    </div>
+    </Link>
   );
 }
 

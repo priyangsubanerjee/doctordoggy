@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     breed,
     color,
     weight,
-    complications,
+    historyOfComplications,
     parentEmail,
   } = JSON.parse(req.body);
 
@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       breed: breed,
       color: color,
       weight: weight.toString(),
-      complications: complications,
+      historyOfComplications: historyOfComplications || "",
       parentEmail: parentEmail,
     });
     if (pet_) {

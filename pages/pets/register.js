@@ -39,7 +39,7 @@ function RegisterPet() {
     breed: "",
     color: "",
     weight: "",
-    complications: "",
+    historyOfComplications: "",
   });
   const [loading, setLoading] = useState(false);
 
@@ -84,7 +84,7 @@ function RegisterPet() {
         breed: pet.breed,
         color: pet.color,
         weight: pet.weight,
-        complications: pet.complications,
+        historyOfComplications: pet.historyOfComplications,
         parentEmail: session.data.user.email,
       }),
     });
@@ -272,9 +272,9 @@ function RegisterPet() {
               Previous complications
             </label>
             <textarea
-              value={pet.complications}
+              value={pet.historyOfComplications}
               onChange={(e) =>
-                setPet({ ...pet, complications: e.target.value })
+                setPet({ ...pet, historyOfComplications: e.target.value })
               }
               name=""
               className="resize-none w-full h-full border px-4 py-3 mt-2"
