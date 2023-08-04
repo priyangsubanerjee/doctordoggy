@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import LinearProgress from "@material/react-linear-progress";
@@ -9,8 +7,6 @@ import "@material/react-linear-progress/dist/linear-progress.css";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
-import { set } from "mongoose";
-import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { data } from "autoprefixer";
 
@@ -136,114 +132,114 @@ function Profile() {
     }
   };
 
+  //   const retrieveUser = async () => {
+  //     if (getCookie("user")) {
+  //       var token = getCookie("user");
+  //       var res = await fetch("/api/user/decode", {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           token: token,
+  //         }),
+  //       });
+
+  //       var data = await res.json();
+
+  //       if (data.success) {
+  //         if (data.user.phone == null) {
+  //           document.getElementById("phoneInput").focus();
+  //           return;
+  //         }
+  //         if (data.user.pincode == null) {
+  //           document.getElementById("pincodeInput").focus();
+  //           return;
+  //         }
+
+  //         setPhone(data.user.phone);
+  //         setPincode(data.user.pincode);
+  //         setAddress(data.user.address);
+  //       }
+
+  //       var resUpdate = await fetch("/api/user/updateLocal", {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           email: session.data.user.email,
+  //         }),
+  //       });
+
+  //       var dataUpdate = await resUpdate.json();
+  //       if (dataUpdate.success) {
+  //         var resSaveCookie = await fetch("/api/user/saveToCookie", {
+  //           method: "POST",
+  //           body: JSON.stringify({
+  //             name: session.data.user.name,
+  //             email: session.data.user.email,
+  //             phone: dataUpdate.user.phone,
+  //             pincode: dataUpdate.user.pincode,
+  //             address: dataUpdate.user.address,
+  //           }),
+  //         });
+
+  //         var dataSaveCookie = await resSaveCookie.json();
+
+  //         if (dataSaveCookie.success) {
+  //           setPhone(dataUpdate.user.phone);
+  //           setPincode(dataUpdate.user.pincode);
+  //           setAddress(dataUpdate.user.address);
+  //         }
+  //       }
+  //     } else {
+  //       var resBackup = await fetch("/api/user/findBackup", {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           email: session.data.user.email,
+  //         }),
+  //       });
+
+  //       var dataBackup = await resBackup.json();
+
+  //       if (dataBackup.success) {
+  //         if (dataBackup.user.phone == null) {
+  //           document.getElementById("phoneInput").focus();
+  //           return;
+  //         } else if (dataBackup.user.pincode == null) {
+  //           document.getElementById("pincodeInput").focus();
+  //           return;
+  //         }
+  //         let resSaveCookie = await fetch("/api/user/saveToCookie", {
+  //           method: "POST",
+  //           body: JSON.stringify({
+  //             name: session.data.user.name,
+  //             email: session.data.user.email,
+  //             phone: dataBackup.user.phone,
+  //             pincode: dataBackup.user.pincode,
+  //             address: dataBackup.user.address,
+  //           }),
+  //         });
+  //         let dataSaveCookie = await resSaveCookie.json();
+  //         if (dataSaveCookie.success) {
+  //           router.push("/dashboard");
+  //         } else {
+  //           alert("Something went wrong, please try again");
+  //         }
+  //       } else {
+  //         let resCreate = await fetch("/api/user/createDb", {
+  //           method: "POST",
+  //           body: JSON.stringify({
+  //             email: session.data.user.email,
+  //             name: session.data.user.name,
+  //           }),
+  //         });
+
+  //         var dataCreate = await resCreate.json();
+  //         if (dataCreate.success) {
+  //           document.getElementById("phoneInput").focus();
+  //         } else {
+  //         }
+  //       }
+  //     }
+  //   };
+
   const retrieveUser = async () => {
-    if (getCookie("user")) {
-      var token = getCookie("user");
-      var res = await fetch("/api/user/decode", {
-        method: "POST",
-        body: JSON.stringify({
-          token: token,
-        }),
-      });
-
-      var data = await res.json();
-
-      if (data.success) {
-        if (data.user.phone == null) {
-          document.getElementById("phoneInput").focus();
-          return;
-        }
-        if (data.user.pincode == null) {
-          document.getElementById("pincodeInput").focus();
-          return;
-        }
-
-        setPhone(data.user.phone);
-        setPincode(data.user.pincode);
-        setAddress(data.user.address);
-      }
-
-      var resUpdate = await fetch("/api/user/updateLocal", {
-        method: "POST",
-        body: JSON.stringify({
-          email: session.data.user.email,
-        }),
-      });
-
-      var dataUpdate = await resUpdate.json();
-      if (dataUpdate.success) {
-        var resSaveCookie = await fetch("/api/user/saveToCookie", {
-          method: "POST",
-          body: JSON.stringify({
-            name: session.data.user.name,
-            email: session.data.user.email,
-            phone: dataUpdate.user.phone,
-            pincode: dataUpdate.user.pincode,
-            address: dataUpdate.user.address,
-          }),
-        });
-
-        var dataSaveCookie = await resSaveCookie.json();
-
-        if (dataSaveCookie.success) {
-          setPhone(dataUpdate.user.phone);
-          setPincode(dataUpdate.user.pincode);
-          setAddress(dataUpdate.user.address);
-        }
-      }
-    } else {
-      var resBackup = await fetch("/api/user/findBackup", {
-        method: "POST",
-        body: JSON.stringify({
-          email: session.data.user.email,
-        }),
-      });
-
-      var dataBackup = await resBackup.json();
-
-      if (dataBackup.success) {
-        if (dataBackup.user.phone == null) {
-          document.getElementById("phoneInput").focus();
-          return;
-        } else if (dataBackup.user.pincode == null) {
-          document.getElementById("pincodeInput").focus();
-          return;
-        }
-        let resSaveCookie = await fetch("/api/user/saveToCookie", {
-          method: "POST",
-          body: JSON.stringify({
-            name: session.data.user.name,
-            email: session.data.user.email,
-            phone: dataBackup.user.phone,
-            pincode: dataBackup.user.pincode,
-            address: dataBackup.user.address,
-          }),
-        });
-        let dataSaveCookie = await resSaveCookie.json();
-        if (dataSaveCookie.success) {
-          router.push("/dashboard");
-        } else {
-          alert("Something went wrong, please try again");
-        }
-      } else {
-        let resCreate = await fetch("/api/user/createDb", {
-          method: "POST",
-          body: JSON.stringify({
-            email: session.data.user.email,
-            name: session.data.user.name,
-          }),
-        });
-
-        var dataCreate = await resCreate.json();
-        if (dataCreate.success) {
-          document.getElementById("phoneInput").focus();
-        } else {
-        }
-      }
-    }
-  };
-
-  const retrieveUserCopy = async () => {
     let user = await getLocalCookie();
     if (user) {
       setPhone(user.phone);
@@ -315,7 +311,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    retrieveUserCopy();
+    retrieveUser();
     if (router.query.edit == "true") {
       setEdit(true);
       document.getElementById("phoneInput").focus();

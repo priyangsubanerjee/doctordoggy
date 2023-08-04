@@ -33,8 +33,8 @@ function RegisterPet() {
   const [pet, setPet] = useState({
     image: null,
     name: "",
-    family: "",
-    sex: "",
+    family: "Canine",
+    sex: "Male",
     dateOfBirth: "",
     breed: "",
     color: "",
@@ -47,7 +47,6 @@ function RegisterPet() {
 
   const uploadImage = async (e) => {
     if (pet.image !== "" && pet.image !== null) {
-      console.log("uploading");
       const formData = new FormData();
       formData.append("file", pet.image);
       const res = await fetch("/api/cloudinary/upload", {
@@ -62,6 +61,16 @@ function RegisterPet() {
   };
 
   const registerPet = async () => {
+    if (
+      pet.name == "" ||
+      pet.family == "" ||
+      pet.sex == "" ||
+      pet.dateOfBirth == "" ||
+      pet.breed == ""
+    ) {
+      alert("* marked fields are necessary & cannot be left empty.");
+      return;
+    }
     setLoading(true);
     let imageUrl = await uploadImage();
     let res = await fetch("/api/pets/register", {
