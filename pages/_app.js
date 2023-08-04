@@ -27,6 +27,7 @@ export default function App({
       });
       let data = await res.json();
       if (data.success) {
+        console.log(data.pets);
         setPets(data.pets);
       }
     }

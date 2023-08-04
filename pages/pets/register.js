@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -25,11 +26,12 @@ export async function getServerSideProps(context) {
 }
 
 function RegisterPet() {
+  const { refreshPets } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
 
   const [pet, setPet] = useState({
-    image: "",
+    image: null,
     name: "",
     family: "",
     sex: "",
@@ -44,14 +46,19 @@ function RegisterPet() {
   const imageInput = useRef(null);
 
   const uploadImage = async (e) => {
-    const formData = new FormData();
-    formData.append("file", pet.image);
-    const res = await fetch("/api/cloudinary/upload", {
-      method: "POST",
-      body: formData,
-    });
-    const { fileUrl } = await res.json();
-    return fileUrl;
+    if (pet.image !== "" && pet.image !== null) {
+      console.log("uploading");
+      const formData = new FormData();
+      formData.append("file", pet.image);
+      const res = await fetch("/api/cloudinary/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const { fileUrl } = await res.json();
+      return fileUrl;
+    } else {
+      return "https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png";
+    }
   };
 
   const registerPet = async () => {
@@ -74,6 +81,7 @@ function RegisterPet() {
     });
     let data = await res.json();
     if (data.success) {
+      refreshPets();
       setLoading(false);
       router.push("/dashboard");
     }
@@ -108,7 +116,7 @@ function RegisterPet() {
               />
               <img
                 src={
-                  pet.image
+                  pet.image !== null
                     ? URL.createObjectURL(pet.image)
                     : "https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png"
                 }

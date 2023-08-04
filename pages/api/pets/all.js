@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   await connectDatabase();
   const { email } = JSON.parse(req.body);
   try {
-    let pets = await pet.find({ email: email });
+    let pets = await pet.find({ parentEmail: email });
     if (pets.length === 0) {
       return res.status(200).json({ success: true, pets: [] });
     } else {
