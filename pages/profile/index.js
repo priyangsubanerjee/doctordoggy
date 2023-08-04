@@ -182,7 +182,7 @@ function Profile() {
 
       <div className="border border-neutral-200 rounded-md p-8 mt-28 lg:max-w-4xl">
         <h2 className="text-xl font-semibold">Update account</h2>
-        <p className="text-sm mt-2 text-neutral-500">
+        <p className="text-xs mt-2 text-neutral-500 leading-5">
           You can update your account details here.
         </p>
         <button
@@ -197,7 +197,7 @@ function Profile() {
 
       <div className="border border-red-200 rounded-md p-8 mt-8 lg:max-w-4xl">
         <h2 className="text-xl font-semibold">Danger zone</h2>
-        <p className="text-sm mt-2 text-neutral-500">
+        <p className="text-xs mt-2 text-neutral-500 leading-5">
           This action is irreversible. You will be logged out of your current
           device.
         </p>
