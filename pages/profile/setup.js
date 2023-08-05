@@ -261,7 +261,7 @@ function Profile() {
           return;
         } else {
           await saveLocalCookie(backupUser);
-          router.push("/dashboard");
+          router.push("/profile/redirecting");
         }
       } else {
         setFindingBackup(false);
