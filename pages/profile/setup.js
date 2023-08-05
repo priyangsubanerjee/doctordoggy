@@ -441,7 +441,9 @@ function Profile() {
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
               This might take a few seconds
             </p>
-            <div className="mt-8"></div>
+            <div className="mt-8 w-full h-1 bg-neutral-100 rounded-full overflow-hidden">
+              <div className="h-full w-[40%] rounded-full bg-neutral-800 animate-indeterminate"></div>
+            </div>
           </div>
         </div>
       )}

@@ -85,19 +85,17 @@ function Dashboard() {
       )}
 
       {pets == null && (
-        <div className="fixed inset-0 h-full w-full bg-black/50 flex items-center justify-center z-30">
-          <div className="flex flex-col items-center justify-center w-fit bg-white px-16 pt-8 pb-16 rounded-lg">
-            <img
-              src="https://mir-s3-cdn-cf.behance.net/project_modules/max_632/04de2e31234507.564a1d23645bf.gif"
-              className="h-[200px] lg:h-[200px]"
-              alt=""
-            />
-            <h2 className="text-lg mt-5 font-semibold text-neutral-600">
-              Loading registerd pets
+        <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
+          <div className="px-10 py-8 bg-white rounded-lg">
+            <h2 className="text-lg font-semibold text-neutral-700">
+              Finding all your registered pets
             </h2>
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
-              You can add a pet by clicking the button below.
+              This might take a few seconds
             </p>
+            <div className="mt-8 w-full h-1 bg-neutral-100 rounded-full overflow-hidden">
+              <div className="h-full w-[40%] rounded-full bg-neutral-800 animate-indeterminate"></div>
+            </div>
           </div>
         </div>
       )}

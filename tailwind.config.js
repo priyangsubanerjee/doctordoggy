@@ -10,6 +10,15 @@ module.exports = {
       fontFamily: {
         popins: ["Poppins", "sans-serif"],
       },
+      animation: {
+        indeterminate: "indeterminate 2s linear infinite",
+      },
+      keyframes: {
+        indeterminate: {
+          "0%, 100%": { transform: "translateX(-100%)" },
+          "50%": { transform: "translateX(240%)" },
+        },
+      },
     },
   },
   plugins: [],
