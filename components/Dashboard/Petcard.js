@@ -75,10 +75,10 @@ function Petcard({ pet }) {
             <iconify-icon icon="ic:twotone-female"></iconify-icon>
           </div>
         )}
-        <div className="lg:h-32 h-28 lg:w-32 w-28 p-2 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
+        <div className="lg:h-32 h-28 lg:w-32 w-28 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
           <img
             src={pet.image}
-            className="bg-gray-50 rounded-full p-3 h-full w-full object-center object-cover"
+            className="rounded-full p-3 h-full w-full object-center object-cover"
             alt=""
           />
         </div>

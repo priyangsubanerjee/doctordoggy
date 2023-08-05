@@ -63,7 +63,7 @@ function Prescription({ pet, prescription }) {
           for <span className="font-semibold">{pet.name}</span>
         </span>
       </div>
-      <div className="grid grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-7 mt-10 lg:max-w-4xl">
+      <div className="grid grid-cols-3 lg:grid-cols-4 gap-7 lg:gap-7 mt-10 lg:max-w-4xl">
         <div className="col-span-3 lg:col-span-1 ">
           <span className="tracking-wide text-xs text-neutral-500">Name</span>
           <p className="mt-2">{pet.name}</p>
@@ -84,9 +84,13 @@ function Prescription({ pet, prescription }) {
           </span>
           <p className="mt-2">{prescription.temperature || "--"}</p>
         </div>
-        <div className="col-span-3 lg:col-span-1">
+        <div className="col-span-2 lg:col-span-1">
           <span className="tracking-wide text-xs text-neutral-500">Breed</span>
           <p className="mt-2">{pet.breed}</p>
+        </div>
+        <div className="col-span-1 lg:col-span-1">
+          <span className="tracking-wide text-xs text-neutral-500">Sex</span>
+          <p className="mt-2">{pet.sex}</p>
         </div>
         <div className="col-span-3 lg:col-span-1">
           <span className="tracking-wide text-xs text-neutral-500">
@@ -94,11 +98,23 @@ function Prescription({ pet, prescription }) {
           </span>
           <p className="mt-2">{prescription.weight} Kg</p>
         </div>
-        <div className="col-span-3 lg:col-span-1">
+        <div className="col-span-3 lg:col-span-4">
           <span className="tracking-wide text-xs text-neutral-500">
             Complication history
           </span>
           <p className="mt-2">{pet.historyOfComplications || "--"}</p>
+        </div>
+        <div className="col-span-3 lg:col-span-1">
+          <span className="tracking-wide text-xs text-neutral-500">
+            Reason of visit
+          </span>
+          <p className="mt-2">{prescription.reason || "--"}</p>
+        </div>
+        <div className="col-span-3 lg:col-span-4">
+          <span className="tracking-wide text-xs text-neutral-500">
+            Additional notes
+          </span>
+          <p className="mt-2">{prescription.notes || "--"}</p>
         </div>
       </div>
       <div className="mt-10 lg:mt-16 lg:max-w-4xl">
