@@ -77,7 +77,7 @@ function Petcard({ pet }) {
         )}
         <div className="lg:h-32 h-28 lg:w-32 w-28 border border-dashed border-neutral-300 rounded-full flex items-center justify-center bg-white">
           <img
-            src={pet.image}
+            src={pet.image.url}
             className="rounded-full p-3 h-full w-full object-center object-cover"
             alt=""
           />

@@ -4,7 +4,8 @@ import pet from "@/db/models/pet";
 export default async function handler(req, res) {
   await connectDatabase();
   const {
-    image,
+    fileUrl,
+    publicId,
     name,
     family,
     sex,
@@ -18,7 +19,10 @@ export default async function handler(req, res) {
 
   try {
     const pet_ = await pet.create({
-      image: image,
+      image: {
+        url: fileUrl,
+        publicId: publicId,
+      },
       name: name,
       family: family,
       sex: sex,

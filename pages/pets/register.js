@@ -53,8 +53,11 @@ function RegisterPet() {
         method: "POST",
         body: formData,
       });
-      const { fileUrl } = await res.json();
-      return fileUrl;
+      const { fileUrl, publicId } = await res.json();
+      return {
+        fileUrl,
+        publicId,
+      };
     } else {
       return "https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png";
     }
@@ -72,11 +75,12 @@ function RegisterPet() {
       return;
     }
     setLoading(true);
-    let imageUrl = await uploadImage();
+    let { fileUrl, publicId } = await uploadImage();
     let res = await fetch("/api/pets/register", {
       method: "POST",
       body: JSON.stringify({
-        image: imageUrl,
+        fileUrl: fileUrl,
+        publicId: publicId,
         name: pet.name,
         family: pet.family,
         sex: pet.sex,
@@ -301,6 +305,22 @@ function RegisterPet() {
           </button>
         </div>
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
+          <div className="px-10 py-8 bg-white rounded-lg">
+            <h2 className="text-lg font-semibold text-neutral-700">
+              Registering your pet
+            </h2>
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
+              This might take a few seconds
+            </p>
+            <div className="mt-8 w-full h-1 bg-neutral-100 rounded-full overflow-hidden">
+              <div className="h-full w-[40%] rounded-full bg-neutral-800 animate-indeterminate"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

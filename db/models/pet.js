@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const petSchema = new Schema({
   image: {
-    type: String,
+    type: Object,
   },
   name: {
     type: String,
