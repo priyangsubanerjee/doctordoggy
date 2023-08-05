@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
@@ -5,6 +6,7 @@ import { useSession } from "next-auth/react";
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 import Chip from "@/components/Prescription/Chip";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -32,6 +34,8 @@ export async function getServerSideProps(context) {
 }
 
 function UploadPrescription({ pet }) {
+  const session = useSession();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
 
@@ -106,6 +110,12 @@ function UploadPrescription({ pet }) {
       alert("Prescription uploaded successfully");
     }
   };
+
+  useEffect(() => {
+    if (pet.parentEmail !== session.data.user.email) {
+      router.push("/dashboard");
+    }
+  }, [pet]);
 
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
