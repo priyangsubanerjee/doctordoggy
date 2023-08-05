@@ -162,7 +162,7 @@ function RegisterPet() {
           </div>
           <div>
             <label className="font-medium text-xs shrink-0 text-neutral-500 mt-1">
-              Family <span className="text-red-500 text-lg">*</span>
+              Species <span className="text-red-500 text-lg">*</span>
             </label>
             <div className="relative">
               <span className="absolute right-3 top-1/2 -translate-y-[30%]">
