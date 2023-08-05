@@ -122,8 +122,8 @@ function Prescription({ pet, prescription }) {
           Uploaded documents
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 mt-5">
-          {prescription.files.map((document, i) => {
-            return <DocumentCard document={document} key={i} />;
+          {prescription.files.map((doc, i) => {
+            return <DocumentCard doc={doc} key={i} />;
           })}
         </div>
       </div>
