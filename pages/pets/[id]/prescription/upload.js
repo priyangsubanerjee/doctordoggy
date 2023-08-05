@@ -76,11 +76,13 @@ function UploadPrescription({ pet }) {
           method: "POST",
           body: formData,
         });
-        const { fileUrl } = await res.json();
+        const { fileUrl, publicId } = await res.json();
+
         fileParamArray.push({
           url: fileUrl,
           name: files[i].name,
           type: files[i].type,
+          public_id: publicId,
         });
       }
     }
