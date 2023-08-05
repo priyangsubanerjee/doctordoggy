@@ -117,7 +117,7 @@ function PetProfile({ pet }) {
           )}
           <img
             className="rounded-full h-28 w-28 object-cover"
-            src={pet.image}
+            src={pet.image.url}
             alt=""
           />
         </div>
