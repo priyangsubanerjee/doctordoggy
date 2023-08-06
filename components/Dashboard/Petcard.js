@@ -67,11 +67,11 @@ function Petcard({ pet }) {
     <Link href={`/pets/${pet._id}`}>
       <div className="flex flex-col items-center relative">
         {pet.sex.toLowerCase() == "male" ? (
-          <div className="absolute top-2 right-1 text-3xl text-blue-500">
+          <div className="absolute top-0 right-1 text-3xl text-blue-500">
             <iconify-icon icon="ic:twotone-male"></iconify-icon>
           </div>
         ) : (
-          <div className="absolute rotate-45 top-2 right-1 text-3xl text-pink-500">
+          <div className="absolute rotate-45 top-0 right-1 text-3xl text-pink-500">
             <iconify-icon icon="ic:twotone-female"></iconify-icon>
           </div>
         )}

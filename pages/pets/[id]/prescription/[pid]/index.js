@@ -121,7 +121,7 @@ function Prescription({ pet, prescription }) {
         <h2 className="font-semibold text-neutral-800 text-sm">
           Uploaded documents
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-3 mt-5">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mt-5 gap-4">
           {prescription.files.map((doc, i) => {
             return <DocumentCard doc={doc} key={i} />;
           })}

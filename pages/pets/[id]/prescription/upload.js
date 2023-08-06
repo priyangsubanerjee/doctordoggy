@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
@@ -7,6 +7,7 @@ import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 import Chip from "@/components/Prescription/Chip";
 import { useRouter } from "next/router";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -34,6 +35,7 @@ export async function getServerSideProps(context) {
 }
 
 function UploadPrescription({ pet }) {
+  const { refreshPets } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -63,8 +65,13 @@ function UploadPrescription({ pet }) {
       return;
     }
     if (files.length == 0) {
-      alert("Please upload atleast one file");
-      return;
+      if (
+        window.confirm("Are you sure you want to upload without any files?")
+      ) {
+        // do nothing
+      } else {
+        return;
+      }
     }
     setLoading(true);
     let fileParamArray = [];
@@ -107,8 +114,8 @@ function UploadPrescription({ pet }) {
     const { success, prescription_id } = await res.json();
 
     if (success) {
+      refreshPets();
       setLoading(false);
-      console.log(prescription_id);
       router.push(`/pets/${pet._id}/prescription/${prescription_id}`);
     }
   };
@@ -205,7 +212,8 @@ function UploadPrescription({ pet }) {
         </div>
         <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Reason for visit
+            Reason for visit{" "}
+            <span className="text-red-500 ml-1 text-xl">*</span>
           </label>
           <input
             type="text"
@@ -224,7 +232,7 @@ function UploadPrescription({ pet }) {
         </div>
         <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Body weight
+            Body weight <span className="text-red-500/0 ml-1 text-xl">*</span>
           </label>
           <input
             type="text"

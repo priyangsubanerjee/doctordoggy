@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import RecordsCard from "@/components/Pets/RecordsCard";
+import { useRouter } from "next/router";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -33,8 +36,10 @@ export async function getServerSideProps(context) {
 }
 
 function PetProfile({ pet }) {
+  const router = useRouter();
   const session = useSession();
   const [state, setState] = useState("general");
+  const { refreshPets } = useContext(GlobalStates);
 
   const calculateAge = () => {
     let dob = new Date(pet.dateOfBirth);
@@ -94,6 +99,31 @@ function PetProfile({ pet }) {
     //display the calculated age
     return ageString;
   };
+
+  const deletePet = async () => {
+    if (confirm("Are you sure you want to delete this pet?")) {
+      const publicId = pet.image.publicId;
+      const resDeleteImage = await fetch(`/api/cloudinary/delete/`, {
+        method: "POST",
+        body: JSON.stringify({ publicId: publicId }),
+      });
+      const dataDleteImage = await resDeleteImage.json();
+      if (dataDleteImage.success) {
+        const resDeletePet = await fetch(`/api/pets/delete/`, {
+          method: "POST",
+          body: JSON.stringify({ id: pet._id }),
+        });
+        const dataDeletePet = await resDeletePet.json();
+        if (dataDeletePet.success) {
+          await refreshPets();
+          router.push("/dashboard");
+        } else {
+          alert("Something went wrong, please try again later.");
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -284,7 +314,10 @@ function PetProfile({ pet }) {
                   This action is irreversible. You will be deleted from all your
                   device.
                 </p>
-                <button className="text-white bg-red-500 px-6 py-2 rounded mt-7 text-sm shadow-md">
+                <button
+                  onClick={() => deletePet()}
+                  className="text-white bg-red-500 px-6 py-2 rounded mt-7 text-sm shadow-md"
+                >
                   Delete pet
                 </button>
               </div>
@@ -341,53 +374,52 @@ function PetProfile({ pet }) {
         <div className="mt-8 lg:mt-16 gap-4 mx-auto">
           <div className="">
             <div className="mt-5">
-              <h2 className="font-semibold text-neutral-700 text-sm">
-                All prescriptions & medical records
-              </h2>
-              <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {pet.medicalRecords.map((record, i) => {
-                  console.log(record);
-                  return (
-                    <div
-                      key={i}
-                      className="w-full rounded-md border border-neutral-200 p-3 shrink-0"
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-neutral-700 tracking-wider">
-                          {record.date}
-                        </span>
-                        <span className="text-xs text-neutral-700">
-                          {record.doctor}
-                        </span>
-                      </div>
-                      <h2 className="font-semibold mt-3 text-neutral-800">
-                        {record.reason}
+              {pet.medicalRecords.length == 0 ? (
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex">
+                    <div className="ml-4 text-center">
+                      <h2 className="font-semibold text-neutral-700 text-base">
+                        No prescriptions & medical records
                       </h2>
-                      <p className="text-xs mt-2 leading-5 text-neutral-600">
-                        {record.notes || "No notes provided"}
+                      <p className="text-sm mt-2 text-neutral-500">
+                        Click on the upload button below to upload your first.
                       </p>
-                      <div className="flex mt-4 w-full">
-                        <Link
-                          href={`/pets/${pet._id}/prescription/${record._id}`}
-                        >
-                          <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md">
-                            Open file
-                          </button>
-                        </Link>
-                        <button className="px-4 py-2 ml-2 flex items-center justify-center font-medium bg-neutral-50 text-neutral-900 rounded-md">
-                          <iconify-icon
-                            height="20"
-                            icon="ant-design:edit-outlined"
-                          ></iconify-icon>
-                        </button>
-                        <button className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto">
-                          Delete
-                        </button>
-                      </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                  <Link
+                    href={`/pets/${pet._id}/prescription/upload`}
+                    className="mt-9"
+                  >
+                    <button className="h-12 px-6 font-medium bg-neutral-800 hover:bg-black text-white rounded-md text-sm flex items-center space-x-3">
+                      <span className="text-white">
+                        <iconify-icon
+                          height="20"
+                          icon="solar:document-medicine-broken"
+                        ></iconify-icon>
+                      </span>
+                      <span>Upload prescription</span>
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="font-semibold text-neutral-700 text-sm">
+                    All prescriptions & medical records
+                  </h2>
+                  <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {pet.medicalRecords.map((record, i) => {
+                      console.log(record);
+                      return (
+                        <RecordsCard
+                          key={i}
+                          record={record}
+                          pet={pet}
+                        ></RecordsCard>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -396,7 +428,8 @@ function PetProfile({ pet }) {
       )}
 
       {state == "prescriptions" &&
-        pet.parentEmail == session.data.user.email && (
+        pet.parentEmail == session.data.user.email &&
+        pet.medicalRecords.length > 0 && (
           <Link href={`/pets/${pet._id}/prescription/upload`}>
             <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
               <span className="text-white">
