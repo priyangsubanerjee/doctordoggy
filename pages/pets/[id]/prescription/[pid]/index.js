@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 import DocumentCard from "@/components/Prescription/DocumentCard";
+import account from "@/db/models/account";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -14,7 +15,7 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/unauthenticated",
         permanent: false,
       },
     };

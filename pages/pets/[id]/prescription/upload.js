@@ -60,8 +60,12 @@ function UploadPrescription({ pet }) {
   };
 
   const handleSave = async () => {
-    if (prescription.date == "" || prescription.reason == "") {
-      alert("* fields are required");
+    if (prescription.reason == "") {
+      alert("Please enter a reason for visit");
+      return;
+    }
+    if (prescription.date == "") {
+      alert("Please enter a date of visit");
       return;
     }
     if (files.length == 0) {
@@ -263,7 +267,7 @@ function UploadPrescription({ pet }) {
               })
             }
             className="px-4 h-12 border w-full mt-2 rounded "
-            placeholder="Body teemperature in farenheit"
+            placeholder="Body temperature in farenheit"
             name=""
             id=""
           />
