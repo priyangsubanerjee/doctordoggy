@@ -457,7 +457,7 @@ function Profile() {
         <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
           <div className="px-10 py-8 bg-white rounded-lg">
             <h2 className="text-lg font-semibold text-neutral-700">
-              Searching for duplicate sessions
+              Searching for saved sessions
             </h2>
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
               This might take a few seconds
