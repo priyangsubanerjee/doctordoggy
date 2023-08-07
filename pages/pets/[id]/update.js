@@ -122,7 +122,7 @@ function RegisterPet({ pet }) {
     if (data.success) {
       refreshPets();
       setLoading(false);
-      router.push("/dashboard");
+      router.push(`/pets/${pet._id}`);
     }
   };
 
