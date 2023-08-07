@@ -145,6 +145,7 @@ function UploadPrescription({ pet }) {
           multiple
           onChange={(e) => handleFileChange(e)}
           type="file"
+          accept="image/*,application/pdf"
           hidden
           ref={inputRef}
           name=""
