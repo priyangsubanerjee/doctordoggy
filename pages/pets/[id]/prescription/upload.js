@@ -170,15 +170,18 @@ function UploadPrescription({ pet }) {
       </div>
 
       <div className="mt-8 lg:mt-10 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-4 lg:gap-6">
-        <div className="opacity-60">
+        <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">
-            For
+            For •{" "}
+            <span className="text-blue-400 font-normal">
+              You can&apos;t change this
+            </span>
           </label>
           <input
             type="text"
             value={pet.name}
             readOnly
-            className="px-4 h-12 border w-full mt-2 rounded outline-none"
+            className="px-4 h-12 border w-full mt-2 rounded outline-none opacity-60"
             placeholder="How would you like to call your pet?"
             name=""
             id=""

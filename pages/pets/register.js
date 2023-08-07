@@ -96,7 +96,7 @@ function RegisterPet() {
     if (data.success) {
       refreshPets();
       setLoading(false);
-      router.push("/dashboard");
+      router.push(`/pets/${data.pet._id}`);
     }
   };
 
