@@ -20,7 +20,9 @@ export async function middleware(request) {
         return NextResponse.next();
       }
     } else {
-      return NextResponse.redirect(new URL("/profile/setup", request.url));
+      return NextResponse.redirect(
+        new URL("/profile/setup?onboarding=true", request.url)
+      );
     }
   } else {
     return NextResponse.next();

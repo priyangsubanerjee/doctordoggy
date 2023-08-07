@@ -301,9 +301,30 @@ function Profile() {
           address: address,
         }),
       });
-      onBoarding
-        ? router.push("/profile/onboardingSuccess")
-        : router.push("/profile");
+      if (onBoarding) {
+        await fetch("/api/notification/send", {
+          method: "POST",
+          body: JSON.stringify({
+            message:
+              `Registered a new user !` +
+              "%0A%0A" +
+              `Name: ${session.data.user.name}` +
+              "%0A" +
+              `Email: ${session.data.user.email}` +
+              "%0A" +
+              `Phone: ${phone}` +
+              "%0A" +
+              `Pincode: ${pincode}` +
+              "%0A" +
+              `Address: ${address}`,
+          }),
+        });
+        router.push("/profile/onboardingSuccess");
+      } else {
+        router.push("/profile");
+      }
+    } else {
+      toast.error("Something went wrong, please try again");
     }
     setLoading(false);
   };

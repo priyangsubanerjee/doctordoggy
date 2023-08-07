@@ -304,9 +304,11 @@ function PetProfile({ pet }) {
                 <p className="text-xs mt-2 text-neutral-500 leading-5">
                   You can update your pets general information here.
                 </p>
-                <button className="text-white bg-neutral-800 px-6 py-2 rounded mt-7 text-sm shadow-md">
-                  Edit pet details
-                </button>
+                <Link href={`/pets/${pet._id}/update`}>
+                  <button className="text-white bg-neutral-800 px-6 py-2 rounded mt-7 text-sm shadow-md">
+                    Edit pet details
+                  </button>
+                </Link>
               </div>
               <div className="border border-red-200 rounded-md p-8 mt-8 lg:max-w-4xl mx-auto">
                 <h2 className="text-xl font-semibold">Danger zone</h2>

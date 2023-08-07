@@ -29,7 +29,7 @@ function OnboardingSuccess() {
 
         <div className="grid grid-cols-2 mt-16 gap-2">
           <button
-            onClick={() => {
+            onClick={async () => {
               window.open("/dashboard", "_self");
             }}
             className="flex items-center justify-center space-x-2 w-full lg:px-5 px-5 py-3 rounded bg-blue-500 text-white text-sm"
