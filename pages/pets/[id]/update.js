@@ -85,16 +85,18 @@ function RegisterPet({ pet }) {
     }
     setLoading(true);
 
-    if (pet.image.publicId !== null && pet.image.publicId !== "") {
-      let res = await fetch("/api/cloudinary/delete", {
-        method: "POST",
-        body: JSON.stringify({
-          publicId: pet.image.publicId,
-        }),
-      });
-      let data = await res.json();
-      if (data.success) {
-        console.log("deleted");
+    if (pet.file !== null && pet.file !== "" && pet.file !== undefined) {
+      if (pet.image.publicId !== null && pet.image.publicId !== "") {
+        let res = await fetch("/api/cloudinary/delete", {
+          method: "POST",
+          body: JSON.stringify({
+            publicId: pet.image.publicId,
+          }),
+        });
+        let data = await res.json();
+        if (data.success) {
+          console.log("deleted");
+        }
       }
     }
 
