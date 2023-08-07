@@ -59,7 +59,11 @@ function RegisterPet() {
         publicId,
       };
     } else {
-      return "https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png";
+      return {
+        fileUrl:
+          "https://cdn2.iconfinder.com/data/icons/veterinary-12/512/Veterinary_Icons-16-512.png",
+        publicId: null,
+      };
     }
   };
 
