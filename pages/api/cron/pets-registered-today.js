@@ -18,13 +18,15 @@ export default async function handler(req, res) {
     createdOn: new Date().toDateString(),
   });
   if (registeredToday) {
-    res
-      .status(200)
-      .json({
-        success: true,
-        registeredToday: registeredToday,
-        createdOn: new Date().toDateString(),
-      });
+    res.status(200).json({
+      success: true,
+      registeredToday: registeredToday,
+      // date of india today
+
+      createdOn: new Date().toDateString("en-US", {
+        timeZone: "Asia/Kolkata",
+      }),
+    });
   } else {
     res.status(200).json({ success: false });
   }
