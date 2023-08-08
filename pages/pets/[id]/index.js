@@ -102,24 +102,25 @@ function PetProfile({ pet }) {
 
   const deletePet = async () => {
     if (confirm("Are you sure you want to delete this pet?")) {
-      const publicId = pet.image.publicId;
-      const resDeleteImage = await fetch(`/api/cloudinary/delete/`, {
-        method: "POST",
-        body: JSON.stringify({ publicId: publicId }),
-      });
-      const dataDleteImage = await resDeleteImage.json();
-      if (dataDleteImage.success) {
-        const resDeletePet = await fetch(`/api/pets/delete/`, {
+      const publicId = pet.image.publicId || "";
+      if (publicId != "") {
+        const resDeleteImage = await fetch(`/api/cloudinary/delete/`, {
           method: "POST",
-          body: JSON.stringify({ id: pet._id }),
+          body: JSON.stringify({ publicId: publicId }),
         });
-        const dataDeletePet = await resDeletePet.json();
-        if (dataDeletePet.success) {
-          await refreshPets();
-          router.push("/dashboard");
-        } else {
-          alert("Something went wrong, please try again later.");
-        }
+        await resDeleteImage.json();
+      }
+
+      const resDeletePet = await fetch(`/api/pets/delete/`, {
+        method: "POST",
+        body: JSON.stringify({ id: pet._id }),
+      });
+      const dataDeletePet = await resDeletePet.json();
+      if (dataDeletePet.success) {
+        await refreshPets();
+        router.push("/dashboard");
+      } else {
+        alert("Something went wrong, please try again later.");
       }
     }
   };

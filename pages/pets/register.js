@@ -83,6 +83,7 @@ function RegisterPet() {
     let res = await fetch("/api/pets/register", {
       method: "POST",
       body: JSON.stringify({
+        createdOn: new Date().toDateString(),
         fileUrl: fileUrl,
         publicId: publicId,
         name: pet.name,

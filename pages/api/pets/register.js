@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     weight,
     historyOfComplications,
     parentEmail,
+    createdOn,
   } = JSON.parse(req.body);
 
   try {
@@ -23,6 +24,7 @@ export default async function handler(req, res) {
         url: fileUrl,
         publicId: publicId,
       },
+      createdOn: createdOn,
       name: name,
       family: family,
       sex: sex,
