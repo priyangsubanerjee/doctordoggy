@@ -281,7 +281,7 @@ function Profile() {
     const res = await fetch("/api/user/updateDb", {
       method: "POST",
       body: JSON.stringify({
-        createdOn: new Date().toISOString(),
+        createdOn: new Date().toDateString(),
         name: session.data.user.name,
         email: session.data.user.email,
         phone: phone.toString(),

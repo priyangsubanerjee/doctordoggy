@@ -1,7 +1,14 @@
 import connectDatabase from "@/db/connect";
 import pets from "@/db/models/pet";
+import NextCors from "nextjs-cors";
 
 export default async function handler(req, res) {
+  await NextCors(req, res, {
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
   const apiSecret = req.headers.authorization;
   if (apiSecret !== process.env.CRON_API_SECRET) {
     res.status(401).json({ success: false, message: "Unauthorized" });
