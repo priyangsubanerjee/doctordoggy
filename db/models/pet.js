@@ -38,6 +38,9 @@ const petSchema = new Schema({
   parentEmail: {
     type: String,
   },
+  createdOn: {
+    type: String,
+  },
 });
 
 mongoose.models = {};

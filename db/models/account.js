@@ -10,6 +10,9 @@ const accountSchema = new Schema({
   name: {
     type: String,
   },
+  createdOn: {
+    type: String,
+  },
   phone: {
     type: String,
   },

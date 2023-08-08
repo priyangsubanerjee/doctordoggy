@@ -3,12 +3,15 @@ import account from "@/db/models/account";
 
 export default async function handler(req, res) {
   await connectDatabase();
-  const { name, email, phone, pincode, address } = JSON.parse(req.body);
+  const { name, email, phone, pincode, address, createdOn } = JSON.parse(
+    req.body
+  );
 
   try {
     let account_ = await account.findOneAndUpdate(
       { email: email },
       {
+        createdOn: createdOn,
         phone: phone,
         pincode: pincode,
         address: address,
