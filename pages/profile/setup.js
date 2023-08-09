@@ -257,6 +257,8 @@ function Profile() {
           backupUser.phone == null ||
           backupUser.pincode == null
         ) {
+
+          setFindingBackup(false);
           document.getElementById("phoneInput").focus();
           return;
         } else {
