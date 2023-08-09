@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import Petcard from "@/components/Dashboard/Petcard";
 import Link from "next/link";
-import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 import GlobalStates from "@/context/GlobalState";
 
