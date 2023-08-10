@@ -8,22 +8,27 @@ function VaccineCard({ record, pet }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this record?")) return;
-    setLoading(true);
-    const petId = pet._id;
-    const vaccinationId = record._id;
-    const res = await fetch("/api/vaccination/delete", {
-      method: "POST",
-      body: JSON.stringify({
-        petId: petId,
-        vaccinationId: vaccinationId,
-      }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      router.reload();
+    if (
+      window.confirm("Are you sure you want to delete this record?") == false
+    ) {
+      return;
+    } else {
+      setLoading(true);
+      const petId = pet._id;
+      const vaccinationId = record._id;
+      const res = await fetch("/api/vaccination/delete", {
+        method: "POST",
+        body: JSON.stringify({
+          petId: petId,
+          vaccinationId: vaccinationId,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        router.reload();
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
