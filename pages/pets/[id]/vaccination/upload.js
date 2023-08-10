@@ -48,6 +48,7 @@ function Upload({ pet }) {
   const [vRecord, setVRecord] = useState({
     for: pet.name,
     due: "",
+    vaccinatedOn: "",
     vaccineName: "",
     doctor: "",
     files: [],
@@ -117,6 +118,7 @@ function Upload({ pet }) {
     const recordObj = {
       petId: pet._id,
       dueDate: vRecord.due,
+      vaccinatedOn: vRecord.vaccinatedOn,
       vaccineName: vRecord.vaccineName,
       vaccineStatus: vaccineStatus,
       notes: vRecord.notes,
@@ -258,7 +260,7 @@ function Upload({ pet }) {
             Vaccine status
             <span className="text-red-500 ml-1 text-xl">*</span>
           </label>
-          <div className="px-4 h-12 border w-full mt-2 rounded outline-none flex items-center space-x-2 text-sm">
+          <div className="px-4 h-12 w-full mt-2 rounded outline-none flex items-center space-x-2 text-sm">
             <span
               style={{
                 opacity: vaccineStatus === "due" ? 1 : 0.5,
@@ -284,6 +286,39 @@ function Upload({ pet }) {
             </span>
           </div>
         </div>
+
+        {vaccineStatus === "done" && (
+          <div>
+            <label className="font-medium text-xs shrink-0 text-neutral-500">
+              Vaccinated on <span className="text-red-500 ml-1 text-xl">*</span>
+            </label>
+            <div
+              onClick={() => document.getElementById("vdobInput").focus()}
+              className="h-12 border w-full mt-2 rounded bg-transparent relative px-4"
+            >
+              <span
+                onClick={() => document.getElementById("vdobInput").focus()}
+                className="absolute right-3 top-1/2 -translate-y-[30%] lg:hidden"
+              >
+                <iconify-icon icon="solar:calendar-outline"></iconify-icon>
+              </span>
+              <input
+                type="date"
+                value={vRecord.vaccinatedOn}
+                onChange={(e) => {
+                  setVRecord({
+                    ...vRecord,
+                    vaccinatedOn: e.target.value,
+                  });
+                }}
+                placeholder="Date of visit to the vet"
+                className="appearance-none w-fit lg:w-full h-full bg-transparent outline-none"
+                name=""
+                id="vdobInput"
+              />
+            </div>
+          </div>
+        )}
         <div className="lg:col-span-2">
           <label className="font-medium text-xs shrink-0 text-neutral-500">
             Anything else we should note?

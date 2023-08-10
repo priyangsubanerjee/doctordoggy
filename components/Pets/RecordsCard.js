@@ -1,10 +1,12 @@
 import GlobalStates from "@/context/GlobalState";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 
 function RecordsCard({ record, pet }) {
   const router = useRouter();
+  const session = useSession();
   const { refreshPets } = useContext(GlobalStates);
   const [loading, setLoading] = useState(false);
 
@@ -49,12 +51,14 @@ function RecordsCard({ record, pet }) {
             </button>
           </Link>
 
-          <button
-            onClick={() => handleDelete()}
-            className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
-          >
-            Delete
-          </button>
+          {pet.parentEmail == session.data.user.email && (
+            <button
+              onClick={() => handleDelete()}
+              className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
       {loading && (

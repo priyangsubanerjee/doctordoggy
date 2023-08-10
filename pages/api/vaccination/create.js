@@ -4,8 +4,16 @@ import pets from "@/db/models/pet";
 import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req, res) {
-  const { petId, dueDate, vaccineName, vaccineStatus, notes, createdBy } =
-    JSON.parse(req.body);
+  const {
+    petId,
+    dueDate,
+    vaccineName,
+    vaccineStatus,
+    vaccinatedOn,
+    notes,
+    createdBy,
+    files,
+  } = JSON.parse(req.body);
 
   try {
     let pet_ = await pets.findById(petId);
@@ -13,10 +21,12 @@ export default async function handler(req, res) {
     let record = {
       _id: uid,
       dueDate: dueDate,
+      vaccinatedOn: vaccinatedOn,
       vaccineName: vaccineName,
       vaccineStatus: vaccineStatus,
       notes: notes,
       createdBy: createdBy,
+      files,
     };
     pet_.vaccinationRecords.push(record);
     await pet_.save();
