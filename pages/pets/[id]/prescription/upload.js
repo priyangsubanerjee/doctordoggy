@@ -240,7 +240,8 @@ function UploadPrescription({ pet }) {
         </div>
         <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">
-            Body weight <span className="text-red-500/0 ml-1 text-xl">*</span>
+            Body weight (in KG){" "}
+            <span className="text-red-500/0 ml-1 text-xl">*</span>
           </label>
           <input
             type="text"

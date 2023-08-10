@@ -81,7 +81,7 @@ function Prescription({ pet, prescription }) {
         </div>
         <div>
           <span className="tracking-wide text-xs text-neutral-500">
-            Temperature
+            Temperature (F)
           </span>
           <p className="mt-2">{prescription.temperature || "--"}</p>
         </div>
