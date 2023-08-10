@@ -15,6 +15,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const [pets, setPets] = useState(null);
+  const [account, setAccount] = useState(null);
 
   const refreshPets = async () => {
     let email = session?.user?.email || null;
@@ -32,8 +33,29 @@ export default function App({
     }
   };
 
+  const refreshAccount = async () => {
+    let email = session?.user?.email || null;
+    if (email) {
+      let res = await fetch("/api/user/find", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+        }),
+      });
+      let data = await res.json();
+      if (data.success) {
+        setAccount(data.user);
+      } else {
+        return null;
+      }
+    }
+  };
+
   useEffect(() => {
-    refreshPets();
+    (async () => {
+      await refreshPets();
+      await refreshAccount();
+    })();
   }, []);
 
   return (
@@ -41,6 +63,8 @@ export default function App({
       value={{
         pets,
         refreshPets,
+        account,
+        refreshAccount,
       }}
     >
       <SessionProvider session={session}>

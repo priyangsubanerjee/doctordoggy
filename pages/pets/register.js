@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
 }
 
 function RegisterPet() {
-  const { refreshPets } = useContext(GlobalStates);
+  const { refreshPets, account, refreshAccount } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
 
@@ -101,6 +101,12 @@ function RegisterPet() {
     if (data.success) {
       refreshPets();
       setLoading(false);
+      await fetch("/api/notification/send", {
+        method: "POST",
+        body: JSON.stringify({
+          message: `New pet registered by ${session.data.user.name} (${session.data.user.email})%0A%0AName: ${pet.name}%0ASpecies: ${pet.family}%0ABreed: ${pet.breed}%0ASex:  ${pet.sex}%0AD.O.B: ${pet.dateOfBirth}%0A%0APhone: ${account.phone}%0APincode: ${account.pincode}%0AAddress: ${account.address}`,
+        }),
+      });
       router.push(`/pets/${data.pet._id}`);
     }
   };

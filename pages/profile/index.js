@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 import { signOut, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import { encrypt } from "@/helper/crypto";
-import { deleteCookie, getCookie, setCookie } from "cookies-next";
-import { toast } from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -30,7 +27,6 @@ export async function getServerSideProps(context) {
 
 function Profile() {
   const session = useSession();
-  const [mode, setMode] = useState("view");
   const [phone, setPhone] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");

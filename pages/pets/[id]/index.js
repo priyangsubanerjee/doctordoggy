@@ -445,6 +445,21 @@ function PetProfile({ pet }) {
             </button>
           </Link>
         )}
+      {state == "vaccination" &&
+        pet.parentEmail == session.data.user.email &&
+        pet.medicalRecords.length > 0 && (
+          <Link href={`/pets/${pet._id}/vaccination/upload`}>
+            <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
+              <span className="text-white">
+                <iconify-icon
+                  height="20"
+                  icon="covid:vaccine-protection-syringe"
+                ></iconify-icon>
+              </span>
+              <span>Upload</span>
+            </button>
+          </Link>
+        )}
     </div>
   );
 }
