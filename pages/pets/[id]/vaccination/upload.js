@@ -136,7 +136,9 @@ function Upload({ pet }) {
     if (success) {
       refreshPets();
       setLoading(false);
-      router.push(`/dashboard`);
+      vaccineStatus == "done"
+        ? router.push(`/pets/${pet._id}/vaccination/${id}/`)
+        : router.push(`/pets/${pet._id}/`);
     }
   };
 
