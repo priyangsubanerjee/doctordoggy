@@ -8,11 +8,9 @@ function VaccineCard({ record, pet }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
-    if (
-      window.confirm("Are you sure you want to delete this record?") == false
-    ) {
+    if (window.confirm("Are you sure you want to delete this record?") == false)
       return;
-    } else {
+    else {
       setLoading(true);
       const petId = pet._id;
       const vaccinationId = record._id;
