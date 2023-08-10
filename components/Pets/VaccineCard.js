@@ -9,7 +9,6 @@ function VaccineCard({ record, pet }) {
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this record?")) return;
-
     setLoading(true);
     const petId = pet._id;
     const vaccinationId = record._id;
@@ -73,7 +72,7 @@ function VaccineCard({ record, pet }) {
 
         {pet.parentEmail == session.data.user.email && (
           <button
-            onClick={() => handleDelete()}
+            onClick={() => alert("Delete")}
             style={{
               opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
             }}
