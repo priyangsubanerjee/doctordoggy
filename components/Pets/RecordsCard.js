@@ -45,7 +45,10 @@ function RecordsCard({ record, pet }) {
           {record.notes || "No notes provided"}
         </p>
         <div className="flex mt-4 w-full">
-          <Link href={`/pets/${pet._id}/prescription/${record._id}`}>
+          <Link
+            target="_blank"
+            href={`/pets/${pet._id}/prescription/${record._id}`}
+          >
             <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md">
               Open file
             </button>

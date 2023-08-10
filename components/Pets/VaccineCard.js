@@ -30,7 +30,7 @@ function VaccineCard({ record, pet }) {
   };
 
   return (
-    <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0">
+    <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0 z-10">
       <p className="text-xs text-neutral-700 tracking-wider">
         {record.vaccineStatus == "due"
           ? "DUE " +
@@ -66,24 +66,25 @@ function VaccineCard({ record, pet }) {
             Get an appointment
           </button>
         ) : (
-          <Link href={`/pets/${pet._id}/vaccination/${record._id}`}>
+          <Link
+            target="_blank"
+            href={`/pets/${pet._id}/vaccination/${record._id}`}
+          >
             <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
               View certificate
             </button>
           </Link>
         )}
 
-        {pet.parentEmail == session.data.user.email && (
-          <button
-            onClick={() => alert("Delete")}
-            style={{
-              opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
-            }}
-            className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
-          >
-            Delete
-          </button>
-        )}
+        <button
+          onClick={() => handleDelete()}
+          style={{
+            opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
+          }}
+          className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

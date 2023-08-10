@@ -24,7 +24,7 @@ function Sidebar({ open, setOpen }) {
   return (
     <>
       {open && (
-        <div className="fixed inset-0 h-full w-full bg-black/50 z-10 flex lg:hidden justify-end">
+        <div className="fixed inset-0 h-full w-full bg-black/50 z-20 flex lg:hidden justify-end">
           <div className="bg-white h-full w-[80%] py-6">
             <div className="flex items-center justify-end px-6">
               <button onClick={() => setOpen(false)}>
