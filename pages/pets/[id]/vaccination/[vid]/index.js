@@ -58,41 +58,20 @@ function Vaccination({ pet, vaccination }) {
         </div>
       </div>
       <div className="mt-10">
-        <h2 className="text-4xl text-neutral-700 font-bold">
+        <h2 className="text-3xl lg:text-4xl text-neutral-700 font-bold">
           {vaccination.vaccineName}
         </h2>
         <div className="mt-4">
           {vaccination.doctor?.id == null && (
-            <div className="text-sm flex items-center">
-              <span className="inline-block">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                >
-                  <g
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1.5"
-                  >
-                    <circle cx="8" cy="8" r="6.25" />
-                    <path d="M8 5.25v0m0 6v-3.5" />
-                  </g>
-                </svg>
-              </span>
-              <p className="ml-1 inline-block">
-                We are sorry, but we could not find the doctor who administered
-                this vaccine. Thus we do not claim any responsibility for the
-                data.
-              </p>
+            <div className="text-xs lg:text-sm leading-6">
+              We are sorry, but we could not find the doctor who administered
+              this vaccine. Thus we do not claim any responsibility for the
+              data.
             </div>
           )}
         </div>
         <div className="grid grid-cols-3 lg:grid-cols-4 gap-7 lg:gap-7 mt-10 lg:max-w-4xl">
-          <div className="col-span-3 lg:col-span-1 ">
+          <div className="">
             <span className="tracking-wide text-xs text-neutral-500">
               Vaccine for
             </span>
@@ -126,7 +105,7 @@ function Vaccination({ pet, vaccination }) {
             <span className="tracking-wide text-xs text-neutral-500">Sex</span>
             <p className="mt-2">{pet.sex}</p>
           </div>
-          <div className="col-span-3 lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <span className="tracking-wide text-xs text-neutral-500">
               Complication history
             </span>
@@ -144,7 +123,7 @@ function Vaccination({ pet, vaccination }) {
             </span>
             <p className="mt-2">{vaccination.dueDate || "--"}</p>
           </div>
-          <div className="">
+          <div className="col-span-3">
             <span className="tracking-wide text-xs text-neutral-500">
               Vaccinated by
             </span>
