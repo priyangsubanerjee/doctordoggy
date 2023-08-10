@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
@@ -41,6 +41,8 @@ function PetProfile({ pet }) {
   const session = useSession();
   const [state, setState] = useState("general");
   const { refreshPets } = useContext(GlobalStates);
+  const [upcomingVaccines, setUpcomingVaccines] = useState([]);
+  const [pastVaccines, setPastVaccines] = useState([]);
 
   const calculateAge = () => {
     let dob = new Date(pet.dateOfBirth);
@@ -125,6 +127,22 @@ function PetProfile({ pet }) {
       }
     }
   };
+
+  useEffect(() => {
+    let records = pet.vaccinationRecords || [];
+    let upcoming = records.filter((record) => {
+      if (record.vaccineStatus == "due") {
+        return true;
+      }
+    });
+    let past = records.filter((record) => {
+      if (record.vaccineStatus == "done") {
+        return true;
+      }
+    });
+    setUpcomingVaccines(upcoming);
+    setPastVaccines(past);
+  }, [pet]);
 
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
@@ -330,26 +348,68 @@ function PetProfile({ pet }) {
         </div>
       ) : state == "vaccination" ? (
         <div className="mt-8 lg:mt-16 lg:max-w-6xl gap-4 mx-auto">
-          <div className="">
-            <h2 className="font-semibold text-neutral-700 text-sm">Upcoming</h2>
-            <div className="mt-5 flex items-center whitespace-nowrap overflow-auto space-x-2">
-              {pet.vaccinationRecords.map((record, index) => {
-                if (record.vaccineStatus == "due") {
-                  return <VaccineCard key={index} pet={pet} record={record} />;
-                }
-              })}
+          {pet.vaccinationRecords.length == 0 ? (
+            <div className="flex flex-col items-center justify-center">
+              <div className="flex">
+                <div className="ml-4 text-center">
+                  <h2 className="font-semibold text-neutral-700 text-base">
+                    No vaccination records
+                  </h2>
+                  <p className="text-sm mt-2 text-neutral-500">
+                    Click on the upload button below to schedule your first.
+                  </p>
+                </div>
+              </div>
+              <Link
+                href={`/pets/${pet._id}/vaccination/upload`}
+                className="mt-9"
+              >
+                <button className="h-12 px-6 font-medium bg-neutral-800 hover:bg-black text-white rounded-md text-sm flex items-center space-x-3">
+                  <span className="text-white">
+                    <iconify-icon
+                      height="20"
+                      icon="covid:vaccine-protection-syringe"
+                    ></iconify-icon>
+                  </span>
+                  <span>Schedule vaccination</span>
+                </button>
+              </Link>
             </div>
-          </div>
-          <div className="mt-10">
-            <h2 className="font-semibold text-neutral-700 text-sm">Done</h2>
-            <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {pet.vaccinationRecords.map((record, index) => {
-                if (record.vaccineStatus == "done") {
-                  return <VaccineCard key={index} pet={pet} record={record} />;
-                }
-              })}
+          ) : (
+            <div>
+              <div className="">
+                {upcomingVaccines.length > 0 && (
+                  <h2 className="font-semibold text-neutral-700 text-sm">
+                    Upcoming
+                  </h2>
+                )}
+
+                <div className="mt-5 flex items-center whitespace-nowrap overflow-auto space-x-2">
+                  {upcomingVaccines.map((record, index) => {
+                    if (record.vaccineStatus == "due") {
+                      return (
+                        <VaccineCard key={index} pet={pet} record={record} />
+                      );
+                    }
+                  })}
+                </div>
+              </div>
+              <div className="mt-10">
+                {pastVaccines.length > 0 && (
+                  <h2 className="font-semibold text-neutral-700 text-sm">
+                    Done
+                  </h2>
+                )}
+                <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  {pastVaccines.map((record, index) => {
+                    return (
+                      <VaccineCard key={index} pet={pet} record={record} />
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ) : state == "prescriptions" ? (
         <div className="mt-8 lg:mt-16 gap-4 mx-auto">
@@ -425,7 +485,7 @@ function PetProfile({ pet }) {
         )}
       {state == "vaccination" &&
         pet.parentEmail == session.data.user.email &&
-        pet.medicalRecords.length > 0 && (
+        pet.vaccinationRecords.length > 0 && (
           <Link href={`/pets/${pet._id}/vaccination/upload`}>
             <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
               <span className="text-white">

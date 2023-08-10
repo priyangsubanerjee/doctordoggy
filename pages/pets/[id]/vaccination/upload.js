@@ -83,7 +83,7 @@ function Upload({ pet }) {
       alert("Please enter a due date");
       return;
     }
-    if (files.length == 0) {
+    if (vaccineStatus == "done" && files.length == 0) {
       if (
         window.confirm("Are you sure you want to upload without any files?")
       ) {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function VaccineCard({ record, pet }) {
@@ -34,9 +35,11 @@ function VaccineCard({ record, pet }) {
             Get an appointment
           </button>
         ) : (
-          <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
-            Review certificate
-          </button>
+          <Link href={`/pets/${pet._id}/vaccination/${record._id}`}>
+            <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
+              Review certificate
+            </button>
+          </Link>
         )}
 
         <button
