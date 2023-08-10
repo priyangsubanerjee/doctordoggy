@@ -37,7 +37,6 @@ export async function getServerSideProps(context) {
   }
 }
 function Vaccination({ pet, vaccination }) {
-  console.log(vaccination);
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -58,7 +57,7 @@ function Vaccination({ pet, vaccination }) {
                     />
                   </svg>
                 </span>
-                <span>Vaccination done</span>
+                <span>Vaccinated</span>
               </div>
             </div>
             <div className="mt-10">

@@ -16,7 +16,6 @@ export default function App({
 }) {
   const [pets, setPets] = useState(null);
   const [account, setAccount] = useState(null);
-
   const refreshPets = async () => {
     let email = session?.user?.email || null;
     if (email) {

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
@@ -25,7 +26,7 @@ function Navbar() {
       </Link>
       <ul className="hidden lg:flex items-center space-x-12 text-sm text-neutral-700">
         {session.status === "authenticated" ? (
-          <Link href="/dashboard">
+          <a rel="noopener noreferrer" href="/dashboard">
             <li className="flex items-center space-x-2">
               <iconify-icon
                 height="22"
@@ -34,7 +35,7 @@ function Navbar() {
               ></iconify-icon>
               <span>Dashboard</span>
             </li>
-          </Link>
+          </a>
         ) : (
           <li className="flex items-center space-x-2">
             <iconify-icon
