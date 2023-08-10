@@ -79,15 +79,17 @@ function VaccineCard({ record, pet }) {
           </button>
         )}
 
-        <button
-          onClick={() => handleDelete()}
-          style={{
-            opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
-          }}
-          className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
-        >
-          Delete
-        </button>
+        {pet.parentEmail == session.data.user.email && (
+          <button
+            onClick={() => handleDelete()}
+            style={{
+              opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
+            }}
+            className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
