@@ -19,15 +19,15 @@ function OnboardingSuccess() {
             {session?.data?.user?.name}
           </span>
         </h2>
-        <h1 className="text-4xl font-bold mt-6 text-neutral-800">
+        <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-neutral-800">
           Onboarding <span className="text-pink-500">success</span>
         </h1>
-        <p className="text-sm leading-7 mt-6 text-neutral-500">
+        <p className="text-xs lg:text-sm leading-7 mt-6 text-neutral-500">
           You have successfully completed the onboarding process. You can now
           register your pets in the dashboard & start using the app.
         </p>
 
-        <div className="grid grid-cols-2 mt-16 gap-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 mt-10 lg:mt-16 gap-4 lg:gap-2">
           <button
             onClick={async () => {
               window.open("/dashboard", "_self");
