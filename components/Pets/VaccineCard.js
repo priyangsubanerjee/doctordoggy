@@ -1,7 +1,32 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 function VaccineCard({ record, pet }) {
+  const session = useSession();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this record?")) return;
+
+    setLoading(true);
+    const petId = pet._id;
+    const vaccinationId = record._id;
+    const res = await fetch("/api/vaccination/delete", {
+      method: "POST",
+      body: JSON.stringify({
+        petId: petId,
+        vaccinationId: vaccinationId,
+      }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      router.reload();
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0">
       <p className="text-xs text-neutral-700 tracking-wider">
@@ -46,14 +71,17 @@ function VaccineCard({ record, pet }) {
           </Link>
         )}
 
-        <button
-          style={{
-            opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
-          }}
-          className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
-        >
-          Delete
-        </button>
+        {pet.parentEmail == session.data.user.email && (
+          <button
+            onClick={() => handleDelete()}
+            style={{
+              opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
+            }}
+            className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );
