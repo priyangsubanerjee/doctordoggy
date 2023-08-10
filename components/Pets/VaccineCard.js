@@ -30,7 +30,7 @@ function VaccineCard({ record, pet }) {
   };
 
   return (
-    <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0 z-10">
+    <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0">
       <p className="text-xs text-neutral-700 tracking-wider">
         {record.vaccineStatus == "due"
           ? "DUE " +
