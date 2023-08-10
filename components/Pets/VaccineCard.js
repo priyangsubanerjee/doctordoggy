@@ -66,14 +66,17 @@ function VaccineCard({ record, pet }) {
             Get an appointment
           </button>
         ) : (
-          <Link
-            target="_blank"
-            href={`/pets/${pet._id}/vaccination/${record._id}`}
+          <button
+            onClick={() => {
+              window.open(
+                `/pets/${pet._id}/vaccination/${record._id}`,
+                "_self"
+              );
+            }}
+            className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5"
           >
-            <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
-              View certificate
-            </button>
-          </Link>
+            View certificate
+          </button>
         )}
 
         <button

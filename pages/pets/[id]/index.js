@@ -144,6 +144,19 @@ function PetProfile({ pet }) {
     setPastVaccines(past);
   }, [pet]);
 
+  useEffect(() => {
+    // tab param
+    if (router.query.tab) {
+      if (router.query.tab == "vaccination") {
+        setState("vaccination");
+      } else if (router.query.tab == "prescriptions") {
+        setState("prescriptions");
+      } else {
+        setState("general");
+      }
+    }
+  }, []);
+
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -176,7 +189,12 @@ function PetProfile({ pet }) {
       </div>
       <div className="flex items-center border border-neutral-200 rounded-full text-sm px-1 justify-between mt-7 py-1 max-w-sm mx-auto">
         <button
-          onClick={() => setState("general")}
+          onClick={() => {
+            setState("general");
+            router.push(`/pets/${pet._id}?tab=general`, undefined, {
+              shallow: true,
+            });
+          }}
           className={`px-5 py-1 ${
             state == "general" && "bg-sky-50"
           } rounded-full`}
@@ -184,7 +202,12 @@ function PetProfile({ pet }) {
           <span>General</span>
         </button>
         <button
-          onClick={() => setState("vaccination")}
+          onClick={() => {
+            setState("vaccination");
+            router.push(`/pets/${pet._id}?tab=vaccination`, undefined, {
+              shallow: true,
+            });
+          }}
           className={`px-5 py-1 ${
             state == "vaccination" && "bg-green-50"
           } rounded-full`}
@@ -192,7 +215,13 @@ function PetProfile({ pet }) {
           <span>Vaccination</span>
         </button>
         <button
-          onClick={() => setState("prescriptions")}
+          onClick={() => {
+            setState("prescriptions");
+            // set params in url to prescriptions
+            router.push(`/pets/${pet._id}?tab=prescriptions`, undefined, {
+              shallow: true,
+            });
+          }}
           className={`px-5 py-1 ${
             state == "prescriptions" && "bg-pink-50"
           } rounded-full`}

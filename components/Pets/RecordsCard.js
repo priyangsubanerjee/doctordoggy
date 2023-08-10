@@ -45,14 +45,17 @@ function RecordsCard({ record, pet }) {
           {record.notes || "No notes provided"}
         </p>
         <div className="flex mt-4 w-full">
-          <Link
-            target="_blank"
-            href={`/pets/${pet._id}/prescription/${record._id}`}
+          <button
+            onClick={() => {
+              window.open(
+                `/pets/${pet._id}/prescription/${record._id}`,
+                "_self"
+              );
+            }}
+            className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md"
           >
-            <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md">
-              Open file
-            </button>
-          </Link>
+            Open file
+          </button>
 
           {pet.parentEmail == session.data.user.email && (
             <button
