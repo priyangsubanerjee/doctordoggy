@@ -28,6 +28,11 @@ export default function App({
       let data = await res.json();
       if (data.success) {
         setPets(data.pets);
+        return data.pets;
+      } else {
+        toast.error(data.message);
+        setPets([]);
+        return [];
       }
     }
   };

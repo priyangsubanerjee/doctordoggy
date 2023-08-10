@@ -500,7 +500,10 @@ function PetProfile({ pet }) {
       {state == "prescriptions" &&
         pet.parentEmail == session.data.user.email &&
         pet.medicalRecords.length > 0 && (
-          <Link href={`/pets/${pet._id}/prescription/upload`}>
+          <a
+            rel="noopener noreferrer"
+            href={`/pets/${pet._id}/prescription/upload`}
+          >
             <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
               <span className="text-white">
                 <iconify-icon
@@ -510,12 +513,15 @@ function PetProfile({ pet }) {
               </span>
               <span>Upload</span>
             </button>
-          </Link>
+          </a>
         )}
       {state == "vaccination" &&
         pet.parentEmail == session.data.user.email &&
         pet.vaccinationRecords.length > 0 && (
-          <Link href={`/pets/${pet._id}/vaccination/upload`}>
+          <a
+            rel="noopener noreferrer"
+            href={`/pets/${pet._id}/vaccination/upload`}
+          >
             <button className="h-12 px-6 font-medium shadow-xl shadow-black/20 bg-neutral-800 hover:bg-black text-white rounded-full text-sm fixed bottom-5 lg:bottom-14 right-6 lg:right-8 flex items-center space-x-3">
               <span className="text-white">
                 <iconify-icon
@@ -525,7 +531,7 @@ function PetProfile({ pet }) {
               </span>
               <span>Schedule</span>
             </button>
-          </Link>
+          </a>
         )}
     </div>
   );
