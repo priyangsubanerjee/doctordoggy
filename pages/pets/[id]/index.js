@@ -9,6 +9,7 @@ import Link from "next/link";
 import RecordsCard from "@/components/Pets/RecordsCard";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
+import VaccineCard from "@/components/Pets/VaccineCard";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -138,11 +139,11 @@ function PetProfile({ pet }) {
       <div className="flex flex-col items-center justify-center mt-10">
         <div className="relative">
           {pet.sex.toLowerCase() == "male" ? (
-            <div className="absolute top-2 right-1 text-3xl text-blue-500">
+            <div className="absolute -top-2 -right-2 text-3xl text-blue-500">
               <iconify-icon icon="ic:twotone-male"></iconify-icon>
             </div>
           ) : (
-            <div className="absolute rotate-45 top-2 right-1 text-3xl text-pink-500">
+            <div className="absolute rotate-45 -top-2 -right-2 text-3xl text-pink-500">
               <iconify-icon icon="ic:twotone-female"></iconify-icon>
             </div>
           )}
@@ -332,44 +333,21 @@ function PetProfile({ pet }) {
           <div className="">
             <h2 className="font-semibold text-neutral-700 text-sm">Upcoming</h2>
             <div className="mt-5 flex items-center whitespace-nowrap overflow-auto space-x-2">
-              <div className="w-full rounded-md border border-neutral-200 p-3 max-w-[300px] shrink-0">
-                <p className="text-xs text-neutral-700 tracking-wider">
-                  DUE 12-12-2021 | THURSDAY
-                </p>
-                <h2 className="font-semibold mt-3 text-neutral-800">
-                  Anti rabies booster vaccine
-                </h2>
-                <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mt-4">
-                  Get an appointment
-                </button>
-              </div>
-              <div className="w-full rounded-md border border-neutral-200 p-3 max-w-[300px] shrink-0">
-                <p className="text-xs text-neutral-700 tracking-wider">
-                  DUE 12-12-2021 | THURSDAY
-                </p>
-                <h2 className="font-semibold mt-3 text-neutral-800">
-                  Anti rabies booster vaccine
-                </h2>
-                <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mt-4">
-                  Get an appointment
-                </button>
-              </div>
+              {pet.vaccinationRecords.map((record, index) => {
+                if (record.vaccineStatus == "due") {
+                  return <VaccineCard key={index} pet={pet} record={record} />;
+                }
+              })}
             </div>
           </div>
           <div className="mt-10">
-            <h2 className="font-semibold text-neutral-700 text-sm">Older</h2>
-            <div className="mt-5 grid grid-cols-1 lg:grid-cols-4 gap-4">
-              <div className="w-full rounded-md border border-neutral-200 p-3 shrink-0">
-                <p className="text-xs text-neutral-700 tracking-wider">
-                  DUE 12-12-2021 | THURSDAY
-                </p>
-                <h2 className="font-semibold mt-3 text-neutral-800">
-                  Anti rabies booster vaccine
-                </h2>
-                <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mt-4">
-                  Review
-                </button>
-              </div>
+            <h2 className="font-semibold text-neutral-700 text-sm">Done</h2>
+            <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {pet.vaccinationRecords.map((record, index) => {
+                if (record.vaccineStatus == "done") {
+                  return <VaccineCard key={index} pet={pet} record={record} />;
+                }
+              })}
             </div>
           </div>
         </div>
@@ -456,7 +434,7 @@ function PetProfile({ pet }) {
                   icon="covid:vaccine-protection-syringe"
                 ></iconify-icon>
               </span>
-              <span>Upload</span>
+              <span>Schedule</span>
             </button>
           </Link>
         )}

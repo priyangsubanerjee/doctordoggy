@@ -8,6 +8,7 @@ import pet from "@/db/models/pet";
 import Chip from "@/components/Prescription/Chip";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
+import Switch from "react-switch";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -40,11 +41,11 @@ function Upload({ pet }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
-  const [vaccineStatus, setVaccineStatus] = useState(null);
+  const [vaccineStatus, setVaccineStatus] = useState("due");
 
   const inputRef = useRef(null);
 
-  const [prescription, setPrescription] = useState({
+  const [vRecord, setVRecord] = useState({
     for: pet.name,
     due: "",
     vaccineName: "",
@@ -52,21 +53,21 @@ function Upload({ pet }) {
     files: [],
   });
 
-  const decideVaccineStatus = (dueDate) => {
-    const today = new Date().toLocaleDateString();
-    const due = new Date(dueDate).toLocaleDateString();
-    console.log(due, today);
-    if (due < today) {
-      console.log("older");
-      return "older";
-    } else if (due > today) {
-      console.log("upcoming");
-      return "upcoming";
-    } else {
-      console.log("today");
-      return "today";
-    }
-  };
+  //   const decideVaccineStatus = (dueDate) => {
+  //     const today = new Date().toLocaleDateString();
+  //     const due = new Date(dueDate).toLocaleDateString();
+  //     console.log(due, today);
+  //     if (due < today) {
+  //       console.log("older");
+  //       return "older";
+  //     } else if (due > today) {
+  //       console.log("upcoming");
+  //       return "upcoming";
+  //     } else {
+  //       console.log("today");
+  //       return "today";
+  //     }
+  //   };
 
   const handleFileChange = (e) => {
     const eFiles = e.target.files;
@@ -74,11 +75,11 @@ function Upload({ pet }) {
   };
 
   const handleSave = async () => {
-    if (prescription.vaccineName == "") {
+    if (vRecord.vaccineName == "") {
       alert("Please enter a vaccine name");
       return;
     }
-    if (prescription.due == "") {
+    if (vRecord.due == "") {
       alert("Please enter a due date");
       return;
     }
@@ -92,6 +93,7 @@ function Upload({ pet }) {
       }
     }
     setLoading(true);
+
     let fileParamArray = [];
     if (files.length != 0) {
       for (let i = 0; i < files.length; i++) {
@@ -114,27 +116,25 @@ function Upload({ pet }) {
 
     const recordObj = {
       petId: pet._id,
-      date: prescription.date,
-      reason: prescription.reason,
-      doctor: prescription.doctor,
-      notes: prescription.notes,
+      dueDate: vRecord.due,
+      vaccineName: vRecord.vaccineName,
+      vaccineStatus: vaccineStatus,
+      notes: vRecord.notes,
       files: fileParamArray,
-      weight: prescription.weight,
-      temperature: prescription.temperature,
-      parentEmail: pet.parentEmail,
+      createdBy: session.data.user.email,
     };
 
-    const res = await fetch("/api/prescription/upload", {
+    const res = await fetch("/api/vaccination/create", {
       method: "POST",
       body: JSON.stringify(recordObj),
     });
 
-    const { success, prescription_id } = await res.json();
+    const { success, id } = await res.json();
 
     if (success) {
       refreshPets();
       setLoading(false);
-      router.push(`/pets/${pet._id}/prescription/${prescription_id}`);
+      router.push(`/dashboard`);
     }
   };
 
@@ -148,10 +148,10 @@ function Upload({ pet }) {
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
         <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-          Upload <span className="text-pink-500">vaccination record</span>
+          Schedule <span className="text-pink-500">vaccination</span>
         </h2>
         <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
-          Upload prescription or medical records for your pet
+          Upload vRecord or medical records for your pet
         </p>
       </div>
 
@@ -219,12 +219,10 @@ function Upload({ pet }) {
             </span>
             <input
               type="date"
-              value={prescription.due}
+              value={vRecord.due}
               onChange={(e) => {
-                const status = decideVaccineStatus(e.target.value);
-                setVaccineStatus(status);
-                setPrescription({
-                  ...prescription,
+                setVRecord({
+                  ...vRecord,
                   due: e.target.value,
                 });
               }}
@@ -242,10 +240,10 @@ function Upload({ pet }) {
           </label>
           <input
             type="text"
-            value={prescription.vaccineName}
+            value={vRecord.vaccineName}
             onChange={(e) =>
-              setPrescription({
-                ...prescription,
+              setVRecord({
+                ...vRecord,
                 vaccineName: e.target.value,
               })
             }
@@ -255,37 +253,47 @@ function Upload({ pet }) {
             id=""
           />
         </div>
-        {vaccineStatus == "older" && (
-          <div>
-            <label className="font-medium text-xs shrink-0 text-neutral-500">
-              Doctor&apos;s name
-            </label>
-            <input
-              type="text"
-              value={prescription.doctor}
-              onChange={(e) =>
-                setPrescription({
-                  ...prescription,
-                  doctor: e.target.value,
-                })
-              }
-              className="px-4 h-12 border w-full mt-2 rounded "
-              placeholder="Vaccinated by"
-              name=""
-              id=""
+        <div>
+          <label className="font-medium text-xs shrink-0 text-neutral-500">
+            Vaccine status
+            <span className="text-red-500 ml-1 text-xl">*</span>
+          </label>
+          <div className="px-4 h-12 border w-full mt-2 rounded outline-none flex items-center space-x-2 text-sm">
+            <span
+              style={{
+                opacity: vaccineStatus === "due" ? 1 : 0.5,
+              }}
+            >
+              Due
+            </span>
+            <Switch
+              checkedIcon={false}
+              uncheckedIcon={false}
+              onColor="#10B981"
+              onChange={() => {
+                setVaccineStatus(vaccineStatus === "due" ? "done" : "due");
+              }}
+              checked={vaccineStatus === "done" ? true : false}
             />
+            <span
+              style={{
+                opacity: vaccineStatus === "done" ? 1 : 0.5,
+              }}
+            >
+              Done
+            </span>
           </div>
-        )}
+        </div>
         <div className="lg:col-span-2">
           <label className="font-medium text-xs shrink-0 text-neutral-500">
             Anything else we should note?
           </label>
           <textarea
             name=""
-            value={prescription.notes}
+            value={vRecord.notes}
             onChange={(e) =>
-              setPrescription({
-                ...prescription,
+              setVRecord({
+                ...vRecord,
                 notes: e.target.value,
               })
             }
@@ -337,7 +345,7 @@ function Upload({ pet }) {
         <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
           <div className="px-10 py-8 bg-white rounded-lg">
             <h2 className="text-lg font-semibold text-neutral-700">
-              Uploading prescription
+              Uploading vRecord
             </h2>
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
               This might take a few seconds
