@@ -76,8 +76,8 @@ function Delete() {
   };
 
   return (
-    <div className="w-full flex justify-center py-[90px] bg-neutral-100 min-h-screen">
-      <div className="lg:w-[550px] p-8 h-fit border w-full bg-white text-center">
+    <div className="w-full flex justify-center lg:py-[90px] bg-neutral-100 min-h-screen">
+      <div className="lg:w-[550px] p-4 lg:p-8 h-fit lg:border w-full bg-white text-center">
         <div className="flex justify-center">
           <div className="p-4 bg-red-50 rounded-xl">
             <span className="text-red-600">
