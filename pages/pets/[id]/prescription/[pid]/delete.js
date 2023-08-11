@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
 import { useRouter } from "next/router";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const id = context.query.id;
-  let currPet = null;
   const pid = context.query.pid;
+  let currPet = null;
 
   if (!session) {
     return {
@@ -51,6 +52,7 @@ export async function getServerSideProps(context) {
 function Delete() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { refreshPets } = useContext(GlobalStates);
 
   const handleDelete = async () => {
     setLoading(true);
@@ -66,7 +68,7 @@ function Delete() {
     const data = await res.json();
     if (data.success) {
       refreshPets();
-      router.reload();
+      router.push(`/pets/${petId}/?tab=prescription`);
     }
     setLoading(false);
   };
@@ -111,6 +113,21 @@ function Delete() {
           </button>
         </div>
       </div>
+      {loading && (
+        <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
+          <div className="px-10 py-8 bg-white rounded-lg">
+            <h2 className="text-lg font-semibold text-neutral-700">
+              Deleting record
+            </h2>
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-3">
+              This might take a few seconds
+            </p>
+            <div className="mt-8 w-full h-1 bg-neutral-100 rounded-full overflow-hidden">
+              <div className="h-full w-[40%] rounded-full bg-neutral-800 animate-indeterminate"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
