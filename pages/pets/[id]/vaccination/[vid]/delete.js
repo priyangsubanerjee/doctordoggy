@@ -65,7 +65,7 @@ function Delete() {
     });
     const data = await res.json();
     if (data.success) {
-      router.reload();
+      router.push(`/pets/${petId}/`);
     }
     setLoading(false);
   };
