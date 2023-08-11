@@ -16,5 +16,3 @@ const connectDatabase = async () => {
 };
 
 export default connectDatabase;
-
-9831826665;
