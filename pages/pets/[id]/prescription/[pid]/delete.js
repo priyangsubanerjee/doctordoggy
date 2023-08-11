@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  const id = context.query.id;
-  const pid = context.query.pid;
+  let session = await getServerSession(context.req, context.res, authOptions);
+  let id = context.query.id;
+  let pid = context.query.pid;
+
   let currPet = null;
 
   if (!session) {
