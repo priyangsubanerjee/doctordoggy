@@ -58,12 +58,14 @@ function RecordsCard({ record, pet }) {
           </button>
 
           {pet.parentEmail == session.data.user.email && (
-            <button
-              onClick={() => handleDelete()}
-              className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+            <Link
+              href={`/pets/${pet._id}/prescription/${record._id}/delete`}
+              className="ml-auto"
             >
-              Delete
-            </button>
+              <button className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md">
+                Delete
+              </button>
+            </Link>
           )}
         </div>
       </div>

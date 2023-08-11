@@ -1,4 +1,5 @@
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -6,27 +7,6 @@ function VaccineCard({ record, pet }) {
   const session = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this record?") == false)
-      return;
-    else {
-      setLoading(true);
-      const petId = pet._id;
-      const vaccinationId = record._id;
-      const res = await fetch("/api/vaccination/delete", {
-        method: "POST",
-        body: JSON.stringify({
-          petId: petId,
-          vaccinationId: vaccinationId,
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        router.reload();
-      }
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="w-full rounded-md border border-neutral-200 p-3 max-w-sm shrink-0 z-0">
@@ -65,26 +45,22 @@ function VaccineCard({ record, pet }) {
             Get an appointment
           </button>
         ) : (
-          <button
-            onClick={() => {
-              router.replace(`/pets/${pet._id}/vaccination/${record._id}`);
-            }}
-            className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5"
-          >
-            View certificate
-          </button>
+          <Link href={`/pets/${pet._id}/vaccination/${record._id}`}>
+            <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
+              View certificate
+            </button>
+          </Link>
         )}
 
         {pet.parentEmail == session.data.user.email && (
-          <button
-            onClick={() => handleDelete()}
-            style={{
-              opacity: pet.parentEmail !== record.createdBy ? 0.5 : 1,
-            }}
-            className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md ml-auto"
+          <Link
+            className="ml-auto"
+            href={`/pets/${pet._id}/vaccination/${record._id}/delete`}
           >
-            Delete
-          </button>
+            <button className="px-4 py-2 font-medium text-sm bg-red-50 text-red-800 rounded-md">
+              Delete
+            </button>
+          </Link>
         )}
       </div>
     </div>
