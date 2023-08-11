@@ -341,24 +341,27 @@ function Upload({ pet }) {
         </div>
       </div>
 
-      <div className="mt-20 bg-blue-50  lg:max-w-4xl p-3 rounded-md text-sm text-blue-600">
-        <svg
-          className="inline-block mr-2 -mt-[1px]"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fill="currentColor"
-            d="M18 10a8 8 0 1 0-16 0a8 8 0 0 0 16 0ZM9.508 8.91a.5.5 0 0 1 .984 0L10.5 9v4.502l-.008.09a.5.5 0 0 1-.984 0l-.008-.09V9l.008-.09ZM9.25 6.75a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0Z"
-          />
-        </svg>
-        <p className="inline-block">
-          We do not claim the authenticity of this vaccine record. Please
-          contact us for more information.
-        </p>
-      </div>
+      {vaccineStatus == "done" && (
+        <div className="mt-20 bg-blue-50  lg:max-w-4xl p-3 rounded-md text-sm text-blue-600">
+          <svg
+            className="inline-block mr-2 -mt-[1px]"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill="currentColor"
+              d="M18 10a8 8 0 1 0-16 0a8 8 0 0 0 16 0ZM9.508 8.91a.5.5 0 0 1 .984 0L10.5 9v4.502l-.008.09a.5.5 0 0 1-.984 0l-.008-.09V9l.008-.09ZM9.25 6.75a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0Z"
+            />
+          </svg>
+
+          <p className="inline-block">
+            We do not claim the authenticity of this vaccine record. Please
+            contact us for more information.
+          </p>
+        </div>
+      )}
 
       <div className="mt-16 flex items-center space-x-3">
         <button

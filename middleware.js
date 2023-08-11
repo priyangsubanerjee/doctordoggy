@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request) {
-  if (
-    request.nextUrl.pathname == "/dashboard" ||
-    request.nextUrl.pathname == "/profile" ||
-    request.nextUrl.pathname == "/pets"
-  ) {
+  if (request.nextUrl.pathname == "/") {
+    return NextResponse.next();
+  } else {
     if (request.cookies.get("user")) {
       let decodeUrl = new URL("/api/user/decode", request.url);
       let res = await fetch(decodeUrl, {
@@ -24,12 +22,10 @@ export async function middleware(request) {
         new URL("/profile/setup?onboarding=true", request.url)
       );
     }
-  } else {
-    return NextResponse.next();
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard", "/profile", "/pets"],
+  matcher: ["/dashboard", "/profile", "/pets/:path*"],
 };
