@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -68,10 +67,7 @@ function VaccineCard({ record, pet }) {
         ) : (
           <button
             onClick={() => {
-              window.open(
-                `/pets/${pet._id}/vaccination/${record._id}`,
-                "_self"
-              );
+              router.replace(`/pets/${pet._id}/vaccination/${record._id}`);
             }}
             className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5"
           >

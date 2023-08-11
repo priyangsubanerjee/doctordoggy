@@ -478,7 +478,6 @@ function PetProfile({ pet }) {
                   </h2>
                   <div className="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
                     {pet.medicalRecords.map((record, i) => {
-                      console.log(record);
                       return (
                         <RecordsCard
                           key={i}
