@@ -14,14 +14,14 @@ function Navbar() {
       <Link href="/">
         <div className="flex items-center space-x-3 relative w-fit">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/2930/2930618.png"
-            className="h-9 lg:h-12"
+            src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1692029332/doctor-doggy/IMG_1494_warsym.png"
+            className="h-12 lg:h-16"
             alt=""
           />
-          <h1 className="font-medium">Doctor Doggy</h1>
+          {/* <h1 className="font-medium">Doctor Doggy</h1>
           <span className="text-[10px] bg-pink-50 text-pink-500 px-2 py-1 rounded font-medium">
             BETA
-          </span>
+          </span> */}
         </div>
       </Link>
       <ul className="hidden lg:flex items-center space-x-12 text-sm text-neutral-700">
