@@ -7,7 +7,7 @@ function Footer() {
       <div className="lg:flex items-center lg:space-y-0 space-y-6">
         <div className="flex items-center space-x-4">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/2930/2930618.png"
+            src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1692029332/doctor-doggy/IMG_1494_warsym.png"
             className="h-9 lg:h-12"
             alt=""
           />
