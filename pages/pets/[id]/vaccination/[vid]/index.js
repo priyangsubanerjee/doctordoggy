@@ -37,6 +37,7 @@ export async function getServerSideProps(context) {
   }
 }
 function Vaccination({ pet, vaccination }) {
+  console.log(vaccination);
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -65,7 +66,7 @@ function Vaccination({ pet, vaccination }) {
                 {vaccination.vaccineName}
               </h2>
               <div className="mt-4">
-                {vaccination.doctor?.id == null && (
+                {vaccination.doctor == null && (
                   <div className="text-xs lg:text-sm leading-6">
                     We are sorry, but we could not find the doctor who
                     administered this vaccine. Thus we do not claim any
@@ -83,7 +84,7 @@ function Vaccination({ pet, vaccination }) {
                       <img
                         className="w-32 object-contain"
                         key={i}
-                        src={file.url}
+                        src={file.fileUrl}
                         alt=""
                       />
                     );
