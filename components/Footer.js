@@ -8,10 +8,9 @@ function Footer() {
         <div className="flex items-center space-x-4">
           <img
             src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1692029332/doctor-doggy/IMG_1494_warsym.png"
-            className="h-9 lg:h-12"
+            className="h-9 lg:h-12 mix-blend-multiply"
             alt=""
           />
-          <h1 className="text-lg font-semibold">Doctor Doggy</h1>
         </div>
         <p className="text-xs lg:ml-8 ml-0">
           Copyright © 2023 PetSmart Inc. All rights reserved.

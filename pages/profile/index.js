@@ -167,7 +167,7 @@ function Profile() {
           <textarea
             name=""
             readOnly={true}
-            className="resize-none w-full h-full border px-4 py-3 mt-2 outline-none rounded"
+            className="resize-none w-full h-full border px-4 py-3 mt-2 outline-none rounded whitespace-pre-line"
             placeholder="Your address here"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
