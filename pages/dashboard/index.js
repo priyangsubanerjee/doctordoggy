@@ -31,21 +31,23 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
-      <div>
-        <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-          Registered <span className="text-pink-500">pet&apos;s</span>
-        </h2>
-        <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
-          All of your pet&apos;s information is stored here.
-        </p>
-      </div>
-
       {(pets && pets.length) > 0 && (
-        <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
-          {pets.map((pet, index) => {
-            return <Petcard key={index} pet={pet} />;
-          })}
-        </div>
+        <>
+          <div>
+            <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
+              Registered <span className="text-pink-500">pet&apos;s</span>
+            </h2>
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
+              All of your pet&apos;s information is stored here.
+            </p>
+          </div>
+
+          <div className="mt-10 lg:mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 place-content-center place-items-center">
+            {pets.map((pet, index) => {
+              return <Petcard key={index} pet={pet} />;
+            })}
+          </div>
+        </>
       )}
 
       {(pets && pets.length) == 0 && (
@@ -84,7 +86,7 @@ function Dashboard() {
       )}
 
       {pets == null && (
-        <div className="fixed inset-0 z-30 h-full w-full bg-black/50 flex items-center justify-center">
+        <div className="h-full w-full flex items-center justify-center mt-20">
           <div className="px-10 py-8 bg-white rounded-lg">
             <h2 className="text-lg font-semibold text-neutral-700">
               Finding all your registered pets
