@@ -205,17 +205,19 @@ function Navbar() {
               Home
             </li>
           </Link>
-          <Link href={"/dashboard"}>
-            <li
-              style={{
-                color: router.pathname.includes("/dashboard")
-                  ? "#fff"
-                  : "rgba(255,255,255,0.7)",
-              }}
-            >
-              Dashboard
-            </li>
-          </Link>
+          {session.status == "authenticated" && (
+            <Link href={"/dashboard"}>
+              <li
+                style={{
+                  color: router.pathname.includes("/dashboard")
+                    ? "#fff"
+                    : "rgba(255,255,255,0.7)",
+                }}
+              >
+                Dashboard
+              </li>
+            </Link>
+          )}
           <li
             style={{
               color: router.pathname.includes("/about")
@@ -290,7 +292,7 @@ function Navbar() {
             {session.status == "unauthenticated" ? (
               <button
                 onClick={() => signIn("google")}
-                className="bg-white px-4 lg:px-7 py-2 rounded-full lg:rounded text-sm lg:shadow-md"
+                className="bg-white px-4 lg:px-7 py-2 rounded-full lg:rounded text-sm"
               >
                 Get started
               </button>
