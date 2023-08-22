@@ -191,7 +191,7 @@ function Navbar() {
             Logo.
           </h1>
         </div>
-        <ul className="hidden lg:flex items-center space-x-16 font-popins text-white/70 text-sm font-normal">
+        <ul className="hidden lg:flex items-center space-x-12 font-popins text-white/70 text-sm font-normal">
           <Link href={"/?redirect=false"}>
             <li>Home</li>
           </Link>
