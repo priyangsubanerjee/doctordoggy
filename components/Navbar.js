@@ -193,6 +193,7 @@ function Navbar() {
             Logo.
           </h1>
         </div>
+
         <ul className="hidden lg:flex items-center space-x-12 font-popins text-white/70 text-sm font-normal">
           <Link href={"/?redirect=false"}>
             <li
@@ -227,8 +228,8 @@ function Navbar() {
           <li className="relative group hover:text-white cursor-pointer">
             <span>Services</span>
 
-            <div className="absolute opacity-0 -z-40 top-0 left-1/2 translate-y-[50%] -translate-x-1/2 group-hover:z-10 group-hover:translate-y-[0] group-hover:opacity-100 transition-all duration-500">
-              <div className="mt-7 w-80 h-44 bg-white shadow-2xl shadow-black/[0.15] relative">
+            <div className="absolute opacity-0 -z-40 top-0 left-1/2 translate-y-[50%] -translate-x-1/2 group-hover:z-10 group-hover:translate-y-[0] group-hover:opacity-100 transition-all">
+              <div className="mt-7 w-80 bg-white shadow-2xl shadow-black/[0.15] relative">
                 <span className="text-white absolute top-1 -translate-y-full left-1/2 -translate-x-1/2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -239,16 +240,34 @@ function Navbar() {
                     <path fill="currentColor" d="m7.5 3l7.5 8H0l7.5-8Z" />
                   </svg>
                 </span>
-                <div className="p-4">
+                <div className="p-4 space-y-5">
                   <div className="flex justify-between bg-red-50 p-4 rounded">
                     <img
                       src="https://cdn-icons-png.flaticon.com/512/1650/1650515.png"
                       className="h-12"
                       alt=""
                     />
-                    <div className="ml-4">
+                    <div className="ml-4 w-full">
                       <h1 className="text-sm font-semibold text-neutral-700">
                         Grooming
+                      </h1>
+                      <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
+                        Lorem ipsum dolor sit amet consectetur.
+                      </p>
+                      <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                        Book now
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex justify-between bg-yellow-50 p-4 rounded">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
+                      className="h-12"
+                      alt=""
+                    />
+                    <div className="ml-4 w-full">
+                      <h1 className="text-sm font-semibold text-neutral-700">
+                        Boarding
                       </h1>
                       <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
                         Lorem ipsum dolor sit amet consectetur.
@@ -265,6 +284,7 @@ function Navbar() {
           <li>Reviews</li>
           <li>Contact</li>
         </ul>
+
         <div className="flex items-center space-x-5">
           <div>
             {session.status == "unauthenticated" ? (
@@ -279,21 +299,16 @@ function Navbar() {
                 <Link className="hidden lg:block" href={"/profile"}>
                   <button className="flex items-center">
                     <span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 37 37"
-                        fill="none"
-                      >
-                        <path
-                          d="M18.5001 6.16669C20.1356 6.16669 21.7041 6.81639 22.8606 7.97286C24.017 9.12934 24.6667 10.6979 24.6667 12.3334C24.6667 13.9689 24.017 15.5374 22.8606 16.6938C21.7041 17.8503 20.1356 18.5 18.5001 18.5C16.8646 18.5 15.2961 17.8503 14.1396 16.6938C12.9831 15.5374 12.3334 13.9689 12.3334 12.3334C12.3334 10.6979 12.9831 9.12934 14.1396 7.97286C15.2961 6.81639 16.8646 6.16669 18.5001 6.16669ZM18.5001 30.8334C18.5001 30.8334 30.8334 30.8334 30.8334 27.75C30.8334 24.05 24.8209 20.0417 18.5001 20.0417C12.1792 20.0417 6.16675 24.05 6.16675 27.75C6.16675 30.8334 18.5001 30.8334 18.5001 30.8334Z"
-                          fill="white"
-                        />
-                      </svg>
+                      <img
+                        src={session.data.user.image}
+                        className="rounded-full h-10 border border-white"
+                        alt=""
+                      />
                     </span>
                     <div className="ml-3 text-left">
-                      <h2 className="text-white text-sm">My account</h2>
+                      <h2 className="text-white text-sm">
+                        {session.data.user.name}
+                      </h2>
                     </div>
                   </button>
                 </Link>
