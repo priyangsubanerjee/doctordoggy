@@ -5,10 +5,12 @@ import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Link from "next/link";
 import { sign } from "jsonwebtoken";
+import { useRouter } from "next/router";
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const session = useSession();
+  const router = useRouter();
 
   return (
     <>
@@ -193,13 +195,73 @@ function Navbar() {
         </div>
         <ul className="hidden lg:flex items-center space-x-12 font-popins text-white/70 text-sm font-normal">
           <Link href={"/?redirect=false"}>
-            <li>Home</li>
+            <li
+              style={{
+                color:
+                  router.pathname == "/" ? "#fff" : "rgba(255,255,255,0.7)",
+              }}
+            >
+              Home
+            </li>
           </Link>
           <Link href={"/dashboard"}>
-            <li className="text-white">Dashboard</li>
+            <li
+              style={{
+                color: router.pathname.includes("/dashboard")
+                  ? "#fff"
+                  : "rgba(255,255,255,0.7)",
+              }}
+            >
+              Dashboard
+            </li>
           </Link>
-          <li>About</li>
-          <li>Services</li>
+          <li
+            style={{
+              color: router.pathname.includes("/about")
+                ? "#fff"
+                : "rgba(255,255,255,0.7)",
+            }}
+          >
+            About
+          </li>
+          <li className="relative group hover:text-white cursor-pointer">
+            <span>Services</span>
+
+            <div className="absolute opacity-0 -z-40 top-0 left-1/2 translate-y-[50%] -translate-x-1/2 group-hover:z-10 group-hover:translate-y-[0] group-hover:opacity-100 transition-all duration-500">
+              <div className="mt-7 w-80 h-44 bg-white shadow-2xl shadow-black/[0.15] relative">
+                <span className="text-white absolute top-1 -translate-y-full left-1/2 -translate-x-1/2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                  >
+                    <path fill="currentColor" d="m7.5 3l7.5 8H0l7.5-8Z" />
+                  </svg>
+                </span>
+                <div className="p-4">
+                  <div className="flex justify-between bg-red-50 p-4 rounded">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/1650/1650515.png"
+                      className="h-12"
+                      alt=""
+                    />
+                    <div className="ml-4">
+                      <h1 className="text-sm font-semibold text-neutral-700">
+                        Grooming
+                      </h1>
+                      <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
+                        Lorem ipsum dolor sit amet consectetur.
+                      </p>
+                      <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                        Book now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
           <li>Reviews</li>
           <li>Contact</li>
         </ul>
