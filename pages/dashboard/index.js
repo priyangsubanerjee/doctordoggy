@@ -35,9 +35,9 @@ function Dashboard() {
         <>
           <div>
             <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-              Registered <span className="text-pink-500">pet&apos;s</span>
+              Registered <span className="text-blue-900">pet&apos;s</span>
             </h2>
-            <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
+            <p className="text-[11px] lg:text-xs text-neutral-500 mt-2">
               All of your pet&apos;s information is stored here.
             </p>
           </div>

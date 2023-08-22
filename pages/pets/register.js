@@ -115,7 +115,7 @@ function RegisterPet() {
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
         <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-          Register new <span className="text-pink-500">pet</span>
+          Register new <span className="text-blue-900">pet</span>
         </h2>
         <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
           <span className="text-red-500">*</span> marked fields are required

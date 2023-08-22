@@ -87,7 +87,7 @@ function Profile() {
       <div>
         <div className="flex items-center justify-between">
           <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-            Your <span className="text-pink-500">account</span>
+            Your <span className="text-[#F15958]">account</span>
           </h2>
         </div>
         <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
