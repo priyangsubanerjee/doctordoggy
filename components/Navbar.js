@@ -300,14 +300,14 @@ function Navbar() {
                   <button className="flex items-center">
                     <span>
                       <img
-                        src={session.data.user.image}
+                        src={session?.data?.user?.image}
                         className="rounded-full h-10 border border-white"
                         alt=""
                       />
                     </span>
                     <div className="ml-3 text-left">
                       <h2 className="text-white text-sm">
-                        {session.data.user.name}
+                        {session?.data?.user?.name}
                       </h2>
                     </div>
                   </button>
