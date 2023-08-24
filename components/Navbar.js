@@ -188,11 +188,13 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="px-6 py-4 lg:px-20 lg:py-5 flex items-center justify-between bg-[#F15958]">
+      <div className="px-6 py-4 lg:py-2 lg:px-20 flex items-center justify-between bg-[#F15958]">
         <div>
-          <h1 className="text-xl lg:text-xl font-semibold text-white font-popins">
-            Doctor Doggy
-          </h1>
+          <img
+            src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1692890038/static/IMG_1494_o1olve.png"
+            className="h-16 mix-blend-multiply"
+            alt=""
+          />
         </div>
 
         <ul className="hidden lg:flex items-center space-x-12 font-popins text-white/70 text-sm font-normal">

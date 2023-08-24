@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <main>
       <div className="w-full h-[500px] lg:h-[670px] lg:p-12">
-        <div className="flex h-full w-full bg-red-50 items-center overflow-auto lg:rounded-lg transition-all">
+        <div className="flex h-full w-full bg-red-50 items-center overflow-auto lg:rounded-lg transition-all relative pointer-events-none">
           <div className="carouselCard h-full shrink-0 w-full relative overflow-hidden transition-all duration-700">
             <img
               src="https://images.alphacoders.com/110/1106886.jpg"
@@ -86,7 +86,7 @@ export default function Home() {
           </div>
           <div className="carouselCard h-full shrink-0 w-full relative overflow-hidden transition-all duration-700">
             <img
-              src="https://images.alphacoders.com/110/1106886.jpg"
+              src="https://media.istockphoto.com/id/1357774532/photo/dog-at-the-veterinarian.jpg?s=170667a&w=0&k=20&c=0Gxpkd99YeG-FWfM8xDOHOB6_8wiX5AscnfmiCNz-Lo="
               className="h-full w-full object-cover absolute inset-0"
               alt=""
             />
@@ -95,7 +95,7 @@ export default function Home() {
                 FEATURED
               </span>
               <h1 className="text-3xl lg:text-5xl font-bold text-white lg:w-1/2 font-popins leading-[1.2] lg:leading-[1.2] mt-8">
-                Book a service for your pet now.
+                Digitalize your pets medical records.
               </h1>
               <p className="text-white lg:w-1/2 mt-6 leading-6 lg:leading-[2] text-xs lg:text-sm font-popins">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -105,7 +105,7 @@ export default function Home() {
               </p>
               <div className="flex items-center mt-10 space-x-4 text-sm">
                 <button className="bg-[#F15958] px-6 h-12 text-white rounded-md">
-                  Make a reservation
+                  Get Started For Free
                 </button>
                 <button className="bg-neutral-800 px-6 h-12 text-white rounded-md">
                   Learn more
