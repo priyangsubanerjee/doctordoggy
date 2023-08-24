@@ -283,7 +283,7 @@ function Navbar() {
                     </div>
                   </div>
 
-                  <Link className="block" href={"/services"}>
+                  <Link className="block" href={"/bookings"}>
                     <div className="flex bg-slate-50 px-4 py-3 border rounded">
                       <span className="text-black">
                         <Icon height={20} icon="solar:calendar-broken" />

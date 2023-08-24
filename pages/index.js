@@ -239,7 +239,7 @@ export default function Home() {
           eiusmod tempor incididunt .
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10">
-          <div className="px-10 py-16 bg-green-100 flex flex-col items-center justify-center">
+          <div className="px-10 py-16 bg-green-50 flex flex-col items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
               className="h-20"
@@ -258,7 +258,7 @@ export default function Home() {
               Learn more
             </button>
           </div>
-          <div className="px-10 py-16 bg-yellow-100 flex flex-col items-center justify-center">
+          <div className="px-10 py-16 bg-yellow-50 flex flex-col items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1854/1854627.png"
               className="h-20"
@@ -277,7 +277,7 @@ export default function Home() {
               Book Now
             </button>
           </div>
-          <div className="px-10 py-16 bg-sky-100 flex flex-col items-center justify-center">
+          <div className="px-10 py-16 bg-sky-50 flex flex-col items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/1499/1499532.png"
               className="h-20"
