@@ -38,7 +38,7 @@ function Dashboard() {
               Registered <span className="text-[#F15958]">pet&apos;s</span>
             </h2>
             <p className="text-[11px] lg:text-xs text-neutral-500 mt-2">
-              All of your pet&apos;s information is stored here.
+              All of your pet&apos;s are listed below
             </p>
           </div>
 

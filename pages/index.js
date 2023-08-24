@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
+import { useEffect, useState } from "react";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -34,9 +35,87 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const [currentCard, setCurrentCard] = useState(0);
+  useEffect(() => {
+    let i = 0;
+    const carouselCards = document.querySelectorAll(".carouselCard");
+    setInterval(() => {
+      if (i == 0) {
+        carouselCards[0].style.transform = "translateX(-100%)";
+        carouselCards[1].style.transform = "translateX(-100%)";
+        i = 1;
+      } else {
+        carouselCards[0].style.transform = "translateX(0%)";
+        carouselCards[1].style.transform = "translateX(0%)";
+        i = 0;
+      }
+    }, 7000);
+  }, []);
   return (
     <main>
+      <div className="w-full h-[500px] lg:h-[670px] lg:p-12">
+        <div className="flex h-full w-full bg-red-50 items-center overflow-auto lg:rounded-lg transition-all">
+          <div className="carouselCard h-full shrink-0 w-full relative overflow-hidden transition-all duration-700">
+            <img
+              src="https://images.alphacoders.com/110/1106886.jpg"
+              className="h-full w-full object-cover absolute inset-0"
+              alt=""
+            />
+            <div className="h-full w-full bg-gradient-to-r from-black to-transparent absolute inset-0 flex flex-col justify-center px-8 lg:px-20">
+              <span className="text-white/70 w-fit rounded-full px-5 py-1 border border-white/50 text-xs tracking-widest font-semibold">
+                FEATURED
+              </span>
+              <h1 className="text-3xl lg:text-5xl font-bold text-white lg:w-1/2 font-popins leading-[1.2] lg:leading-[1.2] mt-8">
+                Book a service for your pet now.
+              </h1>
+              <p className="text-white lg:w-1/2 mt-6 leading-6 lg:leading-[2] text-xs lg:text-sm font-popins">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <div className="flex items-center mt-10 space-x-4 text-sm">
+                <button className="bg-[#F15958] px-6 h-12 text-white rounded-md">
+                  Make a reservation
+                </button>
+                <button className="bg-neutral-800 px-6 h-12 text-white rounded-md">
+                  Learn more
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="carouselCard h-full shrink-0 w-full relative overflow-hidden transition-all duration-700">
+            <img
+              src="https://images.alphacoders.com/110/1106886.jpg"
+              className="h-full w-full object-cover absolute inset-0"
+              alt=""
+            />
+            <div className="h-full w-full bg-gradient-to-r from-black to-transparent absolute inset-0 flex flex-col justify-center px-8 lg:px-20">
+              <span className="text-white/70 w-fit rounded-full px-5 py-1 border border-white/50 text-xs tracking-widest font-semibold">
+                FEATURED
+              </span>
+              <h1 className="text-3xl lg:text-5xl font-bold text-white lg:w-1/2 font-popins leading-[1.2] lg:leading-[1.2] mt-8">
+                Book a service for your pet now.
+              </h1>
+              <p className="text-white lg:w-1/2 mt-6 leading-6 lg:leading-[2] text-xs lg:text-sm font-popins">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <div className="flex items-center mt-10 space-x-4 text-sm">
+                <button className="bg-[#F15958] px-6 h-12 text-white rounded-md">
+                  Make a reservation
+                </button>
+                <button className="bg-neutral-800 px-6 h-12 text-white rounded-md">
+                  Learn more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="px-6 lg:px-[100px] py-12 lg:py-28 lg:flex">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
           <div className="h-fit w-[90%]">

@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import Link from "next/link";
 import { sign } from "jsonwebtoken";
 import { useRouter } from "next/router";
+import { Icon } from "@iconify/react";
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -187,10 +188,10 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="px-6 py-4 lg:px-20 lg:py-4 flex items-center justify-between bg-[#F15958]">
+      <div className="px-6 py-4 lg:px-20 lg:py-5 flex items-center justify-between bg-[#F15958]">
         <div>
-          <h1 className="text-xl lg:text-2xl font-semibold text-white">
-            Logo.
+          <h1 className="text-xl lg:text-xl font-semibold text-white font-popins">
+            Doctor Doggy
           </h1>
         </div>
 
@@ -279,6 +280,22 @@ function Navbar() {
                       </button>
                     </div>
                   </div>
+
+                  <Link className="block" href={"/services"}>
+                    <div className="flex bg-slate-50 px-4 py-3 border rounded">
+                      <span className="text-black">
+                        <Icon height={20} icon="solar:calendar-broken" />
+                      </span>
+                      <div className="ml-4 w-fit">
+                        <h1 className="text-sm font-medium text-neutral-700">
+                          My bookings
+                        </h1>
+                      </div>
+                      <span className="ml-auto text-black">
+                        <Icon icon="ph:arrow-right-bold" />
+                      </span>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>

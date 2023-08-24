@@ -159,14 +159,6 @@ function PetProfile({ pet }) {
 
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
-      <div>
-        <h2 className="text-lg lg:text-2xl font-semibold text-neutral-800">
-          Pets <span className="text-pink-500">profile</span>
-        </h2>
-        <p className="text-[11px] lg:text-xs text-neutral-500 mt-1">
-          Find all your vaccination records & prescriptions here
-        </p>
-      </div>
       <div className="flex flex-col items-center justify-center mt-10">
         <div className="relative">
           {pet.sex.toLowerCase() == "male" ? (
