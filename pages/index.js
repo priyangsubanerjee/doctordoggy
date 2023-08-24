@@ -35,7 +35,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home() {
-  const [currentCard, setCurrentCard] = useState(0);
   useEffect(() => {
     let i = 0;
     const carouselCards = document.querySelectorAll(".carouselCard");
@@ -116,7 +115,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="px-6 lg:px-[100px] py-12 lg:py-28 lg:flex">
+      <div className="hidden px-6 lg:px-[100px] py-12 lg:py-28 lg:hidden">
         <div className="lg:w-1/2 flex items-center justify-center lg:hidden mb-10">
           <div className="h-fit w-[90%]">
             <img
@@ -227,6 +226,75 @@ export default function Home() {
             <p className="text-[10px] mt-2 font-light text-center text-neutral-500">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
             </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white py-16">
+        <h1 className="text-center text-3xl font-semibold font-popins text-neutral-800">
+          See our all services ?
+        </h1>
+        <p className="text-center text-neutral-600 text-sm mt-2">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt .
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10">
+          <div className="px-10 py-16 bg-green-100 flex flex-col items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="text-xl font-semibold mt-5 text-green-700">
+              Grooming & Spa
+            </h2>
+            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+              eligendi eos, voluptatum commodi amet vel, molestias odit
+              distinctio beatae, modi quod labore deleniti facere expedita
+              temporibus quam culpa dolores! Nam.
+            </p>
+            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+              Learn more
+            </button>
+          </div>
+          <div className="px-10 py-16 bg-yellow-100 flex flex-col items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1854/1854627.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="text-xl font-semibold mt-5 text-yellow-700">
+              Veterinay Care
+            </h2>
+            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+              eligendi eos, voluptatum commodi amet vel, molestias odit
+              distinctio beatae, modi quod labore deleniti facere expedita
+              temporibus quam culpa dolores! Nam.
+            </p>
+            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+              Book Now
+            </button>
+          </div>
+          <div className="px-10 py-16 bg-sky-100 flex flex-col items-center justify-center">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1499/1499532.png"
+              className="h-20"
+              alt=""
+            />
+            <h2 className="text-xl font-semibold mt-5 text-sky-700">
+              Dog Boarding
+            </h2>
+            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+              eligendi eos, voluptatum commodi amet vel, molestias odit
+              distinctio beatae, modi quod labore deleniti facere expedita
+              temporibus quam culpa dolores! Nam.
+            </p>
+            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+              More Info
+            </button>
           </div>
         </div>
       </div>
