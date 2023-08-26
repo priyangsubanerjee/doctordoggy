@@ -132,7 +132,7 @@ function Navbar() {
               />
             </svg>
           </span>
-          <span>+91 992234408</span>
+          <span>+91 9996512944</span>
         </div>
         <div className="flex items-center space-x-3">
           <img
@@ -302,8 +302,12 @@ function Navbar() {
               </div>
             </div>
           </li>
-          <li>Reviews</li>
-          <li>Contact</li>
+          <li>
+            <Link href={"/feedback"}>Feedback</Link>
+          </li>
+          <li>
+            <Link href={"/contact"}>Contact</Link>
+          </li>
         </ul>
 
         <div className="flex items-center space-x-5">

@@ -481,11 +481,11 @@ export default function Home() {
             <ul className="text-center mt-7 space-y-3">
               <li className="flex items-center justify-center space-x-3">
                 <Icon height={24} icon="material-symbols:call" />
-                <span className="text-sm">+91 1234567890</span>
+                <span className="text-sm">+91 9996512944</span>
               </li>
               <li className="flex items-center justify-center space-x-3">
                 <Icon height={24} icon="ic:baseline-email" />
-                <span className="text-sm">contact.doctordoggy.vet</span>
+                <span className="text-sm">admin@doctordoggy.vet</span>
               </li>
             </ul>
             <h1 className="text-2xl text-center font-bold text-neutral-800 mt-16">
