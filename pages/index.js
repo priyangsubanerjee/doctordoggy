@@ -423,42 +423,58 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
         <div className="flex items-center justify-between">
-          <p className="text-xl lg:text-2xl font-bold text-neutral-800 font-popins">
-            What our customers say
+          <p className="text-2xl lg:text-3xl font-bold text-neutral-800 font-popins">
+            From the founders
           </p>
-          <button className="hidden lg:block font-semibold tracking-wide88 text-xs text-blue-900">
-            WRITE A REVIEW
-          </button>
         </div>
-        <div className="flex mt-10">
-          <div className="lg:w-[500px] bg-neutral-50 rounded p-6">
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className=" bg-neutral-50 rounded p-6">
             <div className="flex items-center space-x-4">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+                src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1693060777/Screenshot_2023-08-26_at_8.08.37_PM_bsv4hc.png"
                 className="h-12 w-12 rounded-full object-cover"
                 alt=""
               />
               <div className="ml-4">
-                <p className="font-medium">Jane Doe</p>
-                <span className="text-[10px]">12 July, 2023</span>
+                <p className="font-medium">Subhodip Roy</p>
+                <span className="text-[10px]">Co-Founder</span>
               </div>
             </div>
             <p className="text-xs leading-6 font-light mt-4">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis
-              vitae deserunt tenetur qui! Nulla impedit error suscipit harum,
-              dolore soluta deserunt atque repudiandae placeat ratione
-              reprehenderit velit ipsa tempore expedita.
+              Our objective is to blend technology seamlessly into the
+              established pet care sector, ensuring convenience and inclusivity
+              for everyone. What distinguishes us from peers is our emphasis on
+              vital services over mere product sales. Our vision aligns with the
+              industry norm: to streamline the pet parenting journey through a
+              comprehensive array of services delivered by proficient experts.
+              Anticipating your acknowledgment of our endeavour, we welcome any
+              input on how we can further enhance it.
             </p>
-            <div className="mt-4 text-yellow-500 space-x-2">
-              {[...Array(5)].map((_, i) => {
-                return (
-                  <iconify-icon
-                    key={i}
-                    icon="solar:star-bold-duotone"
-                  ></iconify-icon>
-                );
-              })}
+          </div>
+          <div className=" bg-neutral-50 rounded p-6">
+            <div className="flex items-center space-x-4">
+              <img
+                src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1693060777/Screenshot_2023-08-26_at_8.08.45_PM_epyu8v.png"
+                className="h-12 w-12 rounded-full object-cover"
+                alt=""
+              />
+              <div className="ml-4">
+                <p className="font-medium">Ankit Karmakar</p>
+                <span className="text-[10px]">Co-Founder</span>
+              </div>
             </div>
+            <p className="text-xs leading-6 font-light mt-4">
+              Our core intention behind introducing this initiative, despite our
+              existence in the product market for the past few years, is
+              straightforward. We aspire to establish ourselves as a premier
+              modern pet care brand, concentrating primarily on essentials such
+              as healthcare, vaccinations, grooming, and other vital services.
+              Through our team of highly trained professionals and experts, we
+              aim to streamline the journey of pet parenting for individuals
+              engrossed in their professional lives. We understand their desire
+              to provide optimal care for their pets, even when resources are
+              limited.
+            </p>
           </div>
         </div>
       </div>
