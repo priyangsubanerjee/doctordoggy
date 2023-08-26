@@ -288,9 +288,9 @@ function Navbar() {
                       </Link>
                     </div>
                   </div>
-                  <div className="flex justify-between bg-indigo-50 p-4 rounded opacity-50">
+                  <div className="flex justify-between bg-indigo-50 p-4 rounded">
                     <img
-                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
+                      src="https://cdn-icons-png.flaticon.com/512/9099/9099344.png"
                       className="h-12"
                       alt=""
                     />
@@ -309,9 +309,9 @@ function Navbar() {
                       </Link>
                     </div>
                   </div>
-                  <div className="flex justify-between bg-green-50 p-4 rounded opacity-50">
+                  <div className="flex justify-between bg-green-50 p-4 rounded">
                     <img
-                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
+                      src="https://cdn-icons-png.flaticon.com/512/4557/4557266.png"
                       className="h-12"
                       alt=""
                     />

@@ -86,7 +86,7 @@ export default function Home() {
                     Make a reservation
                   </button>
                 </Link>
-                <button className="bg-neutral-800 px-6 h-12 text-white rounded-md">
+                <button className="hidden bg-neutral-800 px-6 h-12 text-white rounded-md">
                   Learn more
                 </button>
               </div>
@@ -118,7 +118,7 @@ export default function Home() {
                 >
                   Get Started For Free
                 </button>
-                <button className="bg-neutral-800 px-6 h-12 text-white rounded-md">
+                <button className="hidden bg-neutral-800 px-6 h-12 text-white rounded-md">
                   Learn more
                 </button>
               </div>

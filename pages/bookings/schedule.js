@@ -8,6 +8,15 @@ import { useSession } from "next-auth/react";
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/unauthenticated",
+        permanent: false,
+      },
+    };
+  }
+
   await connectDatabase();
   let pets_ =
     (await pet.find({
@@ -23,11 +32,25 @@ export async function getServerSideProps(context) {
 
 function Schedule({ pets }) {
   const session = useSession();
+  const [services, setServices] = React.useState([
+    {
+      name: "Grooming & Spa",
+    },
+    {
+      name: "Boarding",
+    },
+    {
+      name: "Training",
+    },
+    {
+      name: "Dog Walking",
+    },
+  ]);
   const [bookingProp, setBookingProp] = React.useState({
     email: session?.data?.user?.email,
     petId: pets[0]._id,
     dateTime: "",
-    serviceType: "Grooming & Spa",
+    serviceType: services[0].name,
     notes: "",
   });
   const [loading, setLoading] = React.useState(false);
@@ -141,8 +164,13 @@ function Schedule({ pets }) {
               name=""
               id=""
             >
-              <option value="Grooming & Spa">Grooming & Spa</option>
-              <option value="Boarding">Boarding</option>
+              {services.map((service, index) => {
+                return (
+                  <option key={index} value={service.name}>
+                    {service.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
