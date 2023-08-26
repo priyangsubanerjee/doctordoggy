@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import Marquee from "react-fast-marquee";
+import { Icon } from "@iconify/react";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -241,7 +242,8 @@ export default function Home() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt .
         </p>
-        <div className="flex items-center justify-center mt-10">
+
+        <div className="mt-10">
           <Marquee>
             <div className="lg:w-[400px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
               <img
@@ -325,7 +327,9 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
         <div className="flex items-center justify-between">
-          <p className="font-medium tracking-wider text-xs">WHAT PEOPLE SAY</p>
+          <p className="tracking-wider text-2xl font-bold text-neutral-800">
+            WHAT PEOPLE SAY
+          </p>
           <button className="font-semibold tracking-wide88 text-xs text-blue-900">
             WRITE A REVIEW
           </button>
@@ -359,6 +363,120 @@ export default function Home() {
                 );
               })}
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-950">
+        <p className="tracking-wider text-4xl font-bold text-white font-popins">
+          Trusted Brands
+        </p>
+        <p className="text-sm mt-3 text-white/50 leading-6">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
+          veniam accusamus expedita harum mollitia quia quisquam fuga adipisci
+          deleniti quasi, eius exercitationem nemo, iusto veritatis corporis
+          quod placeat nihil sed.
+        </p>
+        <div className="flex items-center justify-between"></div>
+        <div className="flex mt-10">
+          <Marquee gradient={true} gradientColor={[0, 0, 0]}>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Royal-Canin-Logo.svg/2560px-Royal-Canin-Logo.svg.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://1000logos.net/wp-content/uploads/2023/03/Pedigree-Logo-2007.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://seeklogo.com/images/F/farmina-pet-foods-logo-19EA90C73A-seeklogo.com.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+          </Marquee>
+        </div>
+      </div>
+
+      <div className="px-6 lg:px-[100px] py-10 lg:pt-28">
+        <p className="text-4xl font-bold text-black font-popins">Contact us</p>
+        <p className="text-sm mt-3 text-black/80 leading-6">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
+          veniam accusamus expedita harum mollitia quia quisquam fuga adipisci.
+        </p>
+        <div className="lg:flex mt-16 lg:space-x-16">
+          <form className="lg:w-[50%] grid grid-cols-2 gap-4 h-fit" action="">
+            <div>
+              <p>Email</p>
+              <input
+                type="text"
+                className="h-12 w-full bg-neutral-100 mt-2 px-4 rounded"
+                placeholder="abc@gmail.com"
+                name=""
+                id=""
+              />
+            </div>
+            <div>
+              <p>Email</p>
+              <input
+                type="text"
+                className="h-12 w-full bg-neutral-100 mt-2 px-4 rounded"
+                placeholder="abc@gmail.com"
+                name=""
+                id=""
+              />
+            </div>
+            <div className="col-span-2">
+              <p>Your message</p>
+              <textarea
+                type="text"
+                className="bg-neutral-100 mt-2 p-4 rounded w-full h-full resize-none"
+                placeholder="abc@gmail.com"
+                cols="10"
+                name=""
+                id=""
+              />
+            </div>
+            <div className="col-span-2">
+              <button className="text-white bg-neutral-800 mt-10 w-full py-4">
+                Send message
+              </button>
+            </div>
+          </form>
+          <div className="lg:w-[50%] mt-10 lg:mt-0">
+            <h1 className="text-2xl text-center font-bold text-neutral-800">
+              Get in touch
+            </h1>
+            <ul className="text-center mt-7 space-y-3">
+              <li className="flex items-center justify-center space-x-3">
+                <Icon height={24} icon="material-symbols:call" />
+                <span className="text-sm">+91 1234567890</span>
+              </li>
+              <li className="flex items-center justify-center space-x-3">
+                <Icon height={24} icon="ic:baseline-email" />
+                <span className="text-sm">contact.doctordoggy.vet</span>
+              </li>
+            </ul>
+            <h1 className="text-2xl text-center font-bold text-neutral-800 mt-16">
+              Locate us
+            </h1>
+            <ul className="text-center mt-7 space-y-3">
+              <li className="flex items-center justify-center space-x-3">
+                <Icon height={24} icon="solar:calendar-broken" />
+                <span className="text-sm">MON - FRI 9:00AM - 10:00PM</span>
+              </li>
+              <li className="flex items-center justify-center space-x-3">
+                <Icon height={24} icon="mdi:location" />
+                <span className="text-sm">Locate on maps</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
