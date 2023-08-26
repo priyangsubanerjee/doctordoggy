@@ -234,7 +234,7 @@ function Navbar() {
             <span>Services</span>
 
             <div className="absolute opacity-0 -z-40 top-0 left-1/2 translate-y-[50%] -translate-x-1/2 group-hover:z-10 group-hover:translate-y-[0] group-hover:opacity-100 transition-all">
-              <div className="mt-7 w-80 bg-white shadow-2xl shadow-black/[0.15] relative">
+              <div className="mt-7 w-[700px] bg-white shadow-2xl shadow-black/[0.15] relative">
                 <span className="text-white absolute top-1 -translate-y-full left-1/2 -translate-x-1/2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +245,7 @@ function Navbar() {
                     <path fill="currentColor" d="m7.5 3l7.5 8H0l7.5-8Z" />
                   </svg>
                 </span>
-                <div className="p-4 space-y-5">
+                <div className="p-4 grid grid-cols-2 gap-2">
                   <div className="flex justify-between bg-red-50 p-4 rounded">
                     <img
                       src="https://cdn-icons-png.flaticon.com/512/1650/1650515.png"
@@ -256,12 +256,15 @@ function Navbar() {
                       <h1 className="text-sm font-semibold text-neutral-700">
                         Grooming
                       </h1>
-                      <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
-                        Lorem ipsum dolor sit amet consectetur.
+                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
+                        Provide your pets with the gift of a professional
+                        grooming and spa session.
                       </p>
-                      <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                        Book now
-                      </button>
+                      <Link href={"/bookings/schedule"}>
+                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                          Book now
+                        </button>
+                      </Link>
                     </div>
                   </div>
                   <div className="flex justify-between bg-yellow-50 p-4 rounded">
@@ -275,16 +278,62 @@ function Navbar() {
                         Boarding
                       </h1>
                       <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
-                        Lorem ipsum dolor sit amet consectetur.
+                        Feeling anxious about leaving your pets in an unfamiliar
+                        environment.
                       </p>
-                      <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                        Book now
-                      </button>
+                      <Link href={"/bookings/schedule"}>
+                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                          Book now
+                        </button>
+                      </Link>
                     </div>
                   </div>
-
+                  <div className="flex justify-between bg-indigo-50 p-4 rounded opacity-50">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
+                      className="h-12"
+                      alt=""
+                    />
+                    <div className="ml-4 w-full">
+                      <h1 className="text-sm font-semibold text-neutral-700">
+                        Training session
+                      </h1>
+                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
+                        Reserve your initial session with our trainer and
+                        witness the transformation.
+                      </p>
+                      <Link href={"/bookings/schedule"}>
+                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                          Book now
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex justify-between bg-green-50 p-4 rounded opacity-50">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
+                      className="h-12"
+                      alt=""
+                    />
+                    <div className="ml-4 w-full">
+                      <h1 className="text-sm font-semibold text-neutral-700">
+                        Dog walking
+                      </h1>
+                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
+                        If you&apos;re short on time for regular pet walks,
+                        arrange a designated time slot.
+                      </p>
+                      <Link href={"/bookings/schedule"}>
+                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
+                          Book now
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4">
                   <Link className="block" href={"/bookings"}>
-                    <div className="flex bg-slate-50 px-4 py-3 border rounded">
+                    <div className="flex hover:bg-slate-100 bg-slate-50 px-4 py-3 border rounded">
                       <span className="text-black">
                         <Icon height={20} icon="solar:calendar-broken" />
                       </span>

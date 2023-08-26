@@ -57,14 +57,14 @@ function Sidebar({ open, setOpen }) {
                 </li>
               )}
 
-              <Link href="/?redirect=false" className="block">
+              <Link href="/bookings/" className="block">
                 <li className="flex items-center space-x-2">
                   <iconify-icon
                     height="20"
                     width="20"
                     icon="akar-icons:scissor"
                   ></iconify-icon>
-                  <span>Services</span>
+                  <span>Bookings</span>
                 </li>
               </Link>
               <Link href="/feedback" className="block">
@@ -77,14 +77,16 @@ function Sidebar({ open, setOpen }) {
                   <span>Feedback</span>
                 </li>
               </Link>
-              <li className="flex items-center space-x-2">
-                <iconify-icon
-                  height="23"
-                  width="23"
-                  icon="fluent:call-20-regular"
-                ></iconify-icon>
-                <span>Contact us</span>
-              </li>
+              <Link href="/contact" className="block">
+                <li className="flex items-center space-x-2">
+                  <iconify-icon
+                    height="23"
+                    width="23"
+                    icon="fluent:call-20-regular"
+                  ></iconify-icon>
+                  <span>Contact us</span>
+                </li>
+              </Link>
             </ul>
             <div className="px-6 mt-10">
               {session.status === "authenticated" ? (
