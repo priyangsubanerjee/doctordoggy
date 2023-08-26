@@ -8,6 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import Marquee from "react-fast-marquee";
 import { Icon } from "@iconify/react";
+import ContactForm from "@/components/ContactForm";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -396,10 +397,7 @@ export default function Home() {
           Trusted Brands
         </p>
         <p className="text-sm mt-3 text-white/50 leading-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          veniam accusamus expedita harum mollitia quia quisquam fuga adipisci
-          deleniti quasi, eius exercitationem nemo, iusto veritatis corporis
-          quod placeat nihil sed.
+          Provide your pets with industry leading products.
         </p>
         <div className="flex items-center justify-between"></div>
         <div className="flex mt-10">
@@ -425,90 +423,82 @@ export default function Home() {
                 className="h-full w-full object-contain"
               />
             </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://www.signaturepetfoods.com/wp-content/uploads/2022/06/cropped-cropped-Signature-Logo-Open-File.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://cdn.shopify.com/s/files/1/0272/4714/9155/files/logo-aboutus.png?1207"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/ftflxc0vrfkbavvj9zkv"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://totw.storage.googleapis.com/wp-content/uploads/2019/08/21105114/totw-logo_home-banner.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://brema-pharm.com/upload/beaphar.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://fidele.co/cdn/shop/files/Asset_2_2x_0389ade8-5ff6-43eb-a12e-de3d44b66beb_250x.png?v=1624518116"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://drools.com/wp-content/uploads/2021/10/drools_logo.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/IAMS-Logo.svg/1200px-IAMS-Logo.svg.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://logolook.net/wp-content/uploads/2022/08/Whiskas-Logo.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <div className="w-52 h-52 bg-transparent shrink-0 mr-20">
+              <img
+                src="https://static.wixstatic.com/media/cef067_ee4b277e8af64795ba0c71d6f8b97235~mv2.png/v1/fill/w_208,h_160,al_c,q_85,usm_1.20_1.00_0.01,enc_auto/logognawlers2_2.png"
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            </div>
           </Marquee>
         </div>
       </div>
 
       <div className="px-6 lg:px-[100px] py-10 lg:pt-28">
-        <p className="text-4xl font-bold text-black font-popins">Contact us</p>
-        <p className="text-sm mt-3 text-black/80 leading-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas
-          veniam accusamus expedita harum mollitia quia quisquam fuga adipisci.
-        </p>
-        <div className="lg:flex mt-16 lg:space-x-16">
-          <form className="lg:w-[50%] grid grid-cols-2 gap-4 h-fit" action="">
-            <div>
-              <p>Email</p>
-              <input
-                type="text"
-                className="h-12 w-full bg-neutral-100 mt-2 px-4 rounded"
-                placeholder="abc@gmail.com"
-                name=""
-                id=""
-              />
-            </div>
-            <div>
-              <p>Email</p>
-              <input
-                type="text"
-                className="h-12 w-full bg-neutral-100 mt-2 px-4 rounded"
-                placeholder="abc@gmail.com"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="col-span-2">
-              <p>Your message</p>
-              <textarea
-                type="text"
-                className="bg-neutral-100 mt-2 p-4 rounded w-full h-full resize-none"
-                placeholder="abc@gmail.com"
-                cols="10"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="col-span-2">
-              <button className="text-white bg-neutral-800 mt-10 w-full py-4">
-                Send message
-              </button>
-            </div>
-          </form>
-          <div className="lg:w-[50%] mt-10 lg:mt-0">
-            <h1 className="text-2xl text-center font-bold text-neutral-800">
-              Get in touch
-            </h1>
-            <ul className="text-center mt-7 space-y-3">
-              <li className="flex items-center justify-center space-x-3">
-                <Icon height={24} icon="material-symbols:call" />
-                <span className="text-sm">+91 9996512944</span>
-              </li>
-              <li className="flex items-center justify-center space-x-3">
-                <Icon height={24} icon="ic:baseline-email" />
-                <span className="text-sm">admin@doctordoggy.vet</span>
-              </li>
-            </ul>
-            <h1 className="text-2xl text-center font-bold text-neutral-800 mt-16">
-              Locate us
-            </h1>
-            <ul className="text-center mt-7 space-y-3">
-              <li className="flex items-center justify-center space-x-3">
-                <Icon height={24} icon="solar:calendar-broken" />
-                <span className="text-sm">MON - FRI, 9:00AM - 10:00PM</span>
-              </li>
-              <a
-                href="https://www.google.com/maps/dir//New+Pet+smart+bidhannagar,+52,+Bidhannagar,+Durgapur,+West+Bengal+713206/@23.5158391,87.3548915,20.29z/data=!4m8!4m7!1m0!1m5!1m1!1s0x39f77193aa4e95c7:0xdb74e5bbb15abf79!2m2!1d87.3552126!2d23.5158563?entry=ttu"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <li className="flex items-center justify-center space-x-3 hover:text-blue-500">
-                  <Icon height={24} icon="mdi:location" />
-                  <span className="text-sm">Locate on maps</span>
-                </li>
-              </a>
-            </ul>
-          </div>
-        </div>
+        <ContactForm />
       </div>
     </main>
   );
