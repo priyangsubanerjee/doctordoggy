@@ -72,10 +72,11 @@ export default function Home() {
                 Book a service for your pet now.
               </h1>
               <p className="text-white lg:w-1/2 mt-6 leading-6 lg:leading-[2] text-xs lg:text-sm font-popins">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Treat your pets with dedicated care from our team of specially
+                trained and highly experienced professionals. At Doctor Doggy,
+                we guarantee top-notch treatment for your beloved non-human
+                family members, even in your absence. Choose from a diverse
+                array of services that we offer.
               </p>
               <div className="flex items-center mt-10 space-x-4 text-sm">
                 <button className="bg-[#F15958] px-6 h-12 text-white rounded-md">
@@ -101,10 +102,10 @@ export default function Home() {
                 Digitalize your pets medical records.
               </h1>
               <p className="text-white lg:w-1/2 mt-6 leading-6 lg:leading-[2] text-xs lg:text-sm font-popins">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Amidst technological progress, why remain attached to physical
+                vaccine cards and essential papers without any backup? Make the
+                transition to Doctor Doggy&apos;s digitalized pet record portal,
+                ensuring you never miss out on important information again.
               </p>
               <div className="flex items-center mt-10 space-x-4 text-sm">
                 <button className="bg-[#F15958] px-6 h-12 text-white rounded-md">
@@ -162,15 +163,14 @@ export default function Home() {
       <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-50 relative">
         <p className="font-medium tracking-wider text-xs">WHY CHOOSE US?</p>
         <h2 className="text-2xl font-medium font-popins mt-10 leading-[1.6]">
-          We are the best in the business. Lorem ipsum dolor sit amet
+          We are the best in the business.
         </h2>
         <p className="mt-4 text-sm leading-7">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-          alias similique laboriosam fugiat odit vero nemo libero fugit, unde
-          aliquid suscipit cupiditate laborum ipsa perspiciatis ex corporis, a
-          minima corrupti eligendi illum ipsum omnis deleniti porro accusantium?
-          Quis earum, culpa cum quaerat rem omnis inventore fugiat, beatae hic
-          dignissimos eius?
+          Embark on your parenthood adventure alongside a community of animal
+          enthusiasts with over 7 years of experience. Our highest commitment is
+          to customer contentment, setting us apart from all other contenders in
+          this field. Join the pet care revolution by making the switch to
+          Doctor Doggy today.
         </p>
         <img
           src="https://cdn-icons-png.flaticon.com/512/9784/9784121.png"
@@ -245,7 +245,7 @@ export default function Home() {
 
         <div className="mt-10">
           <Marquee>
-            <div className="lg:w-[400px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
+            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/2369/2369545.png"
                 className="h-20"
@@ -255,16 +255,17 @@ export default function Home() {
                 Grooming & Spa
               </h2>
               <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
-                odit distinctio beatae, modi quod labore deleniti facere
-                expedita temporibus quam culpa dolores! Nam.
+                Provide your pets with the gift of a professional grooming and
+                spa session, expertly administered by our trained team of
+                grooming professionals. We utilize top-of-the-line equipment and
+                cosmetics to ensure the delivery of high-quality services at
+                budget-friendly rates.
               </p>
               <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
+            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/7810/7810650.png"
                 className="h-20"
@@ -274,16 +275,18 @@ export default function Home() {
                 Boarding
               </h2>
               <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
-                odit distinctio beatae, modi quod labore deleniti facere
-                expedita temporibus quam culpa dolores! Nam.
+                Feeling anxious about leaving your pets in an unfamiliar
+                environment while boarding outside the city? Relax and pay a
+                visit to our boarding facility. Our fully air-conditioned
+                accommodations provide ample personal space for play. What sets
+                us apart are the specialized meal choices, regular cleaning, and
+                stringent quality control measures.
               </p>
               <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
+            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4966/4966169.png"
                 className="h-20"
@@ -293,16 +296,16 @@ export default function Home() {
                 Veterinary
               </h2>
               <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
-                odit distinctio beatae, modi quod labore deleniti facere
-                expedita temporibus quam culpa dolores! Nam.
+                Have your pets undergo examinations by our exceptionally
+                skilled, capable, and seasoned team of veterinarians. Our duty
+                involves consistently evaluating our doctors and safeguarding
+                our clientele from unqualified individuals.
               </p>
               <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
+            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/8410/8410128.png"
                 className="h-20"
@@ -312,10 +315,31 @@ export default function Home() {
                 Dog Walking
               </h2>
               <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
-                odit distinctio beatae, modi quod labore deleniti facere
-                expedita temporibus quam culpa dolores! Nam.
+                If you&apos;re short on time for regular pet walks, arrange a
+                designated time slot and have it taken care of hassle-free. Our
+                approach relies on positive reinforcement, assuring that your
+                pet&apo;ss energy is channelled constructively, preventing
+                disruptions to your living space and keeping boredom at b
+              </p>
+              <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+                Learn more
+              </button>
+            </div>
+            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#caf9f0] flex flex-col items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/3827/3827176.png"
+                className="h-20"
+                alt=""
+              />
+              <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
+                Training
+              </h2>
+              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+                Uncertain about managing your exuberant pet? Worried about
+                teaching them fundamental commands? Reserve your initial session
+                with our trainer and witness the transformation. Our trainer
+                will lead you through necessary steps to ensure your pet&apos;s
+                well-being and vitality.
               </p>
               <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
                 Learn more
@@ -327,8 +351,8 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
         <div className="flex items-center justify-between">
-          <p className="tracking-wider text-2xl font-bold text-neutral-800">
-            WHAT PEOPLE SAY
+          <p className="text-2xl font-bold text-neutral-800 font-popins">
+            What our customers say
           </p>
           <button className="font-semibold tracking-wide88 text-xs text-blue-900">
             WRITE A REVIEW
@@ -470,12 +494,18 @@ export default function Home() {
             <ul className="text-center mt-7 space-y-3">
               <li className="flex items-center justify-center space-x-3">
                 <Icon height={24} icon="solar:calendar-broken" />
-                <span className="text-sm">MON - FRI 9:00AM - 10:00PM</span>
+                <span className="text-sm">MON - FRI, 9:00AM - 10:00PM</span>
               </li>
-              <li className="flex items-center justify-center space-x-3">
-                <Icon height={24} icon="mdi:location" />
-                <span className="text-sm">Locate on maps</span>
-              </li>
+              <a
+                href="https://www.google.com/maps/dir//New+Pet+smart+bidhannagar,+52,+Bidhannagar,+Durgapur,+West+Bengal+713206/@23.5158391,87.3548915,20.29z/data=!4m8!4m7!1m0!1m5!1m1!1s0x39f77193aa4e95c7:0xdb74e5bbb15abf79!2m2!1d87.3552126!2d23.5158563?entry=ttu"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <li className="flex items-center justify-center space-x-3 hover:text-blue-500">
+                  <Icon height={24} icon="mdi:location" />
+                  <span className="text-sm">Locate on maps</span>
+                </li>
+              </a>
             </ul>
           </div>
         </div>
