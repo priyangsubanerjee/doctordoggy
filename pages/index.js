@@ -235,27 +235,27 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-white py-16">
-        <h1 className="text-center text-3xl font-semibold font-popins text-neutral-800">
+      <div className="bg-white pt-16">
+        <h1 className="text-center text-2xl lg:text-3xl font-semibold font-popins text-neutral-800">
           See our all services ?
         </h1>
-        <p className="text-center text-neutral-600 text-sm mt-2">
+        <p className="text-center text-neutral-600 text-xs lg:text-sm mt-2 px-5 leading-5">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt .
         </p>
 
         <div className="mt-10">
           <Marquee>
-            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
+            <div className="w-[380px] lg:w-[400px] h-[450px] lg:h-[550px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/2369/2369545.png"
-                className="h-20"
+                className="h-16 lg:h-20"
                 alt=""
               />
               <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
                 Grooming & Spa
               </h2>
-              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              <p className="text-center text-xs lg:text-sm leading-7 lg:leading-6 mt-4 text-neutral-800">
                 Provide your pets with the gift of a professional grooming and
                 spa session, expertly administered by our trained team of
                 grooming professionals. We utilize top-of-the-line equipment and
@@ -266,16 +266,16 @@ export default function Home() {
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
+            <div className="w-[380px] lg:w-[400px] h-[450px] lg:h-[550px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/7810/7810650.png"
-                className="h-20"
+                className="h-16 lg:h-20"
                 alt=""
               />
               <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
                 Boarding
               </h2>
-              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              <p className="text-center text-xs lg:text-sm leading-7 lg:leading-6 mt-4 text-neutral-800">
                 Feeling anxious about leaving your pets in an unfamiliar
                 environment while boarding outside the city? Relax and pay a
                 visit to our boarding facility. Our fully air-conditioned
@@ -287,16 +287,16 @@ export default function Home() {
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
+            <div className="w-[380px] lg:w-[400px] h-[450px] lg:h-[550px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/4966/4966169.png"
-                className="h-20"
+                className="h-16 lg:h-20"
                 alt=""
               />
               <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
                 Veterinary
               </h2>
-              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              <p className="text-center text-xs lg:text-sm leading-7 lg:leading-6 mt-4 text-neutral-800">
                 Have your pets undergo examinations by our exceptionally
                 skilled, capable, and seasoned team of veterinarians. Our duty
                 involves consistently evaluating our doctors and safeguarding
@@ -306,16 +306,16 @@ export default function Home() {
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
+            <div className="w-[380px] lg:w-[400px] h-[450px] lg:h-[550px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/8410/8410128.png"
-                className="h-20"
+                className="h-16 lg:h-20"
                 alt=""
               />
               <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
                 Dog Walking
               </h2>
-              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              <p className="text-center text-xs lg:text-sm leading-7 lg:leading-6 mt-4 text-neutral-800">
                 If you&apos;re short on time for regular pet walks, arrange a
                 designated time slot and have it taken care of hassle-free. Our
                 approach relies on positive reinforcement, assuring that your
@@ -326,16 +326,16 @@ export default function Home() {
                 Learn more
               </button>
             </div>
-            <div className="lg:w-[400px] h-[550px] px-10 py-16 bg-[#caf9f0] flex flex-col items-center justify-center">
+            <div className="w-[380px] lg:w-[400px] h-[450px] lg:h-[550px] px-10 py-16 bg-[#caf9f0] flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/3827/3827176.png"
-                className="h-20"
+                className="h-16 lg:h-20"
                 alt=""
               />
               <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
                 Training
               </h2>
-              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+              <p className="text-center text-xs lg:text-sm leading-7 lg:leading-6 mt-4 text-neutral-800">
                 Uncertain about managing your exuberant pet? Worried about
                 teaching them fundamental commands? Reserve your initial session
                 with our trainer and witness the transformation. Our trainer
@@ -347,6 +347,67 @@ export default function Home() {
               </button>
             </div>
           </Marquee>
+        </div>
+      </div>
+
+      <div className="relative min-h-[1450px] lg:min-h-[800px]">
+        <img
+          src="https://shotkit.com/wp-content/uploads/2022/09/Photoshoot-Ideas-With-Dogs-mithul-varshan.jpeg"
+          className="absolute inset-0 h-full w-full object-cover"
+          alt=""
+        />
+
+        <div className="py-36 absolute inset-0 bg-black/80">
+          <p className="tracking-wider text-center text-2xl lg:text-4xl font-bold text-white font-popins">
+            Three Steps & Enjoy Your Day
+          </p>
+          <p className="text-sm text-center mt-3 text-white/50 leading-6">
+            Provide your pets with industry leading products.
+          </p>
+
+          <div className="mt-16 w-full flex flex-col lg:flex-row items-center justify-center space-y-7 lg:space-y-0 lg:space-x-8">
+            <div className="bg-[#FFE1CF] rounded-lg px-7 py-12 w-[350px]">
+              <img
+                className="mx-auto h-20"
+                src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1693029123/doctor-doggy/search_k26uw2.png"
+                alt=""
+              />
+              <h1 className="text-2xl font-bold text-center font-popins mt-6">
+                Select a service
+              </h1>
+              <p className="text-sm text-center mt-4 leading-6">
+                Select a service from our diverse array of offerings, ranging
+                from grooming and spa to boarding and veterinary care.
+              </p>
+            </div>
+            <div className="bg-[#E8F6FB] rounded-lg px-7 py-12 w-[350px]">
+              <img
+                className="mx-auto h-20"
+                src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1693029319/doctor-doggy/calendar_wqjtvb.png"
+                alt=""
+              />
+              <h1 className="text-2xl font-bold text-center font-popins mt-6">
+                Book your day
+              </h1>
+              <p className="text-sm text-center mt-4 leading-6">
+                Choose a date and time that is convenient for you and your pet.
+                We will take care of the rest.
+              </p>
+            </div>
+            <div className="bg-[#CFEDCF] rounded-lg px-7 py-12 w-[350px]">
+              <img
+                className="mx-auto h-20"
+                src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1693029504/doctor-doggy/sunbathing_sz1las.png"
+                alt=""
+              />
+              <h1 className="text-2xl font-bold text-center font-popins mt-6">
+                Have Relax
+              </h1>
+              <p className="text-sm text-center mt-4 leading-6">
+                Sit back and relax while we take care of your pet&apos;s needs.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
