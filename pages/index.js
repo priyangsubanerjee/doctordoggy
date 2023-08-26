@@ -413,10 +413,10 @@ export default function Home() {
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28">
         <div className="flex items-center justify-between">
-          <p className="text-2xl font-bold text-neutral-800 font-popins">
+          <p className="text-xl lg:text-2xl font-bold text-neutral-800 font-popins">
             What our customers say
           </p>
-          <button className="font-semibold tracking-wide88 text-xs text-blue-900">
+          <button className="hidden lg:block font-semibold tracking-wide88 text-xs text-blue-900">
             WRITE A REVIEW
           </button>
         </div>
@@ -454,7 +454,7 @@ export default function Home() {
       </div>
 
       <div className="px-6 lg:px-[100px] py-10 lg:py-28 bg-neutral-950">
-        <p className="tracking-wider text-4xl font-bold text-white font-popins">
+        <p className="tracking-wider text-2xl lg:text-4xl font-bold text-white font-popins">
           Trusted Brands
         </p>
         <p className="text-sm mt-3 text-white/50 leading-6">

@@ -30,7 +30,9 @@ function ContactForm() {
 
   return (
     <div>
-      <p className="text-4xl font-bold text-black font-popins">Contact us</p>
+      <p className="text-2xl lg:text-4xl font-bold text-black font-popins">
+        Contact us
+      </p>
       <p className="text-sm mt-3 text-black/80 leading-6">
         Drop us a message and we&apos;ll get back to you as soon as possible.
       </p>
@@ -98,7 +100,7 @@ function ContactForm() {
           </div>
         </form>
         <div className="lg:w-[50%] mt-10 lg:mt-0">
-          <h1 className="text-2xl text-center font-bold text-neutral-800">
+          <h1 className="text-xl lg:text-2xl text-center font-bold text-neutral-800">
             Get in touch
           </h1>
           <ul className="text-center mt-7 space-y-3">
@@ -111,7 +113,7 @@ function ContactForm() {
               <span className="text-sm">admin@doctordoggy.vet</span>
             </li>
           </ul>
-          <h1 className="text-2xl text-center font-bold text-neutral-800 mt-16">
+          <h1 className="text-xl lg:text-2xl text-center font-bold text-neutral-800 mt-16">
             Locate us
           </h1>
           <ul className="text-center mt-7 space-y-3">
