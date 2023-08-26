@@ -247,7 +247,7 @@ export default function Home() {
           <Marquee>
             <div className="lg:w-[400px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                src="https://cdn-icons-png.flaticon.com/512/2369/2369545.png"
                 className="h-20"
                 alt=""
               />
@@ -266,7 +266,7 @@ export default function Home() {
             </div>
             <div className="lg:w-[400px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                src="https://cdn-icons-png.flaticon.com/512/7810/7810650.png"
                 className="h-20"
                 alt=""
               />
@@ -285,7 +285,7 @@ export default function Home() {
             </div>
             <div className="lg:w-[400px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                src="https://cdn-icons-png.flaticon.com/512/4966/4966169.png"
                 className="h-20"
                 alt=""
               />
@@ -304,7 +304,7 @@ export default function Home() {
             </div>
             <div className="lg:w-[400px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                src="https://cdn-icons-png.flaticon.com/512/8410/8410128.png"
                 className="h-20"
                 alt=""
               />
