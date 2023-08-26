@@ -4,6 +4,9 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useEffect, useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import Marquee from "react-fast-marquee";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -238,64 +241,85 @@ export default function Home() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt .
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-10">
-          <div className="px-10 py-16 bg-green-50 flex flex-col items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
-              className="h-20"
-              alt=""
-            />
-            <h2 className="text-xl font-semibold mt-5 text-green-700">
-              Grooming & Spa
-            </h2>
-            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
-              eligendi eos, voluptatum commodi amet vel, molestias odit
-              distinctio beatae, modi quod labore deleniti facere expedita
-              temporibus quam culpa dolores! Nam.
-            </p>
-            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
-              Learn more
-            </button>
-          </div>
-          <div className="px-10 py-16 bg-yellow-50 flex flex-col items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1854/1854627.png"
-              className="h-20"
-              alt=""
-            />
-            <h2 className="text-xl font-semibold mt-5 text-yellow-700">
-              Veterinay Care
-            </h2>
-            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
-              eligendi eos, voluptatum commodi amet vel, molestias odit
-              distinctio beatae, modi quod labore deleniti facere expedita
-              temporibus quam culpa dolores! Nam.
-            </p>
-            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
-              Book Now
-            </button>
-          </div>
-          <div className="px-10 py-16 bg-sky-50 flex flex-col items-center justify-center">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/1499/1499532.png"
-              className="h-20"
-              alt=""
-            />
-            <h2 className="text-xl font-semibold mt-5 text-sky-700">
-              Dog Boarding
-            </h2>
-            <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
-              eligendi eos, voluptatum commodi amet vel, molestias odit
-              distinctio beatae, modi quod labore deleniti facere expedita
-              temporibus quam culpa dolores! Nam.
-            </p>
-            <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
-              More Info
-            </button>
-          </div>
+        <div className="flex items-center justify-center mt-10">
+          <Marquee>
+            <div className="lg:w-[400px] px-10 py-16 bg-[#CAE6D4] flex flex-col items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                className="h-20"
+                alt=""
+              />
+              <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
+                Grooming & Spa
+              </h2>
+              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
+                odit distinctio beatae, modi quod labore deleniti facere
+                expedita temporibus quam culpa dolores! Nam.
+              </p>
+              <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+                Learn more
+              </button>
+            </div>
+            <div className="lg:w-[400px] px-10 py-16 bg-[#FCEBCC] flex flex-col items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                className="h-20"
+                alt=""
+              />
+              <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
+                Boarding
+              </h2>
+              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
+                odit distinctio beatae, modi quod labore deleniti facere
+                expedita temporibus quam culpa dolores! Nam.
+              </p>
+              <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+                Learn more
+              </button>
+            </div>
+            <div className="lg:w-[400px] px-10 py-16 bg-[#D5BCEE] flex flex-col items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                className="h-20"
+                alt=""
+              />
+              <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
+                Veterinary
+              </h2>
+              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
+                odit distinctio beatae, modi quod labore deleniti facere
+                expedita temporibus quam culpa dolores! Nam.
+              </p>
+              <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+                Learn more
+              </button>
+            </div>
+            <div className="lg:w-[400px] px-10 py-16 bg-[#F9CBCA] flex flex-col items-center justify-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/5094/5094353.png"
+                className="h-20"
+                alt=""
+              />
+              <h2 className="text-2xl lg:text-3xl font-bold mt-5 text-black font-popins">
+                Dog Walking
+              </h2>
+              <p className="text-center text-sm leading-6 mt-4 text-neutral-800">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Adipisci eligendi eos, voluptatum commodi amet vel, molestias
+                odit distinctio beatae, modi quod labore deleniti facere
+                expedita temporibus quam culpa dolores! Nam.
+              </p>
+              <button className="mt-8 bg-neutral-800 text-white px-6 text-sm py-2 rounded-full">
+                Learn more
+              </button>
+            </div>
+          </Marquee>
         </div>
       </div>
 
