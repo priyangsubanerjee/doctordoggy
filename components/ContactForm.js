@@ -42,7 +42,7 @@ function ContactForm() {
             e.preventDefault();
             submitForm();
           }}
-          className="lg:w-[50%] grid grid-cols-2 gap-4 h-fit"
+          className="lg:w-[50%] w-full grid grid-cols-1 lg:grid-cols-2 gap-4 h-fit"
           action=""
         >
           <div>
@@ -75,7 +75,7 @@ function ContactForm() {
               id=""
             />
           </div>
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <p className="text-sm font-medium text-neutral-700">Your message</p>
             <textarea
               type="text"
@@ -85,12 +85,11 @@ function ContactForm() {
               value={message}
               className="bg-neutral-100 mt-2 p-4 rounded w-full h-full resize-none"
               placeholder="Your message here"
-              cols="10"
               name=""
               id=""
             />
           </div>
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <button
               type="submit"
               className="text-white bg-neutral-800 mt-10 w-full py-4"
