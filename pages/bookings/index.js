@@ -6,7 +6,6 @@ import { signOut, useSession } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
 import connectDatabase from "@/db/connect";
 import booking from "@/db/models/booking";
-import pet from "@/db/models/pet";
 
 export async function getServerSideProps(context) {
   await connectDatabase();
