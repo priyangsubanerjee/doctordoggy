@@ -47,8 +47,8 @@ function Schedule({ pets }) {
     },
   ]);
   const [bookingProp, setBookingProp] = React.useState({
-    email: session?.data?.user?.email,
     petId: pets[0]._id,
+    petName: pets[0].name,
     dateTime: "",
     serviceType: services[0].name,
     notes: "",
@@ -59,17 +59,20 @@ function Schedule({ pets }) {
     setLoading(true);
     const response = await fetch("/api/booking/create", {
       method: "POST",
-      body: JSON.stringify(bookingProp),
+      body: JSON.stringify({
+        ...bookingProp,
+        email: session.data.user.email,
+      }),
     });
     const data = await response.json();
     setLoading(false);
     if (data.success) {
-      await fetch("/api/notification/send", {
-        method: "POST",
-        body: JSON.stringify({
-          message: `New booking request from ${session?.data?.user?.name} for ${bookingProp.serviceType} on ${bookingProp.dateTime}`,
-        }),
-      });
+      //   await fetch("/api/notification/send", {
+      //     method: "POST",
+      //     body: JSON.stringify({
+      //       message: `New booking request from ${session?.data?.user?.name} for ${bookingProp.serviceType} on ${bookingProp.dateTime}`,
+      //     }),
+      //   });
       window.location.href = "/bookings";
     } else {
       alert(data.message);
@@ -99,6 +102,11 @@ function Schedule({ pets }) {
                 setBookingProp({
                   ...bookingProp,
                   petId: e.target.value,
+                  petName: pets.find((pet) => {
+                    if (pet._id == e.target.value) {
+                      return pet.name;
+                    }
+                  }),
                 });
               }}
               className="px-4 h-12 border w-full mt-2 appearance-none rounded bg-transparent"

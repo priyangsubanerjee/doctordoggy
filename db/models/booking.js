@@ -9,7 +9,14 @@ const bookingSchema = new Schema({
   email: {
     type: String,
   },
+  status: {
+    type: String,
+    default: "due",
+  },
   petId: {
+    type: String,
+  },
+  petName: {
     type: String,
   },
   serviceType: {

@@ -1,10 +1,13 @@
 import booking from "@/db/models/booking";
 
 export default async function handler(req, res) {
-  const { petId, dateTime, serviceType, notes, email } = JSON.parse(req.body);
+  const { petId, dateTime, serviceType, notes, email, petName } = JSON.parse(
+    req.body
+  );
 
   let booking_ = new booking({
     petId,
+    petName,
     dateTime,
     serviceType,
     notes,
