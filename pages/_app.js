@@ -29,11 +29,11 @@ export default function App({
       return;
     } else {
       loadingScreen.style.transform = "translateX(0%)";
-      setTimeout(() => {
-        loadingScreen.style.transform = "translateX(-100%)";
-        sessionStorage.setItem("loadingShown", true);
-        setLoadingOn(false);
-      }, 3000);
+      //   setTimeout(() => {
+      //     loadingScreen.style.transform = "translateX(-100%)";
+      //     sessionStorage.setItem("loadingShown", true);
+      //     setLoadingOn(false);
+      //   }, 3000);
     }
   }, []);
 
@@ -105,6 +105,7 @@ export default function App({
             />
             <span className="text-white mt-20">
               <Icon height={40} icon="line-md:loading-twotone-loop" />
+              Site under construction
             </span>
           </div>
           {loadingOn == false && (
