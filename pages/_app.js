@@ -4,9 +4,9 @@ import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import Navbar from "@/components/Navbar";
 import GlobalStates from "@/context/GlobalState";
-import "@/styles/globals.css";
 import { Icon } from "@iconify/react";
 import { set } from "mongoose";
+import "@/styles/globals.css";
 
 import { SessionProvider } from "next-auth/react";
 import NextProgress from "next-progress";
@@ -29,11 +29,11 @@ export default function App({
       return;
     } else {
       loadingScreen.style.transform = "translateX(0%)";
-      //   setTimeout(() => {
-      //     loadingScreen.style.transform = "translateX(-100%)";
-      //     sessionStorage.setItem("loadingShown", true);
-      //     setLoadingOn(false);
-      //   }, 3000);
+      setTimeout(() => {
+        loadingScreen.style.transform = "translateX(-100%)";
+        sessionStorage.setItem("loadingShown", true);
+        setLoadingOn(false);
+      }, 3000);
     }
   }, []);
 
