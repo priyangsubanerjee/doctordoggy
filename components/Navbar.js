@@ -7,6 +7,7 @@ import Link from "next/link";
 import { sign } from "jsonwebtoken";
 import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
+import { Popover } from "@headlessui/react";
 
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -96,9 +97,72 @@ function Navbar() {
             <li>Home</li>
           </Link>
           <Link href={"/"} className="block">
-            <li className="flex space-x-2 items-center">
-              <span>Services</span>
-              <Icon icon="icon-park-outline:down" />
+            <li className="">
+              <Popover className="relative">
+                <Popover.Button className="flex items-center space-x-2 outline-none">
+                  <span>Services</span>
+                  <Icon icon="icon-park-outline:down" />
+                </Popover.Button>
+
+                <Popover.Panel className="absolute z-10 bg-white rounded shadow-2xl border shadow-black/10 w-[650px] p-4 mt-3 left-1/2 -translate-x-1/2">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Grooming & Spa</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Provide your pet with the best grooming and spa
+                          services.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Boarding</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          The best boarding services for your pets while you are
+                          away.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Dog walking</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Your pet&apos;s energy is channelled constructively.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Training</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Basic obedience to advanced training, we have it all.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Popover>
             </li>
           </Link>
           <Link href={"/"} className="block">
@@ -139,7 +203,7 @@ function Navbar() {
               </div>
             </Link>
           )}
-          <button className="md:hidden">
+          <button onClick={() => setSidebarOpen(true)} className="md:hidden">
             <Icon height={20} icon="clarity:menu-line" />
           </button>
         </div>
