@@ -96,16 +96,15 @@ export default function App({
         <>
           <div
             id="loadingScreen"
-            className="fixed transition-all duration-700 -translate-x-full inset-0 h-full w-full z-40 bg-[#F15958] flex flex-col items-center justify-center"
+            className="fixed transition-all duration-700 -translate-x-full inset-0 h-full w-full z-40 bg-[#0d1121] flex flex-col items-center justify-center"
           >
             <img
-              src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1692890038/static/IMG_1494_o1olve.png"
-              className="max-w-[300px] mix-blend-multiply"
+              src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1692859196/static/PHOTO-2023-08-22-10-17-36-removebg-preview_exf5h4.png"
+              className="max-w-[300px]"
               alt=""
             />
             <span className="text-white mt-20">
               <Icon height={40} icon="line-md:loading-twotone-loop" />
-              Site under construction
             </span>
           </div>
           {loadingOn == false && (

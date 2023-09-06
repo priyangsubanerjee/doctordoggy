@@ -126,12 +126,12 @@ function Navbar() {
             <Link href={"/profile"}>
               <div className="flex items-center">
                 <img
-                  className="h-12 w-12 rounded-full"
+                  className="h-10 w-10 rounded-full"
                   src={session?.data?.user?.image}
                   alt=""
                 />
                 <div className="ml-4">
-                  <h2 className="">{session?.data?.user?.name}</h2>
+                  <h2 className="text-sm">{session?.data?.user?.name}</h2>
                   <h2 className="text-xs text-neutral-600 mt-1">
                     {session?.data?.user?.email}
                   </h2>
