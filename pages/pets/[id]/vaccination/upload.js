@@ -9,11 +9,13 @@ import Chip from "@/components/Prescription/Chip";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import Switch from "react-switch";
+import doctor from "@/db/models/doctor";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const id = context.query.id;
   let currPet = null;
+  let doctors = [];
 
   if (!session) {
     return {
@@ -25,17 +27,19 @@ export async function getServerSideProps(context) {
   } else {
     await connectDatabase();
     currPet = await pet.findById(id);
+    doctors = await doctor.find({});
   }
 
   return {
     props: {
       session,
       pet: JSON.parse(JSON.stringify(currPet)),
+      doctors: JSON.parse(JSON.stringify(doctors)),
     },
   };
 }
 
-function Upload({ pet }) {
+function Upload({ pet, doctors }) {
   const { refreshPets } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();

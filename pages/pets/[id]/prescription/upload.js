@@ -8,11 +8,13 @@ import pet from "@/db/models/pet";
 import Chip from "@/components/Prescription/Chip";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
+import doctor from "@/db/models/doctor";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   const id = context.query.id;
   let currPet = null;
+  let doctors = null;
 
   if (!session) {
     return {
@@ -24,17 +26,19 @@ export async function getServerSideProps(context) {
   } else {
     await connectDatabase();
     currPet = await pet.findById(id);
+    doctors = await doctor.find({});
   }
 
   return {
     props: {
       session,
       pet: JSON.parse(JSON.stringify(currPet)),
+      doctors: JSON.parse(JSON.stringify(doctors)),
     },
   };
 }
 
-function UploadPrescription({ pet }) {
+function UploadPrescription({ pet, doctors }) {
   const { refreshPets } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
@@ -45,7 +49,7 @@ function UploadPrescription({ pet }) {
 
   const [prescription, setPrescription] = useState({
     for: pet.name,
-    doctor: "Dr. Souradeep Adhikary",
+    doctor: doctors[0]._id,
     date: "",
     reason: "",
     notes: "",
@@ -294,10 +298,13 @@ function UploadPrescription({ pet }) {
               name=""
               id=""
             >
-              <option value="Dr. Souradeep Adhikary">
-                Dr. Souradeep Adhikary
-              </option>
-              <option value="Dr. Mrinal Kanti Dey">Dr. Mrinal Kanti Dey</option>
+              {doctors.map((doctor, index) => {
+                return (
+                  <option key={index} value={doctor._id}>
+                    {doctor.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
