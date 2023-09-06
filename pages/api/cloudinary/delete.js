@@ -2,10 +2,10 @@ import formidable from "formidable";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: "db9kd4qbi",
+  cloud_name: "ddn3h4a2b",
   secure: true,
-  api_key: "368554699184186",
-  api_secret: "F9mtebD4_95fUM69twEbJMLbO7o",
+  api_key: "691663994994734",
+  api_secret: "ZOZL4S_hxhXHBkPq5gnf429rby4",
 });
 
 export default async function handler(req, res) {
