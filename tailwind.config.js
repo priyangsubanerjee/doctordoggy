@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         popins: ["Poppins", "sans-serif"],
+        jost: ["Jost", "sans-serif"],
       },
       animation: {
         indeterminate: "indeterminate 2s linear infinite",

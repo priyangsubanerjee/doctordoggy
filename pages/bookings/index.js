@@ -22,12 +22,12 @@ export async function getServerSideProps(context) {
   };
 }
 
-function Services({ bookings }) {
+function Bookings({ bookings }) {
   const session = useSession();
 
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
-      <div>
+      {/* <div>
         <div className="flex items-center space-x-2">
           <Icon height={30} icon="solar:calendar-broken" />
           <h2 className="font-semibold text-neutral-700 text-sm">
@@ -56,9 +56,9 @@ function Services({ bookings }) {
             }
           })}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
 
-export default Services;
+export default Bookings;

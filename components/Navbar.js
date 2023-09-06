@@ -15,108 +15,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="hidden px-6 py-4 lg:px-20 lg:py-4 shadow-xl shadow-black/[0.018] items-center justify-between lg:sticky lg:top-0 lg:inset-x-0 z-20 bg-white">
-        <Link href="/">
-          <div className="flex items-center space-x-3 relative w-fit">
-            <img
-              src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1692029332/doctor-doggy/IMG_1494_warsym.png"
-              className="h-12 lg:h-16"
-              alt=""
-            />
-            {/* <h1 className="font-medium">Doctor Doggy</h1>
-          <span className="text-[10px] bg-pink-50 text-pink-500 px-2 py-1 rounded font-medium">
-            BETA
-          </span> */}
-          </div>
-        </Link>
-        <ul className="hidden lg:flex items-center space-x-12 text-sm text-neutral-700">
-          {session.status === "authenticated" ? (
-            <a rel="noopener noreferrer" href="/dashboard">
-              <li className="flex items-center space-x-2">
-                <iconify-icon
-                  height="22"
-                  width="22"
-                  icon="streamline:nature-ecology-dog-head-dog-pet-animals-canine"
-                ></iconify-icon>
-                <span>Dashboard</span>
-              </li>
-            </a>
-          ) : (
-            <li className="flex items-center space-x-2">
-              <iconify-icon
-                height="24"
-                width="24"
-                icon="ph:paw-print"
-              ></iconify-icon>
-              <span>About us</span>
-            </li>
-          )}
-          <Link href="/?redirect=false">
-            <li className="flex items-center space-x-2">
-              <iconify-icon
-                height="20"
-                width="20"
-                icon="akar-icons:scissor"
-              ></iconify-icon>
-              <span>Services</span>
-            </li>
-          </Link>
-          <Link href="/feedback">
-            <li className="flex items-center space-x-2">
-              <iconify-icon
-                height="20"
-                width="20"
-                icon="iconoir:message-text"
-              ></iconify-icon>
-              <span>Feedback</span>
-            </li>
-          </Link>
-          <li className="flex items-center space-x-2">
-            <iconify-icon
-              height="23"
-              width="23"
-              icon="fluent:call-20-regular"
-            ></iconify-icon>
-            <span>Contact us</span>
-          </li>
-        </ul>
-        <div className="hidden lg:block">
-          {session.status === "authenticated" ? (
-            <Link href="/profile">
-              <div className="flex items-center space-x-3 px-3 py-2 hover:bg-neutral-100 rounded-md">
-                <img
-                  className="h-10 w-10 rounded-full"
-                  src={session.data.user.image}
-                  alt=""
-                />
-                <div>
-                  <h1 className="font-medium text-sm">
-                    {session.data.user.name}
-                  </h1>
-                  <span className="text-xs text-neutral-500">
-                    {session.data.user.email}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ) : (
-            <button
-              onClick={async () => await signIn("google")}
-              className="text-sm bg-neutral-100 px-3 py-2 lg:py-3 lg:px-6 text-black rounded flex items-center space-x-3"
-            >
-              <iconify-icon height="20" icon="devicon:google"></iconify-icon>
-              <span>Get Started</span>
-            </button>
-          )}
-        </div>
-        <div className="lg:hidden">
-          <button onClick={() => setSidebarOpen(true)}>
-            <iconify-icon height="24" icon="basil:menu-solid"></iconify-icon>
-          </button>
-        </div>
-      </div>
-
-      <div className="px-6 py-4 lg:px-20 lg:py-4 flex justify-center lg:justify-between items-center text-xs lg:text-sm font-popins">
+      <div className="bg-gradient-to-r from-pink-100 to-yellow-100 px-6 py-4 lg:px-20 lg:py-4 flex justify-center lg:justify-between items-center text-xs lg:text-sm font-popins">
         <div className="hidden lg:flex items-center space-x-2">
           <span>
             <svg
@@ -188,218 +87,63 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="px-6 py-4 lg:py-2 lg:px-20 flex items-center justify-between bg-[#F15958]">
-        <div>
-          <img
-            src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1692890038/static/IMG_1494_o1olve.png"
-            className="h-16 mix-blend-multiply"
-            alt=""
-          />
-        </div>
-
-        <ul className="hidden lg:flex items-center space-x-12 font-popins text-white/70 text-sm font-normal">
-          <Link href={"/?redirect=false"}>
-            <li
-              style={{
-                color:
-                  router.pathname == "/" ? "#fff" : "rgba(255,255,255,0.7)",
-              }}
-            >
-              Home
+      <nav className="sticky z-20 top-0 inset-x-0 h-16 md:h-20 flex items-center justify-between px-6 md:px-16 lg:px-28 bg-white shadow-2xl shadow-black/10">
+        <Link href={"/"} className="block">
+          <img src="/logo.png" className="h-14 lg:h-[70px]" alt="" />
+        </Link>
+        <ul className="hidden font-poppins md:flex items-center md:space-x-10 text-slate-500 md:text-sm lg:text-sm">
+          <Link href={"/?redirect=false"} className="block">
+            <li>Home</li>
+          </Link>
+          <Link href={"/"} className="block">
+            <li className="flex space-x-2 items-center">
+              <span>Services</span>
+              <Icon icon="icon-park-outline:down" />
             </li>
           </Link>
-          {session.status == "authenticated" && (
-            <Link href={"/dashboard"}>
-              <li
-                style={{
-                  color: router.pathname.includes("/dashboard")
-                    ? "#fff"
-                    : "rgba(255,255,255,0.7)",
-                }}
-              >
-                Dashboard
-              </li>
+          <Link href={"/"} className="block">
+            <li>Brands</li>
+          </Link>
+          <Link href={"/"} className="block">
+            <li>Contact us</li>
+          </Link>
+          <Link href={"/"} className="block">
+            <li>Offers</li>
+          </Link>
+        </ul>
+        <div>
+          {session.status == "unauthenticated" ? (
+            <button
+              onClick={async () => await signIn("google")}
+              className="hidden md:flex items-center bg-[#1b1b1b] rounded px-7 h-12 space-x-3"
+            >
+              <Icon height={25} icon="flat-color-icons:google" />
+              <span className="font-medium text-white text-sm font-poppins">
+                Get started
+              </span>
+            </button>
+          ) : (
+            <Link href={"/profile"}>
+              <div className="flex items-center">
+                <img
+                  className="h-12 w-12 rounded-full"
+                  src={session?.data?.user?.image}
+                  alt=""
+                />
+                <div className="ml-4">
+                  <h2 className="">{session?.data?.user?.name}</h2>
+                  <h2 className="text-xs text-neutral-600 mt-1">
+                    {session?.data?.user?.email}
+                  </h2>
+                </div>
+              </div>
             </Link>
           )}
-          <li
-            style={{
-              color: router.pathname.includes("/about")
-                ? "#fff"
-                : "rgba(255,255,255,0.7)",
-            }}
-          >
-            About
-          </li>
-          <li className="relative group hover:text-white cursor-pointer">
-            <span>Services</span>
-
-            <div className="absolute opacity-0 -z-40 top-0 left-1/2 translate-y-[50%] -translate-x-1/2 group-hover:z-10 group-hover:translate-y-[0] group-hover:opacity-100 transition-all">
-              <div className="mt-7 w-[700px] bg-white shadow-2xl shadow-black/[0.15] relative">
-                <span className="text-white absolute top-1 -translate-y-full left-1/2 -translate-x-1/2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 15 15"
-                  >
-                    <path fill="currentColor" d="m7.5 3l7.5 8H0l7.5-8Z" />
-                  </svg>
-                </span>
-                <div className="p-4 grid grid-cols-2 gap-2">
-                  <div className="flex justify-between bg-red-50 p-4 rounded">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1650/1650515.png"
-                      className="h-12"
-                      alt=""
-                    />
-                    <div className="ml-4 w-full">
-                      <h1 className="text-sm font-semibold text-neutral-700">
-                        Grooming
-                      </h1>
-                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
-                        Provide your pets with the gift of a professional
-                        grooming and spa session.
-                      </p>
-                      <Link href={"/bookings/schedule"}>
-                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                          Book now
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="flex justify-between bg-yellow-50 p-4 rounded">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/128/6245/6245359.png"
-                      className="h-12"
-                      alt=""
-                    />
-                    <div className="ml-4 w-full">
-                      <h1 className="text-sm font-semibold text-neutral-700">
-                        Boarding
-                      </h1>
-                      <p className="text-[10px] lg:text-[11px] text-neutral-500 mt-1 leading-5">
-                        Feeling anxious about leaving your pets in an unfamiliar
-                        environment.
-                      </p>
-                      <Link href={"/bookings/schedule"}>
-                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                          Book now
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="flex justify-between bg-indigo-50 p-4 rounded">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/9099/9099344.png"
-                      className="h-12"
-                      alt=""
-                    />
-                    <div className="ml-4 w-full">
-                      <h1 className="text-sm font-semibold text-neutral-700">
-                        Training session
-                      </h1>
-                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
-                        Reserve your initial session with our trainer and
-                        witness the transformation.
-                      </p>
-                      <Link href={"/bookings/schedule"}>
-                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                          Book now
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="flex justify-between bg-green-50 p-4 rounded">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/4557/4557266.png"
-                      className="h-12"
-                      alt=""
-                    />
-                    <div className="ml-4 w-full">
-                      <h1 className="text-sm font-semibold text-neutral-700">
-                        Dog walking
-                      </h1>
-                      <p className="text-[10px] lg:text-[10px] text-neutral-500 mt-1 leading-4">
-                        If you&apos;re short on time for regular pet walks,
-                        arrange a designated time slot.
-                      </p>
-                      <Link href={"/bookings/schedule"}>
-                        <button className="w-full bg-[#F15958] text-center text-sm text-white rounded mt-2 py-2">
-                          Book now
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <Link className="block" href={"/bookings"}>
-                    <div className="flex hover:bg-slate-100 bg-slate-50 px-4 py-3 border rounded">
-                      <span className="text-black">
-                        <Icon height={20} icon="solar:calendar-broken" />
-                      </span>
-                      <div className="ml-4 w-fit">
-                        <h1 className="text-sm font-medium text-neutral-700">
-                          My bookings
-                        </h1>
-                      </div>
-                      <span className="ml-auto text-black">
-                        <Icon icon="ph:arrow-right-bold" />
-                      </span>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <Link href={"/feedback"}>Feedback</Link>
-          </li>
-          <li>
-            <Link href={"/contact"}>Contact</Link>
-          </li>
-        </ul>
-
-        <div className="flex items-center space-x-5">
-          <div>
-            {session.status == "unauthenticated" ? (
-              <button
-                onClick={() => signIn("google")}
-                className="bg-white px-4 lg:px-7 py-2 rounded-full lg:rounded text-sm"
-              >
-                Get started
-              </button>
-            ) : (
-              <div>
-                <Link className="hidden lg:block" href={"/profile"}>
-                  <button className="flex items-center">
-                    <span>
-                      <img
-                        src={session?.data?.user?.image}
-                        className="rounded-full h-10 border border-white"
-                        alt=""
-                      />
-                    </span>
-                    <div className="ml-3 text-left">
-                      <h2 className="text-white text-sm">
-                        {session?.data?.user?.name}
-                      </h2>
-                    </div>
-                  </button>
-                </Link>
-                <button
-                  className="lg:hidden text-white"
-                  onClick={() => setSidebarOpen(true)}
-                >
-                  <iconify-icon
-                    height="24"
-                    icon="basil:menu-solid"
-                  ></iconify-icon>
-                </button>
-              </div>
-            )}
-          </div>
+          <button className="md:hidden">
+            <Icon height={20} icon="clarity:menu-line" />
+          </button>
         </div>
-      </div>
+      </nav>
 
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
     </>
