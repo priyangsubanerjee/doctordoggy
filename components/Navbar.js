@@ -106,60 +106,69 @@ function Navbar() {
 
                 <Popover.Panel className="absolute z-10 bg-white rounded shadow-2xl border shadow-black/10 w-[650px] p-4 mt-3 left-1/2 -translate-x-1/2">
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="flex p-3 hover:bg-slate-50">
-                      <img
-                        src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
-                        className="h-full w-16 object-cover rounded"
-                        alt=""
-                      />
-                      <div className="ml-4">
-                        <h2 className="text-sm text-black">Grooming & Spa</h2>
-                        <p className="text-xs mt-1 leading-5">
-                          Provide your pet with the best grooming and spa
-                          services.
-                        </p>
+                    <Link className="block" href={"/bookings/schedule"}>
+                      <div className="flex p-3 hover:bg-slate-50">
+                        <img
+                          src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
+                          className="h-full w-16 object-cover rounded"
+                          alt=""
+                        />
+                        <div className="ml-4">
+                          <h2 className="text-sm text-black">Grooming & Spa</h2>
+                          <p className="text-xs mt-1 leading-5">
+                            Provide your pet with the best grooming and spa
+                            services.
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex p-3 hover:bg-slate-50">
-                      <img
-                        src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
-                        className="h-full w-16 object-cover rounded"
-                        alt=""
-                      />
-                      <div className="ml-4">
-                        <h2 className="text-sm text-black">Boarding</h2>
-                        <p className="text-xs mt-1 leading-5">
-                          The best boarding services for your pets while you are
-                          away.
-                        </p>
+                    </Link>
+                    <Link className="block" href={"/bookings/schedule"}>
+                      <div className="flex p-3 hover:bg-slate-50">
+                        <img
+                          src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
+                          className="h-full w-16 object-cover rounded"
+                          alt=""
+                        />
+                        <div className="ml-4">
+                          <h2 className="text-sm text-black">Boarding</h2>
+                          <p className="text-xs mt-1 leading-5">
+                            The best boarding services for your pets while you
+                            are away.
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex p-3 hover:bg-slate-50">
-                      <img
-                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
-                        className="h-full w-16 object-cover rounded"
-                        alt=""
-                      />
-                      <div className="ml-4">
-                        <h2 className="text-sm text-black">Dog walking</h2>
-                        <p className="text-xs mt-1 leading-5">
-                          Your pet&apos;s energy is channelled constructively.
-                        </p>
+                    </Link>
+                    <Link className="block" href={"/bookings/schedule"}>
+                      <div className="flex p-3 hover:bg-slate-50">
+                        <img
+                          src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                          className="h-full w-16 object-cover rounded"
+                          alt=""
+                        />
+                        <div className="ml-4">
+                          <h2 className="text-sm text-black">Dog walking</h2>
+                          <p className="text-xs mt-1 leading-5">
+                            Your pet&apos;s energy is channelled constructively.
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex p-3 hover:bg-slate-50">
-                      <img
-                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
-                        className="h-full w-16 object-cover rounded"
-                        alt=""
-                      />
-                      <div className="ml-4">
-                        <h2 className="text-sm text-black">Training</h2>
-                        <p className="text-xs mt-1 leading-5">
-                          Basic obedience to advanced training, we have it all.
-                        </p>
+                    </Link>
+                    <Link className="block" href={"/bookings/schedule"}>
+                      <div className="flex p-3 hover:bg-slate-50">
+                        <img
+                          src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                          className="h-full w-16 object-cover rounded"
+                          alt=""
+                        />
+                        <div className="ml-4">
+                          <h2 className="text-sm text-black">Training</h2>
+                          <p className="text-xs mt-1 leading-5">
+                            Basic obedience to advanced training, we have it
+                            all.
+                          </p>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </Popover.Panel>
               </Popover>
