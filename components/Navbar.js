@@ -177,12 +177,12 @@ function Navbar() {
           <Link href={"/"} className="block">
             <li>Brands</li>
           </Link>
-          <Link href={"/"} className="block">
+          <Link href={"/contact"} className="block">
             <li>Contact us</li>
           </Link>
-          <Link href={"/"} className="block">
+          {/* <Link href={"/"} className="block">
             <li>Offers</li>
-          </Link>
+          </Link> */}
         </ul>
         <div>
           {session.status == "unauthenticated" ? (
