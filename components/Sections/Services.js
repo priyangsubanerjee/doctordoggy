@@ -34,6 +34,8 @@ function Services() {
           <ServiceCard
             image="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
             title="Grooming & Spa"
+            buttonLink={"/bookings/schedule"}
+            buttonText={"Book now"}
             description="Provide your pets with the gift of a professional grooming and
                 spa session, expertly administered by our trained team of
                 grooming professionals. We utilize top-of-the-line equipment and
@@ -44,6 +46,8 @@ function Services() {
           <ServiceCard
             image="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
             title="Boarding"
+            buttonLink={"/bookings/schedule"}
+            buttonText={"Book now"}
             description="Provide your pets with the gift of a professional grooming and
                 spa session, expertly administered by our trained team of
                 grooming professionals. We utilize top-of-the-line equipment and
@@ -53,7 +57,8 @@ function Services() {
 
           <ServiceCard
             image="https://img.freepik.com/free-photo/close-up-veterinary-doctor-taking-care-pet_23-2149267859.jpg?w=2000"
-            title="Veterinary"
+            title="Vet appointments"
+            buttonText={"Coming soon"}
             description="Have your pets undergo examinations by our exceptionally
                 skilled, capable, and seasoned team of veterinarians. Our duty
                 involves consistently evaluating our doctors and safeguarding
@@ -63,6 +68,8 @@ function Services() {
           <ServiceCard
             image="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
             title="Dog Walking"
+            buttonLink={"/bookings/schedule"}
+            buttonText={"Book now"}
             description="If you're short on time for regular pet walks, arrange a
                 designated time slot and have it taken care of hassle-free. Our
                 approach relies on positive reinforcement, assuring that your

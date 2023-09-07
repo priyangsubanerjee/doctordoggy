@@ -174,7 +174,7 @@ function Navbar() {
               </Popover>
             </li>
           </Link>
-          <Link href={"/"} className="block">
+          <Link href={"/#brands"} className="block">
             <li>Brands</li>
           </Link>
           <Link href={"/contact"} className="block">

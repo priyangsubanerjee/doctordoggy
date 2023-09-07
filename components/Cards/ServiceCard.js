@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
 import React from "react";
 
 function ServiceCard({
@@ -26,9 +27,11 @@ function ServiceCard({
         <p className="text-xs text-neutral-600 leading-6 mt-2 mb-5 line-clamp-5">
           {description}
         </p>
-        <button className="mt-auto text-sm shrink-0 bg-slate-900 text-white h-12 rounded-md">
-          {buttonText}
-        </button>
+        <Link className="block w-full mt-auto" href={buttonLink || "#"}>
+          <button className="w-full text-sm shrink-0 bg-slate-900 text-white h-12 rounded-md">
+            {buttonText}
+          </button>
+        </Link>
       </div>
     </div>
   );

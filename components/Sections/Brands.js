@@ -4,7 +4,7 @@ import Marquee from "react-fast-marquee";
 
 function Brands() {
   return (
-    <div className="py-32 mb-12 lg:mb-20">
+    <div id="brands" className="py-32 mb-12 lg:mb-20">
       <div className="px-6 lg:px-32">
         <h1 className="relative text-center text-2xl lg:text-3xl font-jost font-semibold text-neutral-800">
           <img

@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 
 function Hero() {
@@ -39,10 +41,17 @@ function Hero() {
           your absence. Choose from a diverse array of services that we offer.
         </p>
         <div className="mt-10 mb-10 space-y-4 space-x-0 lg:space-y-0 lg:flex lg:items-center lg:space-x-5 text-base lg:text-base">
-          <button className="h-14 w-full lg:w-fit px-10 border border-transparent bg-white text-black rounded-md">
-            Book a service
-          </button>
-          <button className="h-14 w-full lg:w-fit px-10 border border-white/70 text-slate-100 rounded-md">
+          <Link href="/bookings/schedule">
+            <button className="h-14 w-full lg:w-fit px-10 border border-transparent bg-white hover:bg-white/60 text-black rounded-md transition-all">
+              Book a service
+            </button>
+          </Link>
+          <button
+            onClick={async () => {
+              await signIn("google");
+            }}
+            className="h-14 w-full lg:w-fit px-10 border border-white/70 text-slate-100 rounded-md bg-transparent hover:bg-white/5 transition-all"
+          >
             Digitalize pet records
           </button>
         </div>
