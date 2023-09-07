@@ -197,7 +197,7 @@ function Navbar() {
             </button>
           ) : (
             <Link href={"/profile"}>
-              <div className="flex items-center">
+              <div className="hidden lg:flex items-center">
                 <img
                   className="h-10 w-10 rounded-full"
                   src={session?.data?.user?.image}
