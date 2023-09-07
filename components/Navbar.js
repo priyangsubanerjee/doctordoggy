@@ -88,7 +88,7 @@ function Navbar() {
         </div>
       </div>
 
-      <nav className="sticky z-20 top-0 inset-x-0 h-16 md:h-20 flex items-center justify-between px-6 md:px-16 lg:px-28 bg-white shadow-2xl shadow-black/10">
+      <nav className="sticky z-20 top-0 inset-x-0 h-16 md:h-20 flex items-center justify-between px-6 md:px-16 lg:px-28 bg-white shadow-2xl shadow-black/5">
         <Link href={"/"} className="block">
           <img src="/logo.png" className="h-14 lg:h-[70px]" alt="" />
         </Link>

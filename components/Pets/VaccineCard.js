@@ -41,9 +41,11 @@ function VaccineCard({ record, pet }) {
       </h2>
       <div className="flex items-center mt-4">
         {record.vaccineStatus == "due" ? (
-          <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mr-5">
-            Get an appointment
-          </button>
+          <Link href={`tel:9996512944`}>
+            <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mr-5">
+              Get an appointment
+            </button>
+          </Link>
         ) : (
           <Link href={`/pets/${pet._id}/vaccination/${record._id}`}>
             <button className="px-4 py-2 font-medium text-sm bg-blue-50 text-blue-900 rounded-md mr-5">
