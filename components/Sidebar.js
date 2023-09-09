@@ -57,7 +57,7 @@ function Sidebar({ open, setOpen }) {
                 </li>
               )}
 
-              <Link href="/bookings/" className="block">
+              <Link href="/bookings/schedule" className="block">
                 <li className="flex items-center space-x-2">
                   <iconify-icon
                     height="20"
