@@ -40,7 +40,7 @@ function Sidebar({ open, setOpen }) {
                   <iconify-icon
                     height="22"
                     width="22"
-                    icon="streamline:nature-ecology-dog-head-dog-pet-animals-canine"
+                    icon="octicon:home-24"
                   ></iconify-icon>
                   <span>Home</span>
                 </li>
