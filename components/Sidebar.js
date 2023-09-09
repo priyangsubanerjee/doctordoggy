@@ -35,6 +35,16 @@ function Sidebar({ open, setOpen }) {
               </button>
             </div>
             <ul className="items-center space-y-9 text-sm text-neutral-700 px-6">
+              <Link href="/?redirect=false" className="block">
+                <li className="flex items-center space-x-2">
+                  <iconify-icon
+                    height="22"
+                    width="22"
+                    icon="streamline:nature-ecology-dog-head-dog-pet-animals-canine"
+                  ></iconify-icon>
+                  <span>Home</span>
+                </li>
+              </Link>
               {session.status === "authenticated" ? (
                 <Link href="/dashboard" className="block">
                   <li className="flex items-center space-x-2">
