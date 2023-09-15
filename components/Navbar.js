@@ -16,7 +16,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="bg-gradient-to-r from-pink-100 to-yellow-100 px-6 py-4 lg:px-20 lg:py-4 flex justify-center lg:justify-between items-center text-xs lg:text-sm font-popins">
+      <div className="bg-gradient-to-r text-black from-pink-100 to-yellow-100 px-6 py-4 lg:px-20 lg:py-4 flex justify-center lg:justify-between items-center text-xs lg:text-sm font-popins">
         <div className="hidden lg:flex items-center space-x-2">
           <span>
             <svg
@@ -171,6 +171,23 @@ function Navbar() {
                           <p className="text-xs mt-1 leading-5">
                             Basic obedience to advanced training, we have it
                             all.
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                    <Link className="block" href={"/bookings/"}>
+                      <div className="flex p-3 hover:bg-slate-50">
+                        <img
+                          src="https://static.vecteezy.com/system/resources/previews/014/586/732/original/calendar-icon-a-red-calendar-for-reminders-of-appointments-and-important-festivals-in-the-year-png.png"
+                          className="h-full w-16 object-cover rounded"
+                          alt=""
+                        />
+                        <div className="ml-4">
+                          <h2 className="text-sm text-black">
+                            All my bookings
+                          </h2>
+                          <p className="text-xs mt-1 leading-5">
+                            Find all your bookings at one place.
                           </p>
                         </div>
                       </div>

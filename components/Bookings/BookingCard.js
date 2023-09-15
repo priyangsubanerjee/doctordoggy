@@ -27,6 +27,9 @@ function BookingCard({ data }) {
                 message: `Booking cancelation request from ${session?.data?.user?.name} for ${bookingProp.serviceType} on ${bookingProp.dateTime}`,
               }),
             });
+            alert(
+              "Booking cancellation request sent. Please wait for approval."
+            );
           }}
           className="px-4 h-10 font-medium text-sm bg-red-50 text-red-800 rounded-md"
         >
