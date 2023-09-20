@@ -43,7 +43,7 @@ function VaccineCard({ record, pet }) {
         {record.vaccineStatus == "due" ? (
           <Link href={`tel:9996512944`}>
             <button className="px-4 py-2 font-medium text-sm bg-green-50 text-green-900 rounded-md mr-5">
-              Get an appointment
+              Contact us
             </button>
           </Link>
         ) : (

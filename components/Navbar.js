@@ -102,6 +102,14 @@ function Navbar() {
           <Link href={"/?redirect=false"} className="block">
             <li>Home</li>
           </Link>
+
+          <li
+            className="cursor-pointer"
+            onClick={() => (window.location.href = "/dashboard")}
+          >
+            Pets
+          </li>
+
           <Link href={"/"} className="block">
             <li className="">
               <Popover className="relative">

@@ -36,7 +36,7 @@ function ContactForm() {
       <p className="text-sm mt-3 text-black/80 leading-6">
         Drop us a message and we&apos;ll get back to you as soon as possible.
       </p>
-      <div className="lg:flex mt-16 lg:space-x-16">
+      <div className="lg:flex mt-16 lg:space-x-16 items-center">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -98,6 +98,7 @@ function ContactForm() {
             </button>
           </div>
         </form>
+        <span className="text-neutral-600">or</span>
         <div className="lg:w-[50%] mt-10 lg:mt-0">
           <h1 className="text-xl lg:text-2xl text-center font-bold text-neutral-800">
             Get in touch

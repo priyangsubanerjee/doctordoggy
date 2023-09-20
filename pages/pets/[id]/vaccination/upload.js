@@ -142,7 +142,7 @@ function Upload({ pet, doctors }) {
       setLoading(false);
       vaccineStatus == "done"
         ? router.push(`/pets/${pet._id}/vaccination/${id}/`)
-        : router.push(`/pets/${pet._id}/`);
+        : router.push(`/pets/${pet._id}/?tab=vaccination`);
     }
   };
 
@@ -163,35 +163,37 @@ function Upload({ pet, doctors }) {
         </p>
       </div>
 
-      <div className="mt-10 flex items-center overflow-auto whitespace-nowrap space-x-3">
-        <input
-          multiple
-          onChange={(e) => handleFileChange(e)}
-          type="file"
-          accept="image/*,application/pdf"
-          hidden
-          ref={inputRef}
-          name=""
-          id=""
-        />
-        <button
-          onClick={() => {
-            inputRef.current.click();
-          }}
-          className="flex items-center space-x-2 bg-pink-50 hover:bg-pink-100 px-6 h-10 rounded-full text-sm shrink-0"
-        >
-          <iconify-icon
-            height="20"
-            icon="clarity:attachment-line"
-          ></iconify-icon>
-          <span>Choose label photo</span>
-        </button>
-        {files.map((file, index) => {
-          return (
-            <Chip index={index} setFiles={setFiles} key={index} file={file} />
-          );
-        })}
-      </div>
+      {vaccineStatus == "done" && (
+        <div className="mt-10 flex items-center overflow-auto whitespace-nowrap space-x-3">
+          <input
+            multiple
+            onChange={(e) => handleFileChange(e)}
+            type="file"
+            accept="image/*,application/pdf"
+            hidden
+            ref={inputRef}
+            name=""
+            id=""
+          />
+          <button
+            onClick={() => {
+              inputRef.current.click();
+            }}
+            className="flex items-center space-x-2 bg-pink-50 hover:bg-pink-100 px-6 h-10 rounded-full text-sm shrink-0"
+          >
+            <iconify-icon
+              height="20"
+              icon="clarity:attachment-line"
+            ></iconify-icon>
+            <span>Choose label photo</span>
+          </button>
+          {files.map((file, index) => {
+            return (
+              <Chip index={index} setFiles={setFiles} key={index} file={file} />
+            );
+          })}
+        </div>
+      )}
 
       <div className="mt-8 lg:mt-10 grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl gap-4 lg:gap-6">
         <div>
