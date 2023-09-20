@@ -20,9 +20,12 @@ export default async function handler(req, res) {
         for (let j = 0; j < vaccineRecords.length; j++) {
           let vaccineRecord = vaccineRecords[j];
           if (vaccineRecord.vaccineStatus == "due") {
+            let today = new Date();
             let tomorrow = new Date();
             tomorrow.setDate(today.getDate() + 1);
+
             let vaccineDate = new Date(vaccineRecord.dueDate);
+
             if (
               vaccineDate.getDate() == tomorrow.getDate() &&
               vaccineDate.getMonth() == tomorrow.getMonth() &&
