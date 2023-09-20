@@ -1,6 +1,7 @@
 import connectDatabase from "@/db/connect";
 import account from "@/db/models/account";
 import pet from "@/db/models/pet";
+
 const accountSid = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_AUTH;
 const client = require("twilio")(accountSid, authToken);
