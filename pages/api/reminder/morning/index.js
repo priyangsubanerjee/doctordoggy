@@ -10,6 +10,7 @@ export default async function handler(req, res) {
   await connectDatabase();
 
   let pets_ = await pet.find({});
+  let notificationCount = 0;
 
   if (pets_.length != 0) {
     for (let i = 0; i < pets_.length; i++) {
@@ -38,6 +39,7 @@ export default async function handler(req, res) {
                 from: process.env.TWILIO_NUMBER,
                 to: `+91${parent_.phone}`,
               });
+              notificationCount++;
             }
           }
         }
@@ -45,5 +47,8 @@ export default async function handler(req, res) {
     }
   }
 
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).json({
+    success: true,
+    message: `Sent ${notificationCount} morning reminders!`,
+  });
 }
