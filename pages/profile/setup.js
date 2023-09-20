@@ -257,7 +257,6 @@ function Profile() {
           backupUser.phone == null ||
           backupUser.pincode == null
         ) {
-
           setFindingBackup(false);
           document.getElementById("phoneInput").focus();
           return;
@@ -320,6 +319,13 @@ function Profile() {
               `Pincode: ${pincode}` +
               "%0A" +
               `Address: ${address}`,
+          }),
+        });
+        await fetch("/api/notification/sms", {
+          method: "POST",
+          body: JSON.stringify({
+            to: `+91${phone}`,
+            body: `Welcome to DoctorDoggy, ${session.data.user.name}! We are glad to have you onboard. We will be sending you notifications regarding your pet's vaccination schedule. You can also reach us at +91 9996512944 for any queries. Thank you! - Team DoctorDoggy`,
           }),
         });
         router.push("/profile/onboardingSuccess");
