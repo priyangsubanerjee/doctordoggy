@@ -122,7 +122,7 @@ function Navbar() {
                   <a
                     rel="noopener norefferer"
                     className="block"
-                    href={"/bookings/schedule"}
+                    href={"/bookings/schedule?serviceType=grooming"}
                   >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
@@ -142,7 +142,7 @@ function Navbar() {
                   <a
                     rel="noopener norefferer"
                     className="block"
-                    href={"/bookings/schedule"}
+                    href={"/bookings/schedule?serviceType=borading"}
                   >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
@@ -162,7 +162,7 @@ function Navbar() {
                   <a
                     rel="noopener norefferer"
                     className="block"
-                    href={"/bookings/schedule"}
+                    href={"/bookings/schedule?serviceType=dogWalking"}
                   >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
@@ -181,7 +181,7 @@ function Navbar() {
                   <a
                     rel="noopener norefferer"
                     className="block"
-                    href={"/bookings/schedule"}
+                    href={"/bookings/schedule?serviceType=training"}
                   >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img

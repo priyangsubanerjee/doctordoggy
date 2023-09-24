@@ -1,9 +1,10 @@
 import connectDatabase from "@/db/connect";
 import pet from "@/db/models/pet";
-import React from "react";
+import React, { useEffect } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -30,6 +31,7 @@ export async function getServerSideProps(context) {
 }
 
 function Schedule({ pets = [] }) {
+  const router = useRouter();
   const session = useSession();
   const [services, setServices] = React.useState([
     {
@@ -71,6 +73,43 @@ function Schedule({ pets = [] }) {
       alert(data.message);
     }
   };
+
+  useEffect(() => {
+    let serviceTypeValue = document.getElementById("serviceTypeValue");
+
+    const serviceType = router.query.serviceType;
+    if (serviceType) {
+      if (serviceType == "grooming") {
+        setBookingProp({
+          ...bookingProp,
+          serviceType: "Grooming & Spa",
+        });
+        serviceTypeValue.value = "Grooming & Spa";
+      }
+      if (serviceType == "boarding") {
+        setBookingProp({
+          ...bookingProp,
+          serviceType: "Boarding",
+        });
+        serviceTypeValue.value = "Boarding";
+      }
+      if (serviceType == "training") {
+        setBookingProp({
+          ...bookingProp,
+          serviceType: "Training",
+        });
+        serviceTypeValue.value = "Training";
+      }
+
+      if (serviceType == "dogWalking") {
+        setBookingProp({
+          ...bookingProp,
+          serviceType: "Dog Walking",
+        });
+        serviceTypeValue.value = "Dog Walking";
+      }
+    }
+  }, [router.query.serviceType]);
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>
@@ -155,6 +194,7 @@ function Schedule({ pets = [] }) {
               <iconify-icon icon="icon-park-outline:down"></iconify-icon>
             </span>
             <select
+              id="serviceTypeValue"
               onChange={(e) => {
                 setBookingProp({
                   ...bookingProp,
@@ -163,7 +203,6 @@ function Schedule({ pets = [] }) {
               }}
               className="px-4 h-12 border w-full mt-2 appearance-none rounded bg-transparent"
               name=""
-              id=""
             >
               {services.map((service, index) => {
                 return (
