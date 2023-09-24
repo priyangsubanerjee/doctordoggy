@@ -110,101 +110,97 @@ function Navbar() {
             Pets
           </li>
 
-          <Link href={"/"} className="block">
-            <li className="">
-              <Popover className="relative">
-                <Popover.Button className="flex items-center space-x-2 outline-none">
-                  <span>Services</span>
-                  <Icon icon="icon-park-outline:down" />
-                </Popover.Button>
+          <li className="">
+            <Popover className="relative">
+              <Popover.Button className="flex items-center space-x-2 outline-none">
+                <span>Services</span>
+                <Icon icon="icon-park-outline:down" />
+              </Popover.Button>
 
-                <Popover.Panel className="absolute z-10 bg-white rounded shadow-2xl border shadow-black/10 w-[650px] p-4 mt-3 left-1/2 -translate-x-1/2">
-                  <div className="grid grid-cols-2 gap-3">
-                    <Link className="block" href={"/bookings/schedule"}>
-                      <div className="flex p-3 hover:bg-slate-50">
-                        <img
-                          src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
-                          className="h-full w-16 object-cover rounded"
-                          alt=""
-                        />
-                        <div className="ml-4">
-                          <h2 className="text-sm text-black">Grooming & Spa</h2>
-                          <p className="text-xs mt-1 leading-5">
-                            Provide your pet with the best grooming and spa
-                            services.
-                          </p>
-                        </div>
+              <Popover.Panel className="absolute z-10 bg-white rounded shadow-2xl border shadow-black/10 w-[650px] p-4 mt-3 left-1/2 -translate-x-1/2">
+                <div className="grid grid-cols-2 gap-3">
+                  <Link className="block" href={"/bookings/schedule"}>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Grooming & Spa</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Provide your pet with the best grooming and spa
+                          services.
+                        </p>
                       </div>
-                    </Link>
-                    <Link className="block" href={"/bookings/schedule"}>
-                      <div className="flex p-3 hover:bg-slate-50">
-                        <img
-                          src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
-                          className="h-full w-16 object-cover rounded"
-                          alt=""
-                        />
-                        <div className="ml-4">
-                          <h2 className="text-sm text-black">Boarding</h2>
-                          <p className="text-xs mt-1 leading-5">
-                            The best boarding services for your pets while you
-                            are away.
-                          </p>
-                        </div>
+                    </div>
+                  </Link>
+                  <Link className="block" href={"/bookings/schedule"}>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Boarding</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          The best boarding services for your pets while you are
+                          away.
+                        </p>
                       </div>
-                    </Link>
-                    <Link className="block" href={"/bookings/schedule"}>
-                      <div className="flex p-3 hover:bg-slate-50">
-                        <img
-                          src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
-                          className="h-full w-16 object-cover rounded"
-                          alt=""
-                        />
-                        <div className="ml-4">
-                          <h2 className="text-sm text-black">Dog walking</h2>
-                          <p className="text-xs mt-1 leading-5">
-                            Your pet&apos;s energy is channelled constructively.
-                          </p>
-                        </div>
+                    </div>
+                  </Link>
+                  <Link className="block" href={"/bookings/schedule"}>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Dog walking</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Your pet&apos;s energy is channelled constructively.
+                        </p>
                       </div>
-                    </Link>
-                    <Link className="block" href={"/bookings/schedule"}>
-                      <div className="flex p-3 hover:bg-slate-50">
-                        <img
-                          src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
-                          className="h-full w-16 object-cover rounded"
-                          alt=""
-                        />
-                        <div className="ml-4">
-                          <h2 className="text-sm text-black">Training</h2>
-                          <p className="text-xs mt-1 leading-5">
-                            Basic obedience to advanced training, we have it
-                            all.
-                          </p>
-                        </div>
+                    </div>
+                  </Link>
+                  <Link className="block" href={"/bookings/schedule"}>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">Training</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Basic obedience to advanced training, we have it all.
+                        </p>
                       </div>
-                    </Link>
-                    <Link className="block" href={"/bookings/"}>
-                      <div className="flex p-3 hover:bg-slate-50">
-                        <img
-                          src="https://static.vecteezy.com/system/resources/previews/014/586/732/original/calendar-icon-a-red-calendar-for-reminders-of-appointments-and-important-festivals-in-the-year-png.png"
-                          className="h-full w-16 object-cover rounded"
-                          alt=""
-                        />
-                        <div className="ml-4">
-                          <h2 className="text-sm text-black">
-                            All my bookings
-                          </h2>
-                          <p className="text-xs mt-1 leading-5">
-                            Find all your bookings at one place.
-                          </p>
-                        </div>
+                    </div>
+                  </Link>
+                  <Link className="block" href={"/bookings/"}>
+                    <div className="flex p-3 hover:bg-slate-50">
+                      <img
+                        src="https://static.vecteezy.com/system/resources/previews/014/586/732/original/calendar-icon-a-red-calendar-for-reminders-of-appointments-and-important-festivals-in-the-year-png.png"
+                        className="h-full w-16 object-cover rounded"
+                        alt=""
+                      />
+                      <div className="ml-4">
+                        <h2 className="text-sm text-black">All my bookings</h2>
+                        <p className="text-xs mt-1 leading-5">
+                          Find all your bookings at one place.
+                        </p>
                       </div>
-                    </Link>
-                  </div>
-                </Popover.Panel>
-              </Popover>
-            </li>
-          </Link>
+                    </div>
+                  </Link>
+                </div>
+              </Popover.Panel>
+            </Popover>
+          </li>
+
           <Link href={"/#brands"} className="block">
             <li>Brands</li>
           </Link>
