@@ -47,8 +47,8 @@ function Schedule({ pets }) {
     },
   ]);
   const [bookingProp, setBookingProp] = React.useState({
-    petId: pets[0]._id,
-    petName: pets[0].name,
+    petId: pets.length > 0 ? pets[0]._id : "",
+    petName: pets.length > 0 ? pets[0].name : "",
     dateTime: "",
     serviceType: services[0].name,
     notes: "",
