@@ -109,7 +109,7 @@ function Schedule({ pets = [] }) {
         serviceTypeValue.value = "Dog Walking";
       }
     }
-  }, [router.query.serviceType]);
+  }, [bookingProp, router.query.serviceType]);
   return (
     <div className="min-h-screen px-6 py-8 lg:py-16 lg:px-[100px]">
       <div>

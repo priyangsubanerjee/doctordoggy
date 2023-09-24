@@ -142,7 +142,7 @@ function Navbar() {
                   <a
                     rel="noopener norefferer"
                     className="block"
-                    href={"/bookings/schedule?serviceType=borading"}
+                    href={"/bookings/schedule?serviceType=boarding"}
                   >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
@@ -222,7 +222,7 @@ function Navbar() {
           </li>
 
           <Link href={"/#brands"} className="block">
-            <li>Brands</li>
+            <li>Ratings & Reviews</li>
           </Link>
           <Link href={"/contact"} className="block">
             <li>Contact us</li>
