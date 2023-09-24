@@ -23,15 +23,6 @@ export async function getServerSideProps(context) {
       parentEmail: session.user.email,
     })) || [];
 
-  if (pets_.length == 0) {
-    return {
-      redirect: {
-        destination: "/pets/register",
-        permanent: false,
-      },
-    };
-  }
-
   return {
     props: {
       pets: JSON.parse(JSON.stringify(pets_)),
