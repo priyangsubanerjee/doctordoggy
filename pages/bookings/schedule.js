@@ -67,13 +67,7 @@ function Schedule({ pets }) {
     const data = await response.json();
     setLoading(false);
     if (data.success) {
-      //   await fetch("/api/notification/send", {
-      //     method: "POST",
-      //     body: JSON.stringify({
-      //       message: `New booking request from ${session?.data?.user?.name} for ${bookingProp.serviceType} on ${bookingProp.dateTime}`,
-      //     }),
-      //   });
-      window.location.href = "/bookings";
+      window.location.href = "/bookings/success";
     } else {
       alert(data.message);
     }
