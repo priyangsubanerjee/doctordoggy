@@ -5,30 +5,29 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { useSession } from "next-auth/react";
 
-// export async function getServerSideProps(context) {
-//   const session = await getServerSession(context.req, context.res, authOptions);
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
 
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "/unauthenticated",
-//         permanent: false,
-//       },
-//     };
-//   }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/unauthenticated",
+        permanent: false,
+      },
+    };
+  }
 
-//   await connectDatabase();
-//   let pets_ =
-//     (await pet.find({
-//       parentEmail: session.user.email,
-//     })) || [];
+  await connectDatabase();
+  let pets_ = await pet.find({
+    parentEmail: session.user.email,
+  });
 
-//   return {
-//     props: {
-//       pets: JSON.parse(JSON.stringify(pets_)),
-//     },
-//   };
-// }
+  return {
+    props: {
+      pets: JSON.parse(JSON.stringify(pets_)),
+    },
+  };
+}
 
 function Schedule({ pets = [] }) {
   const session = useSession();
