@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import Switch from "react-switch";
 import doctor from "@/db/models/doctor";
+import vaccineList from "@/static/vaccineList";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -259,9 +260,15 @@ function Upload({ pet, doctors }) {
             }
             className="px-4 h-12 border w-full mt-2 rounded "
             placeholder="Name of vaccine"
+            list="vaccines"
             name=""
             id=""
           />
+          <datalist id="vaccines">
+            {vaccineList.map((vaccine, index) => {
+              return <option key={index} value={vaccine.name} />;
+            })}
+          </datalist>
         </div>
         <div>
           <label className="font-medium text-xs shrink-0 text-neutral-500">

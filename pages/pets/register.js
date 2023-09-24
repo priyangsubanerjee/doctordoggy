@@ -186,8 +186,8 @@ function RegisterPet() {
                 name=""
                 id=""
               >
-                <option value="Canine">Canine</option>
-                <option value="Feline">Feline</option>
+                <option value="Canine">Canine 🐶</option>
+                <option value="Feline">Feline 😺</option>
               </select>
             </div>
           </div>
