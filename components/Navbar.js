@@ -119,7 +119,11 @@ function Navbar() {
 
               <Popover.Panel className="absolute z-10 bg-white rounded shadow-2xl border shadow-black/10 w-[650px] p-4 mt-3 left-1/2 -translate-x-1/2">
                 <div className="grid grid-cols-2 gap-3">
-                  <Link className="block" href={"/bookings/schedule"}>
+                  <a
+                    rel="noopener norefferer"
+                    className="block"
+                    href={"/bookings/schedule"}
+                  >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
                         src="https://kibblesandcuts.com/wp-content/uploads/2022/02/Dog-Grooming-Services.jpg"
@@ -134,8 +138,12 @@ function Navbar() {
                         </p>
                       </div>
                     </div>
-                  </Link>
-                  <Link className="block" href={"/bookings/schedule"}>
+                  </a>
+                  <a
+                    rel="noopener norefferer"
+                    className="block"
+                    href={"/bookings/schedule"}
+                  >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
                         src="https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg"
@@ -150,8 +158,12 @@ function Navbar() {
                         </p>
                       </div>
                     </div>
-                  </Link>
-                  <Link className="block" href={"/bookings/schedule"}>
+                  </a>
+                  <a
+                    rel="noopener norefferer"
+                    className="block"
+                    href={"/bookings/schedule"}
+                  >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
                         src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
@@ -165,8 +177,12 @@ function Navbar() {
                         </p>
                       </div>
                     </div>
-                  </Link>
-                  <Link className="block" href={"/bookings/schedule"}>
+                  </a>
+                  <a
+                    rel="noopener norefferer"
+                    className="block"
+                    href={"/bookings/schedule"}
+                  >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
                         src="https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg"
@@ -180,8 +196,12 @@ function Navbar() {
                         </p>
                       </div>
                     </div>
-                  </Link>
-                  <Link className="block" href={"/bookings/"}>
+                  </a>
+                  <a
+                    rel="noopener norefferer"
+                    className="block"
+                    href={"/bookings/"}
+                  >
                     <div className="flex p-3 hover:bg-slate-50">
                       <img
                         src="https://static.vecteezy.com/system/resources/previews/014/586/732/original/calendar-icon-a-red-calendar-for-reminders-of-appointments-and-important-festivals-in-the-year-png.png"
@@ -195,7 +215,7 @@ function Navbar() {
                         </p>
                       </div>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </Popover.Panel>
             </Popover>
