@@ -12,6 +12,11 @@ export default async function handler(req, res) {
   let pets_ = await pet.find({});
   let notificationCount = 0;
 
+  res.status(200).json({
+    success: true,
+    message: `Morning reminders initiated.`,
+  });
+
   if (pets_.length != 0) {
     for (let i = 0; i < pets_.length; i++) {
       let pet = pets_[i];
@@ -40,15 +45,11 @@ export default async function handler(req, res) {
                 to: `+91${parent_.phone}`,
               });
               notificationCount++;
+              await new Promise((resolve) => setTimeout(resolve, 3000));
             }
           }
         }
       }
     }
   }
-
-  res.status(200).json({
-    success: true,
-    message: `Sent ${notificationCount} morning reminders!`,
-  });
 }
