@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URI_V1")
+}
+
+model File {
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  url            String
+  publicId       String
+  createdAt      DateTime      @default(now())
+  Prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+  prescriptionId String?       @db.ObjectId
+  Vaccination    Vaccination?  @relation(fields: [vaccinationId], references: [id])
+  vaccinationId  String?       @db.ObjectId
+  Pet            Pet?          @relation(fields: [petId], references: [id])
+  petId          String?       @db.ObjectId
+  Deworming      Deworming?    @relation(fields: [dewormingId], references: [id])
+  dewormingId    String?       @db.ObjectId
+  Pathology      Pathology?    @relation(fields: [pathologyId], references: [id])
+  pathologyId    String?       @db.ObjectId
+  Service        Service?      @relation(fields: [serviceId], references: [id])
+  serviceId      String?       @db.ObjectId
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String
+  phone     String
+  pincode   String
+  address   String?
+  createdAt DateTime @default(now())
+  pets      Pet[]
+}
+
+model Admin {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  name        String
+  phone       String
+  pincode     String
+  address     String?
+  password    String
+  createdAt   DateTime @default(now())
+  permissions String[]
+  defaultPass Boolean
+}
+
+model Doctor {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String   @unique
+  name        String
+  phone       String
+  regd        String
+  description String?
+  password    String
+  createdAt   DateTime @default(now())
+  defaultPass Boolean
+  schedule   Schedule[]
+}
+
+model Schedule {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  doctor    Doctor   @relation(fields: [doctorId], references: [id])
+  doctorId  String   @db.ObjectId
+  day       String
+  startTime String
+  endTime   String
+  clinic    String
+}
+
+model Pet {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  image         File[]
+  name          String
+  species       String
+  breed         String
+  dateOfBirth   DateTime
+  colour        String
+  weight        String
+  complications String
+  parentEmail   String
+  parent        User           @relation(fields: [parentEmail], references: [email])
+  vaccination   Vaccination[]
+  Prescription  Prescription[]
+  Deworming     Deworming[]
+  Pathology     Pathology[]
+  Services      Service[]
+}
+
+model Vaccination {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  petId        String   @db.ObjectId
+  pet          Pet      @relation(fields: [petId], references: [id])
+  weitght      String
+  temperature  String
+  vaccine_name String
+  status       String
+  due_date     DateTime
+  given_date   DateTime
+  uploaded_by  String
+  doctor       String
+  createdAt    DateTime @default(now())
+  files        File[]
+  notes        String?
+}
+
+model Prescription {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  petId       String   @db.ObjectId
+  pet         Pet      @relation(fields: [petId], references: [id])
+  reason      String
+  temperature String
+  weight      String
+  doctor      String
+  createdAt   DateTime @default(now())
+  files       File[]
+  notes       String?
+  uploaded_by String
+}
+
+model Deworming {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  petId       String   @db.ObjectId
+  pet         Pet      @relation(fields: [petId], references: [id])
+  createdAt   DateTime @default(now())
+  due_date    DateTime
+  given_date  DateTime
+  weitght     String
+  temperature String
+  dewormer    String
+  status      String
+  uploaded_by String
+  files       File[]
+  notes       String?
+}
+
+model Pathology {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  petId       String   @db.ObjectId
+  pet         Pet      @relation(fields: [petId], references: [id])
+  createdAt   DateTime @default(now())
+  due_date    DateTime
+  given_date  DateTime
+  weitght     String
+  temperature String
+  dewormer    String
+  status      String
+  uploaded_by String
+  files       File[]
+  notes       String?
+}
+
+model Service {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  pet         Pet      @relation(fields: [petId], references: [id])
+  petId       String   @db.ObjectId
+  name        String
+  description String
+  price       String
+  createdAt   DateTime @default(now())
+  files       File[]
+  notes       String?
+}
