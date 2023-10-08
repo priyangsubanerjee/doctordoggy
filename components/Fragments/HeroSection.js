@@ -59,7 +59,7 @@ function HeroSection() {
           className="h-full w-full object-cover"
           alt=""
         />
-        <div className="absolute inset-0 z-10 pb-6 lg:pb-20 flex items-end justify-center bg-gradient-to-b from-transparent to-black/50">
+        <div className="absolute inset-0 z-10 lg:pb-20 flex items-center lg:items-end justify-center bg-gradient-to-b from-transparent to-black/50">
           <div className="h-12 lg:h-16 bg-white border w-[93%] lg:w-[60%] rounded-md flex items-center overflow-hidden">
             <input
               type="text"
