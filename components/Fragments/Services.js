@@ -60,7 +60,7 @@ function Services() {
       >
         <img
           src={image}
-          className="h-[100px] lg:h-[150px] w-[100px] lg:w-[150px] object-cover rounded-xl"
+          className="h-[100px] lg:h-[150px] w-[100px] lg:w-[150px] object-cover rounded-full lg:rounded-full"
           alt=""
         />
         <h2 className="lg:text-lg font-bold mt-5">{title}</h2>
@@ -81,7 +81,7 @@ function Services() {
 
   return (
     <div className="border-t py-24">
-      <h1 className="text-xl lg:text-2xl font-semibold text-center">
+      <h1 className="text-2xl lg:text-3xl font-semibold text-center">
         Services that we provide
       </h1>
       <p className="text-sm text-center mt-3 mx-6 leading-6 text-neutral-600">

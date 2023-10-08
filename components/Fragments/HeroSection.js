@@ -24,14 +24,21 @@ function HeroSection() {
       icon: "https://cdn-icons-png.flaticon.com/512/809/809957.png",
       link: "Schedule now",
     },
+    {
+      title: "Deworming",
+      icon: "https://cdn-icons-png.flaticon.com/512/1984/1984420.png",
+      link: "Schedule now",
+    },
+    {
+      title: "Pathology",
+      icon: "https://cdn-icons-png.flaticon.com/512/4468/4468662.png",
+      link: "Upload now",
+    },
   ];
 
   const FeatureCard = ({ title, icon, link, index }) => {
     return (
-      <div
-        className={`flex w-full flex-col items-center justify-center p-3
-        ${index == 3 ? "lg:col-span-3" : "col-span-1"}`}
-      >
+      <div className={`flex w-full flex-col items-center justify-center p-3`}>
         <img src={icon} alt="" className="h-12" />
         <p className="text-xl font-semibold mt-5">{title}</p>
         <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2">
@@ -46,9 +53,9 @@ function HeroSection() {
 
   return (
     <div>
-      <div className="h-[300px] md:h-[400px] lg:h-[500px]">
+      <div className="h-[400px] md:h-[500px] lg:h-[600px]">
         <img
-          src="https://images.hdqwalls.com/wallpapers/kids-and-dogs-qhd.jpg"
+          src="https://images7.alphacoders.com/126/1269810.jpg"
           className="h-full w-full object-cover"
           alt=""
         />
@@ -60,7 +67,7 @@ function HeroSection() {
         <p className="text-center mt-6 text-lg lg:text-xl font-light">
           For all your parenting needs
         </p>
-        <div className="mt-20 lg:mt-24 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-4xl place-content-center place-items-center mx-6 lg:mx-auto">
+        <div className="mt-16 lg:mt-20 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-6 lg:mx-auto">
           {featuresList.map((feature, i) => (
             <FeatureCard {...feature} key={i} index={i} />
           ))}
