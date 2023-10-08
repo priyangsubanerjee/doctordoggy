@@ -53,12 +53,26 @@ function HeroSection() {
 
   return (
     <div>
-      <div className="h-[300px] md:h-[500px] lg:h-[500px]">
+      <div className="h-[250px] md:h-[500px] lg:h-[500px] relative">
         <img
           src="https://images7.alphacoders.com/126/1269810.jpg"
           className="h-full w-full object-cover"
           alt=""
         />
+        <div className="absolute inset-0 z-10 pb-6 lg:pb-20 flex items-end justify-center bg-gradient-to-b from-transparent to-black/50">
+          <div className="h-12 lg:h-16 bg-white border w-[93%] lg:w-[60%] rounded-md flex items-center overflow-hidden">
+            <input
+              type="text"
+              className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
+              placeholder="Search for a service or a product"
+              name=""
+              id=""
+            />
+            <button className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full">
+              <Icon icon="iconoir:search" className="text-2xl text-gray-900" />
+            </button>
+          </div>
+        </div>
       </div>
       <div className="py-10 lg:py-20">
         <h1 className="text-3xl lg:text-5xl font-semibold text-center">
