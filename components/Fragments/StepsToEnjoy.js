@@ -57,19 +57,28 @@ function StepsToEnjoy() {
       <p className="text-center text-sm text-neutral-600 mt-3 leading-6 mx-6">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus aliquid
       </p>
-      <div className="mt-16 lg:mt-24 grid gap-y-5 gap-x-6 lg:gap-x-6 lg:gap-y-16 grid-cols-1 md:grid-cols-3 lg:max-w-5xl place-content-center place-items-center mx-6 lg:mx-auto">
+      <div className="mt-16 lg:mt-24 grid gap-y-5 gap-x-6 lg:gap-x-6 lg:gap-y-6 grid-cols-1 md:grid-cols-3 lg:max-w-5xl place-content-center place-items-center mx-6 lg:mx-auto">
         {stepsList.map((step, i) => (
           <StepCard {...step} key={i} index={i} />
         ))}
-      </div>
-      <div className="flex items-center justify-center mt-16 lg:mt-24">
-        <span>Still not sure?</span>
-        <button className="flex items-center space-x-2 justify-center ml-2 text-blue-600">
-          <span>Get a free consultation</span>
-          <span className="translate-y-[1px]">
-            <Icon icon="formkit:right" />
-          </span>
-        </button>
+        <div className="lg:col-span-3 w-full bg-slate-100 rounded-2xl py-10 px-6 flex flex-col items-center justify-center">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3249/3249904.png"
+            alt=""
+            className="h-10"
+          />
+          <h1 className="text-xl font-semibold mt-4">Still not sure?</h1>
+          <p className="text-sm text-neutral-600 text-center mt-2 leading-6">
+            Get a free consultation from our experts and get your doubts
+            cleared.
+          </p>
+          <button className="mt-6 flex items-center text-blue-600 space-x-2 text-base">
+            <span>Schedule a call</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );

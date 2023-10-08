@@ -40,7 +40,7 @@ function HeroSection() {
     return (
       <div className={`flex w-full flex-col items-center justify-center p-3`}>
         <img src={icon} alt="" className="h-12" />
-        <p className="text-xl font-semibold mt-5">{title}</p>
+        <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
         <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2">
           <span>{link}</span>
           <span className="translate-y-[1px]">
@@ -53,21 +53,21 @@ function HeroSection() {
 
   return (
     <div>
-      <div className="h-[400px] md:h-[500px] lg:h-[600px]">
+      <div className="h-[300px] md:h-[500px] lg:h-[500px]">
         <img
           src="https://images7.alphacoders.com/126/1269810.jpg"
           className="h-full w-full object-cover"
           alt=""
         />
       </div>
-      <div className="py-20">
-        <h1 className="text-4xl lg:text-5xl font-semibold text-center">
+      <div className="py-10 lg:py-20">
+        <h1 className="text-3xl lg:text-5xl font-semibold text-center">
           One Stop Solution
         </h1>
-        <p className="text-center mt-6 text-lg lg:text-xl font-light">
+        <p className="text-center mt-4 lg:mt-6 text-base lg:text-xl font-light">
           For all your parenting needs
         </p>
-        <div className="mt-16 lg:mt-20 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-6 lg:mx-auto">
+        <div className="mt-16 lg:mt-20 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-0 lg:mx-auto">
           {featuresList.map((feature, i) => (
             <FeatureCard {...feature} key={i} index={i} />
           ))}
