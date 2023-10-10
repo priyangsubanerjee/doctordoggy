@@ -5,3 +5,5 @@ This readme file is solely made for the developer, who are going to work on this
 ## Project Description
 
 Doctor doggy is multimodal platform to provide the best possible care for your pet. This platform empowers hands-free consultation with the vet, online appointment booking.
+
+- **Doctor Doggy** is a platform where you can book an appointment with the vet and get the best possible care for your pet.
