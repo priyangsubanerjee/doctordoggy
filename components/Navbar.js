@@ -13,20 +13,25 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const InfoBar = ({}) => {
-  return (
-    <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
-      This site is under development.
-      <Button radius="full" size="sm" className="ml-3">
-        Learn more
-      </Button>
-    </div>
-  );
-};
-
 function Navbar() {
   const router = useRouter();
   const session = useSession();
+
+  const InfoBar = ({}) => {
+    return (
+      <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
+        This site is under development.
+        <Button
+          onClick={() => router.push("/dev")}
+          radius="full"
+          size="sm"
+          className="ml-3"
+        >
+          Learn more
+        </Button>
+      </div>
+    );
+  };
 
   const AccountButton = () => {
     // shows different buttons depending on the session status
