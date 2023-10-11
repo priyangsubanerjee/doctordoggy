@@ -29,6 +29,7 @@ function Navbar() {
   const session = useSession();
 
   const AccountButton = () => {
+    // shows different buttons depending on the session status
     return (
       <div>
         {session.status == "unauthenticated" ? (
