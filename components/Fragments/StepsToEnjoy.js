@@ -72,12 +72,20 @@ function StepsToEnjoy() {
             Get a free consultation from our experts and get your doubts
             cleared.
           </p>
-          <button className="mt-6 flex items-center text-blue-600 space-x-2 text-base">
-            <span>Schedule a call</span>
-            <span className="translate-y-[1px]">
-              <Icon icon="formkit:right" />
-            </span>
-          </button>
+          <div className="flex items-center justify-center space-x-5 mt-6">
+            <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+              <span>Choose a service</span>
+              <span className="translate-y-[1px]">
+                <Icon icon="formkit:right" />
+              </span>
+            </button>
+            <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+              <span>Schedule a call</span>
+              <span className="translate-y-[1px]">
+                <Icon icon="formkit:right" />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

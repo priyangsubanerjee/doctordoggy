@@ -68,7 +68,7 @@ function Services() {
           {description}
         </p>
         <Link href={buttonLink} className="mt-3 block">
-          <button className="flex items-center text-blue-600 space-x-2 text-sm">
+          <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
             <span>{buttonText}</span>
             <span className="translate-y-[1px]">
               <Icon icon="formkit:right" />

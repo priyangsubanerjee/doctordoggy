@@ -7,42 +7,42 @@ function HeroSection() {
     {
       title: "Pet's profile",
       icon: "https://cdn-icons-png.flaticon.com/512/2437/2437791.png",
-      link: "Register pet",
+      buttonText: "Register pet",
     },
     {
       title: "Vaccination",
       icon: "https://cdn-icons-png.flaticon.com/512/6064/6064468.png",
-      link: "Schedule now",
+      buttonText: "Schedule now",
     },
     {
       title: "Prescriptions",
       icon: "https://cdn-icons-png.flaticon.com/512/843/843435.png",
-      link: "Upload now",
+      buttonText: "Upload now",
     },
     {
       title: "Appointments",
       icon: "https://cdn-icons-png.flaticon.com/512/809/809957.png",
-      link: "Schedule now",
+      buttonText: "Schedule now",
     },
     {
       title: "Deworming",
       icon: "https://cdn-icons-png.flaticon.com/512/1984/1984420.png",
-      link: "Schedule now",
+      buttonText: "Schedule now",
     },
     {
       title: "Pathology",
       icon: "https://cdn-icons-png.flaticon.com/512/4468/4468662.png",
-      link: "Upload now",
+      buttonText: "Upload now",
     },
   ];
 
-  const FeatureCard = ({ title, icon, link, index }) => {
+  const FeatureCard = ({ title, icon, buttonText, index }) => {
     return (
       <div className={`flex w-full flex-col items-center justify-center p-3`}>
         <img src={icon} alt="" className="h-12" />
         <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
-        <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2">
-          <span>{link}</span>
+        <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
+          <span>{buttonText}</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
