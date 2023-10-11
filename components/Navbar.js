@@ -41,7 +41,11 @@ function Navbar() {
       <div>
         {session.status == "unauthenticated" ? (
           <Link href={"/signin"}>
-            <Icon height={24} icon="codicon:account" />
+            <Avatar
+              size="sm"
+              src={session?.data?.user?.image}
+              className="cursor-pointer"
+            />
           </Link>
         ) : (
           <Dropdown className="rounded-lg z-30">
@@ -59,8 +63,8 @@ function Navbar() {
                   case "logout":
                     signOut();
                     break;
-                  case "profile":
-                    router.push("/profile");
+                  case "account":
+                    router.push("/account");
                     break;
                   default:
                     break;
@@ -69,7 +73,7 @@ function Navbar() {
               aria-label="Custom item styles"
             >
               <DropdownSection aria-label="Profile & Actions" showDivider>
-                <DropdownItem key="profile" className="h-14 gap-2 opacity-100">
+                <DropdownItem key="account" className="h-14 gap-2 opacity-100">
                   <User
                     name={session?.data?.user?.name}
                     description={session?.data?.user?.email}
