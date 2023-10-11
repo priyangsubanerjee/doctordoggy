@@ -2,6 +2,10 @@
 import { Icon } from "@iconify/react";
 import React from "react";
 
+// TODO: Make the search bar functional
+// TODO: Migrate all the static data to static.js file
+// TODO: Migrate all the images to Cloudinary
+
 function HeroSection() {
   const featuresList = [
     {

@@ -13,6 +13,20 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    async session({ session, user, token }) {
+      if (!session) return;
+
+      // TODO: Add database logic here to check if the user's account is already created
+
+      return {
+        ...session,
+        user: {
+          ...session.user,
+        },
+      };
+    },
+  },
   secret: process.env.AUTH_SECRET_SALT,
 };
 

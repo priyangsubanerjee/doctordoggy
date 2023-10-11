@@ -17,6 +17,8 @@ function Navbar() {
   const router = useRouter();
   const session = useSession();
 
+  console.log(session);
+
   const InfoBar = ({}) => {
     return (
       <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
