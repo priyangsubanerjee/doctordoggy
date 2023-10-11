@@ -32,7 +32,7 @@ function SignIn() {
           Join us as a doctor or a partner and help us make the world a better
           place for our pets.
         </p>
-        <div className="lg:flex items-center justify-center gap-5 mt-6">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-5 mt-6">
           <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
             <span>Doctors portal</span>
             <span className="translate-y-[1px]">
