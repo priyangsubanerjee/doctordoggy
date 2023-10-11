@@ -78,7 +78,7 @@ function Navbar() {
                     name={session?.data?.user?.name}
                     description={session?.data?.user?.email}
                     classNames={{
-                      name: "text-slate-700",
+                      name: "text-neutral-700",
                       description: "text-default-500",
                     }}
                     avatarProps={{

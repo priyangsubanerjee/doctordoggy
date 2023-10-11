@@ -51,7 +51,7 @@ function Account() {
   }, [state]);
 
   return (
-    <div className="lg:px-44 px-6 py-16">
+    <div className="lg:px-44 px-6 py-20 lg:py-16">
       <h1 className="text-2xl lg:text-3xl font-medium">Account</h1>
       <div className="flex items-center space-x-2 mt-3 text-neutral-600 text-xs lg:text-sm">
         <span>Unable to access this page?</span>
@@ -63,7 +63,7 @@ function Account() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl mt-10 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:max-w-4xl mt-10 gap-2 lg:gap-4">
         <Input
           label="Name (as per your account provider)"
           type="text"
@@ -71,7 +71,7 @@ function Account() {
           radius="none"
           value={accountProp.name}
           readOnly
-          className="rounded-none cursor-not-allowed pointer-events-none"
+          className="rounded-none cursor-not-allowed pointer-events-none opacity-50"
         />
 
         <Input
@@ -81,7 +81,7 @@ function Account() {
           radius="none"
           value={accountProp.email}
           readOnly
-          className="rounded-none border border-transparent focus-within:border-black/30 pointer-events-none"
+          className="rounded-none pointer-events-none opacity-50"
         />
         <Input
           label="Phone"
@@ -105,7 +105,10 @@ function Account() {
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30 lg:col-span-2"
         />
-        <div className="mt-8 flex items-center justify-end lg:col-span-2">
+        <div className="mt-8 flex items-center justify-end lg::justify-between lg:col-span-2">
+          <button className="text-sm text-blue-600 hover:underline hidden lg:block">
+            Why cant I edit my name and email?
+          </button>
           <Statemanager />
         </div>
       </div>
