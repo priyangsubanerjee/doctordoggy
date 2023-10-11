@@ -59,6 +59,9 @@ function Navbar() {
                   case "logout":
                     signOut();
                     break;
+                  case "profile":
+                    router.push("/profile");
+                    break;
                   default:
                     break;
                 }
@@ -66,12 +69,7 @@ function Navbar() {
               aria-label="Custom item styles"
             >
               <DropdownSection aria-label="Profile & Actions" showDivider>
-                <DropdownItem
-                  onClick={() => router.push("/account")}
-                  isReadOnly
-                  key="profile"
-                  className="h-14 gap-2 opacity-100"
-                >
+                <DropdownItem key="profile" className="h-14 gap-2 opacity-100">
                   <User
                     name={session?.data?.user?.name}
                     description={session?.data?.user?.email}
@@ -90,6 +88,7 @@ function Navbar() {
               <DropdownItem className="rounded" key="new">
                 Pets
               </DropdownItem>
+
               <DropdownItem className="rounded" key="copy">
                 Account
               </DropdownItem>
