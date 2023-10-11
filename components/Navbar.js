@@ -107,7 +107,9 @@ function Navbar() {
           />
         </div>
         <ul className="hidden lg:flex items-center space-x-14 text-sm">
-          <li>Home</li>
+          <li>
+            <Link href={"/"}>Home</Link>
+          </li>
           <li>About</li>
           <li>Services</li>
           <li>Parenting</li>
