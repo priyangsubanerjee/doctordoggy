@@ -44,7 +44,7 @@ function Navbar() {
             <Icon height={24} icon="codicon:account" />
           </Link>
         ) : (
-          <Dropdown className="rounded-lg">
+          <Dropdown className="rounded-lg z-30">
             <DropdownTrigger className="outline-none">
               <Avatar
                 size="sm"
@@ -53,7 +53,18 @@ function Navbar() {
               />
             </DropdownTrigger>
 
-            <DropdownMenu aria-label="Custom item styles">
+            <DropdownMenu
+              onAction={(key) => {
+                switch (key) {
+                  case "logout":
+                    signOut();
+                    break;
+                  default:
+                    break;
+                }
+              }}
+              aria-label="Custom item styles"
+            >
               <DropdownSection aria-label="Profile & Actions" showDivider>
                 <DropdownItem
                   onClick={() => router.push("/account")}
@@ -75,6 +86,7 @@ function Navbar() {
                   />
                 </DropdownItem>
               </DropdownSection>
+
               <DropdownItem className="rounded" key="new">
                 Pets
               </DropdownItem>
@@ -85,8 +97,7 @@ function Navbar() {
                 Report an issue
               </DropdownItem>
               <DropdownItem
-                onClick={() => signOut()}
-                key="delete"
+                key="logout"
                 className="text-danger rounded"
                 color="danger"
               >
