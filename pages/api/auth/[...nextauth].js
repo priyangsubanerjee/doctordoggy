@@ -1,3 +1,4 @@
+import { create_user, get_user } from "@/prisma/user";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -19,10 +20,23 @@ export const authOptions = {
 
       // TODO: Add database logic here to check if the user's account is already created
 
+      let isPhoneEmpty = false;
+      let isZipEmpty = false;
+
+      let userDB = await get_user(session.user.email);
+      if (!userDB) {
+        let createdUser = await create_user(
+          session.user.name,
+          session.user.email
+        );
+        userDB = createdUser;
+      }
+
       return {
         ...session,
         user: {
           ...session.user,
+          onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
         },
       };
     },

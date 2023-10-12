@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import quickNavOptions from "@/static/quick-navigaion";
 import { Icon } from "@iconify/react";
 import React from "react";
 
@@ -7,39 +8,6 @@ import React from "react";
 // TODO: Migrate all the images to Cloudinary
 
 function HeroSection() {
-  const featuresList = [
-    {
-      title: "Pet's profile",
-      icon: "https://cdn-icons-png.flaticon.com/512/2437/2437791.png",
-      buttonText: "Register pet",
-    },
-    {
-      title: "Vaccination",
-      icon: "https://cdn-icons-png.flaticon.com/512/6064/6064468.png",
-      buttonText: "Schedule now",
-    },
-    {
-      title: "Prescriptions",
-      icon: "https://cdn-icons-png.flaticon.com/512/843/843435.png",
-      buttonText: "Upload now",
-    },
-    {
-      title: "Appointments",
-      icon: "https://cdn-icons-png.flaticon.com/512/809/809957.png",
-      buttonText: "Schedule now",
-    },
-    {
-      title: "Deworming",
-      icon: "https://cdn-icons-png.flaticon.com/512/1984/1984420.png",
-      buttonText: "Schedule now",
-    },
-    {
-      title: "Pathology",
-      icon: "https://cdn-icons-png.flaticon.com/512/4468/4468662.png",
-      buttonText: "Upload now",
-    },
-  ];
-
   const FeatureCard = ({ title, icon, buttonText, index }) => {
     return (
       <div className={`flex w-full flex-col items-center justify-center p-3`}>
@@ -86,7 +54,7 @@ function HeroSection() {
           For all your parenting needs
         </p>
         <div className="mt-16 lg:mt-20 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-0 lg:mx-auto">
-          {featuresList.map((feature, i) => (
+          {quickNavOptions.map((feature, i) => (
             <FeatureCard {...feature} key={i} index={i} />
           ))}
         </div>

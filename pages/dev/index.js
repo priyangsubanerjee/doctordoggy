@@ -20,7 +20,7 @@ function Dev() {
           <h1 className="lg:text-xl mt-4 text-center text-base">
             Some thing is gonna happen soon ...
           </h1>
-          <p className="text-center max-w-md mt-6 text-xs lg:text-sm leading-7">
+          <p className="text-center max-w-md mt-6 text-xs lg:text-sm leading-7 lg:leading-7">
             If you had already registered, you will be notified via email once
             the platform is ready. Your data is safe with us.
           </p>
