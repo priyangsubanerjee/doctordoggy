@@ -44,6 +44,37 @@ function Account() {
     );
   };
 
+  const CCNameEmail = () => {
+    return (
+      <div
+        id="ccne-modal"
+        className="hidden fixed inset-0 h-full w-full bg-black/70 items-center justify-center z-30"
+      >
+        <div className="max-w-lg w-full bg-white rounded-lg p-8">
+          <h1 className="font-semibold text-xl">
+            Why cant I edit my name and email?
+          </h1>
+          <p className="mt-3 text-sm text-neutral-700 leading-6">
+            Your name and email are fetched from your account provider. To
+            change your name and email, you need to change it in your account
+            provider, such as Google, Github, etc.
+          </p>
+          <Button
+            onPress={() => {
+              document.getElementById("ccne-modal").classList.remove("flex");
+              document.getElementById("ccne-modal").classList.add("hidden");
+            }}
+            radius="full"
+            color="primary"
+            className="mt-7"
+          >
+            Okay, I understand
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
   useEffect(() => {
     if (state == "view") return;
     const phoneInput = document.getElementById("phoneInput");
@@ -84,29 +115,32 @@ function Account() {
           className="rounded-none pointer-events-none opacity-50"
         />
         <Input
-          label="Phone"
+          label="Phone number"
           id="phoneInput"
           type="tel"
-          placeholder="Enter your phone number"
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30"
         />
         <Input
-          label="Zipcode"
+          label="Area pincode"
           type="tel"
-          placeholder="Enter your area pincode"
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30"
         />
 
         <Textarea
-          label="Address"
-          placeholder="Enter your address"
+          label="Full Address (Optional)"
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30 lg:col-span-2"
         />
-        <div className="mt-8 flex items-center justify-end lg::justify-between lg:col-span-2">
-          <button className="text-sm text-blue-600 hover:underline hidden lg:block">
+        <div className="mt-8 flex items-center justify-end lg:justify-between lg:col-span-2">
+          <button
+            onClick={() => {
+              document.getElementById("ccne-modal").classList.remove("hidden");
+              document.getElementById("ccne-modal").classList.add("flex");
+            }}
+            className="text-sm text-blue-600 hover:underline hidden lg:block"
+          >
             Why cant I edit my name and email?
           </button>
           <Statemanager />
@@ -132,6 +166,8 @@ function Account() {
           Send
         </Button>
       </div>
+
+      <CCNameEmail />
     </div>
   );
 }
