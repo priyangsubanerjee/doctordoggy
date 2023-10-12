@@ -110,7 +110,7 @@ function Onboarding() {
               <>
                 <p className="text-xs text-neutral-600">Good morning</p>
                 <h1 className="font-semibold text-2xl mt-3">
-                  Priyangsu Banerjee
+                  {session?.data?.user?.name}
                 </h1>
                 <p className="text-sm leading-6 mt-3 text-neutral-700">
                   Glad to have you onboard. We need some more information to get
