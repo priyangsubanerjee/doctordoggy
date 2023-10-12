@@ -7,7 +7,7 @@ function Dev() {
   const router = useRouter();
   return (
     <div className="px-6 lg:px-32 mt-16 lg:mt-16">
-      <div className="h-[500px] bg-[url('https://uploads-ssl.webflow.com/5a9ee6416e90d20001b20038/64f5c2c33e2504f6bbf98f2e_Rectangle%20(6).svg')] bg-cover bg-no-repeat w-full rounded-lg relative overflow-hidden">
+      <div className="h-[500px] bg-[url('https://uploads-ssl.webflow.com/5a9ee6416e90d20001b20038/64f5c2c33e2504f6bbf98f2e_Rectangle%20(6).svg')] bg-cover bg-no-repeat w-full lg:w-[700px] mx-auto rounded-lg relative overflow-hidden">
         <div className="absolute inset-0 h-full w-full flex flex-col items-center justify-center px-6 lg:px-2">
           <img
             src="https://cdn-icons-png.flaticon.com/512/2504/2504710.png"
