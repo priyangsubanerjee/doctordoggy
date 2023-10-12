@@ -37,6 +37,9 @@ export const authOptions = {
         user: {
           ...session.user,
           onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
+          phone: userDB.phone,
+          zipCode: userDB.zipCode,
+          address: userDB.address,
         },
       };
     },
