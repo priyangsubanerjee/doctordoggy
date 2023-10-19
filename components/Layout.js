@@ -5,8 +5,8 @@ import Onboarding from "./Onboarding";
 function Layout({ children }) {
   return (
     <div className="pt-16 lg:pt-28">
-      <Onboarding />
-      <Navbar />
+      {/* <Onboarding />
+      <Navbar /> */}
       {children}
     </div>
   );

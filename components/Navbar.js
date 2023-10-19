@@ -17,8 +17,6 @@ function Navbar() {
   const router = useRouter();
   const session = useSession();
 
-  console.log(session);
-
   const InfoBar = ({}) => {
     return (
       <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
@@ -112,6 +110,7 @@ function Navbar() {
       </div>
     );
   };
+
   return (
     <nav className="fixed top-0 inset-x-0 z-20">
       <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white/90 backdrop-blur-2xl">
