@@ -115,11 +115,7 @@ function Navbar() {
     <nav className="fixed top-0 inset-x-0 z-20">
       <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white/90 backdrop-blur-2xl">
         <div>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/676/676291.png"
-            className="h-7"
-            alt=""
-          />
+          <img src="/logoDark.png" className="h-7" alt="" />
         </div>
         <ul className="hidden lg:flex items-center space-x-14 text-sm">
           <li>
