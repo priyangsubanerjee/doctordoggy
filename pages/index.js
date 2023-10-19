@@ -13,9 +13,14 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   useEffect(() => {
     // ask for notification permission on page load
-    Notification.requestPermission().then(function (result) {
-      console.log(result);
-    });
+    // check if browser supports notification
+
+    if ("Notification" in window) {
+      console.log("This browser does not support notifications.");
+      Notification.requestPermission().then(function (result) {
+        console.log(result);
+      });
+    }
 
     // if granted then send notification to user
 
