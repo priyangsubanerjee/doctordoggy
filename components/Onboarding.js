@@ -38,6 +38,9 @@ function Onboarding() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+    const fetchR = await fetch("/api/onboarding/", {
+      method: "POST",
+    });
     setTimeout(() => {
       setStep(2);
       handleConfetti();
