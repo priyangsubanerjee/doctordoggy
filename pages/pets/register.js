@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react";
 import { Button, Input } from "@nextui-org/react";
 import React from "react";
 import { Switch } from "@nextui-org/react";
+import Link from "next/link";
 
 function RegisterPet() {
   const [isPublicProfile, setIsPublicProfile] = React.useState(false);
@@ -16,8 +17,7 @@ function RegisterPet() {
         <p className="text-center text-neutral-600 text-sm">
           * marked fields are mandatory.
         </p>
-        <a
-          rel="noopener noreferrer"
+        <Link
           href="/pets/register"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
@@ -25,7 +25,7 @@ function RegisterPet() {
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </a>
+        </Link>
       </div>
 
       <div className="flex w-[80%] mx-auto space-x-12 mt-16">
@@ -95,8 +95,7 @@ function RegisterPet() {
               <p className="text-neutral-800 text-sm">
                 Is your pet&apos;s profile public?
               </p>
-              <a
-                rel="noopener noreferrer"
+              <Link
                 href="/pets/register"
                 className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
               >
@@ -104,7 +103,7 @@ function RegisterPet() {
                 <span className="translate-y-[1px]">
                   <Icon icon="formkit:right" />
                 </span>
-              </a>
+              </Link>
             </div>
             <Switch checked={isPublicProfile} onChange={setIsPublicProfile} />
           </div>

@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 import React from "react";
 
 function Pets() {
@@ -10,8 +11,7 @@ function Pets() {
         <p className="text-center text-neutral-600 text-sm">
           Your fur babies deserve the utmost care.
         </p>
-        <a
-          rel="noopener noreferrer"
+        <Link
           href="/pets/register"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
@@ -19,7 +19,7 @@ function Pets() {
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </a>
+        </Link>
       </div>
 
       <div className="max-w-[75%] mx-auto h-44 mt-16 grid grid-cols-3 place-content-center place-items-center">
