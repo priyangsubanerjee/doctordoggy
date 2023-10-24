@@ -6,7 +6,7 @@ import { Switch } from "@nextui-org/react";
 import Link from "next/link";
 
 function RegisterPet() {
-  const [isPublicProfile, setIsPublicProfile] = React.useState(false);
+  const [isPublicProfile, setIsPublicProfile] = React.useState(true);
   return (
     <div className="pb-16">
       <h1 className="text-3xl font-semibold text-center mt-16">
@@ -28,9 +28,9 @@ function RegisterPet() {
         </Link>
       </div>
 
-      <div className="flex w-[80%] mx-auto space-x-12 mt-16">
-        <div className="w-fit shrink-0">
-          <div className="h-full max-h-[500px] w-96 bg-neutral-100 rounded-md relative">
+      <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
+        <div className="lg:w-fit w-full shrink-0">
+          <div className="h-[200px] lg:h-full lg:max-h-[300px] lg:w-96 bg-neutral-100 rounded-md relative">
             <div className="absolute inset-0 h-full w-full flex flex-col items-center justify-center">
               <img
                 src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
@@ -44,16 +44,17 @@ function RegisterPet() {
             </div>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full mt-16 lg:mt-0">
           <p className="text-xs text-neutral-600">
             General information about your pet
           </p>
-          <div className="mt-6 grid grid-cols-2 gap-3 text-b">
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b">
             <Input
               label="Name of your pet"
               type="email"
               radius="none"
-              className="rounded-none  col-span-2"
+              size="md"
+              className="rounded-none text-base lg:col-span-2"
             />
 
             <Input
@@ -90,7 +91,7 @@ function RegisterPet() {
           </div>
           <div className="h-[1px] w-full my-8"></div>
           <p className="text-xs text-neutral-600">Privacy</p>
-          <div className="flex items-center justify-between max-w-sm mt-5">
+          <div className="flex items-center justify-between mt-5">
             <div>
               <p className="text-neutral-800 text-sm">
                 Is your pet&apos;s profile public?
@@ -105,23 +106,16 @@ function RegisterPet() {
                 </span>
               </Link>
             </div>
-            <Switch checked={isPublicProfile} onChange={setIsPublicProfile} />
+            <Switch
+              isSelected={isPublicProfile}
+              onValueChange={setIsPublicProfile}
+            />
           </div>
-          <div className="h-[1px] w-full my-8"></div>
-          <p className="text-xs text-neutral-600">Alerts</p>
-          <div className="flex items-center justify-between max-w-sm mt-5">
-            <div>
-              <p className="text-neutral-800 text-sm">
-                Receive sms & email alerts ?
-              </p>
-            </div>
-            <Switch checked={isPublicProfile} onChange={setIsPublicProfile} />
-          </div>
-          <div className="mt-20 flex items-center justify-start">
+
+          <div className="mt-20 flex space-x-2 items-center justify-end">
             <Button
               radius="none"
-              color="primary"
-              className="w-1/2 rounded h-12"
+              className="w-full rounded-md h-12 bg-black text-white"
             >
               {" "}
               Register{" "}
