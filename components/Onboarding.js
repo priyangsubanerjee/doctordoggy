@@ -12,8 +12,8 @@ function Onboarding() {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(0); // 0: phone, 1: zipcode, address, 2: success
-  const [phone, setPhone] = useState("9647045453");
-  const [zipcode, setZipcode] = useState("713216");
+  const [phone, setPhone] = useState("");
+  const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [errors, setErrors] = useState({
     phone: {
