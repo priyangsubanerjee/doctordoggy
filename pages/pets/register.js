@@ -17,6 +17,7 @@ function RegisterPet() {
           * marked fields are mandatory.
         </p>
         <a
+          rel="noopener noreferrer"
           href="/pets/register"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
@@ -95,6 +96,7 @@ function RegisterPet() {
                 Is your pet&apos;s profile public?
               </p>
               <a
+                rel="noopener noreferrer"
                 href="/pets/register"
                 className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
               >

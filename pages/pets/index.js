@@ -11,6 +11,7 @@ function Pets() {
           Your fur babies deserve the utmost care.
         </p>
         <a
+          rel="noopener noreferrer"
           href="/pets/register"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
