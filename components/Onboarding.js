@@ -1,21 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Icon } from "@iconify/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 import { Button, Input, Textarea } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 function Onboarding() {
-  const session = useSession();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [step, setStep] = useState(0); // 0: phone, 1: zipcode, address, 2: success
-  const [phone, setPhone] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState("");
-  const [errors, setErrors] = useState({
+  let router = useRouter();
+  let session = useSession();
+  let [needsRefresh, setNeedsRefresh] = useState(false);
+  let [isVisible, setIsVisible] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
+  let [step, setStep] = useState(0); // 0: phone, 1: zipcode, address, 2: success
+  let [phone, setPhone] = useState("");
+  let [zipcode, setZipcode] = useState("");
+  let [address, setAddress] = useState("");
+  let [errors, setErrors] = useState({
     phone: {
       message: "",
       isError: false,
@@ -38,32 +43,43 @@ function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    setIsLoading(true);
-    const updateData = await axios.post(
-      "/api/user/update",
-      {
-        email: session?.data?.user?.email,
-        phone,
-        zipcode,
-        address,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      setIsLoading(true);
+      await axios.post(
+        "/api/user/update",
+        {
+          email: session?.data?.user?.email,
+          phone,
+          zipcode,
+          address,
         },
-      }
-    );
-    console.log(updateData);
-    setStep(2);
-    handleConfetti();
-    setIsLoading(false);
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setStep(2);
+      handleConfetti();
+      setIsLoading(false);
+      setNeedsRefresh(true);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setNeedsRefresh(false);
+    }
   };
 
   const stepForward = () => {
     if (step == 1) {
       handleSubmit();
     } else if (step == 2) {
-      setIsVisible(false);
+      if (needsRefresh == true) {
+        router.reload();
+        return;
+      } else {
+        setIsVisible(false);
+      }
     } else if (step == 0) {
       if (phone.length == 0) {
         setErrors({
