@@ -25,7 +25,8 @@ export const create_user = async (name, email) => {
   return user;
 };
 
-export const update_user_phone_zip = async (email, phone, zipCode) => {
+export const update_user_phone_zip = async (email, phone, zipCode, address) => {
+  console.log(email, phone, zipCode);
   const user = await prisma.user.update({
     where: {
       email: email,
@@ -33,6 +34,7 @@ export const update_user_phone_zip = async (email, phone, zipCode) => {
     data: {
       phone: phone,
       zipCode: zipCode,
+      address: address,
     },
   });
   return user;

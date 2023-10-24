@@ -17,6 +17,8 @@ function Navbar() {
   const router = useRouter();
   const session = useSession();
 
+  console.log(session);
+
   const InfoBar = ({}) => {
     return (
       <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
@@ -64,6 +66,9 @@ function Navbar() {
                   case "account":
                     router.push("/account");
                     break;
+                  case "pets":
+                    router.push("/pets");
+                    break;
                   default:
                     break;
                 }
@@ -87,7 +92,7 @@ function Navbar() {
                 </DropdownItem>
               </DropdownSection>
 
-              <DropdownItem className="rounded" key="new">
+              <DropdownItem className="rounded" key="pets">
                 Pets
               </DropdownItem>
 
@@ -115,7 +120,7 @@ function Navbar() {
     <nav className="fixed top-0 inset-x-0 z-20">
       <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white/90 backdrop-blur-2xl">
         <div>
-          <img src="/logoDark.png" className="h-9" alt="" />
+          <img src="/logoDark.png" className="lg:h-9 h-7" alt="" />
         </div>
         <ul className="hidden lg:flex items-center space-x-14 text-sm">
           <li>

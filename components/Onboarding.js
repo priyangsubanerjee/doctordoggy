@@ -5,14 +5,15 @@ import { Button, Input, Textarea } from "@nextui-org/react";
 import React, { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { useSession } from "next-auth/react";
+import axios from "axios";
 
 function Onboarding() {
   const session = useSession();
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(0); // 0: phone, 1: zipcode, address, 2: success
-  const [phone, setPhone] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [phone, setPhone] = useState("9647045453");
+  const [zipcode, setZipcode] = useState("713216");
   const [address, setAddress] = useState("");
   const [errors, setErrors] = useState({
     phone: {
@@ -38,14 +39,24 @@ function Onboarding() {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const fetchR = await fetch("/api/onboarding/", {
-      method: "POST",
-    });
-    setTimeout(() => {
-      setStep(2);
-      handleConfetti();
-      setIsLoading(false);
-    }, 3000);
+    const updateData = await axios.post(
+      "/api/user/update",
+      {
+        email: session?.data?.user?.email,
+        phone,
+        zipcode,
+        address,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(updateData);
+    setStep(2);
+    handleConfetti();
+    setIsLoading(false);
   };
 
   const stepForward = () => {
@@ -93,7 +104,10 @@ function Onboarding() {
   };
 
   useEffect(() => {
-    if (session.status === "authenticated" && !session.data.onBoardingSuccess) {
+    if (
+      session.status === "authenticated" &&
+      !session.data.user.onBoardingSuccess
+    ) {
       let remidLater = sessionStorage.getItem("remindLater");
       if (remidLater) {
         if (remidLater == "true") {

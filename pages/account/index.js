@@ -1,16 +1,18 @@
 import { Icon } from "@iconify/react";
 import { Button, Divider, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function Account() {
   const session = useSession();
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState("view"); // ["view", "edit"]
   const [accountProp, setAccountProp] = useState({
-    name: session?.data?.user?.name || "",
-    email: session?.data?.user?.email || "",
+    name: "",
+    email: "",
     phone: "",
     zipcode: "",
     address: "",
@@ -37,7 +39,11 @@ function Account() {
         >
           Cancel
         </button>
-        <Button className="rounded-md bg-neutral-800 hover:bg-black text-white h-12">
+        <Button
+          onPress={handleSave}
+          isLoading={isLoading}
+          className="rounded-md bg-neutral-800 hover:bg-black text-white h-12"
+        >
           Save changes
         </Button>
       </div>
@@ -81,6 +87,50 @@ function Account() {
     phoneInput.focus();
   }, [state]);
 
+  useEffect(() => {
+    if (session.status == "authenticated") {
+      setAccountProp({
+        name: session?.data?.user?.name,
+        email: session?.data?.user?.email,
+        phone: session?.data?.user?.phone,
+        zipcode: session?.data?.user?.zipCode,
+        address: session?.data?.user?.address,
+      });
+    }
+  }, [
+    session?.data?.user?.address,
+    session?.data?.user?.email,
+    session?.data?.user?.name,
+    session?.data?.user?.phone,
+    session?.data?.user?.zipCode,
+    session.status,
+  ]);
+
+  const handleSave = async () => {
+    try {
+      setIsLoading(true);
+      await axios.post(
+        "/api/user/update",
+        {
+          email: session?.data?.user?.email,
+          phone: accountProp.phone,
+          zipcode: accountProp.zipcode,
+          address: accountProp.address,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setIsLoading(false);
+      setState("view");
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="lg:px-44 px-6 py-20 lg:py-16">
       <h1 className="text-2xl lg:text-3xl font-medium">Account</h1>
@@ -117,12 +167,22 @@ function Account() {
         <Input
           label="Phone number"
           id="phoneInput"
+          readOnly={state == "view"}
+          value={accountProp.phone}
+          onChange={(e) => {
+            setAccountProp({ ...accountProp, phone: e.target.value });
+          }}
           type="tel"
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30"
         />
         <Input
           label="Area pincode"
+          readOnly={state == "view"}
+          value={accountProp.zipcode}
+          onChange={(e) => {
+            setAccountProp({ ...accountProp, zipcode: e.target.value });
+          }}
           type="tel"
           radius="none"
           className="rounded-none border border-transparent focus-within:border-black/30"
@@ -131,6 +191,11 @@ function Account() {
         <Textarea
           label="Full Address (Optional)"
           radius="none"
+          readOnly={state == "view"}
+          value={accountProp.address}
+          onChange={(e) => {
+            setAccountProp({ ...accountProp, address: e.target.value });
+          }}
           className="rounded-none border border-transparent focus-within:border-black/30 lg:col-span-2"
         />
         <div className="mt-8 flex items-center justify-end lg:justify-between lg:col-span-2">

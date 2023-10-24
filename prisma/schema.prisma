@@ -10,12 +10,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model File {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  publicId  String
+  url       String
+  createdAt DateTime @default(now())
+  Pet       Pet?     @relation(fields: [petId], references: [id])
+  petId     String?  @db.ObjectId
+}
+
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String  @unique
+  email     String   @unique
   name      String
   phone     String?
   zipCode   String?
   address   String?
   createdAt DateTime @default(now())
+  pets      Pet[]
+}
+
+model Pet {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  image       File[]
+  name        String
+  Parent      User     @relation(fields: [parentEmail], references: [email])
+  parentEmail String
+  breed       String
+  dateOfBirth DateTime
+  color       String
+  species     String
+  createdBy   String
+  createdAt   DateTime @default(now())
 }
