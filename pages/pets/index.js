@@ -125,9 +125,9 @@ function Pets({ pets }) {
       </div>
 
       <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 lg:grid-cols-3 place-content-center place-items-center">
-        {pets.map((pet) => (
+        {pets.map((pet, i) => (
           <PetCard
-            key={pet.id}
+            key={i}
             id={pet.id}
             name={pet.name}
             age={calculateAge(pet.dateOfBirth)}
