@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
@@ -5,6 +6,9 @@ import React, { useEffect } from "react";
 import { Switch } from "@nextui-org/react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { uploadImage } from "@/helper/image";
 
 export async function getServerSideProps(context) {
   let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
@@ -19,16 +23,18 @@ export async function getServerSideProps(context) {
 }
 
 function RegisterPet({ canine, feline }) {
+  const session = useSession();
   const imageRef = React.useRef(null);
-  const dateRef = React.useRef(null);
-  const [isPublicProfile, setIsPublicProfile] = React.useState(true);
   const [registerProp, setRegisterProp] = React.useState({
+    parentEmail: "",
     name: "",
     species: "",
     breed: "",
     sex: "",
     dateOfBirth: "",
     bodyWeight: "",
+    isPublic: true,
+    color: "",
   });
   const [imageFile, setImageFile] = React.useState(null); // cannot be null
   const [breedOptions, setBreedOptions] = React.useState([
@@ -39,6 +45,10 @@ function RegisterPet({ canine, feline }) {
   const performChecks = () => {
     if (imageFile == null) {
       toast("Please choose a photo of your pet");
+      return false;
+    }
+    if (registerProp.parentEmail == "") {
+      toast("No parent email found");
       return false;
     }
     if (registerProp.name == "") {
@@ -77,12 +87,44 @@ function RegisterPet({ canine, feline }) {
     }
   }, [canine, feline, registerProp.species]);
 
+  const handleSubmit = async () => {
+    if (performChecks()) {
+      try {
+        const { fileUrl, publicId } = await uploadImage(imageFile);
+        await axios.post(
+          "/api/pet/create",
+          {
+            pet: registerProp,
+            file: { fileUrl, publicId },
+            sessionEmail: session?.data?.user?.email,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("End of create transaction");
+      } catch (error) {
+        toast.error("Something went wrong with image.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setRegisterProp({
+        ...registerProp,
+        parentEmail: session?.data?.user?.email,
+      });
+    }
+  }, [session.status]);
+
   return (
     <div className="pb-16">
       <h1 className="text-3xl font-semibold text-center mt-16">
         Register your pet
       </h1>
-
       <div className="flex items-center justify-center space-x-2 mt-4">
         <p className="text-center text-neutral-600 text-sm">
           * marked fields are mandatory.
@@ -97,7 +139,6 @@ function RegisterPet({ canine, feline }) {
           </span>
         </Link>
       </div>
-
       <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
         <div className="lg:w-fit w-full shrink-0">
           <div
@@ -217,8 +258,12 @@ function RegisterPet({ canine, feline }) {
               radius="none"
               label="Sex"
             >
-              <SelectItem value="dog">Male ♂</SelectItem>
-              <SelectItem value="cat">Female ♀</SelectItem>
+              <SelectItem key="male" value="male">
+                Male ♂
+              </SelectItem>
+              <SelectItem key="female" value="female">
+                Female ♀
+              </SelectItem>
             </Select>
 
             <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
@@ -253,6 +298,20 @@ function RegisterPet({ canine, feline }) {
               radius="none"
               className="rounded-none "
             />
+
+            <Input
+              label="Coloras"
+              value={registerProp.color}
+              onChange={(e) =>
+                setRegisterProp({
+                  ...registerProp,
+                  color: e.target.value,
+                })
+              }
+              type="text"
+              radius="none"
+              className="rounded-none "
+            />
           </div>
 
           <div className="h-[1px] w-full my-8"></div>
@@ -273,18 +332,19 @@ function RegisterPet({ canine, feline }) {
               </Link>
             </div>
             <Switch
-              isSelected={isPublicProfile}
-              onValueChange={setIsPublicProfile}
+              isSelected={registerProp.isPublic}
+              onValueChange={() => {
+                setRegisterProp({
+                  ...registerProp,
+                  isPublic: !registerProp.isPublic,
+                });
+              }}
             />
           </div>
 
           <div className="mt-20 flex space-x-2 items-center justify-end">
             <Button
-              onPress={() => {
-                if (performChecks()) {
-                  console.log(registerProp);
-                }
-              }}
+              onPress={handleSubmit}
               radius="none"
               className="w-full rounded-md h-12 bg-black text-white"
             >

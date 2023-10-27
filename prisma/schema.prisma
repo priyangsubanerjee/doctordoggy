@@ -14,10 +14,8 @@ model File {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   publicId  String
-  url       String
+  url       String   @unique
   createdAt DateTime @default(now())
-  Pet       Pet?     @relation(fields: [petId], references: [id])
-  petId     String?  @db.ObjectId
 }
 
 model User {
@@ -33,15 +31,15 @@ model User {
 
 model Pet {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  image       File[]
+  image       String[]
   name        String
-  Parent      User     @relation(fields: [parentEmail], references: [email])
-  parentEmail String
+  Parent      User?    @relation(fields: [parentEmail], references: [email])
+  parentEmail String?
   breed       String
   dateOfBirth DateTime
-  color       String
+  color       String?
   species     String
-  createdBy   String
+  createdBy   String?
   createdAt   DateTime @default(now())
   isPublic    Boolean  @default(true)
 }
