@@ -9,7 +9,7 @@ export async function getServerSideProps(context) {
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
       : "https://doctordoggy.vet";
-  const pets = await fetch(`${homeUrl}/api/pet`);
+  let pets = await fetch(`${homeUrl}/api/pet`);
   pets = await pets.json();
 
   return {
