@@ -7,17 +7,17 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  const prisma = new PrismaClient();
-  const pets = await prisma.pet.findMany({
-    where: {
-      parentEmail: session.user.email,
-    },
-  });
+  //   const session = await getServerSession(context.req, context.res, authOptions);
+  //   const prisma = new PrismaClient();
+  //   const pets = await prisma.pet.findMany({
+  //     where: {
+  //       parentEmail: session.user.email,
+  //     },
+  //   });
 
   return {
     props: {
-      pets: JSON.parse(JSON.stringify(pets)) || [],
+      pets: [],
     },
   };
 }
