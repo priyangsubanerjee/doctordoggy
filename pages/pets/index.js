@@ -5,8 +5,12 @@ import Link from "next/link";
 import React from "react";
 
 export async function getServerSideProps(context) {
-  let pets = await getAllPets();
-  pets = JSON.parse(JSON.stringify(pets));
+  let homeUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://doctordoggy.vet";
+  const pets = await fetch(`${homeUrl}/api/pet`);
+  pets = await pets.json();
 
   return {
     props: { pets }, // will be passed to the page component as props
