@@ -43,4 +43,5 @@ model Pet {
   species     String
   createdBy   String
   createdAt   DateTime @default(now())
+  isPublic    Boolean  @default(true)
 }

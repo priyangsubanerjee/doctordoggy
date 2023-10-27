@@ -1,12 +1,58 @@
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
-import { Button, Input } from "@nextui-org/react";
-import React from "react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import React, { useEffect } from "react";
 import { Switch } from "@nextui-org/react";
 import Link from "next/link";
 
-function RegisterPet() {
+export async function getServerSideProps(context) {
+  let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
+  breeds = await breeds.json();
+
+  return {
+    props: {
+      canine: breeds.caninenames,
+      feline: breeds.felinenames,
+    },
+  };
+}
+
+function RegisterPet({ canine, feline }) {
+  const imageRef = React.useRef(null);
+  const dateRef = React.useRef(null);
   const [isPublicProfile, setIsPublicProfile] = React.useState(true);
+  const [registerProp, setRegisterProp] = React.useState({
+    name: "",
+    species: "",
+    breed: "",
+    sex: "",
+    dateOfBirth: "",
+    bodyWeight: "",
+  });
+  const [imageFile, setImageFile] = React.useState(null); // cannot be null
+  const [breedOptions, setBreedOptions] = React.useState([
+    ...canine,
+    ...feline,
+  ]); // cannot be null
+
+  const performChecks = () => {
+    if (registerProp.name == "") {
+      alert("Please enter the name of your pet");
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    console.log(registerProp.species);
+    if (registerProp.species == "canine") {
+      setBreedOptions([...canine]);
+    } else if (registerProp.species == "feline") {
+      setBreedOptions([...feline]);
+    } else {
+      setBreedOptions([...canine, ...feline]);
+    }
+  }, [registerProp.species]);
+
   return (
     <div className="pb-16">
       <h1 className="text-3xl font-semibold text-center mt-16">
@@ -30,18 +76,57 @@ function RegisterPet() {
 
       <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
         <div className="lg:w-fit w-full shrink-0">
-          <div className="h-[200px] lg:h-full lg:max-h-[300px] lg:w-96 bg-neutral-100 rounded-md relative">
-            <div className="absolute inset-0 h-full w-full flex flex-col items-center justify-center">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
-                className="h-8 w-8"
-                alt=""
-              />
-              <p className="mt-3 font-medium">Choose a photo</p>
-              <p className="text-xs text-neutral-500 mt-2">
-                .png, .jpg, .jpeg, .heic
-              </p>
-            </div>
+          <div
+            onClick={() => imageRef?.current.click()}
+            className="h-[200px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
+          >
+            <input
+              type="file"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                setImageFile(file);
+              }}
+              name=""
+              hidden
+              ref={imageRef}
+              id=""
+            />
+            {imageFile == null ? (
+              <>
+                <div className="h-full w-full flex flex-col items-center justify-center">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
+                    className="h-8 w-8"
+                    alt=""
+                  />
+                  <p className="mt-3 font-medium">Choose a photo</p>
+                  <p className="text-xs text-neutral-500 mt-2">
+                    .png, .jpg, .jpeg, .heic
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="h-full w-full flex flex-col items-center justify-center">
+                  <img
+                    src={URL.createObjectURL(imageFile)}
+                    className="h-full w-full object-cover"
+                    alt=""
+                  />
+                  <div className="absolute opacity-0 hover:opacity-100 inset-0 h-full w-full bg-white/70 flex flex-col items-center justify-center">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
+                      className="h-8 w-8"
+                      alt=""
+                    />
+                    <p className="mt-3 font-medium">Choose another photo</p>
+                    <p className="text-xs text-neutral-500 mt-2">
+                      .png, .jpg, .jpeg, .heic
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="w-full mt-16 lg:mt-0">
@@ -51,46 +136,89 @@ function RegisterPet() {
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b">
             <Input
               label="Name of your pet"
-              type="email"
+              type="text"
+              required
               radius="none"
+              value={registerProp.name}
+              onChange={(e) =>
+                setRegisterProp({ ...registerProp, name: e.target.value })
+              }
               size="md"
               className="rounded-none text-base lg:col-span-2"
             />
 
-            <Input
-              label="Species"
-              type="email"
+            <Select
+              onChange={(e) => {
+                setRegisterProp({ ...registerProp, species: e.target.value });
+              }}
               radius="none"
-              className="rounded-none "
-            />
+              label="Species"
+            >
+              <SelectItem key="canine" value="canine">
+                Canine 🦮
+              </SelectItem>
+              <SelectItem key="feline" value="feline">
+                Feline 🐈
+              </SelectItem>
+            </Select>
+
+            <Select radius="none" label="Breed">
+              {breedOptions.map((breed, index) => {
+                return (
+                  <SelectItem key={breed} value={breed}>
+                    {breed}
+                  </SelectItem>
+                );
+              })}
+            </Select>
+
+            <Select
+              onSelectionChange={(e) => {
+                setRegisterProp({ ...registerProp, breed: e.target.value });
+              }}
+              radius="none"
+              label="Sex"
+            >
+              <SelectItem value="dog">Male ♂</SelectItem>
+              <SelectItem value="cat">Female ♀</SelectItem>
+            </Select>
+
+            <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+              <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                D.O.B
+              </span>
+              <input
+                value={registerProp.dateOfBirth}
+                onChange={(e) =>
+                  setRegisterProp({
+                    ...registerProp,
+                    dateOfBirth: e.target.value,
+                  })
+                }
+                type="date"
+                className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
+                name=""
+                id="datPicker"
+              />
+            </div>
 
             <Input
-              label="Breed"
-              type="text"
-              radius="none"
-              className="rounded-none "
-            />
-            <Input
-              label="Sex"
-              type="text"
-              radius="none"
-              className="rounded-none "
-            />
-            <Input
-              label="Date of birth"
-              type="text"
-              radius="none"
-              className="rounded-none "
-            />
-            <Input
-              label="Body weight"
-              type="text"
+              label="Body weight (Kg)"
+              value={registerProp.bodyWeight}
+              onChange={(e) =>
+                setRegisterProp({
+                  ...registerProp,
+                  bodyWeight: e.target.value,
+                })
+              }
+              type="tel"
               radius="none"
               className="rounded-none "
             />
           </div>
+
           <div className="h-[1px] w-full my-8"></div>
-          <p className="text-xs text-neutral-600">Privacy</p>
+
           <div className="flex items-center justify-between mt-5">
             <div>
               <p className="text-neutral-800 text-sm">
