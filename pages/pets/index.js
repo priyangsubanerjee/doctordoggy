@@ -8,7 +8,6 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
-
   const prisma = new PrismaClient();
   const pets = await prisma.pet.findMany({
     where: {
