@@ -4,6 +4,7 @@ import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import { Switch } from "@nextui-org/react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
@@ -36,14 +37,37 @@ function RegisterPet({ canine, feline }) {
   ]); // cannot be null
 
   const performChecks = () => {
-    if (registerProp.name == "") {
-      alert("Please enter the name of your pet");
+    if (imageFile == null) {
+      toast("Please choose a photo of your pet");
       return false;
+    }
+    if (registerProp.name == "") {
+      toast("Please enter your pet's name");
+      return false;
+    }
+    if (registerProp.species == "") {
+      toast("Please select your pet's species");
+      return false;
+    }
+
+    if (registerProp.sex == "") {
+      toast("Please select your pet's sex");
+      return false;
+    }
+
+    if (registerProp.breed == "") {
+      toast("Please select your pet's breed");
+      return false;
+    }
+    if (registerProp.dateOfBirth == "") {
+      toast("Please enter your pet's date of birth");
+      return false;
+    } else {
+      return true;
     }
   };
 
   useEffect(() => {
-    console.log(registerProp.species);
     if (registerProp.species == "canine") {
       setBreedOptions([...canine]);
     } else if (registerProp.species == "feline") {
@@ -51,7 +75,7 @@ function RegisterPet({ canine, feline }) {
     } else {
       setBreedOptions([...canine, ...feline]);
     }
-  }, [registerProp.species]);
+  }, [canine, feline, registerProp.species]);
 
   return (
     <div className="pb-16">
@@ -162,19 +186,33 @@ function RegisterPet({ canine, feline }) {
               </SelectItem>
             </Select>
 
-            <Select radius="none" label="Breed">
+            <Input
+              label="Breed"
+              value={registerProp.breed}
+              onChange={(e) =>
+                setRegisterProp({
+                  ...registerProp,
+                  breed: e.target.value,
+                })
+              }
+              type="tel"
+              radius="none"
+              className="rounded-none "
+              list="breeds"
+            />
+            <datalist id="breeds">
               {breedOptions.map((breed, index) => {
                 return (
-                  <SelectItem key={breed} value={breed}>
+                  <option key={breed} value={breed}>
                     {breed}
-                  </SelectItem>
+                  </option>
                 );
               })}
-            </Select>
+            </datalist>
 
             <Select
-              onSelectionChange={(e) => {
-                setRegisterProp({ ...registerProp, breed: e.target.value });
+              onChange={(e) => {
+                setRegisterProp({ ...registerProp, sex: e.target.value });
               }}
               radius="none"
               label="Sex"
@@ -242,6 +280,11 @@ function RegisterPet({ canine, feline }) {
 
           <div className="mt-20 flex space-x-2 items-center justify-end">
             <Button
+              onPress={() => {
+                if (performChecks()) {
+                  console.log(registerProp);
+                }
+              }}
               radius="none"
               className="w-full rounded-md h-12 bg-black text-white"
             >
