@@ -1,9 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+import { getAllPets } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
 
-function Pets() {
+export async function getServerSideProps(context) {
+  let pets = await getAllPets();
+  pets = JSON.parse(JSON.stringify(pets));
+
+  return {
+    props: { pets }, // will be passed to the page component as props
+  };
+}
+
+function Pets({ pets }) {
+  console.log(pets);
   const PetCard = ({ name, age, image }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">
