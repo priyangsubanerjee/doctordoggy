@@ -1,9 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 import React from "react";
+import { get_my_pets } from "@/prisma/pet";
 
-function Pets() {
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  let pets = await get_my_pets(session.user.email);
+  pets = JSON.parse(JSON.stringify(pets));
+  return {
+    props: {
+      session,
+      pets,
+    },
+  };
+}
+
+function Pets({ pets }) {
+  console.log(pets || "No pets found");
   const PetCard = ({ name, age, image }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">

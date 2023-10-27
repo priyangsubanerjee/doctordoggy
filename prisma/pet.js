@@ -33,3 +33,19 @@ export const register_pet = async (pet, file, sessionEmail) => {
     return null;
   }
 };
+
+export const get_my_pets = async (sessionEmail) => {
+  console.log("Get my pets function initiated");
+  try {
+    const pets = await prisma.pet.findMany({
+      where: {
+        parentEmail: sessionEmail,
+      },
+    });
+    console.log("Pets fetched successfully");
+    return pets;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
