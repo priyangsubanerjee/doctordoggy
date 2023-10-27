@@ -94,8 +94,7 @@ function RegisterPet({ canine, feline }) {
         await axios.post(
           "/api/pet/create",
           {
-            pet: registerProp,
-            file: { fileUrl, publicId },
+            pet: { ...registerProp, image: fileUrl },
             sessionEmail: session?.data?.user?.email,
           },
           {
@@ -104,7 +103,6 @@ function RegisterPet({ canine, feline }) {
             },
           }
         );
-        console.log("End of create transaction");
       } catch (error) {
         toast.error("Something went wrong with image.");
       }

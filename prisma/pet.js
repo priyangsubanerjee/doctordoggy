@@ -1,21 +1,9 @@
 import prisma from "./prisma";
-export const register_pet = async (pet, file, sessionEmail) => {
-  console.log("Register pet function initiated");
-
-  console.log("File public id getting stored in database");
-  const fileCreated = await prisma.file.create({
-    data: {
-      name: new Date().toISOString() + "-" + pet.name,
-      publicId: file.publicId,
-      url: file.fileUrl,
-    },
-  });
-
+export const registerPet = async (pet, sessionEmail) => {
   try {
-    console.log("Pet getting stored in database");
     const petCreated = await prisma.pet.create({
       data: {
-        image: [fileCreated.url],
+        image: pet.image,
         name: pet.name,
         parentEmail: pet.parentEmail,
         breed: pet.breed,
@@ -26,7 +14,6 @@ export const register_pet = async (pet, file, sessionEmail) => {
         createdBy: sessionEmail,
       },
     });
-    console.log("Pet has been created successfully in database");
     return petCreated;
   } catch (error) {
     console.log(error);
@@ -34,18 +21,28 @@ export const register_pet = async (pet, file, sessionEmail) => {
   }
 };
 
-export const get_my_pets = async (sessionEmail) => {
-  console.log("Get my pets function initiated");
+export const getPersonalPet = async (sessionEmail) => {
   try {
     const pets = await prisma.pet.findMany({
       where: {
         parentEmail: sessionEmail,
       },
     });
-    console.log("Pets fetched successfully");
     return pets;
   } catch (error) {
-    console.log(error);
+    return null;
+  }
+};
+
+export const getAllPets = async () => {
+  try {
+    const pets = await prisma.pet.findMany({
+      where: {
+        isPublic: true,
+      },
+    });
+    return pets;
+  } catch (error) {
     return null;
   }
 };

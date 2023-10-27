@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "pages/api/auth/[...nextauth]";
 import React from "react";
 
 function Pets() {
