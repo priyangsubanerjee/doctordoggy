@@ -28,7 +28,7 @@ function RegisterPet({ canine, feline }) {
   const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
-  const { processingModalOpen, updatedModal } = useContext(GlobalStates);
+  const { updatedModal } = useContext(GlobalStates);
   const [registerProp, setRegisterProp] = React.useState({
     parentEmail: "",
     name: "",
