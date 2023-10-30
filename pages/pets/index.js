@@ -13,6 +13,8 @@ export async function getServerSideProps(context) {
   if (session) {
     pets = await getPersonalPet(session.user.email);
     pets = (await JSON.parse(JSON.stringify(pets))) || [];
+  } else {
+    pets = [];
   }
   return {
     props: { pets }, // will be passed to the page component as props
@@ -63,7 +65,7 @@ function Pets({ pets = [] }) {
         </Link>
       </div>
       <>
-        {pets?.length !== 0 && (
+        {pets && (
           <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
             {pets.map((pet) => (
               <PetCard
@@ -77,7 +79,7 @@ function Pets({ pets = [] }) {
           </div>
         )}
       </>
-      <>
+      {/* <>
         {pets?.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-32">
             <img
@@ -90,7 +92,7 @@ function Pets({ pets = [] }) {
             </p>
           </div>
         )}
-      </>
+      </> */}
     </div>
   );
 }
