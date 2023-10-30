@@ -9,8 +9,9 @@ import React from "react";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
-  let pets = await getPersonalPet(session.user.email);
-  pets = await JSON.parse(JSON.stringify(pets));
+  let pets = [];
+  pets = await getPersonalPet(session.user.email);
+  pets = (await JSON.parse(JSON.stringify(pets))) || [];
   return {
     props: { pets }, // will be passed to the page component as props
   };
