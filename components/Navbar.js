@@ -11,6 +11,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import Link from "next/link";
+import Router from "next/router";
 import { useRouter } from "next/router";
 
 function Navbar() {
@@ -130,8 +131,8 @@ function Navbar() {
           </li>
           <li>About</li>
           <li>Services</li>
-          <li>
-            <Link href={"/pets"}>Pets</Link>
+          <li className="cursor-pointer" onClick={() => Router.push("/pets")}>
+            Pets
           </li>
           <li>Vaccination</li>
           <li>Appointments</li>
