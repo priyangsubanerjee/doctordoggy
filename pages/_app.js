@@ -109,7 +109,7 @@ export default function App({
           </div>
           {loadingOn == false && (
             <>
-              <NextProgress height={"3px"} options={{ showSpinner: false }} />
+              <NextProgress options={{ showSpinner: false }} />
               <Navbar />
               <Layout>
                 <Component {...pageProps} />
