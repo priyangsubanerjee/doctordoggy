@@ -64,10 +64,10 @@ function Navbar() {
                     signOut();
                     break;
                   case "account":
-                    router.asPath("/account");
+                    router.push("/account");
                     break;
                   case "pets":
-                    router.asPath("/pets");
+                    router.push("/pets");
                     break;
                   default:
                     break;
@@ -131,9 +131,7 @@ function Navbar() {
           <li>About</li>
           <li>Services</li>
           <li>
-            <Link href={""} as={"/pets"}>
-              Pets
-            </Link>
+            <Link href={"/pets"}>Pets</Link>
           </li>
           <li>Vaccination</li>
           <li>Appointments</li>
