@@ -18,34 +18,34 @@ export async function getServerSideProps(context) {
 }
 
 function Pets({ pets }) {
-  const PetCard = ({ name, age, image, id }) => {
-    return (
-      <div className="flex flex-col lg:flex-row items-center justify-center">
-        <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 bg-teal-50 rounded-full overflow-hidden">
-          <img src={image} className="h-full w-full object-cover" alt="" />
-        </div>
-        <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
-          <h2 className="text-slate-800 font-medium text-base">{name}</h2>
-          <p className="text-xs mt-1 text-neutral-600">{age}</p>
-          <Link href={`/pets/${id}`}>
-            <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
-              <span>Details</span>
-              <span className="translate-y-[1px]">
-                <Icon icon="formkit:right" />
-              </span>
-            </button>
-          </Link>
-        </div>
-      </div>
-    );
-  };
+  //   const PetCard = ({ name, age, image, id }) => {
+  //     return (
+  //       <div className="flex flex-col lg:flex-row items-center justify-center">
+  //         <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 bg-teal-50 rounded-full overflow-hidden">
+  //           <img src={image} className="h-full w-full object-cover" alt="" />
+  //         </div>
+  //         <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
+  //           <h2 className="text-slate-800 font-medium text-base">{name}</h2>
+  //           <p className="text-xs mt-1 text-neutral-600">{age}</p>
+  //           <Link href={`/pets/${id}`}>
+  //             <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
+  //               <span>Details</span>
+  //               <span className="translate-y-[1px]">
+  //                 <Icon icon="formkit:right" />
+  //               </span>
+  //             </button>
+  //           </Link>
+  //         </div>
+  //       </div>
+  //     );
+  //   };
 
   return (
     <div>
       <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
         Pets galaxy
       </h1>
-
+      {/* 
       <div className="flex items-center justify-center space-x-2 mt-4">
         <p className="text-center text-neutral-600 text-sm">
           Cant find your pet below?
@@ -85,7 +85,7 @@ function Pets({ pets }) {
             You have not registered any pet yet.{" "}
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
