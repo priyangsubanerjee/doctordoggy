@@ -245,7 +245,7 @@ function RegisterPet({ canine, feline }) {
                   breed: e.target.value,
                 })
               }
-              type="tel"
+              type="text"
               radius="none"
               className="rounded-none "
               list="breeds"
