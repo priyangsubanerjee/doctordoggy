@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   let pets = [];
   if (session) {
-    pets = await getPersonalPet(session.user.email);
+    pets = await getPersonalPet(session?.user?.email);
     pets = (await JSON.parse(JSON.stringify(pets))) || [];
   } else {
     pets = [];
