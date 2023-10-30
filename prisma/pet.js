@@ -6,6 +6,7 @@ export const registerPet = async (pet, sessionEmail) => {
         image: pet.image,
         name: pet.name,
         parentEmail: pet.parentEmail,
+        sex: pet.sex,
         breed: pet.breed,
         dateOfBirth: new Date(pet.dateOfBirth).toISOString(),
         species: pet.species,

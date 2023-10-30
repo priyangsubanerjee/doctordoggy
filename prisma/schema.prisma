@@ -33,6 +33,7 @@ model Pet {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   image       String
   name        String
+  sex         String?
   Parent      User?    @relation(fields: [parentEmail], references: [email])
   parentEmail String?
   breed       String
