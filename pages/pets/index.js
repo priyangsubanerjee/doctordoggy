@@ -19,7 +19,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-function Pets({ pets }) {
+function Pets({ pets = [] }) {
   const PetCard = ({ name, age, image, id }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">
