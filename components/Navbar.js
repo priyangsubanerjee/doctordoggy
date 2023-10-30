@@ -64,10 +64,10 @@ function Navbar() {
                     signOut();
                     break;
                   case "account":
-                    router.push("/account");
+                    router.asPath("/account");
                     break;
                   case "pets":
-                    router.push("/pets");
+                    router.asPath("/pets");
                     break;
                   default:
                     break;
