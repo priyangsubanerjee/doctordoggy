@@ -1,31 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
-import { getAllPets } from "@/prisma/pet";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+import { getAllPets, getPersonalPet } from "@/prisma/pet";
+import calculateAge from "@/helper/age";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
 
 export async function getServerSideProps(context) {
-  const pets = await getAllPets();
+  const session = await getServerSession(context.req, context.res, authOptions);
+  let pets = await getPersonalPet(session.user.email);
+  pets = await JSON.parse(JSON.stringify(pets));
   return {
     props: { pets }, // will be passed to the page component as props
   };
 }
 
 function Pets({ pets }) {
-  console.log(pets);
   const PetCard = ({ name, age, image }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 bg-teal-50 rounded-full overflow-hidden">
-          <img
-            src="https://puppyintraining.com/wp-content/uploads/long-haired-gsd.jpg"
-            className="h-full w-full object-cover"
-            alt=""
-          />
+          <img src={image} className="h-full w-full object-cover" alt="" />
         </div>
         <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
-          <h2 className="text-slate-800 font-medium text-base">Laddoo</h2>
-          <p className="text-xs mt-1 text-neutral-600">1year & 2months old</p>
+          <h2 className="text-slate-800 font-medium text-base">{name}</h2>
+          <p className="text-xs mt-1 text-neutral-600">{age}</p>
           <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
             <span>Details</span>
             <span className="translate-y-[1px]">
@@ -58,10 +58,27 @@ function Pets({ pets }) {
         </Link>
       </div>
 
-      <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 lg:grid-cols-3 place-content-center place-items-center">
-        <PetCard />
-        <PetCard />
-      </div>
+      {pets.length !== 0 && (
+        <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 lg:grid-cols-3 place-content-center place-items-center">
+          {pets.map((pet) => (
+            <PetCard
+              key={pet.id}
+              name={pet.name}
+              age={calculateAge(pet.dateOfBirth)}
+              image={pet.image}
+            />
+          ))}
+        </div>
+      )}
+      {pets.length == 0 && (
+        <div className="flex flex-col items-center justify-center mt-32">
+          <img
+            src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
+            className="h-32"
+            alt=""
+          />
+        </div>
+      )}
     </div>
   );
 }

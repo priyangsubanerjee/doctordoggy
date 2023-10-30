@@ -2,15 +2,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { Button, Input, Select, SelectItem } from "@nextui-org/react";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Switch } from "@nextui-org/react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
+import GlobalStates from "@/context/GlobalState";
+import { useRouter } from "next/router";
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
   breeds = await breeds.json();
 
@@ -23,8 +25,10 @@ export async function getServerSideProps(context) {
 }
 
 function RegisterPet({ canine, feline }) {
+  const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
+  const { processingModalOpen, updatedModal } = useContext(GlobalStates);
   const [registerProp, setRegisterProp] = React.useState({
     parentEmail: "",
     name: "",
@@ -40,7 +44,8 @@ function RegisterPet({ canine, feline }) {
   const [breedOptions, setBreedOptions] = React.useState([
     ...canine,
     ...feline,
-  ]); // cannot be null
+  ]);
+  const [loading, setLoading] = useState(true);
 
   const performChecks = () => {
     if (imageFile == null) {
@@ -77,20 +82,13 @@ function RegisterPet({ canine, feline }) {
     }
   };
 
-  useEffect(() => {
-    if (registerProp.species == "canine") {
-      setBreedOptions([...canine]);
-    } else if (registerProp.species == "feline") {
-      setBreedOptions([...feline]);
-    } else {
-      setBreedOptions([...canine, ...feline]);
-    }
-  }, [canine, feline, registerProp.species]);
-
   const handleSubmit = async () => {
     if (performChecks()) {
+      updatedModal(true, "Uploading image ...");
+      setLoading(true);
       try {
         const { fileUrl, publicId } = await uploadImage(imageFile);
+        updatedModal(true, "Storing pet information ...");
         await axios.post(
           "/api/pet/create",
           {
@@ -103,6 +101,9 @@ function RegisterPet({ canine, feline }) {
             },
           }
         );
+        setLoading(false);
+        updatedModal(false);
+        router.push("/pets");
       } catch (error) {
         toast.error("Something went wrong with image.");
       }
@@ -117,6 +118,16 @@ function RegisterPet({ canine, feline }) {
       });
     }
   }, [session.status]);
+
+  useEffect(() => {
+    if (registerProp.species == "canine") {
+      setBreedOptions([...canine]);
+    } else if (registerProp.species == "feline") {
+      setBreedOptions([...feline]);
+    } else {
+      setBreedOptions([...canine, ...feline]);
+    }
+  }, [canine, feline, registerProp.species]);
 
   return (
     <div className="pb-16">
@@ -298,7 +309,7 @@ function RegisterPet({ canine, feline }) {
             />
 
             <Input
-              label="Coloras"
+              label="Color"
               value={registerProp.color}
               onChange={(e) =>
                 setRegisterProp({
@@ -342,6 +353,7 @@ function RegisterPet({ canine, feline }) {
 
           <div className="mt-20 flex space-x-2 items-center justify-end">
             <Button
+              isLoading={loading}
               onPress={handleSubmit}
               radius="none"
               className="w-full rounded-md h-12 bg-black text-white"
