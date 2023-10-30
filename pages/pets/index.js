@@ -79,7 +79,7 @@ function Pets({ pets = [] }) {
           </div>
         )}
       </>
-      {/* <>
+      <>
         {pets?.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-32">
             <img
@@ -92,7 +92,7 @@ function Pets({ pets = [] }) {
             </p>
           </div>
         )}
-      </> */}
+      </>
     </div>
   );
 }
