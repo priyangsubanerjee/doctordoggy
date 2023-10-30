@@ -67,11 +67,11 @@ function Pets({ pets }) {
           <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
             {pets.map((pet) => (
               <PetCard
-                id={pet.id}
-                key={pet.id}
-                name={pet.name}
-                age={calculateAge(pet.dateOfBirth)}
-                image={pet.image}
+                id={pet?.id}
+                key={pet?.id}
+                name={pet?.name}
+                age={calculateAge(pet?.dateOfBirth)}
+                image={pet?.image}
               />
             ))}
           </div>
