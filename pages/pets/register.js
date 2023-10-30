@@ -45,7 +45,7 @@ function RegisterPet({ canine, feline }) {
     ...canine,
     ...feline,
   ]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const performChecks = () => {
     if (imageFile == null) {
