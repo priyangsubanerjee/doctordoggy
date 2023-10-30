@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
 }
 
 function Pets({ pets }) {
-  const PetCard = ({ name, age, image }) => {
+  const PetCard = ({ name, age, image, id }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 bg-teal-50 rounded-full overflow-hidden">
@@ -26,12 +26,14 @@ function Pets({ pets }) {
         <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
           <h2 className="text-slate-800 font-medium text-base">{name}</h2>
           <p className="text-xs mt-1 text-neutral-600">{age}</p>
-          <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
-            <span>Details</span>
-            <span className="translate-y-[1px]">
-              <Icon icon="formkit:right" />
-            </span>
-          </button>
+          <Link href={`/pets/${id}`}>
+            <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
+              <span>Details</span>
+              <span className="translate-y-[1px]">
+                <Icon icon="formkit:right" />
+              </span>
+            </button>
+          </Link>
         </div>
       </div>
     );
@@ -62,6 +64,7 @@ function Pets({ pets }) {
         <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
           {pets.map((pet) => (
             <PetCard
+              id={pet.id}
               key={pet.id}
               name={pet.name}
               age={calculateAge(pet.dateOfBirth)}

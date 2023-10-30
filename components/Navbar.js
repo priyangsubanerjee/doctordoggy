@@ -96,7 +96,7 @@ function Navbar() {
                 Pets
               </DropdownItem>
 
-              <DropdownItem className="rounded" key="copy">
+              <DropdownItem className="rounded" key="account">
                 Account
               </DropdownItem>
               <DropdownItem className="rounded" key="edit">
@@ -128,7 +128,9 @@ function Navbar() {
           </li>
           <li>About</li>
           <li>Services</li>
-          <li>Parenting</li>
+          <li>
+            <Link href={"/pets"}>Pets</Link>
+          </li>
           <li>Vaccination</li>
           <li>Appointments</li>
         </ul>

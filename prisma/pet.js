@@ -34,6 +34,19 @@ export const getPersonalPet = async (sessionEmail) => {
   }
 };
 
+export const getPetById = async (id) => {
+  try {
+    const pet = await prisma.pet.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return pet;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getAllPets = async () => {
   try {
     const pets = await prisma.pet.findMany({
