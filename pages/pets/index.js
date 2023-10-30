@@ -47,7 +47,7 @@ function Pets({ pets }) {
       <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
         Pets galaxy
       </h1>
-      {/* 
+
       <div className="flex items-center justify-center space-x-2 mt-4">
         <p className="text-center text-neutral-600 text-sm">
           Cant find your pet below?
@@ -62,32 +62,35 @@ function Pets({ pets }) {
           </span>
         </Link>
       </div>
-
-      {pets.length !== 0 && (
-        <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
-          {pets.map((pet) => (
-            <PetCard
-              id={pet.id}
-              key={pet.id}
-              name={pet.name}
-              age={calculateAge(pet.dateOfBirth)}
-              image={pet.image}
+      <>
+        {pets.length !== 0 && (
+          <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
+            {pets.map((pet) => (
+              <PetCard
+                id={pet.id}
+                key={pet.id}
+                name={pet.name}
+                age={calculateAge(pet.dateOfBirth)}
+                image={pet.image}
+              />
+            ))}
+          </div>
+        )}
+      </>
+      <>
+        {pets.length == 0 && (
+          <div className="flex flex-col items-center justify-center mt-32">
+            <img
+              src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
+              className="h-32"
+              alt=""
             />
-          ))}
-        </div>
-      )}
-      {pets.length == 0 && (
-        <div className="flex flex-col items-center justify-center mt-32">
-          <img
-            src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
-            className="h-32"
-            alt=""
-          />
-          <p className="mt-6 text-sm text-neutral-500">
-            You have not registered any pet yet.{" "}
-          </p>
-        </div>
-      )} */}
+            <p className="mt-6 text-sm text-neutral-500">
+              You have not registered any pet yet.{" "}
+            </p>
+          </div>
+        )}
+      </>
     </div>
   );
 }
