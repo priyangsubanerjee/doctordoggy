@@ -63,7 +63,7 @@ function Pets({ pets }) {
         </Link>
       </div>
       <>
-        {pets.length !== 0 && (
+        {pets?.length !== 0 && (
           <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
             {pets.map((pet) => (
               <PetCard
@@ -78,7 +78,7 @@ function Pets({ pets }) {
         )}
       </>
       <>
-        {pets.length == 0 && (
+        {pets?.length == 0 && (
           <div className="flex flex-col items-center justify-center mt-32">
             <img
               src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
