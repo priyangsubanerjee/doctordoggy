@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import NextProgress from "next-progress";
 import ProcessingModal from "@/components/ProcessingModal";
 import GlobalStates from "@/context/GlobalState";
 import "@/styles/globals.css";
@@ -32,6 +33,7 @@ export default function App({
     >
       <SessionProvider session={session}>
         <NextUIProvider>
+          <NextProgress height={"10px"} />
           <Layout>
             <Component {...pageProps} />
             <ProcessingModal />

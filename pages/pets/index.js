@@ -59,7 +59,7 @@ function Pets({ pets }) {
       </div>
 
       {pets.length !== 0 && (
-        <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 lg:grid-cols-3 place-content-center place-items-center">
+        <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
           {pets.map((pet) => (
             <PetCard
               key={pet.id}
@@ -77,6 +77,9 @@ function Pets({ pets }) {
             className="h-32"
             alt=""
           />
+          <p className="mt-6 text-sm text-neutral-500">
+            You have not registered any pet yet.{" "}
+          </p>
         </div>
       )}
     </div>
