@@ -131,7 +131,9 @@ function Navbar() {
           <li>About</li>
           <li>Services</li>
           <li>
-            <Link href={"/pets"}>Pets</Link>
+            <Link href={""} as={"/pets"}>
+              Pets
+            </Link>
           </li>
           <li>Vaccination</li>
           <li>Appointments</li>
