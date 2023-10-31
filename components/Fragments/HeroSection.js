@@ -85,8 +85,10 @@ function HeroSection() {
           </span>
           <div className="py-3 flex items-center justify-center space-x-2">
             {pets.length > 0 &&
-              pets.map((pet, i) => (
-                <Avatar key={i} src={pet.image} size="lg" />
+              pets.slice(0, 2).map((pet, i) => (
+                <Link href={`/pets/${pet.id}`} key={i}>
+                  <Avatar key={i} src={pet.image} size="lg" />
+                </Link>
               ))}
           </div>
         </div>
