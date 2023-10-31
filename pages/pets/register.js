@@ -137,15 +137,12 @@ function RegisterPet({ canine, feline }) {
         <p className="text-center text-neutral-600 text-sm">
           * marked fields are mandatory.
         </p>
-        <Link
-          href="/pets/register"
-          className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
-        >
+        <p className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
           <span>Learn more</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </Link>
+        </p>
       </div>
       <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
         <div className="lg:w-fit w-full shrink-0">
