@@ -247,13 +247,15 @@ function RegisterPet({ canine = [], feline = [] }) {
               list="breeds"
             />
             <datalist id="breeds">
-              {breedOptions.map((breed, index) => {
-                return (
-                  <option key={breed} value={breed}>
-                    {breed}
-                  </option>
-                );
-              })}
+              {breedOptions != undefined &&
+                breedOptions.length !== 0 &&
+                breedOptions.map((breed, index) => {
+                  return (
+                    <option key={breed} value={breed}>
+                      {breed}
+                    </option>
+                  );
+                })}
             </datalist>
 
             <Select
