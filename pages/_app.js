@@ -33,7 +33,7 @@ export default function App({
     >
       <SessionProvider session={session}>
         <NextUIProvider>
-          <NextProgress />
+          <NextProgress height={"4px"} />
           <Layout>
             <Component {...pageProps} />
             <ProcessingModal />

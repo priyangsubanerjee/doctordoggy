@@ -239,7 +239,7 @@ function PetDashboard({ pet, isParent }) {
           <>
             <div className="p-5 rounded-md mt-24 border">
               <h1>Edit zone</h1>
-              <p className="text-sm text-neutral-500 mt-2">
+              <p className="text-xs text-neutral-500 mt-2">
                 Edit pet information
               </p>
               <Button
@@ -251,7 +251,7 @@ function PetDashboard({ pet, isParent }) {
             </div>
             <div className="p-5 rounded-md mt-5 border">
               <h1>Danger zone</h1>
-              <p className="text-sm text-neutral-500 mt-2">
+              <p className="text-xs text-neutral-500 mt-2">
                 This action is irreversible & will delete this pet completely.
               </p>
               <Button
