@@ -57,7 +57,7 @@ function Pets({ pets = [] }) {
           Cant find your pet below?
         </p>
         <p
-          onClick={() => Router.push("/pets/register")}
+          onClick={() => Router.push("/pets/register/")}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
         >
           <span>Register your pet</span>
