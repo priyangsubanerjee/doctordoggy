@@ -179,8 +179,8 @@ function PetDashboard({ pet, isParent }) {
 
   const GeneralTab = ({}) => {
     return (
-      <div className="max-w-3xl mx-auto pb-16">
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
+      <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-7 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
           <div className="border h-16 rounded-md relative flex items-center px-4">
             <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
               Name
@@ -236,18 +236,32 @@ function PetDashboard({ pet, isParent }) {
         </div>
 
         {isParent && (
-          <div className="p-5 rounded-md mt-24 border">
-            <h1>Danger zone</h1>
-            <p className="text-sm text-neutral-500 mt-2">
-              This action is irreversible & will delete this pet completely.
-            </p>
-            <Button
-              radius="full"
-              className="px-10 py-2 bg-red-600 text-sm text-white mt-5"
-            >
-              Delete
-            </Button>
-          </div>
+          <>
+            <div className="p-5 rounded-md mt-24 border">
+              <h1>Edit zone</h1>
+              <p className="text-sm text-neutral-500 mt-2">
+                Edit pet information
+              </p>
+              <Button
+                radius="full"
+                className="px-6 py-2 bg-neutral-800 text-sm text-white mt-5"
+              >
+                Edit
+              </Button>
+            </div>
+            <div className="p-5 rounded-md mt-5 border">
+              <h1>Danger zone</h1>
+              <p className="text-sm text-neutral-500 mt-2">
+                This action is irreversible & will delete this pet completely.
+              </p>
+              <Button
+                radius="full"
+                className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
+              >
+                Delete
+              </Button>
+            </div>
+          </>
         )}
       </div>
     );
