@@ -12,13 +12,9 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import Router from "next/router";
-import { useRouter } from "next/router";
 
 function Navbar() {
-  const router = useRouter();
   const session = useSession();
-
-  console.log(session);
 
   const InfoBar = ({}) => {
     return (
@@ -65,10 +61,10 @@ function Navbar() {
                     signOut();
                     break;
                   case "account":
-                    router.push("/account");
+                    Router.push("/account");
                     break;
                   case "pets":
-                    router.push("/pets");
+                    Router.push("/pets");
                     break;
                   default:
                     break;
