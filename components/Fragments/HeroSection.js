@@ -80,8 +80,8 @@ function HeroSection() {
       </div>
       {pets.length > 0 && (
         <div className="w-fit mx-auto rounded-full border relative px-3 mt-8">
-          <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 bg-white">
-            ❤️
+          <span className="absolute whitespace-nowrap top-0 text-[10px] tracking-widest text-neutral-500 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 bg-white">
+            LOVE
           </span>
           <div className="py-3 flex items-center justify-center space-x-2">
             {pets.length > 0 &&
@@ -90,6 +90,19 @@ function HeroSection() {
                   <Avatar key={i} src={pet.image} size="lg" />
                 </Link>
               ))}
+            <Link href={`/pets/`}>
+              <Avatar
+                className="bg-neutral-100 hover:bg-neutral-200"
+                icon={
+                  <Icon
+                    icon="icon-park-outline:right"
+                    height={25}
+                    className="text-neutral-700"
+                  />
+                }
+                size="lg"
+              />
+            </Link>
           </div>
         </div>
       )}
