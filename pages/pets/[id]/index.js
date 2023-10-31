@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react";
 import { Button, Input, Select, SelectItem, Switch } from "@nextui-org/react";
 import calculateAge from "@/helper/age";
 import Link from "next/link";
+import axios from "axios";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -32,18 +33,7 @@ export async function getServerSideProps(context) {
 }
 
 function PetDashboard({ pet, isParent }) {
-  const [isEditable, setIsEditable] = useState(false);
-  const [registerProp, setRegisterProp] = useState({
-    parentEmail: pet?.parentEmail || "",
-    name: pet?.name || "",
-    species: pet?.species || "",
-    breed: pet?.breed || "",
-    sex: pet?.sex || "",
-    dateOfBirth: pet?.dateOfBirth || "",
-    bodyWeight: pet?.bodyWeight || "",
-    isPublic: pet?.isPublic || true,
-    color: pet?.color || "",
-  });
+  const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
     "General",
     "Prescriptions",
@@ -54,6 +44,23 @@ function PetDashboard({ pet, isParent }) {
 
   const [tabChooserOpen, setTabChooserOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+
+  useEffect(() => {
+    (async () => {
+      await axios.post(
+        "/api/pet/visibility",
+        {
+          id: pet?.id,
+          isPublic: isPublic,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    })();
+  }, [isPublic, pet?.id]);
 
   const Capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -232,7 +239,10 @@ function PetDashboard({ pet, isParent }) {
               </span>
             </Link>
           </div>
-          <Switch isSelected={pet?.isPublic} />
+          <Switch
+            isSelected={isPublic}
+            onValueChange={() => setIsPublic(!isPublic)}
+          />
         </div>
 
         {isParent && (

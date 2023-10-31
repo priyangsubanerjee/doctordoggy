@@ -48,6 +48,22 @@ export const getPetById = async (id) => {
   }
 };
 
+export const updateVisibility = async (id, isPublic) => {
+  try {
+    const pet = await prisma.pet.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isPublic: isPublic,
+      },
+    });
+    return pet;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getAllPets = async () => {
   try {
     const pets = await prisma.pet.findMany({
