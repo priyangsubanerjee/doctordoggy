@@ -25,7 +25,7 @@ function Pets({ pets = [] }) {
   const PetCard = ({ name, age, image, id }) => {
     return (
       <div className="flex flex-col lg:flex-row items-center justify-center">
-        <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 bg-teal-50 rounded-full overflow-hidden">
+        <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 rounded-full overflow-hidden">
           <img src={image} className="h-full w-full object-cover" alt="" />
         </div>
         <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
