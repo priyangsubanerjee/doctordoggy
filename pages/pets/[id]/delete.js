@@ -52,7 +52,7 @@ function Delete({ session, pet, isParent }) {
       <div className="flex items-center justify-center space-x-4 mt-6">
         <Button
           isDisabled={deleting}
-          onPress={() => Router.push(`/pets/${pet.id}`)}
+          onPress={() => (window.location.href = `/pets/${pet.id}`)}
           radius="none"
           className="w-44 rounded-md"
         >
