@@ -150,7 +150,7 @@ function EditProfile({ pet, canine, feline }) {
           }
         );
         setLoading(false);
-        updatedModal(true, "Pet created successfully");
+        updatedModal(true, "Pet updated successfully");
         window.location.href = `/pets`;
       } catch (error) {
         console.log(error.message);
