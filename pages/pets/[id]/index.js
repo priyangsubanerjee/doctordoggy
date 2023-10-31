@@ -8,6 +8,7 @@ import { Button, Input, Select, SelectItem, Switch } from "@nextui-org/react";
 import calculateAge from "@/helper/age";
 import Link from "next/link";
 import axios from "axios";
+import Router from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -224,6 +225,12 @@ function PetDashboard({ pet, isParent }) {
             </span>
             <p>{Capitalize(pet?.sex)}</p>
           </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Date of birth
+            </span>
+            <p>{Capitalize(new Date(pet?.dateOfBirth).toDateString())}</p>
+          </div>
         </div>
 
         <div className="flex items-center justify-between mt-10 border rounded-md p-5">
@@ -254,6 +261,7 @@ function PetDashboard({ pet, isParent }) {
               </p>
               <Button
                 radius="full"
+                onPress={() => Router.push(`/pets/${pet?.id}/edit`)}
                 className="px-6 py-2 bg-neutral-800 text-sm text-white mt-5"
               >
                 Edit
@@ -265,6 +273,7 @@ function PetDashboard({ pet, isParent }) {
                 This action is irreversible & will delete this pet completely.
               </p>
               <Button
+                onPress={() => Router.push(`/pets/${pet?.id}/delete`)}
                 radius="full"
                 className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
               >

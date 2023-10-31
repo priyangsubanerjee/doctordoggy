@@ -21,7 +21,7 @@ function Navbar() {
       <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
         This site is under development.
         <Button
-          onClick={() => router.push("/dev")}
+          onClick={() => Router.push("/dev")}
           radius="full"
           size="sm"
           className="ml-3"
