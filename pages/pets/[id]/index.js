@@ -64,6 +64,7 @@ function PetDashboard({ pet, isParent }) {
   }, [isPublic, pet?.id]);
 
   const Capitalize = (str) => {
+    if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
