@@ -12,6 +12,7 @@ import Router from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
+  let customCode = 100;
   let pet = null;
   let isParent = false;
   if (session) {
@@ -23,17 +24,20 @@ export async function getServerSideProps(context) {
       }
       if (!pet.isPublic) {
         if (pet.parentEmail !== session?.user?.email) {
+          customCode = 101;
           pet = null;
         }
       }
+    } else {
+      customCode = 102;
     }
   }
   return {
-    props: { session, pet, isParent }, // will be passed to the page component as props
+    props: { session, pet, isParent, customCode }, // will be passed to the page component as props
   };
 }
 
-function PetDashboard({ pet, isParent }) {
+function PetDashboard({ pet, isParent, customCode }) {
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
     "General",
@@ -293,7 +297,7 @@ function PetDashboard({ pet, isParent }) {
     );
   };
 
-  if (pet != null) {
+  if (customCode == 100) {
     return (
       <div>
         <div className="relative">
@@ -322,14 +326,15 @@ function PetDashboard({ pet, isParent }) {
         <GeneralTab />
       </div>
     );
-  } else {
+  } else if (customCode == 101) {
     return (
       <div>
         <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
-          Profile not found
+          This pet is currently private. Please ask the owner to make it public.
         </h1>
       </div>
     );
+  } else if (customCode == 102) {
   }
 }
 

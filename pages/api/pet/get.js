@@ -1,7 +1,10 @@
-import { get_my_pets } from "@/prisma/pet";
+import { getPersonalPet } from "@/prisma/pet";
 
 export default async function handler(req, res) {
-  let pets = await get_my_pets("devpriyangsu@gmail.com");
+  const { email } = req.body;
+  console.log("Get request received");
+  let pets = await getPersonalPet(email);
   pets = JSON.parse(JSON.stringify(pets));
+  console.log(pets);
   res.status(200).json(pets);
 }

@@ -1,6 +1,5 @@
 import prisma from "./prisma";
 export const registerPet = async (pet, sessionEmail) => {
-  console.log(pet);
   try {
     const petCreated = await prisma.pet.create({
       data: {

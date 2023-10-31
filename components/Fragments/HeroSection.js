@@ -1,25 +1,57 @@
 /* eslint-disable @next/next/no-img-element */
 import quickNavOptions from "@/static/quick-navigaion";
 import { Icon } from "@iconify/react";
-import React from "react";
+import { Avatar } from "@nextui-org/react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import React, { useEffect } from "react";
 
 // TODO: Make the search bar functional
 // TODO: Migrate all the static data to static.js file
 // TODO: Migrate all the images to Cloudinary
 
 function HeroSection() {
-  const FeatureCard = ({ title, icon, buttonText, index }) => {
+  const session = useSession();
+  const [pets, setPets] = React.useState([]);
+
+  useEffect(() => {
+    if (session?.data?.user?.email) {
+      axios
+        .post(
+          `/api/pet/get`,
+          {
+            email: session?.data?.user?.email,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          setPets(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [session.status]);
+
+  const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
-      <div className={`flex w-full flex-col items-center justify-center p-3`}>
-        <img src={icon} alt="" className="h-12" />
-        <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
-        <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
-          <span>{buttonText}</span>
-          <span className="translate-y-[1px]">
-            <Icon icon="formkit:right" />
-          </span>
-        </button>
-      </div>
+      <Link href={href || "/"}>
+        <div className={`flex w-full flex-col items-center justify-center p-3`}>
+          <img src={icon} alt="" className="h-12" />
+          <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
+          <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
+            <span>{buttonText}</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </button>
+        </div>
+      </Link>
     );
   };
 
@@ -46,7 +78,20 @@ function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="py-10 lg:py-20">
+      {pets.length > 0 && (
+        <div className="w-fit mx-auto rounded-full border relative px-3 mt-8">
+          <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 bg-white">
+            ❤️
+          </span>
+          <div className="py-3 flex items-center justify-center space-x-2">
+            {pets.length > 0 &&
+              pets.map((pet, i) => (
+                <Avatar key={i} src={pet.image} size="lg" />
+              ))}
+          </div>
+        </div>
+      )}
+      <div className="py-10 lg:py-20 lg:-mt-8">
         <h1 className="text-3xl lg:text-5xl font-semibold text-center">
           One Stop Solution
         </h1>
