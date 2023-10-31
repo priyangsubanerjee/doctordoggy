@@ -1,5 +1,6 @@
 import prisma from "./prisma";
 export const registerPet = async (pet, sessionEmail) => {
+  console.log(pet);
   try {
     const petCreated = await prisma.pet.create({
       data: {
@@ -7,6 +8,7 @@ export const registerPet = async (pet, sessionEmail) => {
         name: pet.name,
         parentEmail: pet.parentEmail,
         sex: pet.sex,
+        bodyWeight: pet.bodyWeight,
         breed: pet.breed,
         dateOfBirth: new Date(pet.dateOfBirth).toISOString(),
         species: pet.species,
@@ -56,6 +58,19 @@ export const updateVisibility = async (id, isPublic) => {
       },
       data: {
         isPublic: isPublic,
+      },
+    });
+    return pet;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const deletePetById = async (id) => {
+  try {
+    const pet = await prisma.pet.delete({
+      where: {
+        id: id,
       },
     });
     return pet;

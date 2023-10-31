@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
 import { Button } from "@nextui-org/react";
 import Router from "next/router";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -30,6 +32,7 @@ export async function getServerSideProps(context) {
 }
 
 function Delete({ session, pet, isParent }) {
+  const [deleting, setDeleting] = React.useState(false);
   return (
     <div>
       <div className="flex items-center justify-center mt-16">
@@ -48,6 +51,7 @@ function Delete({ session, pet, isParent }) {
       </p>
       <div className="flex items-center justify-center space-x-4 mt-6">
         <Button
+          isDisabled={deleting}
           onPress={() => Router.push(`/pets/${pet.id}`)}
           radius="none"
           className="w-44 rounded-md"
@@ -55,6 +59,29 @@ function Delete({ session, pet, isParent }) {
           Cancel
         </Button>
         <Button
+          isLoading={deleting}
+          onPress={async () => {
+            if (isParent) {
+              setDeleting(true);
+              try {
+                await axios.post(
+                  "/api/pet/delete",
+                  {
+                    id: pet.id,
+                  },
+                  {
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
+                Router.push("/pets");
+              } catch (error) {
+                toast.error("Something went wrong");
+              }
+              setDeleting(false);
+            }
+          }}
           radius="none"
           className="w-44 rounded-md bg-rose-600 text-white"
         >

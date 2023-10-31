@@ -231,6 +231,12 @@ function PetDashboard({ pet, isParent }) {
             </span>
             <p>{Capitalize(new Date(pet?.dateOfBirth).toDateString())}</p>
           </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Body weight
+            </span>
+            <p>{Capitalize(pet?.bodyWeight)} Kg</p>
+          </div>
         </div>
 
         <div className="flex items-center justify-between mt-10 border rounded-md p-5">

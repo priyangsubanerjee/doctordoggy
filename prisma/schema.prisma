@@ -34,6 +34,7 @@ model Pet {
   image       String
   name        String
   sex         String?
+  bodyWeight  String?
   Parent      User?    @relation(fields: [parentEmail], references: [email])
   parentEmail String?
   breed       String

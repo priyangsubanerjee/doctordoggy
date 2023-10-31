@@ -87,7 +87,7 @@ function RegisterPet({ canine, feline }) {
       updatedModal(true, "Uploading image ...");
       setLoading(true);
       try {
-        const { fileUrl, publicId } = await uploadImage(imageFile);
+        const { fileUrl } = await uploadImage(imageFile);
         updatedModal(true, "Storing pet information ...");
         await axios.post(
           "/api/pet/create",
