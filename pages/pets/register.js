@@ -24,7 +24,7 @@ export async function getServerSideProps() {
   };
 }
 
-function RegisterPet({ canine, feline }) {
+function RegisterPet({ canine = [], feline = [] }) {
   const session = useSession();
   const imageRef = React.useRef(null);
   const { updatedModal } = useContext(GlobalStates);
