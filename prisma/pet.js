@@ -66,6 +66,31 @@ export const updateVisibility = async (id, isPublic) => {
   }
 };
 
+export const updatePetData = async (id, pet) => {
+  try {
+    const petUpdated = await prisma.pet.update({
+      where: {
+        id: id,
+      },
+
+      data: {
+        image: pet.image,
+        name: pet.name,
+        sex: pet.sex,
+        bodyWeight: pet.bodyWeight,
+        breed: pet.breed,
+        dateOfBirth: new Date(pet.dateOfBirth).toISOString(),
+        species: pet.species,
+        color: pet.color,
+      },
+    });
+
+    return petUpdated;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deletePetById = async (id) => {
   try {
     const pet = await prisma.pet.delete({

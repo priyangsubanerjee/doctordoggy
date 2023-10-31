@@ -88,7 +88,7 @@ function RegisterPet({ canine = [], feline = [] }) {
       try {
         const { fileUrl, publicId } = await uploadImage(imageFile);
         updatedModal(true, "Storing pet information ...");
-        let petCreated = await axios.post(
+        await axios.post(
           "/api/pet/create",
           {
             pet: { ...registerProp, image: fileUrl },
@@ -101,7 +101,7 @@ function RegisterPet({ canine = [], feline = [] }) {
           }
         );
         setLoading(false);
-        updatedModal(false);
+        updatedModal(true, "Pet created successfully");
         window.location.href = `/pets`;
       } catch (error) {
         toast.error("Something went wrong with image.");

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-import { getAllPets, getPersonalPet } from "@/prisma/pet";
+import { getPersonalPet } from "@/prisma/pet";
 import calculateAge from "@/helper/age";
 import { Icon } from "@iconify/react";
 import Link from "next/link";

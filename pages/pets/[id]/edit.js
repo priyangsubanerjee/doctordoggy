@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext, useEffect, useState } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
@@ -8,6 +9,9 @@ import { Icon } from "@iconify/react";
 import GlobalStates from "@/context/GlobalState";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { uploadImage } from "@/helper/image";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -57,7 +61,7 @@ function EditProfile({ pet, canine, feline }) {
     dateOfBirth: "",
     bodyWeight: pet?.bodyWeight || "",
     isPublic: pet?.isPublic || false,
-    color: "",
+    color: pet?.color || "",
   });
 
   const [imageFile, setImageFile] = useState(null); // cannot be null
@@ -88,6 +92,72 @@ function EditProfile({ pet, canine, feline }) {
       setStoredProp({ ...storedProp, dateOfBirth: dateStr });
     }
   }, []);
+
+  const performChecks = () => {
+    if (storedProp.parentEmail == "") {
+      toast("No parent email found");
+      return false;
+    }
+    if (storedProp.name == "") {
+      toast("Please enter your pet's name");
+      return false;
+    }
+    if (storedProp.species == "") {
+      toast("Please select your pet's species");
+      return false;
+    }
+
+    if (storedProp.sex == "") {
+      toast("Please select your pet's sex");
+      return false;
+    }
+
+    if (storedProp.breed == "") {
+      toast("Please select your pet's breed");
+      return false;
+    }
+    if (storedProp.dateOfBirth == "") {
+      toast("Please enter your pet's date of birth");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (performChecks()) {
+      setLoading(true);
+      try {
+        let imageUrl = storedProp.image;
+        if (imageFile != null) {
+          updatedModal(true, "Uploading image ...");
+          const { fileUrl, publicId } = await uploadImage(imageFile);
+          imageUrl = fileUrl;
+        }
+
+        updatedModal(true, "Storing pet information ...");
+        await axios.post(
+          "/api/pet/update",
+          {
+            id: pet.id,
+            pet: { ...storedProp, image: imageUrl },
+            sessionEmail: session?.data?.user?.email,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setLoading(false);
+        updatedModal(true, "Pet created successfully");
+        window.location.href = `/pets`;
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Something went wrong with image.");
+      }
+    }
+  };
 
   return (
     <div>
@@ -126,7 +196,7 @@ function EditProfile({ pet, canine, feline }) {
                 ref={imageRef}
                 id=""
               />
-              {imageFile == null ? (
+              {storedProp.image == null ? (
                 <>
                   <div className="h-full w-full flex flex-col items-center justify-center">
                     <img
@@ -144,7 +214,11 @@ function EditProfile({ pet, canine, feline }) {
                 <>
                   <div className="h-full w-full flex flex-col items-center justify-center">
                     <img
-                      src={URL.createObjectURL(imageFile)}
+                      src={
+                        imageFile == null
+                          ? storedProp.image
+                          : URL.createObjectURL(imageFile)
+                      }
                       className="h-full w-full object-cover"
                       alt=""
                     />
@@ -320,11 +394,12 @@ function EditProfile({ pet, canine, feline }) {
             <div className="mt-20 flex space-x-2 items-center justify-end">
               <Button
                 isLoading={loading}
+                onPress={() => handleSubmit()}
                 radius="none"
                 className="w-full rounded-md h-12 bg-black text-white"
               >
                 {" "}
-                Register{" "}
+                Update{" "}
               </Button>
             </div>
           </div>

@@ -75,7 +75,7 @@ function Delete({ session, pet, isParent }) {
                     },
                   }
                 );
-                Router.push("/pets");
+                window.location.href = "/pets";
               } catch (error) {
                 toast.error("Something went wrong");
               }
