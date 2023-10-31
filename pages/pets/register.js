@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
 import GlobalStates from "@/context/GlobalState";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 export async function getServerSideProps() {
   let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
@@ -25,7 +25,6 @@ export async function getServerSideProps() {
 }
 
 function RegisterPet({ canine, feline }) {
-  const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
   const { updatedModal } = useContext(GlobalStates);
@@ -103,7 +102,7 @@ function RegisterPet({ canine, feline }) {
         );
         setLoading(false);
         updatedModal(false);
-        router.push("/pets");
+        Router.push("/pets");
       } catch (error) {
         toast.error("Something went wrong with image.");
       }
