@@ -4,27 +4,46 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
+import { Button, Input, Select, SelectItem, Switch } from "@nextui-org/react";
+import calculateAge from "@/helper/age";
+import Link from "next/link";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   let pet = null;
+  let isParent = false;
   if (session) {
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
     if (pet) {
+      if (session?.user?.email == pet.parentEmail) {
+        isParent = true;
+      }
       if (!pet.isPublic) {
-        if (pet.parentEmail !== session.user.email) {
+        if (pet.parentEmail !== session?.user?.email) {
           pet = null;
         }
       }
     }
   }
   return {
-    props: { session, pet }, // will be passed to the page component as props
+    props: { session, pet, isParent }, // will be passed to the page component as props
   };
 }
 
-function PetDashboard({ pet }) {
+function PetDashboard({ pet, isParent }) {
+  const [isEditable, setIsEditable] = useState(false);
+  const [registerProp, setRegisterProp] = useState({
+    parentEmail: pet?.parentEmail || "",
+    name: pet?.name || "",
+    species: pet?.species || "",
+    breed: pet?.breed || "",
+    sex: pet?.sex || "",
+    dateOfBirth: pet?.dateOfBirth || "",
+    bodyWeight: pet?.bodyWeight || "",
+    isPublic: pet?.isPublic || true,
+    color: pet?.color || "",
+  });
   const tabOptions = [
     "General",
     "Prescriptions",
@@ -35,6 +54,10 @@ function PetDashboard({ pet }) {
 
   const [tabChooserOpen, setTabChooserOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+
+  const Capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   const TabChooser = ({}) => {
     if (tabChooserOpen) {
@@ -152,13 +175,91 @@ function PetDashboard({ pet }) {
     );
   };
 
+  const ActiveTab = ({}) => {};
+
+  const GeneralTab = ({}) => {
+    return (
+      <div className="max-w-3xl mx-auto pb-16">
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Name
+            </span>
+            <p>{pet?.name}</p>
+          </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Species
+            </span>
+            <p>{Capitalize(pet?.species)}</p>
+          </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Breed
+            </span>
+            <p>{Capitalize(pet?.breed)}</p>
+          </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Age
+            </span>
+            <p>{calculateAge(pet?.dateOfBirth)}</p>
+          </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Colour
+            </span>
+            <p>{Capitalize(pet?.color)}</p>
+          </div>
+          <div className="border h-16 rounded-md relative flex items-center px-4">
+            <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+              Sex
+            </span>
+            <p>{Capitalize(pet?.sex)}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between mt-10 border rounded-md p-5">
+          <div>
+            <p className="text-neutral-800 text-base">Public profile?</p>
+            <Link
+              href="/pets/register"
+              className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
+            >
+              <span>Learn about public profiles</span>
+              <span className="translate-y-[1px]">
+                <Icon icon="formkit:right" />
+              </span>
+            </Link>
+          </div>
+          <Switch isSelected={pet?.isPublic} />
+        </div>
+
+        {isParent && (
+          <div className="p-5 rounded-md mt-24 border">
+            <h1>Danger zone</h1>
+            <p className="text-sm text-neutral-500 mt-2">
+              This action is irreversible & will delete this pet completely.
+            </p>
+            <Button
+              radius="full"
+              className="px-10 py-2 bg-red-600 text-sm text-white mt-5"
+            >
+              Delete
+            </Button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   if (pet != null) {
     return (
       <div>
         <div className="relative">
           <img
             src={pet.image}
-            className="h-48 lg:h-72 w-full object-cover blur-3xl opacity-70"
+            className="h-48 lg:h-72 w-full object-cover blur-3xl opacity-50"
             alt=""
           />
           <img
@@ -178,6 +279,7 @@ function PetDashboard({ pet }) {
         </p>
         <Tabs />
         <TabChooser />
+        <GeneralTab />
       </div>
     );
   } else {
