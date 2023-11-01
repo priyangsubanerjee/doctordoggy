@@ -11,10 +11,9 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 
 function Navbar() {
-  const router = useRouter();
   const session = useSession();
 
   const InfoBar = ({}) => {
@@ -128,18 +127,10 @@ function Navbar() {
           </li>
           <li>About</li>
           <li>Services</li>
-          <li
-            className="cursor-pointer"
-            onClick={() => router.replace("/pets")}
-          >
-            Pets
+          <li className="cursor-pointer">
+            <Link href={"/pets"}>Pets</Link>
           </li>
-          <li
-            className="cursor-pointer"
-            onClick={() => router.replace("/vaccination")}
-          >
-            Vaccination
-          </li>
+          <li className="cursor-pointer">Vaccination</li>
           <li>Appointments</li>
         </ul>
         <div className="flex items-center">
