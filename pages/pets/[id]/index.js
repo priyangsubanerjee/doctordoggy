@@ -118,15 +118,17 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
               aria-label="Static Actions"
             >
               <DropdownItem key="new">Certificate</DropdownItem>
-              <DropdownItem key="copy">Update record</DropdownItem>
               {isParent && (
-                <DropdownItem
-                  key="delete"
-                  className="text-danger"
-                  color="danger"
-                >
-                  Delete record
-                </DropdownItem>
+                <>
+                  <DropdownItem key="copy">Update record</DropdownItem>
+                  <DropdownItem
+                    key="delete"
+                    className="text-danger"
+                    color="danger"
+                  >
+                    Delete record
+                  </DropdownItem>
+                </>
               )}
             </DropdownMenu>
           </Dropdown>
@@ -386,7 +388,7 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
 
   const VaccinationTab = ({}) => {
     return (
-      <div className="max-w-3xl grid grid-cols-1 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+      <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
         {vaccinations.map((vaccine, index) => (
           <VaccineCard key={index} vaccine={vaccine} />
         ))}
@@ -408,6 +410,9 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
               case "sd_v":
                 window.location.href = `/vaccination/schedule`;
                 break;
+              case "up_p":
+                window.location.href = `/prescription/upload`;
+                break;
               default:
                 break;
             }
@@ -415,7 +420,7 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
           aria-label="Static Actions"
         >
           <DropdownItem key="sd_v">Schedule vaccination</DropdownItem>
-          <DropdownItem key="copy">Upload prescription</DropdownItem>
+          <DropdownItem key="up_p">Upload prescription</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );

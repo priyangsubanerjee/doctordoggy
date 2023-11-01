@@ -15,6 +15,7 @@ const quickNavOptions = [
     title: "Prescriptions",
     icon: "https://cdn-icons-png.flaticon.com/512/843/843435.png",
     buttonText: "Upload now",
+    href: "/prescription",
   },
   {
     title: "Appointments",
