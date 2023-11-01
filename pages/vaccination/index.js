@@ -60,7 +60,7 @@ function VaccinationHistory({ vaccinations = [] }) {
         </div>
         <div className="mt-3">
           <h1 className="text-base font-semibold text-neutral-700">
-            Anti Rabies Booster
+            {vaccine.vaccineName}
           </h1>
           <div className="flex items-center mt-3">
             <Icon icon="solar:calendar-line-duotone" />
