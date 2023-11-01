@@ -10,7 +10,7 @@ import {
   DropdownSection,
   DropdownItem,
 } from "@nextui-org/react";
-import Link from "next/link";
+import { Link } from "@nextui-org/react";
 import Router from "next/router";
 
 function Navbar() {
@@ -123,15 +123,16 @@ function Navbar() {
         </div>
         <ul className="hidden lg:flex items-center space-x-14 text-sm">
           <li>
-            <Link href={"/"}>Home</Link>
+            <Link className="text-sm text-black" href={"/"}>
+              Home
+            </Link>
           </li>
           <li>About</li>
           <li>Services</li>
-          <li
-            className="cursor-pointer"
-            onClick={() => (window.location.href = "/pets")}
-          >
-            Pets
+          <li className="cursor-pointer">
+            <Link className="text-sm text-black" href={"/pets"}>
+              Pets
+            </Link>
           </li>
           <li
             className="cursor-pointer"
