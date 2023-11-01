@@ -394,6 +394,33 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
     );
   };
 
+  const QuickAction = ({}) => {
+    return (
+      <Dropdown>
+        <DropdownTrigger>
+          <button className="bg-white hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+            <Icon height={20} icon="ic:round-add" />
+          </button>
+        </DropdownTrigger>
+        <DropdownMenu
+          onAction={(key) => {
+            switch (key) {
+              case "sd_v":
+                window.location.href = `/vaccination/schedule`;
+                break;
+              default:
+                break;
+            }
+          }}
+          aria-label="Static Actions"
+        >
+          <DropdownItem key="sd_v">Schedule vaccination</DropdownItem>
+          <DropdownItem key="copy">Upload prescription</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    );
+  };
+
   if (customCode == 100) {
     return (
       <div>
@@ -403,11 +430,18 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
             className="h-48 lg:h-72 w-full object-cover blur-3xl opacity-50"
             alt=""
           />
-          <img
-            src={pet.image}
-            className="absolute -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2 h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
-            alt=""
-          />
+          <div className="absolute -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
+            <div className="relative">
+              <div className="absolute bottom-3 right-4">
+                <QuickAction />
+              </div>
+              <img
+                src={pet.image}
+                className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
         <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
           {pet.name.split(" ")[0]}&apos;s{" "}
