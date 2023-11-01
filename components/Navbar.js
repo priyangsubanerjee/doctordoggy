@@ -127,10 +127,18 @@ function Navbar() {
           </li>
           <li>About</li>
           <li>Services</li>
-          <li className="cursor-pointer">
-            <Link href={"/pets"}>Pets</Link>
+          <li
+            className="cursor-pointer"
+            onClick={() => (window.location.href = "/pets")}
+          >
+            Pets
           </li>
-          <li className="cursor-pointer">Vaccination</li>
+          <li
+            className="cursor-pointer"
+            onClick={() => (window.location.href = "/vaccination")}
+          >
+            Vaccination
+          </li>
           <li>Appointments</li>
         </ul>
         <div className="flex items-center">
