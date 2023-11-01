@@ -61,10 +61,10 @@ function Navbar() {
                     signOut();
                     break;
                   case "account":
-                    router.replace("/account");
+                    window.location.href = "/account";
                     break;
                   case "pets":
-                    router.replace("/pets");
+                    window.location.href = "/pets";
                     break;
                   default:
                     break;
