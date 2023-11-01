@@ -13,6 +13,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import { getVaccinesByEmail } from "@/prisma/vaccine";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -30,6 +31,7 @@ export async function getServerSideProps(context) {
 }
 
 function VaccinationHistory({ vaccinations = [] }) {
+  const router = useRouter();
   const VaccineCard = ({ vaccine }) => {
     return (
       <div className="border rounded-md p-4">
@@ -85,15 +87,15 @@ function VaccinationHistory({ vaccinations = [] }) {
         Vaccination History
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
-        <Link
-          href={"/vaccination/schedule"}
-          className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
+        <p
+          onClick={() => router.replace("/vaccination/schedule")}
+          className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
         >
           <span>Schedule vaccination</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </Link>
+        </p>
         <Link
           href={"/vaccination/schedule"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
