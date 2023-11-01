@@ -4,21 +4,35 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
-import { Button, Input, Select, SelectItem, Switch } from "@nextui-org/react";
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input,
+  Select,
+  SelectItem,
+  Switch,
+} from "@nextui-org/react";
 import calculateAge from "@/helper/age";
 import Link from "next/link";
 import axios from "axios";
 import Router from "next/router";
+import { getVaccineByPetId } from "@/prisma/vaccine";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   let customCode = 100;
   let pet = null;
   let isParent = false;
+  let vaccinations = [];
   if (session) {
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
     if (pet) {
+      vaccinations = await getVaccineByPetId("6540d9ed3eaa24e50eef39c3");
+      vaccinations = await JSON.parse(JSON.stringify(vaccinations));
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
       }
@@ -33,11 +47,11 @@ export async function getServerSideProps(context) {
     }
   }
   return {
-    props: { session, pet, isParent, customCode }, // will be passed to the page component as props
+    props: { session, pet, vaccinations, isParent, customCode }, // will be passed to the page component as props
   };
 }
 
-function PetDashboard({ pet, isParent, customCode }) {
+function PetDashboard({ pet, isParent, customCode, vaccinations }) {
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
     "General",
@@ -70,6 +84,67 @@ function PetDashboard({ pet, isParent, customCode }) {
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const VaccineCard = ({ vaccine }) => {
+    return (
+      <div className="border rounded-md p-4">
+        <div className="flex items-center">
+          <img
+            src={vaccine.image}
+            className="h-6 w-6 rounded-full object-cover"
+            alt=""
+          />
+          <p className="text-xs ml-2 text-neutral-500">{vaccine.name}</p>
+          <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+            {vaccine.status}
+          </p>
+          <Dropdown>
+            <DropdownTrigger>
+              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+                <Icon height={20} icon="pepicons-pencil:dots-y" />
+              </button>
+            </DropdownTrigger>
+            <DropdownMenu
+              onAction={(key) => {
+                switch (key) {
+                  case "delete":
+                    window.location.href = `/vaccination/${vaccine.id}/delete`;
+                    break;
+                  default:
+                    break;
+                }
+              }}
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="new">Certificate</DropdownItem>
+              <DropdownItem key="copy">Update record</DropdownItem>
+              <DropdownItem key="delete" className="text-danger" color="danger">
+                Delete record
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div className="mt-3">
+          <h1 className="text-base font-semibold text-neutral-700">
+            {vaccine.vaccineName}
+          </h1>
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              Due on{" "}
+              <span className="text-neutral-700">
+                {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const TabChooser = ({}) => {
@@ -188,7 +263,14 @@ function PetDashboard({ pet, isParent, customCode }) {
     );
   };
 
-  const ActiveTab = ({}) => {};
+  const ActiveTab = ({}) => {
+    switch (selectedTab) {
+      case "General":
+        return <GeneralTab />;
+      case "Vaccinations":
+        return <VaccinationTab />;
+    }
+  };
 
   const GeneralTab = ({}) => {
     return (
@@ -297,6 +379,16 @@ function PetDashboard({ pet, isParent, customCode }) {
     );
   };
 
+  const VaccinationTab = ({}) => {
+    return (
+      <div className="max-w-3xl grid grid-cols-2 mx-3 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        {vaccinations.map((vaccine, index) => (
+          <VaccineCard key={index} vaccine={vaccine} />
+        ))}
+      </div>
+    );
+  };
+
   if (customCode == 100) {
     return (
       <div>
@@ -323,7 +415,7 @@ function PetDashboard({ pet, isParent, customCode }) {
         </p>
         <Tabs />
         <TabChooser />
-        <GeneralTab />
+        <ActiveTab />
       </div>
     );
   } else if (customCode == 101) {

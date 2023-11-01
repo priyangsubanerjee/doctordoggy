@@ -48,6 +48,20 @@ export const getVaccineById = async (id) => {
   }
 };
 
+export const getVaccineByPetId = async (petId) => {
+  try {
+    const vaccines = await prisma.vaccination.findMany({
+      where: {
+        petId: petId,
+      },
+    });
+    return vaccines;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const deleteVaccineById = async (id) => {
   try {
     const vaccine = await prisma.vaccination.delete({

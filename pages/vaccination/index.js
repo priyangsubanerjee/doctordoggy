@@ -32,7 +32,6 @@ export async function getServerSideProps(context) {
 }
 
 function VaccinationHistory({ vaccinations = [] }) {
-  const router = useRouter();
   const VaccineCard = ({ vaccine }) => {
     return (
       <div className="border rounded-md p-4">
