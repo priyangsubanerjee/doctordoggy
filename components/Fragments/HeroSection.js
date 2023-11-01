@@ -5,6 +5,7 @@ import { Avatar } from "@nextui-org/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Router from "next/router";
 import React, { useEffect } from "react";
 
 // TODO: Make the search bar functional
@@ -40,18 +41,19 @@ function HeroSection() {
 
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
-      <Link href={href || "/"}>
-        <div className={`flex w-full flex-col items-center justify-center p-3`}>
-          <img src={icon} alt="" className="h-12" />
-          <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
-          <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
-            <span>{buttonText}</span>
-            <span className="translate-y-[1px]">
-              <Icon icon="formkit:right" />
-            </span>
-          </button>
-        </div>
-      </Link>
+      <div
+        onClick={() => Router.push(href ? href : "/")}
+        className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
+      >
+        <img src={icon} alt="" className="h-12" />
+        <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
+        <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
+          <span>{buttonText}</span>
+          <span className="translate-y-[1px]">
+            <Icon icon="formkit:right" />
+          </span>
+        </button>
+      </div>
     );
   };
 
