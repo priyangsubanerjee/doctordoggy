@@ -1,4 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import React from "react";
 import {
@@ -9,16 +12,36 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { getVaccinesByEmail } from "@/prisma/vaccine";
 
-function VaccinationHistory() {
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  let vaccinations = [];
+  if (session) {
+    vaccinations = await getVaccinesByEmail(session?.user?.email);
+    vaccinations = JSON.parse(JSON.stringify(vaccinations));
+  }
+
+  return {
+    props: {
+      vaccinations,
+    },
+  };
+}
+
+function VaccinationHistory({ vaccinations = [] }) {
   const VaccineCard = ({ vaccine }) => {
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">
-          <div className="h-6 w-6 bg-neutral-400 rounded-full"></div>
-          <p className="text-xs ml-2 text-neutral-500">Laddoo</p>
+          <img
+            src={vaccine.image}
+            className="h-6 w-6 rounded-full object-cover"
+            alt=""
+          />
+          <p className="text-xs ml-2 text-neutral-500">{vaccine.name}</p>
           <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
-            DUE
+            {vaccine.status}
           </p>
           <Dropdown>
             <DropdownTrigger>
@@ -42,7 +65,14 @@ function VaccinationHistory() {
           <div className="flex items-center mt-3">
             <Icon icon="solar:calendar-line-duotone" />
             <p className="text-sm text-neutral-500 ml-2">
-              Due on <span className="text-neutral-700">12 December, 2023</span>
+              Due on{" "}
+              <span className="text-neutral-700">
+                {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
             </p>
           </div>
         </div>
@@ -75,9 +105,9 @@ function VaccinationHistory() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
-        <VaccineCard />
-        <VaccineCard />
-        <VaccineCard />
+        {vaccinations.map((vaccine, index) => (
+          <VaccineCard key={index} vaccine={vaccine} />
+        ))}
       </div>
     </div>
   );

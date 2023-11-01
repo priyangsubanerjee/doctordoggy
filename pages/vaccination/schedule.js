@@ -1,11 +1,14 @@
 import { Icon } from "@iconify/react";
 import { Select, SelectItem, Input, Button } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPersonalPet } from "@/prisma/pet";
 import calculateAge from "@/helper/age";
+import axios from "axios";
+import toast from "react-hot-toast";
+import GlobalStates from "@/context/GlobalState";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -28,6 +31,39 @@ export async function getServerSideProps(context) {
 }
 
 function Vaccination({ pets = [], vaccines = [] }) {
+  const { updatedModal } = useContext(GlobalStates);
+  const [selectedPet, setSelectedPet] = React.useState(null);
+  const [selectedVaccine, setSelectedVaccine] = React.useState(null);
+  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleSubmit = async () => {
+    updatedModal(true, "Scheduling vaccination");
+    setIsLoading(true);
+    const vaccineProp = {
+      name: selectedPet.name,
+      image: selectedPet.image,
+      petId: selectedPet.id,
+      vaccineName: selectedVaccine,
+      dueDate: new Date(selectedDate).toISOString(),
+      parentEmail: selectedPet.parentEmail,
+    };
+    try {
+      await axios.post("/api/vaccine/schedule", vaccineProp, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      updatedModal(true, "Scheduled vaccination");
+      window.location.href = "/vaccination";
+    } catch (error) {
+      console.log(error);
+      updatedModal(true, "Error scheduling vaccination");
+      toast.error("Something went wrong");
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
@@ -50,7 +86,13 @@ function Vaccination({ pets = [], vaccines = [] }) {
         </Link>
       </div>
       <div className="mt-10 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
-        <Select radius="none" label="Whom do you want to vaccinate?">
+        <Select
+          onChange={(event) => {
+            setSelectedPet(pets.find((pet) => pet.id === event.target.value));
+          }}
+          radius="none"
+          label="Whom do you want to vaccinate?"
+        >
           {pets.map((pet) => {
             return (
               <SelectItem key={pet.id} value={pet.id}>
@@ -61,6 +103,10 @@ function Vaccination({ pets = [], vaccines = [] }) {
         </Select>
         <Input
           label="Name of the vaccine"
+          onChange={(event) => {
+            setSelectedVaccine(event.target.value);
+          }}
+          value={selectedVaccine}
           type="text"
           radius="none"
           className="rounded-none "
@@ -78,6 +124,10 @@ function Vaccination({ pets = [], vaccines = [] }) {
           </span>
           <input
             type="date"
+            onChange={(event) => {
+              setSelectedDate(event.target.value);
+            }}
+            value={selectedDate}
             className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
             name=""
             id="datPicker"
@@ -92,6 +142,8 @@ function Vaccination({ pets = [], vaccines = [] }) {
           </Link>
         </p>
         <Button
+          loading={isLoading}
+          onClick={handleSubmit}
           className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
           radius="none"
         >

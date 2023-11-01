@@ -19,29 +19,53 @@ model File {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  email     String        @unique
   name      String
   phone     String?
   zipCode   String?
   address   String?
-  createdAt DateTime @default(now())
+  createdAt DateTime      @default(now())
   pets      Pet[]
+  vaccines  Vaccination[]
 }
 
 model Pet {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   image       String
   name        String
   sex         String?
   bodyWeight  String?
-  Parent      User?    @relation(fields: [parentEmail], references: [email])
+  Parent      User?         @relation(fields: [parentEmail], references: [email])
   parentEmail String?
   breed       String
   dateOfBirth DateTime
   color       String?
   species     String
   createdBy   String?
-  createdAt   DateTime @default(now())
-  isPublic    Boolean  @default(true)
+  createdAt   DateTime      @default(now())
+  isPublic    Boolean       @default(true)
+  vaccines    Vaccination[]
+}
+
+model Vaccination {
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  image            String
+  pet              Pet       @relation(fields: [petId], references: [id])
+  petId            String    @db.ObjectId
+  Parent           User?     @relation(fields: [parentEmail], references: [email])
+  parentEmail      String?
+  vaccineName      String
+  bodyWeight       String?
+  bodyTemperature  String?
+  files            String[]
+  notes            String?
+  status           String?
+  dueDate          DateTime
+  doneDate         DateTime?
+  doneAt           String?
+  doneBy           String?
+  doctorsSignature String?
+  createdAt        DateTime  @default(now())
 }
