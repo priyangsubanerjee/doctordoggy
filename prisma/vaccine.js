@@ -34,30 +34,30 @@ export const getVaccinesByEmail = async (email) => {
   }
 };
 
-// export const getVaccineById = async (id) => {
-//   try {
-//     const vaccine = await prisma.vaccination.findUnique({
-//       where: {
-//         id: id,
-//       },
-//     });
-//     return vaccine;
-//   } catch (error) {
-//     console.log(error);
-//     return null;
-//   }
-// };
+export const getVaccineById = async (id) => {
+  try {
+    const vaccine = await prisma.vaccination.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return vaccine;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
 
-// export const deleteVaccineById = async (id) => {
-//   try {
-//     const vaccine = await prisma.vaccination.delete({
-//       where: {
-//         id: id,
-//       },
-//     });
-//     return vaccine;
-//   } catch (error) {
-//     console.log(error);
-//     return null;
-//   }
-// };
+export const deleteVaccineById = async (id) => {
+  try {
+    const vaccine = await prisma.vaccination.delete({
+      where: {
+        id: id,
+      },
+    });
+    return vaccine;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
