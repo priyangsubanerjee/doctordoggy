@@ -28,7 +28,6 @@ export async function getServerSideProps(context) {
 }
 
 function Vaccination({ pets = [], vaccines = [] }) {
-  console.log(vaccines);
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">

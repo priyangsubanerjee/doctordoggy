@@ -9,6 +9,7 @@ const quickNavOptions = [
     title: "Vaccination",
     icon: "https://cdn-icons-png.flaticon.com/512/6064/6064468.png",
     buttonText: "Schedule now",
+    href: "/vaccination",
   },
   {
     title: "Prescriptions",

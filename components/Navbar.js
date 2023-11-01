@@ -130,7 +130,12 @@ function Navbar() {
           <li className="cursor-pointer" onClick={() => Router.push("/pets")}>
             Pets
           </li>
-          <li>Vaccination</li>
+          <li
+            className="cursor-pointer"
+            onClick={() => Router.push("/vaccination")}
+          >
+            Vaccination
+          </li>
           <li>Appointments</li>
         </ul>
         <div className="flex items-center">
