@@ -6,7 +6,7 @@ import { Avatar } from "@nextui-org/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
 // TODO: Make the search bar functional
@@ -14,6 +14,7 @@ import React, { useEffect } from "react";
 // TODO: Migrate all the images to Cloudinary
 
 function HeroSection() {
+  const router = useRouter();
   const session = useSession();
   const [pets, setPets] = React.useState([]);
 
@@ -43,7 +44,7 @@ function HeroSection() {
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
       <div
-        onClick={() => Router.push(href ? href : "/")}
+        onClick={() => router.replace(href)}
         className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
       >
         <img src={icon} alt="" className="h-12" />
