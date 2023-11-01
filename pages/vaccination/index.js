@@ -53,15 +53,15 @@ function VaccinationHistory({ vaccinations = [] }) {
               </button>
             </DropdownTrigger>
             <DropdownMenu
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    window.location.href = `/vaccination/${vaccine.id}/delete`;
-                    break;
-                  default:
-                    break;
-                }
-              }}
+              //   onAction={(key) => {
+              //     switch (key) {
+              //       case "delete":
+              //         window.location.href = `/vaccination/${vaccine.id}/delete`;
+              //         break;
+              //       default:
+              //         break;
+              //     }
+              //   }}
               aria-label="Static Actions"
             >
               <DropdownItem key="new">Certificate</DropdownItem>
