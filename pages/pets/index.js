@@ -9,6 +9,10 @@ import React from "react";
 import Router from "next/router";
 
 export async function getServerSideProps(context) {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
   const session = await getServerSession(context.req, context.res, authOptions);
   let pets = [];
   if (session) {
