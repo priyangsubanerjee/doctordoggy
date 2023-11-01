@@ -28,16 +28,16 @@ export async function getServerSideProps(context) {
 function DeleteRecord({ record, isParent }) {
   const [deleting, setDeleting] = React.useState(false);
   return (
-    <div>
+    <div className="px-5 lg:px-0">
       <img
         src="https://cdn-icons-png.flaticon.com/512/2358/2358553.png"
-        className="h-32 mx-auto mt-16"
+        className="h-24 lg:h-32 mx-auto mt-16"
         alt=""
       />
       <h1 className="text-center text-xl font-semibold text-neutral-800 mt-10">
         Are you sure you want to delete this record?
       </h1>
-      <p className="text-sm text-neutral-500 text-center mt-3">
+      <p className="text-sm text-neutral-500 text-center mt-3 leading-6">
         This action cannot be undone. This will permanently delete the profile &
         all associated data.
       </p>
