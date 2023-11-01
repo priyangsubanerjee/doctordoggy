@@ -49,11 +49,17 @@ function Vaccination({ pets = [], vaccines = [] }) {
       parentEmail: selectedPet.parentEmail,
     };
     try {
-      await axios.post("/api/vaccine/create", vaccineProp, {
-        headers: {
-          "Content-Type": "application/json",
+      await axios.post(
+        "/api/vaccine/create",
+        {
+          ...vaccineProp,
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       updatedModal(true, "Scheduled vaccination");
       window.location.href = "/vaccination";
     } catch (error) {
