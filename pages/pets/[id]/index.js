@@ -386,7 +386,7 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
 
   const VaccinationTab = ({}) => {
     return (
-      <div className="max-w-3xl grid grid-cols-2 mx-3 lg:mx-auto pb-16 mt-10 lg:mt-7">
+      <div className="max-w-3xl grid grid-cols-1 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
         {vaccinations.map((vaccine, index) => (
           <VaccineCard key={index} vaccine={vaccine} />
         ))}
