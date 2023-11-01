@@ -119,9 +119,15 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
             >
               <DropdownItem key="new">Certificate</DropdownItem>
               <DropdownItem key="copy">Update record</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
+              {isParent && (
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                >
+                  Delete record
+                </DropdownItem>
+              )}
             </DropdownMenu>
           </Dropdown>
         </div>
@@ -326,27 +332,26 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-10 border rounded-md p-5">
-          <div>
-            <p className="text-neutral-800 text-base">Public profile?</p>
-            <Link
-              href="/pets/register"
-              className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
-            >
-              <span>Learn about public profiles</span>
-              <span className="translate-y-[1px]">
-                <Icon icon="formkit:right" />
-              </span>
-            </Link>
-          </div>
-          <Switch
-            isSelected={isPublic}
-            onValueChange={() => setIsPublic(!isPublic)}
-          />
-        </div>
-
         {isParent && (
           <>
+            <div className="flex items-center justify-between mt-10 border rounded-md p-5">
+              <div>
+                <p className="text-neutral-800 text-base">Public profile?</p>
+                <Link
+                  href="/pets/register"
+                  className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
+                >
+                  <span>Learn about public profiles</span>
+                  <span className="translate-y-[1px]">
+                    <Icon icon="formkit:right" />
+                  </span>
+                </Link>
+              </div>
+              <Switch
+                isSelected={isPublic}
+                onValueChange={() => setIsPublic(!isPublic)}
+              />
+            </div>
             <div className="p-5 rounded-md mt-24 border">
               <h1>Edit zone</h1>
               <p className="text-xs text-neutral-500 mt-2">

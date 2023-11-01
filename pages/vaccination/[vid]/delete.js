@@ -72,6 +72,8 @@ function DeleteRecord({ record, isParent }) {
                 setDeleting(false);
                 toast.error("Something went wrong");
               }
+            } else {
+              toast.error("You are not authorized to perform this action");
             }
           }}
           radius="none"
