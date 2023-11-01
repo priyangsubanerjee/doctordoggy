@@ -29,7 +29,6 @@ function VaccinationHistory() {
             <DropdownMenu aria-label="Static Actions">
               <DropdownItem key="new">Certificate</DropdownItem>
               <DropdownItem key="copy">Update record</DropdownItem>
-              <DropdownItem key="edit">Find vaccination centres</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
               </DropdownItem>
@@ -55,15 +54,21 @@ function VaccinationHistory() {
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
         Vaccination History
       </h1>
-      <div className="flex items-center justify-center space-x-2 mt-4">
-        <p className="text-center text-neutral-600 text-sm">
-          Want to schedule a vaccination?
-        </p>
+      <div className="flex items-center justify-center space-x-4 mt-4">
         <Link
           href={"/vaccination/schedule"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
-          <span>Schedule here</span>
+          <span>Schedule vaccination</span>
+          <span className="translate-y-[1px]">
+            <Icon icon="formkit:right" />
+          </span>
+        </Link>
+        <Link
+          href={"/vaccination/schedule"}
+          className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
+        >
+          <span>Find centres</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
