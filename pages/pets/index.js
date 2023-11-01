@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
@@ -56,15 +57,16 @@ function Pets({ pets = [] }) {
         <p className="text-center text-neutral-600 text-sm">
           Cant find your pet below?
         </p>
-        <p
-          onClick={() => Router.push("/pets/register/")}
+        <a
+          href="/pets/register"
+          rel="noreferrer noopener"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
         >
           <span>Register your pet</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </p>
+        </a>
       </div>
       <>
         {pets && (
