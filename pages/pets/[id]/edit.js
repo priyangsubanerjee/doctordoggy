@@ -363,34 +363,6 @@ function EditProfile({ pet, canine, feline }) {
               />
             </div>
 
-            <div className="h-[1px] w-full my-8"></div>
-
-            <div className="flex items-center justify-between mt-5">
-              <div>
-                <p className="text-neutral-800 text-sm">
-                  Is your pet&apos;s profile public?
-                </p>
-                <Link
-                  href="/pets/register"
-                  className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
-                >
-                  <span>Learn about public profiles</span>
-                  <span className="translate-y-[1px]">
-                    <Icon icon="formkit:right" />
-                  </span>
-                </Link>
-              </div>
-              <Switch
-                isSelected={storedProp.isPublic}
-                onValueChange={() => {
-                  setStoredProp({
-                    ...storedProp,
-                    isPublic: !storedProp.isPublic,
-                  });
-                }}
-              />
-            </div>
-
             <div className="mt-20 flex space-x-2 items-center justify-end">
               <Button
                 isLoading={loading}
