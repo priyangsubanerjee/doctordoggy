@@ -123,22 +123,33 @@ function Navbar() {
         </div>
         <ul className="hidden lg:flex items-center space-x-14 text-sm">
           <li>
-            <Link className="text-sm text-black" href={"/"}>
+            <a
+              rel="noopener noreferrer"
+              className="text-sm text-black"
+              href={"/"}
+            >
               Home
-            </Link>
+            </a>
           </li>
           <li>About</li>
           <li>Services</li>
           <li className="cursor-pointer">
-            <Link className="text-sm text-black" href={"/pets"}>
+            <a
+              rel="noopener noreferrer"
+              className="text-sm text-black"
+              href={"/pets"}
+            >
               Pets
-            </Link>
+            </a>
           </li>
-          <li
-            className="cursor-pointer"
-            onClick={() => (window.location.href = "/vaccination")}
-          >
-            Vaccination
+          <li className="cursor-pointer">
+            <a
+              rel="noopener noreferrer"
+              className="text-sm text-black"
+              href={"/vaccination"}
+            >
+              Vaccination
+            </a>
           </li>
           <li>Appointments</li>
         </ul>
