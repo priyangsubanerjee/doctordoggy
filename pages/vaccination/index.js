@@ -53,15 +53,15 @@ function VaccinationHistory({ vaccinations = [] }) {
               </button>
             </DropdownTrigger>
             <DropdownMenu
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    window.location.href = `/vaccination/${vaccine.id}/delete`;
-                    break;
-                  default:
-                    break;
-                }
-              }}
+              //   onAction={(key) => {
+              //     switch (key) {
+              //       case "delete":
+              //         window.location.href = `/vaccination/${vaccine.id}/delete`;
+              //         break;
+              //       default:
+              //         break;
+              //     }
+              //   }}
               aria-label="Static Actions"
             >
               <DropdownItem key="new">Certificate</DropdownItem>
@@ -124,7 +124,7 @@ function VaccinationHistory({ vaccinations = [] }) {
           <VaccineCard key={index} vaccine={vaccine} />
         ))}
       </div>
-      {vaccinations.length === 0 && (
+      {/* {vaccinations.length === 0 && (
         <div className="flex flex-col items-center justify-center mt-7">
           <img
             src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
@@ -133,7 +133,7 @@ function VaccinationHistory({ vaccinations = [] }) {
           />
           <p className="text-sm -mt-4">No vaccination records found.</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
