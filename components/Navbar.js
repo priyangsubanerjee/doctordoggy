@@ -11,9 +11,10 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import Link from "next/link";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 function Navbar() {
+  const router = useRouter();
   const session = useSession();
 
   const InfoBar = ({}) => {
@@ -61,10 +62,10 @@ function Navbar() {
                     signOut();
                     break;
                   case "account":
-                    Router.push("/account");
+                    router.replace("/account");
                     break;
                   case "pets":
-                    Router.push("/pets");
+                    router.replace("/pets");
                     break;
                   default:
                     break;
