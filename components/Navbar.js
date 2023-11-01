@@ -128,12 +128,15 @@ function Navbar() {
           </li>
           <li>About</li>
           <li>Services</li>
-          <li className="cursor-pointer" onClick={() => router.push("/pets")}>
+          <li
+            className="cursor-pointer"
+            onClick={() => router.replace("/pets")}
+          >
             Pets
           </li>
           <li
             className="cursor-pointer"
-            onClick={() => Router.push("/vaccination")}
+            onClick={() => router.replace("/vaccination")}
           >
             Vaccination
           </li>
