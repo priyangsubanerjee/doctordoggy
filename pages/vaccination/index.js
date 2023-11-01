@@ -53,7 +53,7 @@ function VaccinationHistory() {
                   className="text-danger"
                   color="danger"
                 >
-                  Delete file
+                  Delete record
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
