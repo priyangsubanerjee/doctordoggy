@@ -49,7 +49,7 @@ function Vaccination({ pets = [], vaccines = [] }) {
       parentEmail: selectedPet.parentEmail,
     };
     try {
-      await axios.post("/api/vaccine/schedule", vaccineProp, {
+      await axios.post("/api/vaccine/create", vaccineProp, {
         headers: {
           "Content-Type": "application/json",
         },
