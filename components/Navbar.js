@@ -131,8 +131,18 @@ function Navbar() {
               Home
             </a>
           </li>
-          <li>About</li>
-          <li>Services</li>
+          <li
+            className="cursor-pointer"
+            onClick={() => Router.push("/dev/progress")}
+          >
+            About
+          </li>
+          <li
+            className="cursor-pointer"
+            onClick={() => Router.push("/dev/progress")}
+          >
+            Services
+          </li>
           <li className="cursor-pointer">
             <a
               rel="noopener noreferrer"

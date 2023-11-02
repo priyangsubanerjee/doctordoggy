@@ -61,3 +61,16 @@ export const deletePrescriptionById = async (id) => {
     console.log(error);
   }
 };
+
+export const getPrescriptionsByPetId = async (id) => {
+  try {
+    let prescriptions = await prisma.prescription.findMany({
+      where: {
+        petId: id,
+      },
+    });
+    return prescriptions;
+  } catch (error) {
+    console.log(error);
+  }
+};

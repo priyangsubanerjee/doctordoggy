@@ -20,6 +20,7 @@ import Link from "next/link";
 import axios from "axios";
 import Router from "next/router";
 import { getVaccineByPetId } from "@/prisma/vaccine";
+import { getPrescriptionsByPetId } from "@/prisma/prescription";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -27,12 +28,15 @@ export async function getServerSideProps(context) {
   let pet = null;
   let isParent = false;
   let vaccinations = [];
+  let prescriptions = [];
   if (session) {
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
     if (pet) {
-      vaccinations = await getVaccineByPetId("6540d9ed3eaa24e50eef39c3");
+      vaccinations = await getVaccineByPetId(pet.id);
       vaccinations = await JSON.parse(JSON.stringify(vaccinations));
+      prescriptions = await getPrescriptionsByPetId(pet.id);
+      prescriptions = await JSON.parse(JSON.stringify(prescriptions));
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
       }
@@ -47,11 +51,17 @@ export async function getServerSideProps(context) {
     }
   }
   return {
-    props: { session, pet, vaccinations, isParent, customCode }, // will be passed to the page component as props
+    props: { session, pet, vaccinations, isParent, customCode, prescriptions }, // will be passed to the page component as props
   };
 }
 
-function PetDashboard({ pet, isParent, customCode, vaccinations }) {
+function PetDashboard({
+  pet,
+  isParent,
+  customCode,
+  vaccinations,
+  prescriptions,
+}) {
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
     "General",
@@ -141,6 +151,70 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
                   month: "long",
                   day: "numeric",
                 })}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const PrescriptionCard = ({ prescription }) => {
+    return (
+      <div className="border rounded-md p-4">
+        <div className="flex items-center">
+          <img
+            src={prescription.image}
+            className="h-6 w-6 rounded-full object-cover"
+            alt=""
+          />
+          <p className="text-xs ml-2 text-neutral-500">{prescription.name}</p>
+          <p className="ml-auto mr-2 flex items-center space-x-1"></p>
+          <Dropdown>
+            <DropdownTrigger>
+              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+                <Icon height={20} icon="pepicons-pencil:dots-y" />
+              </button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disabledKeys={!isParent ? ["delete"] : []}
+              onAction={(key) => {
+                switch (key) {
+                  case "delete":
+                    window.location.href = `/prescription/${prescription.id}/delete`;
+                    break;
+                  case "certificate":
+                    window.location.href = `/prescription/${prescription.id}/`;
+                    break;
+                  default:
+                    break;
+                }
+              }}
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="certificate">Certificate</DropdownItem>
+              <DropdownItem key="delete" className="text-danger" color="danger">
+                Delete record
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div className="mt-3">
+          <h1 className="text-base font-semibold text-neutral-700">
+            {prescription.reasonOfVisit}
+          </h1>
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              <span className="text-neutral-700">
+                {new Date(prescription.dateOfVisit).toLocaleDateString(
+                  "en-US",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                )}
               </span>
             </p>
           </div>
@@ -271,6 +345,8 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
         return <GeneralTab />;
       case "Vaccinations":
         return <VaccinationTab />;
+      case "Prescriptions":
+        return <PrescriptionTab />;
     }
   };
 
@@ -385,6 +461,16 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
       <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
         {vaccinations.map((vaccine, index) => (
           <VaccineCard key={index} vaccine={vaccine} />
+        ))}
+      </div>
+    );
+  };
+
+  const PrescriptionTab = ({}) => {
+    return (
+      <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        {prescriptions.map((prescription, index) => (
+          <PrescriptionCard key={index} prescription={prescription} />
         ))}
       </div>
     );
