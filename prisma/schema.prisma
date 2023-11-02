@@ -19,33 +19,35 @@ model File {
 }
 
 model User {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  email     String        @unique
-  name      String
-  phone     String?
-  zipCode   String?
-  address   String?
-  createdAt DateTime      @default(now())
-  pets      Pet[]
-  vaccines  Vaccination[]
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  email         String         @unique
+  name          String
+  phone         String?
+  zipCode       String?
+  address       String?
+  createdAt     DateTime       @default(now())
+  pets          Pet[]
+  vaccines      Vaccination[]
+  prescriptions Prescription[]
 }
 
 model Pet {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  image       String
-  name        String
-  sex         String?
-  bodyWeight  String?
-  Parent      User?         @relation(fields: [parentEmail], references: [email])
-  parentEmail String?
-  breed       String
-  dateOfBirth DateTime
-  color       String?
-  species     String
-  createdBy   String?
-  createdAt   DateTime      @default(now())
-  isPublic    Boolean       @default(true)
-  vaccines    Vaccination[]
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  image         String
+  name          String
+  sex           String?
+  bodyWeight    String?
+  Parent        User?          @relation(fields: [parentEmail], references: [email])
+  parentEmail   String?
+  breed         String
+  dateOfBirth   DateTime
+  color         String?
+  species       String
+  createdBy     String?
+  createdAt     DateTime       @default(now())
+  isPublic      Boolean        @default(true)
+  vaccines      Vaccination[]
+  prescriptions Prescription[]
 }
 
 model Vaccination {
@@ -68,4 +70,23 @@ model Vaccination {
   doneBy           String?
   doctorsSignature String?
   createdAt        DateTime  @default(now())
+}
+
+model Prescription {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  image         String?
+  name          String?
+  pet           Pet      @relation(fields: [petId], references: [id])
+  petId         String   @db.ObjectId
+  Parent        User?    @relation(fields: [parentEmail], references: [email])
+  parentEmail   String?
+  reasonOfVisit String
+  dateOfVisit   DateTime
+  bodyWeight    String?
+  temperature   String?
+  files         String[]
+  notes         String?
+  doctorName        String?
+  doctorSignature   String?
+  doctorId          String?
 }

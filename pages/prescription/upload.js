@@ -7,6 +7,8 @@ import React, { useContext, useRef } from "react";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import GlobalStates from "@/context/GlobalState";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { uploadImage } from "@/helper/image";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -31,7 +33,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [prescriptionProps, setPrescriptionProps] = React.useState({
-    reasonForVisit: "",
+    reasonOfVisit: "",
     dateOfVisit: "",
     doctorName: "",
     bodyWeight: "",
@@ -49,7 +51,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
       toast.error("Please upload a prescription");
       return false;
     }
-    if (!prescriptionProps.reasonForVisit) {
+    if (!prescriptionProps.reasonOfVisit) {
       toast.error("Please enter the reason for visit");
       return false;
     }
@@ -69,10 +71,37 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
       toast.error("Please enter the temperature");
       return false;
     }
+
+    return true;
   };
 
   const handleSubmit = async () => {
     if (performChecks()) {
+      try {
+        let fileUrls = [];
+        if (prescriptionProps.files.length > 0) {
+          updatedModal(true, "Uploading files");
+          for (let i = 0; i < prescriptionProps.files.length; i++) {
+            let file = prescriptionProps.files[i];
+            let { fileUrl } = await uploadImage(file);
+            fileUrls.push(fileUrl);
+          }
+        }
+        console.log(fileUrls);
+        updatedModal(true, "Uploading prescription");
+        await axios.post("/api/prescription/create", {
+          ...prescriptionProps,
+          image: selectedPet.image,
+          name: selectedPet.name,
+          petId: selectedPet.id,
+          parentEmail: selectedPet.parentEmail,
+          files: fileUrls,
+        });
+        updatedModal(true, "Uploaded prescription");
+        window.location.href = "/prescription";
+      } catch (error) {
+        toast.error("Error uploading prescription");
+      }
     }
   };
 
@@ -120,7 +149,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         </a>
       </div>
 
-      <div className="mt-10 flex items-center max-w-4xl mx-auto">
+      <div className="mt-10 flex items-center max-w-4xl ml-5 lg:mx-auto  overflow-auto whitespace-nowrap">
         <Button
           onPress={() => fileRef.current.click()}
           className="rounded-full bg-blue-100"
@@ -148,7 +177,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
 
         {prescriptionProps.files.length == 0 ? (
           <p className="text-xs text-neutral-600 ml-3 ">
-            You can upload a photo or a PDF file
+            Upload a photo or a PDF file
           </p>
         ) : (
           <div className="flex items-center ml-3">
@@ -176,11 +205,11 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         </Select>
         <Input
           label="Reason for visit"
-          value={prescriptionProps.reasonForVisit}
+          value={prescriptionProps.reasonOfVisit}
           onChange={(e) => {
             setPrescriptionProps({
               ...prescriptionProps,
-              reasonForVisit: e.target.value,
+              reasonOfVisit: e.target.value,
             });
           }}
           type="text"
