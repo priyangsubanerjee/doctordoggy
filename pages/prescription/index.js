@@ -53,14 +53,16 @@ function Prescriptions({ prescriptions = [] }) {
                   case "delete":
                     window.location.href = `/prescription/${prescription.id}/delete`;
                     break;
+                  case "certificate":
+                    window.location.href = `/prescription/${prescription.id}/`;
+                    break;
                   default:
                     break;
                 }
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="new">Certificate</DropdownItem>
-              <DropdownItem key="copy">Update record</DropdownItem>
+              <DropdownItem key="certificate">Certificate</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
               </DropdownItem>

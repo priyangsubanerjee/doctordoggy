@@ -1,7 +1,6 @@
 import prisma from "./prisma";
 
 export const uploadPrescription = async (prescription) => {
-  console.log(prescription);
   try {
     let prescriptionCreated = await prisma.prescription.create({
       data: {
@@ -32,6 +31,32 @@ export const getPrescriptionsByEmail = async (email) => {
       },
     });
     return prescriptions;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getPrescriptionById = async (id) => {
+  try {
+    let prescription = await prisma.prescription.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return prescription;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deletePrescriptionById = async (id) => {
+  try {
+    let prescription = await prisma.prescription.delete({
+      where: {
+        id: id,
+      },
+    });
+    return prescription;
   } catch (error) {
     console.log(error);
   }

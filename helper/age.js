@@ -1,10 +1,10 @@
-const calculateAge = (dateOfBirth) => {
+const calculateAge = (dateOfBirth, presentDate) => {
   let dob = new Date(dateOfBirth);
   var dobYear = dob.getYear();
   var dobMonth = dob.getMonth();
   var dobDate = dob.getDate();
 
-  var now = new Date();
+  var now = presentDate ? new Date(presentDate) : new Date();
   var currentYear = now.getYear();
   var currentMonth = now.getMonth();
   var currentDate = now.getDate();
