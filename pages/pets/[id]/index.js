@@ -517,9 +517,11 @@ function PetDashboard({
           />
           <div className="absolute -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
             <div className="relative">
-              <div className="absolute bottom-3 right-4">
-                <QuickAction />
-              </div>
+              {isParent && (
+                <div className="absolute bottom-3 right-4">
+                  <QuickAction />
+                </div>
+              )}
               <img
                 src={pet.image}
                 className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
