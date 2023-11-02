@@ -106,6 +106,7 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
               </button>
             </DropdownTrigger>
             <DropdownMenu
+              disabledKeys={!isParent ? ["delete", "update"] : []}
               onAction={(key) => {
                 switch (key) {
                   case "delete":
@@ -118,18 +119,11 @@ function PetDashboard({ pet, isParent, customCode, vaccinations }) {
               aria-label="Static Actions"
             >
               <DropdownItem key="new">Certificate</DropdownItem>
-              {isParent && (
-                <>
-                  <DropdownItem key="copy">Update record</DropdownItem>
-                  <DropdownItem
-                    key="delete"
-                    className="text-danger"
-                    color="danger"
-                  >
-                    Delete record
-                  </DropdownItem>
-                </>
-              )}
+
+              <DropdownItem key="update">Update record</DropdownItem>
+              <DropdownItem key="delete" className="text-danger" color="danger">
+                Delete record
+              </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </div>
