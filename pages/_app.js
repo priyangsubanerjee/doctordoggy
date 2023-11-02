@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
 // using next auth for authentication and next ui for styling
 // TODO: add next seo for seo
@@ -15,6 +16,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const [procesingModalOpen, setProcessingModalOpen] = useState(false);
+  const [sidebarOpened, setSidebarOpened] = useState(false);
   const [processingModalMessage, setProcessingModalMessage] =
     useState("Loading...");
 
@@ -26,6 +28,8 @@ export default function App({
   return (
     <GlobalStates.Provider
       value={{
+        sidebarOpened,
+        setSidebarOpened,
         procesingModalOpen,
         processingModalMessage,
         updatedModal,
@@ -35,6 +39,7 @@ export default function App({
         <NextUIProvider>
           <NextProgress height={"4px"} />
           <Layout>
+            <Sidebar />
             <Component {...pageProps} />
             <ProcessingModal />
           </Layout>

@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/react";
 import { Avatar, Button, Chip, User } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
-import React from "react";
+import React, { useContext } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -12,8 +12,10 @@ import {
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import Router from "next/router";
+import GlobalStates from "@/context/GlobalState";
 
 function Navbar() {
+  const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
   const session = useSession();
 
   const InfoBar = ({}) => {
@@ -165,7 +167,10 @@ function Navbar() {
         </ul>
         <div className="flex items-center">
           <AccountButton />
-          <button className="ml-5 lg:hidden">
+          <button
+            onClick={() => setSidebarOpened(true)}
+            className="ml-5 lg:hidden"
+          >
             <Icon height={24} icon="clarity:menu-line" />
           </button>
         </div>
