@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import React, { useContext, useRef } from "react";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import GlobalStates from "@/context/GlobalState";
+import toast from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -23,13 +24,82 @@ export async function getServerSideProps(context) {
 }
 
 function UploadPrescription({ pets = [], vaccines = [] }) {
-  const { updatedModal } = useContext(GlobalStates);
-  const [selectedPet, setSelectedPet] = React.useState(null);
-  const [selectedVaccine, setSelectedVaccine] = React.useState(null);
-  const [selectedDate, setSelectedDate] = React.useState(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-
   const fileRef = useRef(null);
+
+  const { updatedModal } = useContext(GlobalStates);
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedPet, setSelectedPet] = React.useState(null);
+  const [prescriptionProps, setPrescriptionProps] = React.useState({
+    reasonForVisit: "",
+    dateOfVisit: "",
+    doctorName: "",
+    bodyWeight: "",
+    temperature: "",
+    notes: "",
+    files: [],
+  });
+
+  const performChecks = () => {
+    if (!selectedPet) {
+      toast.error("Please select a pet");
+      return false;
+    }
+    if (prescriptionProps.files.length === 0) {
+      toast.error("Please upload a prescription");
+      return false;
+    }
+    if (!prescriptionProps.reasonForVisit) {
+      toast.error("Please enter the reason for visit");
+      return false;
+    }
+    if (!prescriptionProps.dateOfVisit) {
+      toast.error("Please enter the date of visit");
+      return false;
+    }
+    if (!prescriptionProps.doctorName) {
+      toast.error("Please enter the doctor's name");
+      return false;
+    }
+    if (!prescriptionProps.bodyWeight) {
+      toast.error("Please enter the body weight");
+      return false;
+    }
+    if (!prescriptionProps.temperature) {
+      toast.error("Please enter the temperature");
+      return false;
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (performChecks()) {
+    }
+  };
+
+  const FileChip = ({ file }) => {
+    return (
+      <div className="rounded-full bg-neutral-100 flex items-center px-5 py-3">
+        <span className="text-sm text-neutral-700">
+          {file.name.length > 10
+            ? file.name.slice(0, 10) + "..." + file.name.split(".")[1]
+            : file.name}
+        </span>
+        <button
+          onClick={() => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              files: prescriptionProps.files.filter(
+                (f) => f.name !== file.name
+              ),
+            });
+          }}
+          className="ml-3"
+        >
+          <Icon height={20} icon="eva:close-outline" />
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -58,13 +128,35 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         >
           <div className="px-3 flex items-center">
             <span className="text-sm text-neutral-700">Choose file</span>
-            <input ref={fileRef} type="file" hidden name="" id="" />
+            <input
+              multiple
+              accept="image/*,application/pdf"
+              onChange={(e) => {
+                setPrescriptionProps({
+                  ...prescriptionProps,
+                  files: [...prescriptionProps.files, ...e.target.files],
+                });
+              }}
+              ref={fileRef}
+              type="file"
+              hidden
+              name=""
+              id=""
+            />
           </div>
         </Button>
 
-        <p className="text-xs text-neutral-600 ml-3 ">
-          You can upload a photo or a PDF file
-        </p>
+        {prescriptionProps.files.length == 0 ? (
+          <p className="text-xs text-neutral-600 ml-3 ">
+            You can upload a photo or a PDF file
+          </p>
+        ) : (
+          <div className="flex items-center ml-3">
+            {prescriptionProps.files.map((file, i) => {
+              return <FileChip key={i} file={file} />;
+            })}
+          </div>
+        )}
       </div>
       <div className="mt-10 lg:mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
         <Select
@@ -84,10 +176,13 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         </Select>
         <Input
           label="Reason for visit"
-          onChange={(event) => {
-            setSelectedVaccine(event.target.value);
+          value={prescriptionProps.reasonForVisit}
+          onChange={(e) => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              reasonForVisit: e.target.value,
+            });
           }}
-          value={selectedVaccine}
           type="text"
           radius="none"
           className="rounded-none "
@@ -100,9 +195,12 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
           <input
             type="date"
             onChange={(event) => {
-              setSelectedDate(event.target.value);
+              setPrescriptionProps({
+                ...prescriptionProps,
+                dateOfVisit: event.target.value,
+              });
             }}
-            value={selectedDate}
+            value={prescriptionProps.dateOfVisit}
             className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
             name=""
             id="datPicker"
@@ -111,10 +209,13 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
 
         <Input
           label="Name of the doctor"
-          onChange={(event) => {
-            setSelectedVaccine(event.target.value);
+          value={prescriptionProps.doctorName}
+          onChange={(e) => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              doctorName: e.target.value,
+            });
           }}
-          value={selectedVaccine}
           type="text"
           radius="none"
           className="rounded-none "
@@ -122,35 +223,55 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
       </div>
       <div className="mt-4 lg:mt-3 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
         <Input
-          label="Body weight"
-          onChange={(event) => {
-            setSelectedVaccine(event.target.value);
+          value={prescriptionProps.bodyWeight}
+          onChange={(e) => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              bodyWeight: e.target.value,
+            });
           }}
-          value={selectedVaccine}
+          label="Body weight (in kg)"
           type="text"
           radius="none"
           className="rounded-none "
         />
 
         <Input
-          label="Temperature"
-          onChange={(event) => {
-            setSelectedVaccine(event.target.value);
+          value={prescriptionProps.temperature}
+          onChange={(e) => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              temperature: e.target.value,
+            });
           }}
-          value={selectedVaccine}
+          label="Temperature (in °F)"
           type="text"
           radius="none"
           className="rounded-none "
         />
 
         <Textarea
+          value={prescriptionProps.notes}
+          onChange={(e) => {
+            setPrescriptionProps({
+              ...prescriptionProps,
+              notes: e.target.value,
+            });
+          }}
           label="Notes"
           radius="none"
           className="rounded-none lg:col-span-2"
         />
       </div>
-      <div className="max-w-4xl mx-auto mt-10">
-        <Button>Submit</Button>
+      <div className="max-w-4xl mx-auto mt-10 flex justify-end">
+        <Button
+          onClick={handleSubmit}
+          loading={isLoading}
+          className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
+          radius="none"
+        >
+          Submit
+        </Button>
       </div>
     </div>
   );

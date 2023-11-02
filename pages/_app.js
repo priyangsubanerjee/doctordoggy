@@ -5,7 +5,7 @@ import GlobalStates from "@/context/GlobalState";
 import "@/styles/globals.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // using next auth for authentication and next ui for styling
 // TODO: add next seo for seo
