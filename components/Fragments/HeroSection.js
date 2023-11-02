@@ -94,19 +94,19 @@ function HeroSection() {
                   <Avatar key={i} src={pet.image} size="lg" />
                 </Link>
               ))}
-            <Link href={`/pets/`}>
-              <Avatar
-                className="bg-neutral-100 hover:bg-neutral-200"
-                icon={
-                  <Icon
-                    icon="icon-park-outline:right"
-                    height={25}
-                    className="text-neutral-700"
-                  />
-                }
-                size="lg"
-              />
-            </Link>
+
+            <Avatar
+              onClick={() => (window.location.href = "/pets")}
+              className="bg-neutral-100 hover:bg-neutral-200"
+              icon={
+                <Icon
+                  icon="icon-park-outline:right"
+                  height={25}
+                  className="text-neutral-700"
+                />
+              }
+              size="lg"
+            />
           </div>
         </div>
       )}
