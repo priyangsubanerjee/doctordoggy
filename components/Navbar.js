@@ -123,7 +123,7 @@ function Navbar() {
             <img src="/logoDark.png" className="lg:h-9 h-7" alt="" />
           </Link>
         </div>
-        <ul className="hidden lg:flex items-center space-x-14 text-sm">
+        <ul className="hidden lg:flex items-center space-x-12 text-sm">
           <li>
             <a
               rel="noopener noreferrer"
@@ -163,7 +163,15 @@ function Navbar() {
               Vaccination
             </a>
           </li>
-          <li>Appointments</li>
+          <li>
+            <a
+              rel="noopener noreferrer"
+              className="text-sm text-black"
+              href={"/dev/comingSoon"}
+            >
+              Appointments
+            </a>
+          </li>
         </ul>
         <div className="flex items-center">
           <AccountButton />
