@@ -11,6 +11,9 @@ import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 // TODO: redirect url from delete operation
+// TODO: redirect url from upload page
+
+//
 
 export default function Home() {
   useEffect(() => {

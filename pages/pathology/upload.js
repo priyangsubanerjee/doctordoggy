@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPersonalPet } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import GlobalStates from "@/context/GlobalState";
 import toast from "react-hot-toast";
@@ -13,7 +14,6 @@ import { uploadImage } from "@/helper/image";
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   let pets = [];
-  let vaccines = [];
   if (session) {
     pets = await getPersonalPet(session?.user?.email);
     pets = (await JSON.parse(JSON.stringify(pets))) || [];
@@ -21,53 +21,56 @@ export async function getServerSideProps(context) {
     pets = [];
   }
   return {
-    props: { pets, vaccines }, // will be passed to the page component as props
+    props: { pets }, // will be passed to the page component as props
   };
 }
 
-function UploadPrescription({ pets = [], vaccines = [] }) {
+function UploadPathology({ pets = [] }) {
   const fileRef = useRef(null);
 
   const { updatedModal } = useContext(GlobalStates);
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedPet, setSelectedPet] = React.useState(null);
-  const [prescriptionProps, setPrescriptionProps] = React.useState({
-    reasonOfVisit: "",
-    dateOfVisit: "",
-    doctorName: "",
-    bodyWeight: "",
+  const [pathProps, setpathProps] = React.useState({
+    referredBy: "",
+    testedOn: "",
+    bodyWeight: selectedPet?.bodyWeight || "",
     temperature: "",
     notes: "",
     files: [],
   });
+
+  useEffect(() => {
+    setpathProps({
+      ...pathProps,
+      bodyWeight: selectedPet?.bodyWeight || "",
+    });
+  }, [selectedPet]);
 
   const performChecks = () => {
     if (!selectedPet) {
       toast.error("Please select a pet");
       return false;
     }
-    if (prescriptionProps.files.length === 0) {
+    if (pathProps.files.length === 0) {
       toast.error("Please upload a prescription");
       return false;
     }
-    if (!prescriptionProps.reasonOfVisit) {
+    if (!pathProps.referredBy) {
       toast.error("Please enter the reason for visit");
       return false;
     }
-    if (!prescriptionProps.dateOfVisit) {
+    if (!pathProps.testedOn) {
       toast.error("Please enter the date of visit");
       return false;
     }
-    if (!prescriptionProps.doctorName) {
-      toast.error("Please enter the doctor's name");
-      return false;
-    }
-    if (!prescriptionProps.bodyWeight) {
+
+    if (!pathProps.bodyWeight) {
       toast.error("Please enter the body weight");
       return false;
     }
-    if (!prescriptionProps.temperature) {
+    if (!pathProps.temperature) {
       toast.error("Please enter the temperature");
       return false;
     }
@@ -79,18 +82,17 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
     if (performChecks()) {
       try {
         let fileUrls = [];
-        if (prescriptionProps.files.length > 0) {
+        if (pathProps.files.length > 0) {
           updatedModal(true, "Uploading files");
-          for (let i = 0; i < prescriptionProps.files.length; i++) {
-            let file = prescriptionProps.files[i];
+          for (let i = 0; i < pathProps.files.length; i++) {
+            let file = pathProps.files[i];
             let { fileUrl } = await uploadImage(file);
             fileUrls.push(fileUrl);
           }
         }
-        console.log(fileUrls);
         updatedModal(true, "Uploading prescription");
-        await axios.post("/api/prescription/create", {
-          ...prescriptionProps,
+        await axios.post("/api/pathology/create", {
+          ...pathProps,
           image: selectedPet.image,
           name: selectedPet.name,
           petId: selectedPet.id,
@@ -98,7 +100,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
           files: fileUrls,
         });
         updatedModal(true, "Uploaded prescription");
-        window.location.href = "/prescription";
+        window.location.href = "/pathology";
       } catch (error) {
         toast.error("Error uploading prescription");
       }
@@ -115,11 +117,9 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         </span>
         <button
           onClick={() => {
-            setPrescriptionProps({
-              ...prescriptionProps,
-              files: prescriptionProps.files.filter(
-                (f) => f.name !== file.name
-              ),
+            setpathProps({
+              ...pathProps,
+              files: pathProps.files.filter((f) => f.name !== file.name),
             });
           }}
           className="ml-3"
@@ -133,7 +133,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
-        Upload Prescription
+        Upload Pathology Record
       </h1>
       <div className="flex items-center justify-center space-x-2 mt-4 text-sm">
         <p>This record is for your peronal reference</p>
@@ -152,7 +152,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
       <div className="mt-10 flex items-center max-w-4xl ml-5 lg:mx-auto  overflow-auto whitespace-nowrap">
         <Button
           onPress={() => fileRef.current.click()}
-          className="rounded-full bg-blue-100"
+          className="rounded-full bg-red-100"
           radius="full"
         >
           <div className="px-3 flex items-center">
@@ -161,9 +161,9 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
               multiple
               accept="image/*,application/pdf"
               onChange={(e) => {
-                setPrescriptionProps({
-                  ...prescriptionProps,
-                  files: [...prescriptionProps.files, ...e.target.files],
+                setpathProps({
+                  ...pathProps,
+                  files: [...pathProps.files, ...e.target.files],
                 });
               }}
               ref={fileRef}
@@ -175,13 +175,13 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
           </div>
         </Button>
 
-        {prescriptionProps.files.length == 0 ? (
+        {pathProps.files.length == 0 ? (
           <p className="text-xs text-neutral-600 ml-3 ">
             Upload a photo or a PDF file
           </p>
         ) : (
           <div className="flex items-center ml-3">
-            {prescriptionProps.files.map((file, i) => {
+            {pathProps.files.map((file, i) => {
               return <FileChip key={i} file={file} />;
             })}
           </div>
@@ -193,7 +193,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
             setSelectedPet(pets.find((pet) => pet.id === event.target.value));
           }}
           radius="none"
-          label="Prescription for"
+          label="Record for"
         >
           {pets.map((pet) => {
             return (
@@ -204,12 +204,12 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
           })}
         </Select>
         <Input
-          label="Reason for visit"
-          value={prescriptionProps.reasonOfVisit}
+          label="Referred by (Doctor's name)"
+          value={pathProps.referredBy}
           onChange={(e) => {
-            setPrescriptionProps({
-              ...prescriptionProps,
-              reasonOfVisit: e.target.value,
+            setpathProps({
+              ...pathProps,
+              referredBy: e.target.value,
             });
           }}
           type="text"
@@ -219,43 +219,29 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
 
         <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
           <span className="text-sm h-full flex items-center text-neutral-500 shrink-0 border-r border-neutral-200 pr-4">
-            Visited on
+            Tested on
           </span>
           <input
             type="date"
             onChange={(event) => {
-              setPrescriptionProps({
-                ...prescriptionProps,
-                dateOfVisit: event.target.value,
+              setpathProps({
+                ...pathProps,
+                testedOn: event.target.value,
               });
             }}
-            value={prescriptionProps.dateOfVisit}
+            value={pathProps.testedOn}
             className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
             name=""
             id="datPicker"
           />
         </div>
-
-        <Input
-          label="Name of the doctor"
-          value={prescriptionProps.doctorName}
-          onChange={(e) => {
-            setPrescriptionProps({
-              ...prescriptionProps,
-              doctorName: e.target.value,
-            });
-          }}
-          type="text"
-          radius="none"
-          className="rounded-none "
-        />
       </div>
       <div className="mt-4 lg:mt-3 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
         <Input
-          value={prescriptionProps.bodyWeight}
+          value={pathProps.bodyWeight}
           onChange={(e) => {
-            setPrescriptionProps({
-              ...prescriptionProps,
+            setpathProps({
+              ...pathProps,
               bodyWeight: e.target.value,
             });
           }}
@@ -266,10 +252,10 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         />
 
         <Input
-          value={prescriptionProps.temperature}
+          value={pathProps.temperature}
           onChange={(e) => {
-            setPrescriptionProps({
-              ...prescriptionProps,
+            setpathProps({
+              ...pathProps,
               temperature: e.target.value,
             });
           }}
@@ -280,10 +266,10 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         />
 
         <Textarea
-          value={prescriptionProps.notes}
+          value={pathProps.notes}
           onChange={(e) => {
-            setPrescriptionProps({
-              ...prescriptionProps,
+            setpathProps({
+              ...pathProps,
               notes: e.target.value,
             });
           }}
@@ -306,4 +292,4 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
   );
 }
 
-export default UploadPrescription;
+export default UploadPathology;

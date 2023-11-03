@@ -350,6 +350,12 @@ function PetDashboard({
         return <VaccinationTab />;
       case "Prescriptions":
         return <PrescriptionTab />;
+      case "Deworming":
+        return <DewormingTab />;
+      case "Pathology":
+        return <PathologyTab />;
+      default:
+        return <GeneralTab />;
     }
   };
 
@@ -516,6 +522,26 @@ function PetDashboard({
     );
   };
 
+  const DewormingTab = ({}) => {
+    return (
+      <div className="pt-10">
+        <p className="text-center text-sm text-neutral-500">
+          We are working on this feature. Please check back later.
+        </p>
+      </div>
+    );
+  };
+
+  const PathologyTab = ({}) => {
+    return (
+      <div className="pt-10">
+        <p className="text-center text-sm text-neutral-500">
+          We are working on this feature. Please check back later.
+        </p>
+      </div>
+    );
+  };
+
   const QuickAction = ({}) => {
     return (
       <Dropdown>
@@ -533,6 +559,9 @@ function PetDashboard({
               case "up_p":
                 window.location.href = `/prescription/upload`;
                 break;
+              case "up_path":
+                window.location.href = `/pathology/upload`;
+                break;
               default:
                 break;
             }
@@ -541,6 +570,7 @@ function PetDashboard({
         >
           <DropdownItem key="sd_v">Schedule vaccination</DropdownItem>
           <DropdownItem key="up_p">Upload prescription</DropdownItem>
+          <DropdownItem key="up_path">Upload pathology report</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     );

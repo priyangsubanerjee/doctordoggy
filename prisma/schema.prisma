@@ -29,7 +29,8 @@ model User {
   pets          Pet[]
   vaccines      Vaccination[]
   prescriptions Prescription[]
-    dewormings    Deworming[]
+  dewormings    Deworming[]
+  pathologies   Pathology[]
 }
 
 model Pet {
@@ -49,7 +50,8 @@ model Pet {
   isPublic      Boolean        @default(true)
   vaccines      Vaccination[]
   prescriptions Prescription[]
-    dewormings    Deworming[]
+  dewormings    Deworming[]
+  pathologies   Pathology[]
 }
 
 model Vaccination {
@@ -75,38 +77,54 @@ model Vaccination {
 }
 
 model Prescription {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  image         String?
-  name          String?
-  pet           Pet      @relation(fields: [petId], references: [id])
-  petId         String   @db.ObjectId
-  Parent        User?    @relation(fields: [parentEmail], references: [email])
-  parentEmail   String?
-  reasonOfVisit String
-  dateOfVisit   DateTime
-  bodyWeight    String?
-  temperature   String?
-  files         String[]
-  notes         String?
-  doctorName        String?
-  doctorSignature   String?
-  doctorId          String?
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  image           String?
+  name            String?
+  pet             Pet      @relation(fields: [petId], references: [id])
+  petId           String   @db.ObjectId
+  Parent          User?    @relation(fields: [parentEmail], references: [email])
+  parentEmail     String?
+  reasonOfVisit   String
+  dateOfVisit     DateTime
+  bodyWeight      String?
+  temperature     String?
+  files           String[]
+  notes           String?
+  doctorName      String?
+  doctorSignature String?
+  doctorId        String?
 }
 
-
 model Deworming {
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    name         String
-    image        String
-    pet          Pet      @relation(fields: [petId], references: [id])
-    petId        String   @db.ObjectId
-    Parent       User?    @relation(fields: [parentEmail], references: [email])
-    parentEmail  String?
-    bodyWeight   String?
-    files        String[]
-    medicineName String
-    dosage       String
-    notes        String?
-    dueDate      DateTime
-    doneDate     DateTime?
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  image        String
+  pet          Pet       @relation(fields: [petId], references: [id])
+  petId        String    @db.ObjectId
+  Parent       User?     @relation(fields: [parentEmail], references: [email])
+  parentEmail  String?
+  bodyWeight   String?
+  files        String[]
+  medicineName String
+  dosage       String
+  notes        String?
+  dueDate      DateTime
+  doneDate     DateTime?
+}
+
+model Pathology {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  image        String
+  pet          Pet      @relation(fields: [petId], references: [id])
+  petId        String   @db.ObjectId
+  Parent       User?    @relation(fields: [parentEmail], references: [email])
+  date         DateTime
+  parentEmail  String?
+  bodyWeight   String?
+  temperature  String?
+  files        String[]
+  refererredBy String?
+  notes        String?
+  createdAt    DateTime @default(now())
 }
