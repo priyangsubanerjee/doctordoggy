@@ -123,7 +123,7 @@ function PetDashboard({
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/vaccination/${vaccine.id}/delete`;
+                    window.location.href = `/vaccination/${vaccine.id}/delete?redirect=${window.location}`;
                     break;
                   default:
                     break;
@@ -184,7 +184,7 @@ function PetDashboard({
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/prescription/${prescription.id}/delete`;
+                    window.location.href = `/prescription/${prescription.id}/delete?redirect=${window.location}`;
                     break;
                   case "certificate":
                     window.location.href = `/prescription/${prescription.id}/`;

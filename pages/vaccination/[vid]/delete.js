@@ -6,6 +6,8 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Icon } from "@iconify/react";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -26,15 +28,14 @@ export async function getServerSideProps(context) {
 }
 
 function DeleteRecord({ record, isParent }) {
+  const router = useRouter();
   const [deleting, setDeleting] = React.useState(false);
   return (
     <div className="px-5 lg:px-0">
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/2358/2358553.png"
-        className="h-24 lg:h-32 mx-auto mt-16"
-        alt=""
-      />
-      <h1 className="text-center text-xl font-semibold text-neutral-800 mt-10">
+      <div className="w-16 h-16 mx-auto bg-red-50 rounded-lg mt-16 flex items-center justify-center">
+        <Icon icon="mdi-light:delete" height={30} className="text-red-500" />
+      </div>
+      <h1 className="text-center text-xl font-semibold text-neutral-800 mt-5">
         Are you sure you want to delete this record?
       </h1>
       <p className="text-sm text-neutral-500 text-center mt-3 leading-6">
@@ -44,7 +45,11 @@ function DeleteRecord({ record, isParent }) {
       <div className="flex items-center justify-center space-x-4 mt-6">
         <Button
           isDisabled={deleting}
-          onPress={() => (window.location.href = `/vaccination/`)}
+          onPress={() =>
+            (window.location.href = router.query.redirect
+              ? router.query.redirect
+              : "/vaccination")
+          }
           radius="none"
           className="w-44 rounded-md"
         >
@@ -67,7 +72,9 @@ function DeleteRecord({ record, isParent }) {
                     },
                   }
                 );
-                window.location.href = "/vaccination";
+                window.location.href = router.query.redirect
+                  ? router.query.redirect
+                  : "/vaccination";
               } catch (error) {
                 setDeleting(false);
                 toast.error("Something went wrong");
