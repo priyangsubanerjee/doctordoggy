@@ -52,6 +52,7 @@ function VaccinationHistory({ vaccinations = [] }) {
               </button>
             </DropdownTrigger>
             <DropdownMenu
+              disabledKeys={vaccine.status == "DUE" ? ["certificate"] : []}
               onAction={(key) => {
                 switch (key) {
                   case "delete":
@@ -63,7 +64,7 @@ function VaccinationHistory({ vaccinations = [] }) {
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="new">Certificate</DropdownItem>
+              <DropdownItem key="certificate">Certificate</DropdownItem>
               <DropdownItem key="copy">Update record</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record

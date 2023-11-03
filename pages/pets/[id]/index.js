@@ -116,7 +116,10 @@ function PetDashboard({
               </button>
             </DropdownTrigger>
             <DropdownMenu
-              disabledKeys={!isParent ? ["delete", "update"] : []}
+              disabledKeys={
+                (!isParent ? ["delete", "update"] : [],
+                vaccine.status == "DUE" ? ["certificate"] : [])
+              }
               onAction={(key) => {
                 switch (key) {
                   case "delete":
@@ -128,7 +131,7 @@ function PetDashboard({
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="new">Certificate</DropdownItem>
+              <DropdownItem key="certificate">Certificate</DropdownItem>
 
               <DropdownItem key="update">Update record</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
