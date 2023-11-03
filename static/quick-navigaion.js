@@ -33,7 +33,7 @@ const quickNavOptions = [
     title: "Pathology",
     icon: "https://cdn-icons-png.flaticon.com/512/4468/4468662.png",
     buttonText: "Upload now",
-    href: "/dev/comingSoon",
+    href: "/pathology",
   },
 ];
 

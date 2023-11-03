@@ -33,6 +33,7 @@ function UploadPathology({ pets = [] }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [pathProps, setpathProps] = React.useState({
+    testName: "",
     referredBy: "",
     testedOn: "",
     bodyWeight: selectedPet?.bodyWeight || "",
@@ -51,6 +52,10 @@ function UploadPathology({ pets = [] }) {
   const performChecks = () => {
     if (!selectedPet) {
       toast.error("Please select a pet");
+      return false;
+    }
+    if (!pathProps.testName) {
+      toast.error("Please enter the test name");
       return false;
     }
     if (pathProps.files.length === 0) {
@@ -203,6 +208,21 @@ function UploadPathology({ pets = [] }) {
             );
           })}
         </Select>
+
+        <Input
+          label="Name of the test"
+          value={pathProps.testName}
+          onChange={(e) => {
+            setpathProps({
+              ...pathProps,
+              testName: e.target.value,
+            });
+          }}
+          type="text"
+          radius="none"
+          className="rounded-none "
+        />
+
         <Input
           label="Referred by (Doctor's name)"
           value={pathProps.referredBy}

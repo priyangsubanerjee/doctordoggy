@@ -120,6 +120,7 @@ model Pathology {
   petId        String   @db.ObjectId
   Parent       User?    @relation(fields: [parentEmail], references: [email])
   date         DateTime
+  testName    String?
   parentEmail  String?
   bodyWeight   String?
   temperature  String?

@@ -7,6 +7,7 @@ export async function uploadPathologyReport(report) {
         petId: report.petId,
         name: report.name,
         image: report.image,
+        testName: report.testName,
         parentEmail: report.parentEmail,
         refererredBy: report.referredBy,
         date: new Date(report.testedOn).toISOString(),
@@ -17,6 +18,20 @@ export async function uploadPathologyReport(report) {
       },
     });
     return newReport;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getPathologyReportsByEmail(email) {
+  try {
+    const reports = await prisma.pathology.findMany({
+      where: {
+        parentEmail: email,
+      },
+    });
+    return reports;
   } catch (error) {
     console.log(error);
     return null;
