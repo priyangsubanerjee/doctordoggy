@@ -10,6 +10,8 @@ import Founders from "@/components/Fragments/Founders";
 import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
+// TODO: redirect url from delete operation
+
 export default function Home() {
   useEffect(() => {
     // ask for notification permission on page load

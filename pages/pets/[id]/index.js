@@ -458,21 +458,54 @@ function PetDashboard({
 
   const VaccinationTab = ({}) => {
     return (
-      <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
-        {vaccinations.map((vaccine, index) => (
-          <VaccineCard key={index} vaccine={vaccine} />
-        ))}
-      </div>
+      <>
+        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+          {vaccinations.map((vaccine, index) => (
+            <VaccineCard key={index} vaccine={vaccine} />
+          ))}
+        </div>
+        {vaccinations.length == 0 && (
+          <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
+            <p className="text-base text-neutral-700">
+              No vaccinations were scheduled for {pet.name}
+            </p>
+            <Button
+              onPress={() => (window.location.href = "/vaccination/schedule")}
+              className="rounded-md bg-black text-white mt-6 text-sm"
+              radius="none"
+            >
+              Schedule vaccination
+            </Button>
+          </div>
+        )}
+      </>
     );
   };
 
   const PrescriptionTab = ({}) => {
     return (
-      <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
-        {prescriptions.map((prescription, index) => (
-          <PrescriptionCard key={index} prescription={prescription} />
-        ))}
-      </div>
+      <>
+        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+          {prescriptions.map((prescription, index) => (
+            <PrescriptionCard key={index} prescription={prescription} />
+          ))}
+        </div>
+
+        {prescriptions.length == 0 && (
+          <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
+            <p className="text-base text-neutral-700">
+              No prescriptions were uploaded for {pet.name}
+            </p>
+            <Button
+              onPress={() => (window.location.href = "/prescription/upload")}
+              className="rounded-md bg-black text-white mt-6 text-sm"
+              radius="none"
+            >
+              Upload prescription
+            </Button>
+          </div>
+        )}
+      </>
     );
   };
 
