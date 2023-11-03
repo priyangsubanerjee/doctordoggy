@@ -29,6 +29,7 @@ model User {
   pets          Pet[]
   vaccines      Vaccination[]
   prescriptions Prescription[]
+    dewormings    Deworming[]
 }
 
 model Pet {
@@ -48,6 +49,7 @@ model Pet {
   isPublic      Boolean        @default(true)
   vaccines      Vaccination[]
   prescriptions Prescription[]
+    dewormings    Deworming[]
 }
 
 model Vaccination {
@@ -89,4 +91,22 @@ model Prescription {
   doctorName        String?
   doctorSignature   String?
   doctorId          String?
+}
+
+
+model Deworming {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    name         String
+    image        String
+    pet          Pet      @relation(fields: [petId], references: [id])
+    petId        String   @db.ObjectId
+    Parent       User?    @relation(fields: [parentEmail], references: [email])
+    parentEmail  String?
+    bodyWeight   String?
+    files        String[]
+    medicineName String
+    dosage       String
+    notes        String?
+    dueDate      DateTime
+    doneDate     DateTime?
 }

@@ -466,16 +466,18 @@ function PetDashboard({
         </div>
         {vaccinations.length == 0 && (
           <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
-            <p className="text-base text-neutral-700">
+            <p className="text-sm text-neutral-500">
               No vaccinations were scheduled for {pet.name}
             </p>
-            <Button
-              onPress={() => (window.location.href = "/vaccination/schedule")}
-              className="rounded-md bg-black text-white mt-6 text-sm"
-              radius="none"
-            >
-              Schedule vaccination
-            </Button>
+            {isParent && (
+              <Button
+                onPress={() => (window.location.href = "/vaccination/schedule")}
+                className="rounded-md bg-black text-white mt-6 text-sm"
+                radius="none"
+              >
+                Schedule vaccination
+              </Button>
+            )}
           </div>
         )}
       </>
@@ -493,16 +495,18 @@ function PetDashboard({
 
         {prescriptions.length == 0 && (
           <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
-            <p className="text-base text-neutral-700">
+            <p className="text-sm text-neutral-500">
               No prescriptions were uploaded for {pet.name}
             </p>
-            <Button
-              onPress={() => (window.location.href = "/prescription/upload")}
-              className="rounded-md bg-black text-white mt-6 text-sm"
-              radius="none"
-            >
-              Upload prescription
-            </Button>
+            {isParent && (
+              <Button
+                onPress={() => (window.location.href = "/prescription/upload")}
+                className="rounded-md bg-black text-white mt-6 text-sm"
+                radius="none"
+              >
+                Upload prescription
+              </Button>
+            )}
           </div>
         )}
       </>
