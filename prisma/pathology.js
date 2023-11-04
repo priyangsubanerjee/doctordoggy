@@ -37,3 +37,45 @@ export async function getPathologyReportsByEmail(email) {
     return null;
   }
 }
+
+export async function getPathologyReportById(id) {
+  try {
+    const report = await prisma.pathology.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return report;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function deletePathologyReportById(id) {
+  try {
+    const report = await prisma.pathology.delete({
+      where: {
+        id: id,
+      },
+    });
+    return report;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getPathologyReportsByPetId(petId) {
+  try {
+    const reports = await prisma.pathology.findMany({
+      where: {
+        petId: petId,
+      },
+    });
+    return reports;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}

@@ -50,10 +50,10 @@ function Pathology({ pathologyReports }) {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/prescription/${prescription.id}/delete`;
+                    window.location.href = `/pathology/${report.id}/delete?redirect=${window.location}`;
                     break;
                   case "certificate":
-                    window.location.href = `/prescription/${prescription.id}/`;
+                    window.location.href = `/pathology/${report.id}/`;
                     break;
                   default:
                     break;

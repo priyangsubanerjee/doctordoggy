@@ -21,6 +21,7 @@ import axios from "axios";
 import Router from "next/router";
 import { getVaccineByPetId } from "@/prisma/vaccine";
 import { getPrescriptionsByPetId } from "@/prisma/prescription";
+import { getPathologyReportsByPetId } from "@/prisma/pathology";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -29,6 +30,7 @@ export async function getServerSideProps(context) {
   let isParent = false;
   let vaccinations = [];
   let prescriptions = [];
+  let pathologyReports = [];
   if (session) {
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
@@ -37,6 +39,8 @@ export async function getServerSideProps(context) {
       vaccinations = await JSON.parse(JSON.stringify(vaccinations));
       prescriptions = await getPrescriptionsByPetId(pet.id);
       prescriptions = await JSON.parse(JSON.stringify(prescriptions));
+      pathologyReports = await getPathologyReportsByPetId(pet.id);
+      pathologyReports = await JSON.parse(JSON.stringify(pathologyReports));
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
       }
@@ -51,7 +55,15 @@ export async function getServerSideProps(context) {
     }
   }
   return {
-    props: { session, pet, vaccinations, isParent, customCode, prescriptions }, // will be passed to the page component as props
+    props: {
+      session,
+      pet,
+      vaccinations,
+      isParent,
+      customCode,
+      prescriptions,
+      pathologyReports,
+    }, // will be passed to the page component as props
   };
 }
 
@@ -61,6 +73,7 @@ function PetDashboard({
   customCode,
   vaccinations,
   prescriptions,
+  pathologyReports,
 }) {
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
@@ -218,6 +231,67 @@ function PetDashboard({
                     day: "numeric",
                   }
                 )}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const PathologyCard = ({ report }) => {
+    return (
+      <div className="border rounded-md p-4">
+        <div className="flex items-center">
+          <img
+            src={report.image}
+            className="h-6 w-6 rounded-full object-cover"
+            alt=""
+          />
+          <p className="text-xs ml-2 text-neutral-500">{report.name}</p>
+          <p className="ml-auto mr-2 flex items-center space-x-1"></p>
+          <Dropdown>
+            <DropdownTrigger>
+              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+                <Icon height={20} icon="pepicons-pencil:dots-y" />
+              </button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disabledKeys={!isParent ? ["delete"] : []}
+              onAction={(key) => {
+                switch (key) {
+                  case "delete":
+                    window.location.href = `/pathology/${report.id}/delete?redirect=${window.location}`;
+                    break;
+                  case "certificate":
+                    window.location.href = `/pathology/${report.id}/`;
+                    break;
+                  default:
+                    break;
+                }
+              }}
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="certificate">Certificate</DropdownItem>
+              <DropdownItem key="delete" className="text-danger" color="danger">
+                Delete record
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div className="mt-3">
+          <h1 className="text-base font-semibold text-neutral-700">
+            {report.testName}
+          </h1>
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              <span className="text-neutral-700">
+                {new Date(report.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </span>
             </p>
           </div>
@@ -534,11 +608,30 @@ function PetDashboard({
 
   const PathologyTab = ({}) => {
     return (
-      <div className="pt-10">
-        <p className="text-center text-sm text-neutral-500">
-          We are working on this feature. Please check back later.
-        </p>
-      </div>
+      <>
+        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+          {pathologyReports.map((report, index) => (
+            <PathologyCard key={index} report={report} />
+          ))}
+        </div>
+
+        {pathologyReports.length == 0 && (
+          <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
+            <p className="text-sm text-neutral-500">
+              No reports were uploaded for {pet.name}
+            </p>
+            {isParent && (
+              <Button
+                onPress={() => (window.location.href = "/prescription/upload")}
+                className="rounded-md bg-black text-white mt-6 text-sm"
+                radius="none"
+              >
+                Upload pathology report
+              </Button>
+            )}
+          </div>
+        )}
+      </>
     );
   };
 
