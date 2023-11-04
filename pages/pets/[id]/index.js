@@ -622,7 +622,7 @@ function PetDashboard({
             </p>
             {isParent && (
               <Button
-                onPress={() => (window.location.href = "/prescription/upload")}
+                onPress={() => (window.location.href = "/pathology/upload")}
                 className="rounded-md bg-black text-white mt-6 text-sm"
                 radius="none"
               >

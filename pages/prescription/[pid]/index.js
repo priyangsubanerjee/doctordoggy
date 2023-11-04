@@ -63,7 +63,13 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
           <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-4">
             {record.name}
           </h1>
-          <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-10 ">
+          <div className="flex items-center justify-center mt-3">
+            <button className="text-sm text-neutral-500">
+              Something&apos;s wrong with this record?{" "}
+              <span className="text-blue-600">Report</span>
+            </button>
+          </div>
+          <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-16 ">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
