@@ -35,3 +35,45 @@ export const getDewormingsByEmail = async (email) => {
     return null;
   }
 };
+
+export const getDewormingsByPetId = async (petId) => {
+  try {
+    const dewormings = await prisma.deworming.findMany({
+      where: {
+        petId: petId,
+      },
+    });
+    return dewormings;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getDewormingById = async (id) => {
+  try {
+    const deworming = await prisma.deworming.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return deworming;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const deleteDewormingById = async (id) => {
+  try {
+    const deworming = await prisma.deworming.delete({
+      where: {
+        id: id,
+      },
+    });
+    return deworming;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

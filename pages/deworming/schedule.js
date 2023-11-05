@@ -107,7 +107,7 @@ function Deworming({ pets = [], medicines = [] }) {
       </h1>
       <div className="flex items-center justify-center space-x-2 mt-4">
         <p className="text-center text-neutral-600 text-sm">
-          Join the vaccination drive
+          Importance of deworming
         </p>
         <Link
           href={

@@ -56,7 +56,7 @@ function VaccinationHistory({ dewormings = [] }) {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/vaccination/${deworming.id}/delete`;
+                    window.location.href = `/deworming/${deworming.id}/delete?redirect=${window.location}`;
                     break;
                   default:
                     break;
@@ -88,6 +88,10 @@ function VaccinationHistory({ dewormings = [] }) {
                 })}
               </span>
             </p>
+          </div>
+          <div className="flex items-center mt-3">
+            <Icon icon="icon-park-solid:medicine-bottle-one" />
+            <p className="text-sm text-neutral-500 ml-2">{deworming.dosage}</p>
           </div>
         </div>
       </div>

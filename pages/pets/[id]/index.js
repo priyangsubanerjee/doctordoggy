@@ -22,6 +22,7 @@ import Router from "next/router";
 import { getVaccineByPetId } from "@/prisma/vaccine";
 import { getPrescriptionsByPetId } from "@/prisma/prescription";
 import { getPathologyReportsByPetId } from "@/prisma/pathology";
+import { getDewormingsByPetId } from "@/prisma/deworming";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -31,6 +32,7 @@ export async function getServerSideProps(context) {
   let vaccinations = [];
   let prescriptions = [];
   let pathologyReports = [];
+  let dewormings = [];
   if (session) {
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
@@ -41,6 +43,9 @@ export async function getServerSideProps(context) {
       prescriptions = await JSON.parse(JSON.stringify(prescriptions));
       pathologyReports = await getPathologyReportsByPetId(pet.id);
       pathologyReports = await JSON.parse(JSON.stringify(pathologyReports));
+      dewormings = await getDewormingsByPetId(pet.id);
+      dewormings = await JSON.parse(JSON.stringify(dewormings));
+
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
       }
@@ -63,6 +68,7 @@ export async function getServerSideProps(context) {
       customCode,
       prescriptions,
       pathologyReports,
+      dewormings,
     }, // will be passed to the page component as props
   };
 }
@@ -74,6 +80,7 @@ function PetDashboard({
   vaccinations,
   prescriptions,
   pathologyReports,
+  dewormings,
 }) {
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
@@ -107,6 +114,75 @@ function PetDashboard({
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const DewormingCard = ({ deworming }) => {
+    return (
+      <div className="border rounded-md p-4">
+        <div className="flex items-center">
+          <img
+            src={deworming.image}
+            className="h-6 w-6 rounded-full object-cover"
+            alt=""
+          />
+          <p className="text-xs ml-2 text-neutral-500">{deworming.name}</p>
+          <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+            {deworming.status}
+          </p>
+          <Dropdown>
+            <DropdownTrigger>
+              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+                <Icon height={20} icon="pepicons-pencil:dots-y" />
+              </button>
+            </DropdownTrigger>
+            <DropdownMenu
+              disabledKeys={
+                (!isParent ? ["delete", "update"] : [],
+                deworming.status == "DUE" ? ["certificate"] : [])
+              }
+              onAction={(key) => {
+                switch (key) {
+                  case "delete":
+                    window.location.href = `/deworming/${deworming.id}/delete?redirect=${window.location}`;
+                    break;
+                  default:
+                    break;
+                }
+              }}
+              aria-label="Static Actions"
+            >
+              <DropdownItem key="certificate">Certificate</DropdownItem>
+              <DropdownItem key="copy">Update record</DropdownItem>
+              <DropdownItem key="delete" className="text-danger" color="danger">
+                Delete record
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+        <div className="mt-3">
+          <h1 className="text-base font-semibold text-neutral-700">
+            {deworming.medicineName}
+          </h1>
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              Due on{" "}
+              <span className="text-neutral-700">
+                {new Date(deworming.dueDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          </div>
+          <div className="flex items-center mt-3">
+            <Icon icon="icon-park-solid:medicine-bottle-one" />
+            <p className="text-sm text-neutral-500 ml-2">{deworming.dosage}</p>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const VaccineCard = ({ vaccine }) => {
@@ -598,11 +674,30 @@ function PetDashboard({
 
   const DewormingTab = ({}) => {
     return (
-      <div className="pt-10">
-        <p className="text-center text-sm text-neutral-500">
-          We are working on this feature. Please check back later.
-        </p>
-      </div>
+      <>
+        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+          {dewormings.map((report, index) => (
+            <DewormingCard key={index} deworming={report} />
+          ))}
+        </div>
+
+        {dewormings.length == 0 && (
+          <div className="max-w-3xl lg:mx-auto flex flex-col items-center justify-center">
+            <p className="text-sm text-neutral-500">
+              No dewormings were scheduled for {pet.name}
+            </p>
+            {isParent && (
+              <Button
+                onPress={() => (window.location.href = "/deworming/schedule")}
+                className="rounded-md bg-black text-white mt-6 text-sm"
+                radius="none"
+              >
+                Schedule deworming
+              </Button>
+            )}
+          </div>
+        )}
+      </>
     );
   };
 
