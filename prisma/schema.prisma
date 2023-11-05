@@ -108,6 +108,7 @@ model Deworming {
   medicineName String
   dosage       String
   notes        String?
+  status       String?
   dueDate      DateTime
   doneDate     DateTime?
 }
@@ -129,3 +130,4 @@ model Pathology {
   notes        String?
   createdAt    DateTime @default(now())
 }
+ 
