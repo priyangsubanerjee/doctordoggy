@@ -11,12 +11,13 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 
 function Navbar() {
   const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
   const session = useSession();
+  const router = useRouter();
 
   const InfoBar = ({}) => {
     return (
@@ -124,15 +125,7 @@ function Navbar() {
           </Link>
         </div>
         <ul className="hidden lg:flex items-center space-x-12 text-sm">
-          <li>
-            <a
-              rel="noopener noreferrer"
-              className="text-sm text-black"
-              href={"/"}
-            >
-              Home
-            </a>
-          </li>
+          <li onClick={() => router.push("/")}>Home</li>
           <li
             className="cursor-pointer"
             onClick={() => Router.push("/dev/progress")}
@@ -145,14 +138,8 @@ function Navbar() {
           >
             Services
           </li>
-          <li className="cursor-pointer">
-            <a
-              rel="noopener noreferrer"
-              className="text-sm text-black"
-              href={"/pets"}
-            >
-              Pets
-            </a>
+          <li onClick={() => router.push("/pets")} className="cursor-pointer">
+            Pets
           </li>
           <li className="cursor-pointer">
             <a
