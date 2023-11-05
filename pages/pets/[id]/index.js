@@ -673,11 +673,11 @@ function PetDashboard({
     return (
       <div>
         <div className="relative">
-          <div className="h-48 lg:h-72 w-full overflow-hidden relative">
+          <div className="h-48 lg:h-80 w-full overflow-hidden relative">
             <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
             <img
               src={pet.image}
-              className="object-cover w-full h-full blur-3xl opacity-50"
+              className="object-cover w-full h-full blur-2xl opacity-50"
               alt=""
             />
           </div>
