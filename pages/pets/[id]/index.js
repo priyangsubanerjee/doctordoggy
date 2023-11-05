@@ -750,6 +750,9 @@ function PetDashboard({
               case "up_path":
                 window.location.href = `/pathology/upload`;
                 break;
+              case "up_de":
+                window.location.href = `/deworming/schedule`;
+                break;
               default:
                 break;
             }
@@ -758,6 +761,7 @@ function PetDashboard({
         >
           <DropdownItem key="sd_v">Schedule vaccination</DropdownItem>
           <DropdownItem key="up_p">Upload prescription</DropdownItem>
+          <DropdownItem key="up_de">Schedule deworming</DropdownItem>
           <DropdownItem key="up_path">Upload pathology report</DropdownItem>
         </DropdownMenu>
       </Dropdown>
