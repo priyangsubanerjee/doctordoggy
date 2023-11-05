@@ -125,7 +125,9 @@ function Navbar() {
           </Link>
         </div>
         <ul className="hidden lg:flex items-center space-x-12 text-sm">
-          <li onClick={() => router.push("/")}>Home</li>
+          <li className="cursor-pointer" onClick={() => router.push("/")}>
+            Home
+          </li>
           <li
             className="cursor-pointer"
             onClick={() => Router.push("/dev/progress")}
