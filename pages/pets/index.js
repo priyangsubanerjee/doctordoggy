@@ -7,7 +7,7 @@ import calculateAge from "@/helper/age";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -24,6 +24,7 @@ export async function getServerSideProps(context) {
 }
 
 function Pets({ pets = [] }) {
+  const router = useRouter();
   const PetCard = ({ name, age, image, id }) => {
     return (
       <Link href={`/pets/${id}`}>
@@ -57,16 +58,15 @@ function Pets({ pets = [] }) {
         <p className="text-center text-neutral-600 text-sm">
           Cant find your pet below?
         </p>
-        <a
-          href="/pets/register"
-          rel="noreferrer noopener"
+        <button
+          onClick={() => router.push("/pets/register")}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
         >
           <span>Register your pet</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </a>
+        </button>
       </div>
       <>
         {pets && (

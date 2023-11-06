@@ -153,13 +153,40 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a
-              rel="noopener noreferrer"
-              className="text-sm text-black"
-              href={"/dev/comingSoon"}
-            >
-              Appointments
-            </a>
+            <Dropdown>
+              <DropdownTrigger>
+                <button className="flex items-center space-x-1 outline-none">
+                  <span>More</span>
+                  <Icon height={6} icon="formkit:down" />
+                </button>
+              </DropdownTrigger>
+              <DropdownMenu
+                onAction={(key) => {
+                  switch (key) {
+                    case "vc":
+                      router.push("/vaccination");
+                      break;
+                    case "ps":
+                      router.push("/prescription");
+                      break;
+                    case "de":
+                      router.push("/deworming");
+                      break;
+                    case "pa":
+                      router.push("/pathology");
+                      break;
+                    default:
+                      break;
+                  }
+                }}
+                aria-label="Static Actions"
+              >
+                <DropdownItem key="vc">Vaccinations</DropdownItem>
+                <DropdownItem key="ps">Prescriptions</DropdownItem>
+                <DropdownItem key="de">Dewormings</DropdownItem>
+                <DropdownItem key="pa">Pathology</DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </li>
         </ul>
         <div className="flex items-center">
