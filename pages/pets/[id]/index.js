@@ -18,7 +18,7 @@ import {
 import calculateAge from "@/helper/age";
 import Link from "next/link";
 import axios from "axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { getVaccineByPetId } from "@/prisma/vaccine";
 import { getPrescriptionsByPetId } from "@/prisma/prescription";
 import { getPathologyReportsByPetId } from "@/prisma/pathology";
@@ -82,6 +82,7 @@ function PetDashboard({
   pathologyReports,
   dewormings,
 }) {
+  const router = useRouter();
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
     "General",
@@ -717,7 +718,9 @@ function PetDashboard({
             </p>
             {isParent && (
               <Button
-                onPress={() => (window.location.href = "/pathology/upload")}
+                onPress={() => {
+                  router.push(`/pathology/upload?redirect=${window.location}`);
+                }}
                 className="rounded-md bg-black text-white mt-6 text-sm"
                 radius="none"
               >
@@ -742,16 +745,16 @@ function PetDashboard({
           onAction={(key) => {
             switch (key) {
               case "sd_v":
-                window.location.href = `/vaccination/schedule`;
+                window.location.href = `/vaccination/schedule?redirect=${window.location}`;
                 break;
               case "up_p":
-                window.location.href = `/prescription/upload`;
+                window.location.href = `/prescription/upload?redirect=${window.location}`;
                 break;
               case "up_path":
-                window.location.href = `/pathology/upload`;
+                window.location.href = `/pathology/upload?redirect=${window.location}`;
                 break;
               case "up_de":
-                window.location.href = `/deworming/schedule`;
+                window.location.href = `/deworming/schedule?redirect=${window.location}`;
                 break;
               default:
                 break;

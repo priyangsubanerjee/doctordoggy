@@ -143,14 +143,11 @@ function Navbar() {
           <li onClick={() => router.push("/pets")} className="cursor-pointer">
             Pets
           </li>
-          <li className="cursor-pointer">
-            <a
-              rel="noopener noreferrer"
-              className="text-sm text-black"
-              href={"/vaccination"}
-            >
-              Vaccination
-            </a>
+          <li
+            onClick={() => router.push("/vaccination")}
+            className="cursor-pointer"
+          >
+            Vaccination
           </li>
           <li>
             <Dropdown>

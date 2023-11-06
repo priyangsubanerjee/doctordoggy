@@ -10,6 +10,7 @@ import GlobalStates from "@/context/GlobalState";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -26,10 +27,9 @@ export async function getServerSideProps(context) {
 }
 
 function UploadPathology({ pets = [] }) {
+  const router = useRouter();
   const fileRef = useRef(null);
-
   const { updatedModal } = useContext(GlobalStates);
-
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [pathProps, setpathProps] = React.useState({
@@ -105,7 +105,7 @@ function UploadPathology({ pets = [] }) {
           files: fileUrls,
         });
         updatedModal(true, "Uploaded prescription");
-        window.location.href = "/pathology";
+        router.push(router.query.redirect || "/pathology");
       } catch (error) {
         toast.error("Error uploading prescription");
       }
@@ -157,7 +157,7 @@ function UploadPathology({ pets = [] }) {
       <div className="mt-10 flex items-center max-w-4xl ml-5 lg:mx-auto  overflow-auto whitespace-nowrap">
         <Button
           onPress={() => fileRef.current.click()}
-          className="rounded-full bg-red-100"
+          className="rounded-full bg-sky-100"
           radius="full"
         >
           <div className="px-3 flex items-center">
