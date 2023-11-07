@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPrescriptionsByEmail } from "@/prisma/prescription";
@@ -11,25 +12,54 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Progress,
+  Spinner,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let prescriptions = [];
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   let prescriptions = [];
 
-  if (session) {
-    prescriptions = await getPrescriptionsByEmail(session?.user?.email);
-    prescriptions = JSON.parse(JSON.stringify(prescriptions));
-  }
+//   if (session) {
+//     //prescriptions = await getPrescriptionsByEmail(session?.user?.email);
+//     //prescriptions = JSON.parse(JSON.stringify(prescriptions));
+//   }
 
-  return {
-    props: {
-      prescriptions,
-    },
+//   return {
+//     props: {
+//       session,
+//       prescriptions,
+//     },
+//   };
+// }
+
+function Prescriptions() {
+  let session = useSession();
+  const [prescriptions, setPrescriptions] = React.useState(null);
+
+  const fetchPrescriptions = async () => {
+    let prescriptions = await axios.post(
+      "/api/prescription/read",
+      {
+        email: session.data.user.email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    setPrescriptions(prescriptions.data.prescriptions);
   };
-}
 
-function Prescriptions({ prescriptions = [] }) {
+  useEffect(() => {
+    if (session.status == "loading" || session.status == "unauthenticated")
+      return;
+    fetchPrescriptions();
+  }, [session.status]);
+
   const PrescriptionCard = ({ prescription }) => {
     return (
       <div className="border rounded-md p-4">
@@ -119,11 +149,20 @@ function Prescriptions({ prescriptions = [] }) {
           </span>
         </a>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
-        {prescriptions.map((prescription, index) => (
-          <PrescriptionCard key={index} prescription={prescription} />
-        ))}
-      </div>
+
+      {prescriptions == null ? (
+        <>
+          <div className="flex items-center justify-center mt-20">
+            <Spinner color="primary" size="lg" className="" />
+          </div>
+        </>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+          {prescriptions.map((prescription, index) => (
+            <PrescriptionCard key={index} prescription={prescription} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
