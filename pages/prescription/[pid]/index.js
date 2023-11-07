@@ -8,7 +8,7 @@ import calculateAge from "@/helper/age";
 import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -43,6 +43,8 @@ export async function getServerSideProps(context) {
   };
 }
 export default function Prescription({ record, pet, statusCode, isParent }) {
+  const router = useRouter();
+
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -55,11 +57,21 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
           <p className="text-center mt-20 text-sm lg:mt-16 text-neutral-500">
             Prescription uploaded for
           </p>
-          <img
-            src={record.image}
-            className="h-32 w-32 rounded-full object-cover mx-auto mt-10"
-            alt=""
-          />
+
+          <div className="w-fit mx-auto relative">
+            <img
+              src={record.image}
+              className="h-32 w-32 rounded-full object-cover mx-auto mt-10"
+              alt=""
+            />
+            <button
+              onClick={() => router.push(`/pets/${pet?.id}`)}
+              className="absolute bottom-4 -right-1 h-8 w-8 bg-white hover:bg-neutral-200 rounded-full flex items-center justify-center"
+            >
+              <Icon icon="material-symbols:pets" />
+            </button>
+          </div>
+
           <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-4">
             {record.name}
           </h1>
@@ -149,7 +161,6 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               <h1 className="text-xl font-semibold text-neutral-700">
                 Attached documents
               </h1>
-
               <div className="space-y-3 mt-4">
                 {record?.files?.map((file, index) => {
                   return (

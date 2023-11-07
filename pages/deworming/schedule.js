@@ -9,6 +9,7 @@ import calculateAge from "@/helper/age";
 import axios from "axios";
 import toast from "react-hot-toast";
 import GlobalStates from "@/context/GlobalState";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -32,6 +33,7 @@ export async function getServerSideProps(context) {
 }
 
 function Deworming({ pets = [], medicines = [] }) {
+  const router = useRouter();
   const { updatedModal } = useContext(GlobalStates);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [selectedMedicine, setSelectedMedicine] = React.useState(null);
@@ -89,8 +91,8 @@ function Deworming({ pets = [], medicines = [] }) {
             },
           }
         );
-        updatedModal(true, "Scheduled vaccination");
-        window.location.href = "/deworming";
+        updatedModal(true, "Scheduled 🎉");
+        router.push(router.query.redirect || "/deworming");
       } catch (error) {
         console.log(error);
         updatedModal(true, "Error scheduling vaccination");

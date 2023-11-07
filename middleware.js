@@ -31,5 +31,8 @@ export const config = {
     "/account/:path*",
     "/pets/:path*",
     "/vaccination/:path*",
+    "/prescription/:path*",
+    "/pathology/:path*",
+    "/deworming/:path*",
   ],
 };
