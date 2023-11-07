@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -12,26 +13,54 @@ import {
   DropdownSection,
   DropdownItem,
   Button,
+  Spinner,
 } from "@nextui-org/react";
 import { getVaccinesByEmail } from "@/prisma/vaccine";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let vaccinations = [];
-  if (session) {
-    vaccinations = await getVaccinesByEmail(session?.user?.email);
-    vaccinations = JSON.parse(JSON.stringify(vaccinations));
-  }
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   let vaccinations = [];
+//   if (session) {
+//     vaccinations = await getVaccinesByEmail(session?.user?.email);
+//     vaccinations = JSON.parse(JSON.stringify(vaccinations));
+//   }
 
-  return {
-    props: {
-      vaccinations,
-    },
+//   return {
+//     props: {
+//       vaccinations,
+//     },
+//   };
+// }
+
+function VaccinationHistory({}) {
+  const session = useSession();
+  const [vaccinations, setVaccinations] = React.useState(null);
+
+  const fetchVaccinations = async () => {
+    let vaccinations = await axios.post(
+      "/api/vaccine/read",
+      {
+        email: session.data.user.email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setVaccinations(vaccinations.data.vaccinations);
   };
-}
 
-function VaccinationHistory({ vaccinations = [] }) {
+  useEffect(() => {
+    if (session.status == "loading" || session.status == "unauthenticated")
+      return;
+    fetchVaccinations();
+  }, [session.status]);
+
   const VaccineCard = ({ vaccine }) => {
     return (
       <div className="border rounded-md p-4">
@@ -119,20 +148,32 @@ function VaccinationHistory({ vaccinations = [] }) {
           </span>
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
-        {vaccinations.map((vaccine, index) => (
-          <VaccineCard key={index} vaccine={vaccine} />
-        ))}
-      </div>
-      {vaccinations.length === 0 && (
-        <div className="flex flex-col items-center justify-center mt-7">
-          <img
-            src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
-            className="h-44"
-            alt=""
-          />
-          <p className="text-sm -mt-4">No vaccination records found.</p>
+      {vaccinations == null && (
+        <div className="flex items-center justify-center mt-16">
+          <Spinner color="primary" size="lg" className="" />
         </div>
+      )}
+
+      {vaccinations != null && (
+        <>
+          {vaccinations.length != 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+              {vaccinations.map((vaccine, index) => (
+                <VaccineCard key={index} vaccine={vaccine} />
+              ))}
+            </div>
+          )}
+          {vaccinations.length == 0 && (
+            <div className="flex flex-col items-center justify-center mt-7">
+              <img
+                src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
+                className="h-44"
+                alt=""
+              />
+              <p className="text-sm -mt-4">No vaccination records found.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
