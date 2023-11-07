@@ -619,7 +619,7 @@ function PetDashboard({
   const VaccinationTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
           {vaccinations.map((vaccine, index) => (
             <VaccineCard key={index} vaccine={vaccine} />
           ))}
@@ -647,7 +647,7 @@ function PetDashboard({
   const PrescriptionTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
           {prescriptions.map((prescription, index) => (
             <PrescriptionCard key={index} prescription={prescription} />
           ))}
@@ -676,7 +676,7 @@ function PetDashboard({
   const DewormingTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
           {dewormings.map((report, index) => (
             <DewormingCard key={index} deworming={report} />
           ))}
@@ -705,7 +705,7 @@ function PetDashboard({
   const PathologyTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 space-x-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
           {pathologyReports.map((report, index) => (
             <PathologyCard key={index} report={report} />
           ))}
