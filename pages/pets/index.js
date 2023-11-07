@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { authOptions } from "pages/api/auth/[...nextauth]";
@@ -6,25 +7,40 @@ import { getPersonalPet } from "@/prisma/pet";
 import calculateAge from "@/helper/age";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import Router, { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { FetchPets } from "@/hooks/fetch";
+import { Spinner } from "@nextui-org/react";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let pets = [];
-  if (session) {
-    pets = await getPersonalPet(session?.user?.email);
-    pets = (await JSON.parse(JSON.stringify(pets))) || [];
-  } else {
-    pets = [];
-  }
-  return {
-    props: { pets }, // will be passed to the page component as props
-  };
-}
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   let pets = [];
+//   if (session) {
+//     pets = await getPersonalPet(session?.user?.email);
+//     pets = (await JSON.parse(JSON.stringify(pets))) || [];
+//   } else {
+//     pets = [];
+//   }
+//   return {
+//     props: { pets }, // will be passed to the page component as props
+//   };
+// }
 
-function Pets({ pets = [] }) {
+function Pets() {
+  const session = useSession();
   const router = useRouter();
+  const [pets, setPets] = React.useState(null);
+
+  useEffect(() => {
+    if (session.status == "loading" || session.status == "unauthenticated")
+      return;
+
+    FetchPets(session?.data?.user?.email).then((data) => {
+      setPets(data);
+    });
+  }, [session.status]);
+
   const PetCard = ({ name, age, image, id }) => {
     return (
       <Link href={`/pets/${id}`}>
@@ -68,35 +84,46 @@ function Pets({ pets = [] }) {
           </span>
         </button>
       </div>
-      <>
-        {pets && (
-          <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
-            {pets.map((pet) => (
-              <PetCard
-                id={pet?.id}
-                key={pet?.id}
-                name={pet?.name}
-                age={calculateAge(pet?.dateOfBirth)}
-                image={pet?.image}
-              />
-            ))}
-          </div>
-        )}
-      </>
-      <>
-        {pets?.length == 0 && (
-          <div className="flex flex-col items-center justify-center mt-32">
-            <img
-              src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
-              className="h-32"
-              alt=""
-            />
-            <p className="mt-6 text-sm text-neutral-500">
-              You have not registered any pet yet.{" "}
-            </p>
-          </div>
-        )}
-      </>
+
+      {pets == null && (
+        <div className="flex flex-col items-center justify-center mt-32">
+          <Spinner size="lg" color="primary" />
+        </div>
+      )}
+
+      {pets !== null && (
+        <>
+          <>
+            {pets && (
+              <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
+                {pets.map((pet) => (
+                  <PetCard
+                    id={pet?.id}
+                    key={pet?.id}
+                    name={pet?.name}
+                    age={calculateAge(pet?.dateOfBirth)}
+                    image={pet?.image}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+          <>
+            {pets?.length == 0 && (
+              <div className="flex flex-col items-center justify-center mt-32">
+                <img
+                  src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
+                  className="h-32"
+                  alt=""
+                />
+                <p className="mt-6 text-sm text-neutral-500">
+                  You have not registered any pet yet.{" "}
+                </p>
+              </div>
+            )}
+          </>
+        </>
+      )}
     </div>
   );
 }

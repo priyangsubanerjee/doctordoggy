@@ -160,11 +160,15 @@ function Prescriptions() {
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 mt-10 lg:mt-16 max-w-6xl lg:mx-auto mx-5">
-          {prescriptions.map((prescription, index) => (
-            <PrescriptionCard key={index} prescription={prescription} />
-          ))}
-        </div>
+        <>
+          {prescriptions.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 mt-10 lg:mt-16 max-w-6xl lg:mx-auto mx-5">
+              {prescriptions.map((prescription, index) => (
+                <PrescriptionCard key={index} prescription={prescription} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

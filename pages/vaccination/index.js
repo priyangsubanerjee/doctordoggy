@@ -19,7 +19,7 @@ import { getVaccinesByEmail } from "@/prisma/vaccine";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import FetchVaccinations from "@/hooks/fetch";
+import { FetchVaccinations } from "@/hooks/fetch";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
