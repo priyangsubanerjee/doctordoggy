@@ -121,7 +121,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Age
+                  Age on visit
                 </span>
                 <p>{calculateAge(pet?.dateOfBirth, record.dateOfVisit)}</p>
               </div>
