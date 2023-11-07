@@ -8,7 +8,7 @@ import calculateAge from "@/helper/age";
 import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { getPathologyReportById } from "@/prisma/pathology";
 
 export async function getServerSideProps(context) {
@@ -44,6 +44,7 @@ export async function getServerSideProps(context) {
   };
 }
 export default function Prescription({ record, pet, statusCode, isParent }) {
+  const router = useRouter();
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -56,11 +57,20 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
           <p className="text-center mt-20 text-sm lg:mt-16 text-neutral-500">
             Pathology uploaded for
           </p>
-          <img
-            src={record.image}
-            className="h-32 w-32 rounded-full object-cover mx-auto mt-10"
-            alt=""
-          />
+          <div className="w-fit mx-auto relative">
+            <img
+              src={record.image}
+              className="h-32 w-32 rounded-full object-cover mx-auto mt-10"
+              alt=""
+            />
+            <button
+              onClick={() => router.push(`/pets/${pet?.id}`)}
+              className="absolute bottom-4 -right-1 h-8 w-8 bg-white hover:bg-neutral-200 rounded-full flex items-center justify-center"
+            >
+              <Icon icon="material-symbols:pets" />
+            </button>
+          </div>
+
           <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-4">
             {record.name}
           </h1>
@@ -80,7 +90,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Date of visit
+                  Date of test
                 </span>
                 <p>
                   {new Date(record?.date).toDateString({
@@ -92,9 +102,9 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Doctor
+                  Refered by
                 </span>
-                <p>{Capitalize(record?.refererredBy)}</p>
+                <p>Dr. {Capitalize(record?.refererredBy)}</p>
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
@@ -110,9 +120,9 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Age
+                  Age on the day of test
                 </span>
-                <p>{calculateAge(pet?.dateOfBirth, record.dateOfVisit)}</p>
+                <p>{calculateAge(pet?.dateOfBirth, record.date)}</p>
               </div>
               <div className="border h-16 rounded-md relative flex items-center px-4">
                 <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
@@ -175,7 +185,9 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
                 </p>
                 <Button
                   onPress={() =>
-                    Router.push(`/prescription/${record?.id}/delete`)
+                    router.push(
+                      `/prescription/${record?.id}/delete?redirect=${window.location}`
+                    )
                   }
                   radius="full"
                   className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
