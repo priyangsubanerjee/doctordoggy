@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 // TODO: redirect url from delete operation
 // TODO: redirect url from upload page
+// TODO: pet profile from record card
 
 //
 
