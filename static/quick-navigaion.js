@@ -27,7 +27,7 @@ const quickNavOptions = [
     title: "Deworming",
     icon: "https://cdn-icons-png.flaticon.com/512/1984/1984420.png",
     buttonText: "Schedule now",
-    href: "/dev/comingSoon",
+    href: "/deworming",
   },
   {
     title: "Pathology",
