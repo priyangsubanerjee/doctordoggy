@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import { FetchPrescriptions } from "@/hooks/fetch";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -39,25 +40,27 @@ function Prescriptions() {
   let session = useSession();
   const [prescriptions, setPrescriptions] = React.useState(null);
 
-  const fetchPrescriptions = async () => {
-    let prescriptions = await axios.post(
-      "/api/prescription/read",
-      {
-        email: session.data.user.email,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    setPrescriptions(prescriptions.data.prescriptions);
-  };
+  //   const fetchPrescriptions = async () => {
+  //     let prescriptions = await axios.post(
+  //       "/api/prescription/read",
+  //       {
+  //         email: session.data.user.email,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     setPrescriptions(prescriptions.data.prescriptions);
+  //   };
 
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
       return;
-    fetchPrescriptions();
+    FetchPrescriptions(session?.data?.user?.email).then((data) => {
+      setPrescriptions(data);
+    });
   }, [session.status]);
 
   const PrescriptionCard = ({ prescription }) => {

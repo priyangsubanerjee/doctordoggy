@@ -19,6 +19,7 @@ import { getVaccinesByEmail } from "@/prisma/vaccine";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import FetchVaccinations from "@/hooks/fetch";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -39,26 +40,13 @@ function VaccinationHistory({}) {
   const session = useSession();
   const [vaccinations, setVaccinations] = React.useState(null);
 
-  const fetchVaccinations = async () => {
-    let vaccinations = await axios.post(
-      "/api/vaccine/read",
-      {
-        email: session.data.user.email,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    setVaccinations(vaccinations.data.vaccinations);
-  };
-
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
       return;
-    fetchVaccinations();
+
+    FetchVaccinations(session.data.user.email).then((data) => {
+      setVaccinations(data);
+    });
   }, [session.status]);
 
   const VaccineCard = ({ vaccine }) => {
