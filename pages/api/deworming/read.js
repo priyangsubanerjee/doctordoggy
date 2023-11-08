@@ -1,5 +1,4 @@
 import { getDewormingsByEmail } from "@/prisma/deworming";
-import { getPrescriptionsByEmail } from "@/prisma/prescription";
 
 export default async function handler(req, res) {
   let dewormings = await getDewormingsByEmail(req.body.email);
