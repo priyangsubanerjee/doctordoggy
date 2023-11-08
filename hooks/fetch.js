@@ -47,3 +47,19 @@ export async function FetchPets(email) {
 
   return pets.data.pets;
 }
+
+export async function FetchDewormings(email) {
+  let dewormings = await axios.post(
+    "/api/deworming/read",
+    {
+      email,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return dewormings.data.dewormings;
+}

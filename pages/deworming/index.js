@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -12,26 +13,42 @@ import {
   DropdownSection,
   DropdownItem,
   Button,
+  Spinner,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { getDewormingsByEmail } from "@/prisma/deworming";
+import { useSession } from "next-auth/react";
+import { FetchDewormings } from "@/hooks/fetch";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let dewormings = [];
-  if (session) {
-    dewormings = await getDewormingsByEmail(session?.user?.email);
-    dewormings = JSON.parse(JSON.stringify(dewormings));
-  }
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   let dewormings = [];
+//   if (session) {
+//     dewormings = await getDewormingsByEmail(session?.user?.email);
+//     dewormings = JSON.parse(JSON.stringify(dewormings));
+//   }
 
-  return {
-    props: {
-      dewormings,
-    },
-  };
-}
+//   return {
+//     props: {
+//       dewormings,
+//     },
+//   };
+// }
 
-function VaccinationHistory({ dewormings = [] }) {
+function DewormingRepository() {
+  const router = useRouter();
+  const session = useSession();
+
+  const [dewormings, setDewormings] = React.useState(null);
+
+  useEffect(() => {
+    if (session.status === "unauthenticated" || session.status == "loading")
+      return;
+    FetchDewormings(session?.data?.user?.email).then((res) => {
+      setDewormings(res);
+    });
+  }, [session.status]);
+
   const DewormingCard = ({ deworming }) => {
     return (
       <div className="border rounded-md p-4">
@@ -97,6 +114,7 @@ function VaccinationHistory({ dewormings = [] }) {
       </div>
     );
   };
+
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
@@ -123,23 +141,33 @@ function VaccinationHistory({ dewormings = [] }) {
           </span>
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
-        {dewormings.map((record, index) => (
-          <DewormingCard key={index} deworming={record} />
-        ))}
-      </div>
-      {dewormings.length === 0 && (
-        <div className="flex flex-col items-center justify-center mt-7">
-          <img
-            src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
-            className="h-44"
-            alt=""
-          />
-          <p className="text-sm -mt-4">No deworming records found.</p>
+
+      {dewormings == null && (
+        <div className="flex items-center justify-center mt-16">
+          <Spinner color="primary" size="lg" />
         </div>
+      )}
+      {dewormings != null && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+            {dewormings.map((record, index) => (
+              <DewormingCard key={index} deworming={record} />
+            ))}
+          </div>
+          {dewormings.length === 0 && (
+            <div className="flex flex-col items-center justify-center mt-7">
+              <img
+                src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
+                className="h-44"
+                alt=""
+              />
+              <p className="text-sm -mt-4">No deworming records found.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
 }
 
-export default VaccinationHistory;
+export default DewormingRepository;
