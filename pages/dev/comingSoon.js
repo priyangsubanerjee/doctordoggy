@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button } from "@nextui-org/react";
 import React from "react";
 
@@ -10,7 +11,7 @@ function ComingSoon() {
         alt=""
       />
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10">
-        These features will be available soon
+        These feature will be available soon
       </h1>
       <p className="text-sm text-neutral-600 mt-3">
         Please check back later or contact us at database-doctordoggy@gmail.com

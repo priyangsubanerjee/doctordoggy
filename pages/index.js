@@ -10,9 +10,10 @@ import Founders from "@/components/Fragments/Founders";
 import { useEffect } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
-// TODO: redirect url from delete operation
+// DONE: redirect url from delete operation
 // TODO: redirect url from upload page
 // TODO: pet profile from record card
+// TODO: remove unused console logs
 
 //
 
@@ -20,16 +21,13 @@ export default function Home() {
   useEffect(() => {
     // ask for notification permission on page load
     // check if browser supports notification
-
-    if ("Notification" in window) {
-      console.log("This browser does not support notifications.");
-      Notification.requestPermission().then(function (result) {
-        console.log(result);
-      });
-    }
-
+    // if ("Notification" in window) {
+    //   console.log("This browser does not support notifications.");
+    //   Notification.requestPermission().then(function (result) {
+    //     console.log(result);
+    //   });
+    // }
     // if granted then send notification to user
-
     // if (Notification.permission === "granted") {
     //   navigator.serviceWorker.getRegistration().then(function (reg) {
     //     reg.showNotification("Sheduled vaccination on 10th");
