@@ -37,7 +37,9 @@ function Deworming({ pets = [], medicines = [] }) {
   const { updatedModal } = useContext(GlobalStates);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [selectedMedicine, setSelectedMedicine] = React.useState(null);
-  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [isLoading, setIsLoading] = React.useState(false);
   const [dosage, setDosage] = React.useState({
     value: "",
