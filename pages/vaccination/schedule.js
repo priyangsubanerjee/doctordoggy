@@ -66,6 +66,7 @@ function Vaccination({ pets = [], vaccines = [] }) {
       window.location.href = router.query.redirect
         ? router.query.redirect
         : "/vaccination";
+      updatedModal(false, "Scheduled 🎉");
     } catch (error) {
       console.log(error);
       updatedModal(true, "Error scheduling vaccination");
