@@ -97,6 +97,7 @@ function Deworming({ pets = [], medicines = [] }) {
         router.push(
           router.query.redirect ? router.query.redirect : "/deworming"
         );
+        updatedModal(false, "Scheduled 🎉");
       } catch (error) {
         console.log(error);
         updatedModal(true, "Error scheduling vaccination");
