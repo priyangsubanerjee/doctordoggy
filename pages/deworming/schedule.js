@@ -94,7 +94,9 @@ function Deworming({ pets = [], medicines = [] }) {
           }
         );
         updatedModal(true, "Scheduled 🎉");
-        router.push(router.query.redirect || "/deworming");
+        router.push(
+          router.query.redirect ? router.query.redirect : "/deworming"
+        );
       } catch (error) {
         console.log(error);
         updatedModal(true, "Error scheduling vaccination");

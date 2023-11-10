@@ -121,16 +121,15 @@ function DewormingRepository() {
         Deworming Repository
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
-        <a
-          href="/deworming/schedule"
-          rel="noreferrer noopener"
+        <button
+          onClick={() => router.push("/deworming/schedule")}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
         >
           <span>Schedule deworming</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>
-        </a>
+        </button>
         <Link
           href={"/vaccination/schedule"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
