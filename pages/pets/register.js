@@ -161,8 +161,22 @@ function RegisterPet({ canine = [], feline = [] }) {
 
   if (breedList.length == 0) {
     return (
-      <div className="flex items-center justify-center mt-16">
-        <Spinner color="primary" size="lg" />
+      <div className="flex flex-col items-center justify-center mt-16">
+        <h1 className="text-3xl font-semibold text-center">
+          Register your pet
+        </h1>
+        <div className="flex items-center justify-center space-x-2 mt-4">
+          <p className="text-center text-neutral-600 text-sm">
+            * marked fields are mandatory.
+          </p>
+          <p className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+            <span>Learn more</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </p>
+        </div>
+        <Spinner className="mt-10" color="primary" size="lg" />
       </div>
     );
   } else {
