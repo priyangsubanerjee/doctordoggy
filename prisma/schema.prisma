@@ -131,3 +131,8 @@ model Pathology {
   createdAt    DateTime @default(now())
 }
  
+ model Breed{
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    name         String?
+    type          String?
+ }

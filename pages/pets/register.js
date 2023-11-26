@@ -117,17 +117,16 @@ function RegisterPet({ canine = [], feline = [] }) {
   };
 
   const fetchBreeds = async () => {
-    let api =
-      "https://script.googleusercontent.com/macros/echo?user_content_key=r2u49iCIVzNga5twpkqnPSf7cdSlRjWu4rE-Z45LGp9n0g-DnM_XWop6DWNAmEoKXgeshIrjCMfmsbCmwVm26GS31nAE4kWMm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnPZLrnH-BkIWPlUxGYH7b52UdsZ-hBwomtibrD7pcaF1NDRr5NQbsz3NWJI0Uu462XXgNJ5Swsww5d4zsxFzWt2OZXtVRW5O99z9Jw9Md8uu&lib=Mwy8V1r6IO08Cj6VKUglojGY7IXld9P0u";
-    let breeds_ = await fetch(api);
-    breeds_ = await breeds_.json();
+    let api = "/api/breed";
+    let breeds_ = await axios.get(api);
+    breeds_ = breeds_.data.breeds;
     let types = [];
-    breeds_.breeds.forEach((breed) => {
+    breeds_.forEach((breed) => {
       !types.includes(breed.type.toLocaleLowerCase()) &&
         types.push(breed.type.toLocaleLowerCase());
     });
     setSpecies(types);
-    setBreedList(breeds_.breeds);
+    setBreedList(breeds_);
   };
 
   useEffect(() => {
