@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import useFcmToken from "@/firebase/useToken";
 import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
 
 function Notifications() {
   const [isPermissionGranted, setIsPermissionGranted] = React.useState(false);
   const [lastAskedOn, setLastAskedOn] = React.useState("");
+  const { fcmToken } = useFcmToken();
 
   useEffect(() => {
     let state = localStorage.getItem("notificationPermission") || null;
@@ -81,6 +83,7 @@ function Notifications() {
           </div>
         )}
       </div>
+      {fcmToken}
     </div>
   );
 }
