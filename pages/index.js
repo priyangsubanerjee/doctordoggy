@@ -37,7 +37,7 @@ export default function Home() {
       <Services />
       <StepsToEnjoy />
       <Founders />
-      <NotificationLayout />
+      {supported && <NotificationLayout />}
     </main>
   );
 }
