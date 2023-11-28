@@ -78,7 +78,7 @@ function NotificationPermission() {
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (currentToken) {
-          console.log("FCM generated");
+          alert("FCM generated: " + currentToken);
         } else {
           alert(
             "No registration token available. Request permission to generate one."
