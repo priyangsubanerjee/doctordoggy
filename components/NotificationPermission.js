@@ -54,6 +54,7 @@ function NotificationPermission() {
     } else {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
+        setIsVisible(false);
         return true;
       }
     }
