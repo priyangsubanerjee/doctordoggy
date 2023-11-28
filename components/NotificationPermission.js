@@ -120,7 +120,7 @@ function NotificationPermission() {
     } else {
       alert("Not allowed");
     }
-  }, [session.status]);
+  }, []);
 
   const askPermission = async () => {
     if (Notification.permission === "granted") {
