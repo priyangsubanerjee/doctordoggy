@@ -115,9 +115,11 @@ function InstallApp() {
                   add this to home screen. Follow the steps below.
                 </p>
 
-                <p className="mt-10 text-sm">
+                <p className="mt-10 text-sm flex items-center">
                   1. Tap on{" "}
-                  <span className="bg-white px-2 py-1 rounded">Share</span>
+                  <span className="bg-white p-2 text-blue-500 ml-1 rounded-md inline-flex items-center justify-center">
+                    <Icon height={19} icon="ion:share-outline" />
+                  </span>
                 </p>
                 <p className="mt-6 text-sm">
                   2. Select{" "}
