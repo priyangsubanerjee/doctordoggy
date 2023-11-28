@@ -27,7 +27,19 @@ function NotificationLayout() {
     }
   }, []);
 
-  return <></>;
+  return (
+    <>
+      <div className="fixed top-0 left-0 z-50 bg-red-50 w-20 overflow-hidden">
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(fcmToken);
+          }}
+        >
+          Copy Token
+        </button>
+      </div>
+    </>
+  );
 }
 
 export default NotificationLayout;
