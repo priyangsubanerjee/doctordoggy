@@ -59,15 +59,6 @@ function Layout({ children }) {
       <NotificationPermission />
       <Navbar />
 
-      <div className="py-28">
-        <button
-          onClick={() => {
-            retrieveToken();
-          }}
-        >
-          Retrieve{" "}
-        </button>
-      </div>
       {children}
 
       <Toaster
