@@ -121,7 +121,7 @@ model Pathology {
   petId        String   @db.ObjectId
   Parent       User?    @relation(fields: [parentEmail], references: [email])
   date         DateTime
-  testName    String?
+  testName     String?
   parentEmail  String?
   bodyWeight   String?
   temperature  String?
@@ -130,9 +130,15 @@ model Pathology {
   notes        String?
   createdAt    DateTime @default(now())
 }
- 
- model Breed{
-    id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    name         String?
-    type          String?
- }
+
+model Breed {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  name String?
+  type String?
+}
+
+model Token {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String[]
+  createdAt DateTime @default(now())
+}

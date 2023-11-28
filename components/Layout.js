@@ -5,6 +5,7 @@ import Onboarding from "./Onboarding";
 import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import InstallApp from "./InstallApp";
+import NotificationPermission from "./NotificationPermission";
 
 function Layout({ children }) {
   const session = useSession();
@@ -61,6 +62,7 @@ function Layout({ children }) {
     <div className="pt-16 lg:pt-28 h-fit">
       <Onboarding />
       <InstallApp />
+      <NotificationPermission />
       <Navbar />
       {children}
       <Toaster
