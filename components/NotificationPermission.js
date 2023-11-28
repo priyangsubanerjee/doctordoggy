@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
+import GlobalStates from "@/context/GlobalState";
+import firebaseApp from "@/firebase/app";
 import { Button } from "@nextui-org/react";
+import { getMessaging, getToken } from "firebase/messaging";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 function NotificationPermission() {
   const session = useSession();
@@ -45,7 +48,6 @@ function NotificationPermission() {
   function isAllowed() {
     let permissionLastAsked =
       localStorage.getItem("notificationPermissionLastAsked") || null;
-
     let today = new Date();
 
     if (permissionLastAsked == null) {
@@ -63,6 +65,24 @@ function NotificationPermission() {
       }
     }
   }
+
+  const retrieveToken = async () => {
+    const messaging = getMessaging(firebaseApp);
+    const permission = await Notification.requestPermission();
+
+    // Check if permission is granted before retrieving the token
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      if (permission === "granted") {
+        const currentToken = await getToken(messaging, {
+          vapidKey:
+            "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
+        });
+        if (currentToken) {
+          console.log("FCM generated");
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     if (session.status == "authenticated")
@@ -90,10 +110,15 @@ function NotificationPermission() {
                 setIsBlocked(true);
               }
               setIsVisible(true);
+            } else {
             }
           }
         }
       }
+
+    if (Notification.permission == "granted") {
+      retrieveToken();
+    }
   }, [session.status]);
 
   const askPermission = async () => {
@@ -104,6 +129,7 @@ function NotificationPermission() {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         setIsVisible(false);
+        retrieveToken();
         localStorage.setItem("notificationPermission", "granted");
         return true;
       } else {

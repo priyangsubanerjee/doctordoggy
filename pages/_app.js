@@ -15,6 +15,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [fcmToken, setFcmToken] = useState("");
   const [procesingModalOpen, setProcessingModalOpen] = useState(false);
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const [processingModalMessage, setProcessingModalMessage] =
@@ -28,6 +29,8 @@ export default function App({
   return (
     <GlobalStates.Provider
       value={{
+        fcmToken,
+        setFcmToken,
         sidebarOpened,
         setSidebarOpened,
         procesingModalOpen,

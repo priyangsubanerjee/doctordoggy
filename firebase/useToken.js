@@ -20,7 +20,8 @@ const useFcmToken = () => {
           // Check if permission is granted before retrieving the token
           if (permission === "granted") {
             const currentToken = await getToken(messaging, {
-              vapidKey: "your_vapid_key",
+              vapidKey:
+                "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
             });
             if (currentToken) {
               setToken(currentToken);
