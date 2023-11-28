@@ -111,12 +111,10 @@ function NotificationPermission() {
         }
       } else {
         if (Notification.permission !== "granted") {
-          if (Notification.permission == "denied") {
-            localStorage.setItem("notificationPermission", "denied");
-            setIsBlocked(true);
-          }
+          alert("Not granted");
           setIsVisible(true);
         } else {
+          alert("Granted");
         }
       }
     } else {
