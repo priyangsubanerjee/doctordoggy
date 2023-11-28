@@ -40,7 +40,9 @@ function NotificationPermission() {
   useEffect(() => {
     if (checkUserAgent() == "safari") {
       if (checkIfAppIsInstalled() == true) {
-        setIsVisible(true);
+        if (Notification.permission !== "granted") {
+          setIsVisible(true);
+        }
       } else {
       }
     }
