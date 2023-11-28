@@ -8,7 +8,6 @@ import React, { useEffect } from "react";
 function Notifications() {
   const [isPermissionGranted, setIsPermissionGranted] = React.useState(false);
   const [lastAskedOn, setLastAskedOn] = React.useState("");
-  const { fcmToken } = useFcmToken();
 
   useEffect(() => {
     let state = localStorage.getItem("notificationPermission") || null;
