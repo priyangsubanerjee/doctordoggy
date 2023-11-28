@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 function InstallApp() {
   const [isVisible, setIsVisible] = useState(false);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(true);
 
   function checkUserAgent() {
     if (
