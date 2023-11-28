@@ -7,9 +7,11 @@ import HeroSection from "@/components/Fragments/HeroSection";
 import Services from "@/components/Fragments/Services";
 import StepsToEnjoy from "@/components/Fragments/StepsToEnjoy";
 import Founders from "@/components/Fragments/Founders";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NotificationLayout from "@/components/NotifocationLayout";
+import firebaseApp from "@/firebase/firebase";
 const inter = Inter({ subsets: ["latin"] });
+import { isSupported } from "firebase/messaging";
 
 // DONE: redirect url from delete operation
 // TODO: redirect url from upload page
@@ -19,30 +21,23 @@ const inter = Inter({ subsets: ["latin"] });
 //
 
 export default function Home() {
+  const [supported, setSupported] = useState(false);
+
   useEffect(() => {
-    // ask for notification permission on page load
-    // check if browser supports notification
-    // if ("Notification" in window) {
-    //   console.log("This browser does not support notifications.");
-    //   Notification.requestPermission().then(function (result) {
-    //     console.log(result);
-    //   });
-    // }
-    // if granted then send notification to user
-    // if (Notification.permission === "granted") {
-    //   navigator.serviceWorker.getRegistration().then(function (reg) {
-    //     reg.showNotification("Sheduled vaccination on 10th");
-    //   });
-    // }
+    (async () => {
+      if (process.env.NODE_ENV === "production") {
+        setSupported(await isSupported());
+      }
+    })();
   }, []);
+
   return (
-    <NotificationLayout>
-      <main>
-        <HeroSection />
-        <Services />
-        <StepsToEnjoy />
-        <Founders />
-      </main>
-    </NotificationLayout>
+    <main>
+      <HeroSection />
+      <Services />
+      <StepsToEnjoy />
+      <Founders />
+      {supported && <NotificationLayout />}
+    </main>
   );
 }
