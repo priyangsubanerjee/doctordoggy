@@ -7,7 +7,6 @@ import HeroSection from "@/components/Fragments/HeroSection";
 import Services from "@/components/Fragments/Services";
 import StepsToEnjoy from "@/components/Fragments/StepsToEnjoy";
 import Founders from "@/components/Fragments/Founders";
-import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +18,6 @@ const inter = Inter({ subsets: ["latin"] });
 //
 
 export default function Home() {
-  const [supported, setSupported] = useState(false);
-
   return (
     <main>
       <HeroSection />
