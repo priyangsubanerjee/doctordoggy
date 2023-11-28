@@ -20,7 +20,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
-    icon: "./vercel.svg",
+    icon: "./logoDark.png",
     tag: "notification-1",
   };
   self.registration.showNotification(notificationTitle, notificationOptions);
