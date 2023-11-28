@@ -10,10 +10,10 @@ const useFcmToken = () => {
   useEffect(() => {
     const retrieveToken = async () => {
       try {
-        if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-          const messaging = getMessaging(firebaseApp);
+        if (true) {
+          // request notification permission for android and web & ios
 
-          // Retrieve the notification permission status
+          const messaging = getMessaging(firebaseApp);
           const permission = await Notification.requestPermission();
           setNotificationPermissionStatus(permission);
 
@@ -26,10 +26,16 @@ const useFcmToken = () => {
             if (currentToken) {
               setToken(currentToken);
             } else {
+              alert(
+                "No registration token available. Request permission to generate one."
+              );
               console.log(
                 "No registration token available. Request permission to generate one."
               );
             }
+          } else {
+            // ask for permission again
+            console.log("Unable to get permission to notify.");
           }
         }
       } catch (error) {

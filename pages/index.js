@@ -8,10 +8,8 @@ import Services from "@/components/Fragments/Services";
 import StepsToEnjoy from "@/components/Fragments/StepsToEnjoy";
 import Founders from "@/components/Fragments/Founders";
 import { useEffect, useState } from "react";
-import NotificationLayout from "@/components/NotifocationLayout";
-import firebaseApp from "@/firebase/firebase";
+
 const inter = Inter({ subsets: ["latin"] });
-import { isSupported } from "firebase/messaging";
 
 // DONE: redirect url from delete operation
 // TODO: redirect url from upload page
@@ -23,21 +21,12 @@ import { isSupported } from "firebase/messaging";
 export default function Home() {
   const [supported, setSupported] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      if (process.env.NODE_ENV === "production") {
-        setSupported(await isSupported());
-      }
-    })();
-  }, []);
-
   return (
     <main>
       <HeroSection />
       <Services />
       <StepsToEnjoy />
       <Founders />
-      {supported && <NotificationLayout />}
     </main>
   );
 }
