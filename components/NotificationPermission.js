@@ -1,9 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 function NotificationPermission() {
+  const session = useSession();
   const [isVisible, setIsVisible] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
 
   function checkUserAgent() {
     if (
@@ -37,25 +42,74 @@ function NotificationPermission() {
     }
   }
 
-  useEffect(() => {
-    if (checkUserAgent() == "safari") {
-      if (checkIfAppIsInstalled() == true) {
-        if (Notification.permission !== "granted") {
-          setIsVisible(true);
-        }
+  function isAllowed() {
+    let permissionLastAsked =
+      localStorage.getItem("notificationPermissionLastAsked") || null;
+
+    let today = new Date();
+
+    if (permissionLastAsked == null) {
+      localStorage.setItem("notificationPermissionLastAsked", today);
+      return true;
+    } else {
+      let lastAsked = new Date(permissionLastAsked);
+      let diff = today - lastAsked;
+      let days = diff / (1000 * 3600 * 24);
+      if (days > 7) {
+        localStorage.setItem("notificationPermissionLastAsked", today);
+        return true;
       } else {
+        return false;
       }
     }
-  }, []);
+  }
+
+  useEffect(() => {
+    if (session.status == "authenticated")
+      if (session?.data?.user?.onBoardingSuccess == true) {
+        if (isAllowed() == true) {
+          if (checkUserAgent() == "safari") {
+            if (checkIfAppIsInstalled() == true) {
+              if (Notification.permission !== "granted") {
+                if (
+                  Notification.permission == "denied" &&
+                  process.env.NODE_ENV !== "development"
+                ) {
+                  localStorage.setItem("notificationPermission", "denied");
+                  setIsBlocked(true);
+                }
+                setIsVisible(true);
+              }
+            } else {
+              setIsVisible(false);
+            }
+          } else {
+            if (Notification.permission !== "granted") {
+              if (Notification.permission == "denied") {
+                localStorage.setItem("notificationPermission", "denied");
+                setIsBlocked(true);
+              }
+              setIsVisible(true);
+            }
+          }
+        }
+      }
+  }, [session.status]);
 
   const askPermission = async () => {
     if (Notification.permission === "granted") {
+      localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         setIsVisible(false);
+        localStorage.setItem("notificationPermission", "granted");
         return true;
+      } else {
+        setIsBlocked(true);
+        localStorage.setItem("notificationPermission", "denied");
+        return false;
       }
     }
   };
@@ -72,7 +126,7 @@ function NotificationPermission() {
             />
 
             <h1 className="text-2xl font-semibold text-neutral-700 mt-10 text-center">
-              Enable notification
+              {isBlocked ? "Notifications are blocked" : "Enable notifications"}
             </h1>
 
             <p className="text-center leading-6 text-neutral-500 text-sm mt-6">
@@ -80,19 +134,33 @@ function NotificationPermission() {
               pets scheduled appointment, vaccination and other important
               information.
             </p>
-            <div className="flex justify-center mt-16 lg:mt-10">
-              <Button
-                onPress={() => askPermission()}
-                className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center"
-              >
-                Allow
-              </Button>
-            </div>
-            <div className="flex justify-center mt-5">
-              <button className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center">
-                Remind later
-              </button>
-            </div>
+
+            {isBlocked == false && (
+              <>
+                <div className="flex justify-center mt-16 lg:mt-10">
+                  <Button
+                    onPress={() => askPermission()}
+                    className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center"
+                  >
+                    Allow
+                  </Button>
+                </div>
+                <div className="flex justify-center mt-5">
+                  <button className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center">
+                    Remind later
+                  </button>
+                </div>
+              </>
+            )}
+            {isBlocked && (
+              <div className="flex justify-center mt-16 lg:mt-10 mb-8">
+                <Link href="/notifications">
+                  <Button className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center">
+                    Learn more
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}

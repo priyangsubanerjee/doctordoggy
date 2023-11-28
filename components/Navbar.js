@@ -69,6 +69,9 @@ function Navbar() {
                   case "pets":
                     window.location.href = "/pets";
                     break;
+                  case "notifications":
+                    window.location.href = "/notifications";
+                    break;
                   default:
                     break;
                 }
@@ -98,6 +101,9 @@ function Navbar() {
 
               <DropdownItem className="rounded" key="account">
                 Account
+              </DropdownItem>
+              <DropdownItem className="rounded" key="notifications">
+                Notifications
               </DropdownItem>
               <DropdownItem className="rounded" key="edit">
                 Report an issue
