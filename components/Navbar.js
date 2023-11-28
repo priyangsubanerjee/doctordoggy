@@ -41,11 +41,7 @@ function Navbar() {
       <div>
         {session.status == "unauthenticated" ? (
           <Link href={"/signin"}>
-            <Avatar
-              size="sm"
-              src={session?.data?.user?.image}
-              className="cursor-pointer"
-            />
+            <Avatar size="sm" className="cursor-pointer mt-2" />
           </Link>
         ) : (
           <Dropdown className="rounded-lg z-30">

@@ -93,36 +93,33 @@ function NotificationPermission() {
   };
 
   useEffect(() => {
-    if (true)
-      if (true) {
-        if (isAllowed() == true) {
-          if (checkUserAgent() == "safari") {
-            if (checkIfAppIsInstalled() == true) {
-              if (Notification.permission !== "granted") {
-                if (
-                  Notification.permission == "denied" &&
-                  process.env.NODE_ENV !== "development"
-                ) {
-                  localStorage.setItem("notificationPermission", "denied");
-                  setIsBlocked(true);
-                }
-                setIsVisible(true);
-              }
-            } else {
-              setIsVisible(false);
+    if (isAllowed() == true) {
+      if (checkUserAgent() == "safari") {
+        if (checkIfAppIsInstalled() == true) {
+          if (Notification.permission !== "granted") {
+            if (
+              Notification.permission == "denied" &&
+              process.env.NODE_ENV !== "development"
+            ) {
+              localStorage.setItem("notificationPermission", "denied");
+              setIsBlocked(true);
             }
-          } else {
-            if (Notification.permission !== "granted") {
-              if (Notification.permission == "denied") {
-                localStorage.setItem("notificationPermission", "denied");
-                setIsBlocked(true);
-              }
-              setIsVisible(true);
-            } else {
-            }
+            setIsVisible(true);
           }
+        } else {
+          setIsVisible(false);
+        }
+      } else {
+        if (Notification.permission !== "granted") {
+          if (Notification.permission == "denied") {
+            localStorage.setItem("notificationPermission", "denied");
+            setIsBlocked(true);
+          }
+          setIsVisible(true);
+        } else {
         }
       }
+    }
   }, [session.status]);
 
   const askPermission = async () => {

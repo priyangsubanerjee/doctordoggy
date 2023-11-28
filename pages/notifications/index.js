@@ -110,12 +110,7 @@ function Notifications() {
       </div>
 
       <div className="flex justify-center mt-16 lg:mt-10 mb-8">
-        <button
-          onClick={() => retrieveToken()}
-          className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center"
-        >
-          Enable
-        </button>
+        <button onClick={() => retrieveToken()}>Retrieve</button>
       </div>
     </div>
   );
