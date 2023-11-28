@@ -119,6 +119,8 @@ function NotificationPermission() {
         } else {
         }
       }
+    } else {
+      alert("Not allowed");
     }
   }, [session.status]);
 
