@@ -123,22 +123,17 @@ function NotificationPermission() {
           }
         }
       }
-
-    if (Notification.permission == "granted") {
-      retrieveToken();
-    }
   }, [session.status]);
 
   const askPermission = async () => {
     if (Notification.permission === "granted") {
-      retrieveToken();
       localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
-        setIsVisible(false);
         retrieveToken();
+        setIsVisible(false);
         localStorage.setItem("notificationPermission", "granted");
         return true;
       } else {
