@@ -21,6 +21,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.notification.body,
     icon: "./vercel.svg",
+    tag: Math.random().toString(36).substring(7),
   };
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
