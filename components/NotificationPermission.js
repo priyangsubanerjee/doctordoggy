@@ -93,8 +93,8 @@ function NotificationPermission() {
   };
 
   useEffect(() => {
-    if (session.status == "authenticated")
-      if (session?.data?.user?.onBoardingSuccess == true) {
+    if (true)
+      if (true) {
         if (isAllowed() == true) {
           if (checkUserAgent() == "safari") {
             if (checkIfAppIsInstalled() == true) {
