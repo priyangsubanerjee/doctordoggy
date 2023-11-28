@@ -1,4 +1,4 @@
-const { firebaseConfig } = require("@/firebase/config");
+import firebaseConfig from "./firebaseConfig";
 
 // eslint-disable-next-line no-undef
 importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js");
