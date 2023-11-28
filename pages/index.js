@@ -8,6 +8,7 @@ import Services from "@/components/Fragments/Services";
 import StepsToEnjoy from "@/components/Fragments/StepsToEnjoy";
 import Founders from "@/components/Fragments/Founders";
 import { useEffect } from "react";
+import NotificationLayout from "@/components/NotifocationLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 // DONE: redirect url from delete operation
@@ -35,11 +36,13 @@ export default function Home() {
     // }
   }, []);
   return (
-    <main>
-      <HeroSection />
-      <Services />
-      <StepsToEnjoy />
-      <Founders />
-    </main>
+    <NotificationLayout>
+      <main>
+        <HeroSection />
+        <Services />
+        <StepsToEnjoy />
+        <Founders />
+      </main>
+    </NotificationLayout>
   );
 }
