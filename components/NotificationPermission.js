@@ -57,7 +57,7 @@ function NotificationPermission() {
       let lastAsked = new Date(permissionLastAsked);
       let diff = today - lastAsked;
       let days = diff / (1000 * 3600 * 24);
-      if (days > 7) {
+      if (days > 1) {
         localStorage.setItem("notificationPermissionLastAsked", today);
         return true;
       } else {
