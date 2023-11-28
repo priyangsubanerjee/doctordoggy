@@ -1,55 +1,29 @@
 import React, { useEffect } from "react";
 import * as firebase from "firebase/app";
 import "firebase/messaging";
-import { firebaseCloudMessaging } from "../firebase/firebase";
+import firebaseApp, { firebaseCloudMessaging } from "../firebase/firebase";
 import { useRouter } from "next/router";
+import useFcmToken from "@/helper/hooks/useFcmToken";
+import { getMessaging, onMessage } from "firebase/messaging";
 
 function NotificationLayout({ children }) {
   const router = useRouter();
+  const { fcmToken, notificationPermissionStatus } = useFcmToken();
+  fcmToken && console.log("FCM token:", fcmToken);
+
   useEffect(() => {
-    setToken();
-
-    // Event listener that listens for the push notification event in the background
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.addEventListener("message", (event) => {
-        console.log("event for the service worker", event);
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const messaging = getMessaging(firebaseApp);
+      const unsubscribe = onMessage(messaging, (payload) => {
+        console.log("Foreground push notification received:", payload);
+        // Handle the received push notification while the app is in the foreground
+        // You can display a notification or update the UI based on the payload
       });
+      return () => {
+        unsubscribe(); // Unsubscribe from the onMessage event
+      };
     }
-
-    // Calls the getMessage() function if the token is there
-    async function setToken() {
-      try {
-        const token = await firebaseCloudMessaging.init();
-        if (token) {
-          console.log("token", token);
-          getMessage();
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  });
-
-  // Handles the click function on the toast showing push notification
-  const handleClickPushNotification = (url) => {
-    router.push(url);
-  };
-
-  // Get the push notification message and triggers a toast to display it
-  function getMessage() {
-    const messaging = firebase.messaging();
-    messaging.onMessage((message) => {
-      toast(
-        <div onClick={() => handleClickPushNotification(message?.data?.url)}>
-          <h5>{message?.notification?.title}</h5>
-          <h6>{message?.notification?.body}</h6>
-        </div>,
-        {
-          closeOnClick: false,
-        }
-      );
-    });
-  }
+  }, []);
 
   return <>{children}</>;
 }

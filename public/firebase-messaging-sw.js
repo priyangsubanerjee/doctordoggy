@@ -1,13 +1,24 @@
-importScripts("https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/7.9.1/firebase-messaging.js");
+const { firebaseConfig } = require("@/firebase/config");
 
-firebase.initializeApp({
-  apiKey: "your_api_key",
-  authDomain: "your_auth_domain",
-  projectId: "your_project_id",
-  storageBucket: "your_storage_bucket",
-  messagingSenderId: "your_messagin_sender_id",
-  appId: "your_app_id",
-});
+// eslint-disable-next-line no-undef
+importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js");
+// eslint-disable-next-line no-undef
+importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-messaging.js");
 
+// eslint-disable-next-line no-undef
+firebase.initializeApp(firebaseConfig);
+// eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload) => {
+  console.log(
+    "[firebase-messaging-sw.js] Received background message ",
+    payload
+  );
+  const notificationTitle = payload.notification.title;
+  const notificationOptions = {
+    body: payload.notification.body,
+    icon: "./logo.png",
+  };
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
