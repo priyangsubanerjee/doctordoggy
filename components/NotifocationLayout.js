@@ -17,6 +17,7 @@ function NotificationLayout() {
         const messaging = getMessaging(firebaseApp);
         const unsubscribe = onMessage(messaging, (payload) => {
           console.log("Foreground push notification received:", payload);
+          alert("Foreground push notification received:", payload);
         });
         return () => {
           unsubscribe(); // Unsubscribe from the onMessage event
