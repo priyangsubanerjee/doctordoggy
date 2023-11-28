@@ -95,8 +95,8 @@ function InstallApp() {
     <>
       {isVisible && (
         <div className="h-full flex items-end lg:items-center justify-center w-full z-40 bg-black/70 inset-0 fixed">
-          <div className="h-[50%] w-full px-3 pb-4">
-            <div className="w-full h-full relative bg-neutral-100/80 backdrop-blur-lg rounded-3xl pt-6">
+          <div className="h-auto w-full px-3 pb-4">
+            <div className="w-full h-full relative bg-neutral-100/80 backdrop-blur-lg rounded-3xl py-6">
               <div className="flex items-center px-6">
                 <div className="h-14 w-14 flex items-center justify-center bg-white rounded-lg p-2">
                   <img src="/logoDark.png" alt="" />
