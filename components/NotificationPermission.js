@@ -79,8 +79,16 @@ function NotificationPermission() {
         });
         if (currentToken) {
           console.log("FCM generated");
+        } else {
+          alert(
+            "No registration token available. Request permission to generate one."
+          );
         }
+      } else {
+        console.log("Unable to get permission to notify.");
       }
+    } else {
+      console.log("Service worker not available");
     }
   };
 
@@ -123,6 +131,7 @@ function NotificationPermission() {
 
   const askPermission = async () => {
     if (Notification.permission === "granted") {
+      retrieveToken();
       localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
