@@ -28,48 +28,13 @@ function Layout({ children }) {
     }
   }, []);
 
-  const retrieveToken = async () => {
-    try {
-      if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        const messaging = getMessaging(firebaseApp);
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          const currentToken = await getToken(messaging, {
-            vapidKey:
-              "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
-          });
-          if (currentToken) {
-            alert("FCM generated: " + currentToken);
-          } else {
-            console.log(
-              "No registration token available. Request permission to generate one."
-            );
-          }
-        }
-      }
-    } catch (error) {
-      console.log("An error occurred while retrieving token:", error);
-    }
-  };
-
   return (
     <div className="pt-16 lg:pt-28 h-fit">
       <Onboarding />
       <InstallApp />
       <NotificationPermission />
       <Navbar />
-
-      <div className="py-28">
-        <button
-          onClick={() => {
-            retrieveToken();
-          }}
-        >
-          Retrieve{" "}
-        </button>
-      </div>
       {children}
-
       <Toaster
         position="top-right"
         containerStyle={{
