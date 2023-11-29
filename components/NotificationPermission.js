@@ -106,17 +106,22 @@ function NotificationPermission() {
       localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
-      const permission = await Notification.requestPermission();
-      if (permission === "granted") {
-        localStorage.setItem("notificationPermission", "granted");
-        setIsVisible(false);
-        await retrieveToken();
-        return true;
-      } else {
-        localStorage.setItem("notificationPermission", "denied");
-        setIsBlocked(true);
-        return false;
-      }
+      navigator.serviceWorker.register("sw.js");
+      Notification.requestPermission(async function (result) {
+        if (result === "granted") {
+          localStorage.setItem("notificationPermission", "granted");
+          setIsVisible(false);
+          await retrieveToken();
+          navigator.serviceWorker.ready.then(async function (registration) {
+            registration.showNotification("Notification with ServiceWorker");
+          });
+          return true;
+        } else {
+          localStorage.setItem("notificationPermission", "denied");
+          setIsBlocked(true);
+          return false;
+        }
+      });
     }
   };
 
