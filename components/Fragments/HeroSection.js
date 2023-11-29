@@ -95,7 +95,7 @@ function HeroSection() {
     <div>
       <div className="h-[250px] md:h-[500px] lg:h-[500px] relative">
         <img
-          src="https://images7.alphacoders.com/126/1269810.jpg"
+          src="/static/hero.jpg"
           className="h-full w-full object-cover"
           alt=""
         />
