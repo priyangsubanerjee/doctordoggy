@@ -15,6 +15,7 @@
     "axios": "^1.5.1",
     "canvas-confetti": "^1.9.0",
     "cloudinary": "^1.41.0",
+    "compressorjs": "^1.2.1",
     "firebase": "^10.7.0",
     "formidable": "^3.5.1",
     "framer-motion": "^10.16.5",

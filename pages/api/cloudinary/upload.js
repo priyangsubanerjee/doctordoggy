@@ -16,7 +16,6 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  console.log("Upload request received");
   try {
     const file = await new Promise((resolve, reject) => {
       const form = formidable();

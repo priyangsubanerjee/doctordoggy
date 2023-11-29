@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
+import Compressor from "compressorjs";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -189,7 +190,15 @@ function EditProfile({ pet, canine, feline }) {
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  setImageFile(file);
+                  new Compressor(file, {
+                    quality: 0.4,
+                    success(result) {
+                      setImageFile(result);
+                    },
+                    error(err) {
+                      console.log(err.message);
+                    },
+                  });
                 }}
                 name=""
                 hidden
