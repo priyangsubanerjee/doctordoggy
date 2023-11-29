@@ -40,6 +40,8 @@ function Layout({ children }) {
       return () => {
         unsubscribe(); // Unsubscribe from the onMessage event
       };
+    } else {
+      console.log("Service worker is not available");
     }
   }, []);
 
