@@ -41,7 +41,7 @@ export const retrieveToken = async () => {
               return null;
             }
           } else {
-            retrieveToken();
+            await retrieveToken();
           }
         } else {
           console.log("Unable to get permission to notify.");
