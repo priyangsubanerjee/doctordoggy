@@ -116,7 +116,7 @@ function HeroSection() {
 
   const PermissionLayout = () => {
     return (
-      <div className="h-fit bg-white p-8">
+      <div className="h-fit bg-white p-6 md:p-8">
         <div className="border rounded-xl p-5 md:p-8 md:max-w-3xl lg:max-w-4xl mx-auto">
           <div className="md:flex items-center">
             <img
