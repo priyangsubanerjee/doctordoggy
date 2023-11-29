@@ -28,8 +28,8 @@ export default function App({
 
   useEffect(() => {
     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
-    retrieveToken();
     if (tokenUpdatedInSession == null) {
+      retrieveToken();
       sessionStorage.setItem("tokenUpdated", true);
     }
   }, []);
