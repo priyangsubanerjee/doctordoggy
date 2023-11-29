@@ -8,7 +8,7 @@ import InstallApp from "./InstallApp";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
 import { retrieveToken } from "@/helper/token";
-import Permission from "./Permission";
+import Permission from "./PermissionLayout";
 
 function Layout({ children }) {
   const session = useSession();
