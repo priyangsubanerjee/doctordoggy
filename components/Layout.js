@@ -10,6 +10,7 @@ import useFcmToken from "@/firebase/useToken";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
 import { retrieveToken } from "@/helper/token";
+import AskPermission from "./AskPermission";
 
 function Layout({ children }) {
   const session = useSession();
@@ -45,12 +46,12 @@ function Layout({ children }) {
   }, []);
 
   return (
-    <div className="pt-16 lg:pt-28 h-fit">
+    <div className="pt-[104px] lg:pt-28 h-fit">
       <Onboarding />
       <InstallApp />
       <NotificationPermission />
       <Navbar />
-
+      <AskPermission />
       {children}
 
       <Toaster
