@@ -1,11 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { getTokens } from "@/prisma/token";
+import { getAllTokens, getTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
   const { email, title, body } = req.body;
 
-  const fcms = await getTokens(email);
+  const fcms = email == "all" ? await getAllTokens() : await getTokens(email);
+
+  if (!fcms) return res.status(200).json({ message: "No token found" });
 
   if (fcms.tokens.length == 0)
     return res.status(200).json({ message: "No token found" });
@@ -26,9 +28,9 @@ export default async function handler(req, res) {
         },
       }),
     });
+    res.status(200).json({ message: "Notification sent" });
   } catch (error) {
     console.log(error);
+    res.status(200).json({ message: "Something went wrong" });
   }
-
-  res.status(200).json({ message: "Notification sent" });
 }

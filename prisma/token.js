@@ -9,6 +9,16 @@ export const getTokens = async (email) => {
   return token;
 };
 
+export const getAllTokens = async () => {
+  const token = await prisma.token.findMany();
+  let tokens = [];
+  token.forEach((item) => {
+    tokens.push(...item.tokens);
+  });
+  return {
+    tokens: tokens,
+  };
+};
 export const updateToken = async (email, token) => {
   let tokenExist = await getTokens(email);
   if (tokenExist) {

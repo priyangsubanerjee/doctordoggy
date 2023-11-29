@@ -14,19 +14,21 @@ import { retrieveToken } from "@/helper/token";
 function Layout({ children }) {
   const session = useSession();
 
+  const RefreshToken = async () => {
+    let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
+    if (tokenUpdatedInSession == null) {
+      sessionStorage.setItem("tokenUpdated", true);
+      await retrieveToken();
+    }
+  };
+
   useEffect(() => {
     if (
       session.status === "authenticated" &&
       session.data.user.onBoardingSuccess == true &&
       Notification.permission == "granted"
     ) {
-      let tokenUpdatedInSession =
-        sessionStorage.getItem("tokenUpdated") || null;
-      if (tokenUpdatedInSession == null) {
-        sessionStorage.setItem("tokenUpdated", true);
-        retrieveToken();
-      }
-
+      RefreshToken();
       if (typeof window !== "undefined" && "serviceWorker" in navigator) {
         const messaging = getMessaging(firebaseApp);
         const unsubscribe = onMessage(messaging, (payload) => {
