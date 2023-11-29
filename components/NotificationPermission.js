@@ -93,27 +93,31 @@ function NotificationPermission() {
   };
 
   useEffect(() => {
-    if (checkUserAgent() == "safari") {
-      if (checkIfAppIsInstalled() == true) {
-        if (Notification.permission !== "granted") {
-          if (
-            Notification.permission == "denied" &&
-            process.env.NODE_ENV !== "development"
-          ) {
-            localStorage.setItem("notificationPermission", "denied");
-            setIsBlocked(true);
+    if (isAllowed()) {
+      if (checkUserAgent() == "safari") {
+        if (checkIfAppIsInstalled() == true) {
+          if (Notification.permission !== "granted") {
+            if (
+              Notification.permission == "denied" &&
+              process.env.NODE_ENV !== "development"
+            ) {
+              localStorage.setItem("notificationPermission", "denied");
+              setIsBlocked(true);
+            }
+            localStorage.setItem("notificationPermissionLastAsked", today);
+            setIsVisible(true);
           }
-          setIsVisible(true);
+        } else {
+          setIsVisible(false);
         }
       } else {
-        setIsVisible(false);
-      }
-    } else {
-      if (Notification.permission !== "granted") {
-        alert("Not granted");
-        setIsVisible(true);
-      } else {
-        alert("Granted");
+        if (Notification.permission !== "granted") {
+          alert("Not granted");
+          localStorage.setItem("notificationPermissionLastAsked", today);
+          setIsVisible(true);
+        } else {
+          alert("Granted");
+        }
       }
     }
   }, []);
