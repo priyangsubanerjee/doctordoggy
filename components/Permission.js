@@ -1,6 +1,6 @@
 import React from "react";
 
-function AskPermission() {
+function Permission() {
   const askPermission = async () => {
     if ("Notification" in window) {
       try {
@@ -13,7 +13,7 @@ function AskPermission() {
   };
   return (
     <div className="p-6">
-      <div className="border p-8 rounded-xl space-x-8">
+      <div className="border p-8 rounded-xl space-x-8 max-w-lg">
         <button>Remind later</button>
         <button onClick={() => askPermission()}>Allow </button>
         <p id="error"></p>
@@ -22,4 +22,4 @@ function AskPermission() {
   );
 }
 
-export default AskPermission;
+export default Permission;

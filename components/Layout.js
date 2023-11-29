@@ -5,12 +5,10 @@ import Onboarding from "./Onboarding";
 import toast, { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import InstallApp from "./InstallApp";
-import NotificationPermission from "./NotificationPermission";
-import useFcmToken from "@/firebase/useToken";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
 import { retrieveToken } from "@/helper/token";
-import AskPermission from "./AskPermission";
+import Permission from "./Permission";
 
 function Layout({ children }) {
   const session = useSession();
@@ -49,9 +47,7 @@ function Layout({ children }) {
     <div className="pt-[104px] lg:pt-28 h-fit">
       <Onboarding />
       <InstallApp />
-      <NotificationPermission />
       <Navbar />
-      <AskPermission />
       {children}
 
       <Toaster
