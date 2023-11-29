@@ -14,6 +14,7 @@ export const subscribe = async () => {
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
+          alert(token);
           toast.success("Subscribed to push notifications");
           try {
             await axios.post(
@@ -35,6 +36,9 @@ export const subscribe = async () => {
             return null;
           }
         } else {
+          console.log(
+            "No registration token available. Request permission to generate one."
+          );
           toast.error("Error while subscribing to push notifications");
           subscribe();
           return null;
@@ -42,6 +46,7 @@ export const subscribe = async () => {
       }
     }
   } catch (error) {
+    console.log("Service worker registration failed, error:", error);
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
       .then(async function (reg) {
