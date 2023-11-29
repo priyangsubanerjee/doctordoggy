@@ -173,7 +173,16 @@ function NotificationPermission() {
                   </Button>
                 </div>
                 <div className="flex justify-center mt-5">
-                  <button className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center">
+                  <button
+                    onClick={() => {
+                      setIsVisible(false);
+                      localStorage.setItem(
+                        "notificationPermissionLastAsked",
+                        today
+                      );
+                    }}
+                    className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center"
+                  >
                     Remind later
                   </button>
                 </div>
