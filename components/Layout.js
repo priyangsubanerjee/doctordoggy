@@ -52,21 +52,40 @@ function Layout({ children }) {
       <Navbar />
       {children}
 
-      <Toaster
-        position="top-center"
-        containerStyle={{
-          top: 140,
-          right: 50,
-        }}
-        toastOptions={{
-          style: {
-            background: "#fff",
-            color: "#000",
-            borderRadius: 4,
-            fontSize: "0.8rem",
-          },
-        }}
-      />
+      <div className="hidden lg:block">
+        <Toaster
+          position="top-center"
+          containerStyle={{
+            top: 140,
+            right: 50,
+          }}
+          toastOptions={{
+            style: {
+              background: "#fff",
+              color: "#000",
+              borderRadius: 4,
+              fontSize: "0.8rem",
+            },
+          }}
+        />
+      </div>
+      <div className="lg:hidden block">
+        <Toaster
+          position="top-center"
+          containerStyle={{
+            top: 100,
+            right: 50,
+          }}
+          toastOptions={{
+            style: {
+              background: "#fff",
+              color: "#000",
+              borderRadius: 4,
+              fontSize: "0.8rem",
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }
