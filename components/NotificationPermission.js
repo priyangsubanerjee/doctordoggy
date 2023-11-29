@@ -93,6 +93,7 @@ function NotificationPermission() {
   };
 
   useEffect(() => {
+    let today = new Date();
     if (isAllowed()) {
       if (checkUserAgent() == "safari") {
         if (checkIfAppIsInstalled() == true) {
