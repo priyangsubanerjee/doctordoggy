@@ -74,6 +74,7 @@ function InstallApp() {
       <>
         {isInstalled == false && (
           <button
+            id="install-button-ios"
             onClick={() => {
               setIsVisible(!isVisible);
             }}

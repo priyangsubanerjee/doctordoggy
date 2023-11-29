@@ -50,12 +50,51 @@ function HeroSection() {
         session.data.user.onBoardingSuccess == true
       ) {
         if ("Notification" in window && Notification.permission !== "granted") {
-          setIsPermissionLayoutVisible(true);
+          if (
+            checkUserAgent() == "safari" &&
+            checkIfAppIsInstalled() == false
+          ) {
+            console.log("Safari browser needs PWA to be installed");
+          } else {
+            setIsPermissionLayoutVisible(true);
+          }
         }
       } else {
       }
     })();
   }, [session.status]);
+
+  function checkUserAgent() {
+    if (
+      (navigator.userAgent.indexOf("Opera") ||
+        navigator.userAgent.indexOf("OPR")) != -1
+    ) {
+      return "opera";
+    } else if (navigator.userAgent.indexOf("Edg") != -1) {
+      return "edge";
+    } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+      return "chrome";
+    } else if (navigator.userAgent.indexOf("Safari") != -1) {
+      return "safari";
+    } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+      return "firefox";
+    } else if (
+      navigator.userAgent.indexOf("MSIE") != -1 ||
+      !!document.documentMode == true
+    ) {
+      return "ie";
+    } else {
+      return "unknown";
+    }
+  }
+
+  function checkIfAppIsInstalled() {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   const TriggerPermission = async () => {
     let permission = await Notification.requestPermission();
