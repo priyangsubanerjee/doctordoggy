@@ -12,7 +12,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 function NotificationPermission() {
   const session = useSession();
-
   const [isVisible, setIsVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
 
@@ -113,7 +112,14 @@ function NotificationPermission() {
           setIsVisible(false);
           await retrieveToken();
           navigator.serviceWorker.ready.then(async function (registration) {
-            registration.showNotification("Notification with ServiceWorker");
+            registration.showNotification(
+              `Hi ${session.data.user.name.split(" ")[0]}`,
+              {
+                body: "We are delighted to have you onboard!",
+                icon: "./logoDark.png",
+                tag: "notification-1",
+              }
+            );
           });
           return true;
         } else {
