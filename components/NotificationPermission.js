@@ -11,6 +11,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 function NotificationPermission() {
   const session = useSession();
+  console.log(session);
   const [isVisible, setIsVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
 
@@ -69,7 +70,11 @@ function NotificationPermission() {
 
   useEffect(() => {
     let today = new Date();
-    if (isAllowed() == true && session.status == "authenticated") {
+    if (
+      isAllowed() == true &&
+      session.status == "authenticated" &&
+      session.data.user.onBoardingSuccess == true
+    ) {
       if (checkUserAgent() == "safari") {
         if (checkIfAppIsInstalled() == true) {
           if (Notification.permission !== "granted") {
@@ -88,11 +93,9 @@ function NotificationPermission() {
         }
       } else {
         if (Notification.permission !== "granted") {
-          alert("Not granted");
           localStorage.setItem("notificationPermissionLastAsked", today);
           setIsVisible(true);
         } else {
-          alert("Granted");
         }
       }
     }

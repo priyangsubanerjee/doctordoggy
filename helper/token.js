@@ -57,7 +57,11 @@ export const retrieveToken = async () => {
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
       .then(function (reg) {
-        if (reg.active) {
+        if (reg.installing) {
+          console.log("Service worker installing");
+        } else if (reg.waiting) {
+          console.log("Service worker installed");
+        } else if (reg.active) {
           retrieveToken();
           console.log("Service worker active");
         }

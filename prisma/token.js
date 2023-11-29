@@ -10,18 +10,14 @@ export const getTokens = async (email) => {
 };
 
 export const updateToken = async (email, token) => {
-  console.log(email, token);
-
   let tokenExist = await getTokens(email);
   if (tokenExist) {
-    console.log(tokenExist.tokens);
     if (tokenExist.tokens.includes(token)) {
       return tokenExist;
     } else {
       try {
         let tokenArray = tokenExist.tokens;
         tokenArray.push(token);
-        console.log(tokenArray);
         const updatedToken = await prisma.token.update({
           where: {
             email,
