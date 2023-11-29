@@ -9,6 +9,7 @@ import NotificationPermission from "./NotificationPermission";
 import useFcmToken from "@/firebase/useToken";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
+import { retrieveToken } from "@/helper/token";
 
 function Layout({ children }) {
   const session = useSession();

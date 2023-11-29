@@ -7,7 +7,6 @@ import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider, getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import { retrieveToken } from "@/helper/token";
 
 // using next auth for authentication and next ui for styling
 // TODO: add next seo for seo
