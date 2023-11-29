@@ -99,6 +99,19 @@ function NotificationPermission() {
         }
       }
     }
+
+    if (
+      session.status == "authenticated" &&
+      session.data.user.onBoardingSuccess == true &&
+      Notification.permission == "granted"
+    ) {
+      let tokenUpdatedInSession =
+        sessionStorage.getItem("tokenUpdated") || null;
+      if (tokenUpdatedInSession == null) {
+        sessionStorage.setItem("tokenUpdated", true);
+        retrieveToken();
+      }
+    }
   }, [session.status]);
 
   const askPermission = async () => {

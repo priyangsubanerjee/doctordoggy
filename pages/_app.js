@@ -4,7 +4,7 @@ import ProcessingModal from "@/components/ProcessingModal";
 import GlobalStates from "@/context/GlobalState";
 import "@/styles/globals.css";
 import { NextUIProvider } from "@nextui-org/react";
-import { SessionProvider, useSession } from "next-auth/react";
+import { SessionProvider, getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { retrieveToken } from "@/helper/token";
@@ -16,7 +16,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-  const sessionOBJ = useSession();
+  console.log(session + "session");
   const [procesingModalOpen, setProcessingModalOpen] = useState(false);
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const [processingModalMessage, setProcessingModalMessage] =
@@ -26,19 +26,6 @@ export default function App({
     setProcessingModalOpen(state ? state : false);
     setProcessingModalMessage(message ? message : "Loading...");
   };
-
-  useEffect(() => {
-    let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
-    if (
-      tokenUpdatedInSession == null &&
-      sessionOBJ.status === "authenticated" &&
-      sessionOBJ.data.user.onBoardingSuccess === true &&
-      Notification.permission === "granted"
-    ) {
-      retrieveToken();
-      sessionStorage.setItem("tokenUpdated", true);
-    }
-  }, [sessionOBJ]);
 
   return (
     <GlobalStates.Provider
