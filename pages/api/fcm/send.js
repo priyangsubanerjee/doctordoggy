@@ -6,7 +6,9 @@ export default async function handler(req, res) {
   const { email, title, body } = req.body;
 
   const fcms = await getTokens(email);
-  console.log(fcms.tokens);
+
+  if (fcms.tokens.length == 0)
+    return res.status(200).json({ message: "No token found" });
 
   try {
     await fetch("https://fcm.googleapis.com/fcm/send", {
@@ -28,5 +30,5 @@ export default async function handler(req, res) {
     console.log(error);
   }
 
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).json({ message: "Notification sent" });
 }
