@@ -13,6 +13,7 @@ export const retrieveToken = async () => {
     if (session.user.email) {
       if (typeof window !== "undefined" && "serviceWorker" in navigator) {
         if (permission === "granted") {
+          messaging.requestPermission().then(async () => {});
           const currentToken = await getToken(messaging, {
             vapidKey:
               "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",

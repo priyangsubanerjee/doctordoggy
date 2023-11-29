@@ -112,8 +112,20 @@ function NotificationPermission() {
       return true;
     } else {
       await navigator.serviceWorker.register("sw.js");
-      Notification.requestPermission(async function (result) {
-        if (result === "granted") {
+
+      if ("Notification" in window) {
+        Notification.requestPermission().then(function (result) {
+          if (result === "denied") {
+            console.log("Permission wasn't granted. Allow a retry.");
+            localStorage.setItem("notificationPermission", "denied");
+            setIsBlocked(true);
+            return false;
+          }
+          if (result === "default") {
+            console.log("The permission request was dismissed.");
+            return false;
+          }
+          console.log("Permission was granted for notifications");
           localStorage.setItem("notificationPermission", "granted");
           setIsVisible(false);
           retrieveToken();
@@ -130,6 +142,11 @@ function NotificationPermission() {
             });
           }, 4000);
           return true;
+        });
+      }
+
+      Notification.requestPermission(async function (result) {
+        if (result === "granted") {
         } else {
           localStorage.setItem("notificationPermission", "denied");
           setIsBlocked(true);
