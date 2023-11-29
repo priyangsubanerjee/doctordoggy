@@ -56,17 +56,17 @@ export const retrieveToken = async () => {
     console.log("An error occurred while retrieving token:", error);
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
-      .then(function (reg) {
+      .then(async function (reg) {
         if (reg.installing) {
           console.log("Service worker installing");
         } else if (reg.waiting) {
           console.log("Service worker installed");
         } else if (reg.active) {
-          retrieveToken();
+          await retrieveToken();
           console.log("Service worker active");
         }
       });
-    retrieveToken();
+    await retrieveToken();
     return null;
   }
 };
