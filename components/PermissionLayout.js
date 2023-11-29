@@ -3,14 +3,15 @@ import { subscribe } from "@/helper/subscribe";
 import { Button } from "@nextui-org/react";
 import { getSession } from "next-auth/react";
 import React from "react";
+import toast from "react-hot-toast";
 
 function PermissionLayout({ close }) {
   const session = getSession();
   const TriggerPermission = async () => {
     let permission = await Notification.requestPermission();
     if (permission == "granted") {
+      let token = await subscribe(true);
       close();
-      subscribe();
     }
   };
   return (

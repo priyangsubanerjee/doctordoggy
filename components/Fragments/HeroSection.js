@@ -9,6 +9,7 @@ import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import PermissionLayout from "../PermissionLayout";
+import toast from "react-hot-toast";
 
 // TODO: Make the search bar functional
 // TODO: Migrate all the static data to static.js file
@@ -20,6 +21,17 @@ function HeroSection() {
   const [pets, setPets] = React.useState([]);
   const [isPermissionLayoutVisible, setIsPermissionLayoutVisible] =
     React.useState(false);
+
+  //   useEffect(() => {
+  //     let promise = new Promise((resolve, reject) => {
+  //       setTimeout(() => resolve("done!"), 3000);
+  //     });
+  //     toast.promise(promise, {
+  //       loading: "Loading",
+  //       success: "Success",
+  //       error: "Error",
+  //     });
+  //   }, [session.status]);
 
   useEffect(() => {
     if (session?.data?.user?.email) {

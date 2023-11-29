@@ -53,7 +53,7 @@ function Layout({ children }) {
       {children}
 
       <Toaster
-        position="top-right"
+        position="top-center"
         containerStyle={{
           top: 60,
           right: 50,

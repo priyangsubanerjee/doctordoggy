@@ -4,7 +4,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-export const subscribe = async () => {
+export const subscribe = async (toast) => {
   console.log("Subscribing to push notifications");
   let session = await getSession();
   let messaging = getMessaging(firebaseApp);
@@ -16,7 +16,7 @@ export const subscribe = async () => {
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
-          toast.success("Subscribed to push notifications");
+          toast && toast.success("Subscribed to push notifications");
           try {
             await axios.post(
               "/api/fcm/update",
@@ -32,15 +32,13 @@ export const subscribe = async () => {
             );
             return token;
           } catch (error) {
-            toast.error("Error while subscribing to push notifications");
+            toast &&
+              toast.error("Error while subscribing to push notifications");
             console.log(error);
             return null;
           }
         } else {
-          console.log(
-            "No registration token available. Request permission to generate one."
-          );
-          toast.error("Error while subscribing to push notifications");
+          toast && toast.error("Error while subscribing to push notifications");
           subscribe();
           return null;
         }
