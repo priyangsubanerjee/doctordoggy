@@ -16,6 +16,7 @@ export const subscribe = async (showToast) => {
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
+          toast.dismiss();
           showToast && toast.success("Subscribed to push notifications");
           try {
             await axios.post(
