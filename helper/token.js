@@ -18,6 +18,9 @@ export const retrieveToken = async () => {
               "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
           });
           if (currentToken) {
+            alert(
+              "FCM generated: " + currentToken + " for " + session.user.email
+            );
             console.log(
               "FCM generated: " + currentToken + " for " + session.user.email
             );

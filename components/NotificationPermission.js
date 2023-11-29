@@ -112,16 +112,14 @@ function NotificationPermission() {
           setIsVisible(false);
           retrieveToken();
           navigator.serviceWorker.ready.then(async function (registration) {
-            setTimeout(() => {
-              registration.showNotification(
-                `Hi ${session.data.user.name.split(" ")[0]}`,
-                {
-                  body: "We are delighted to have you onboard!",
-                  icon: "./logoDark.png",
-                  tag: "notification-1",
-                }
-              );
-            }, 4000);
+            registration.showNotification(
+              `Hi ${session.data.user.name.split(" ")[0]}`,
+              {
+                body: "We are delighted to have you onboard!",
+                icon: "./logoDark.png",
+                tag: "notification-1",
+              }
+            );
           });
           return true;
         } else {
