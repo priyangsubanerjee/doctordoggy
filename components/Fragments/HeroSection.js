@@ -22,16 +22,9 @@ function HeroSection() {
   const [isPermissionLayoutVisible, setIsPermissionLayoutVisible] =
     React.useState(false);
 
-  //   useEffect(() => {
-  //     let promise = new Promise((resolve, reject) => {
-  //       setTimeout(() => resolve("done!"), 3000);
-  //     });
-  //     toast.promise(promise, {
-  //       loading: "Loading",
-  //       success: "Success",
-  //       error: "Error",
-  //     });
-  //   }, [session.status]);
+  useEffect(() => {
+    toast.loading("Loading...");
+  }, [session.status]);
 
   useEffect(() => {
     if (session?.data?.user?.email) {

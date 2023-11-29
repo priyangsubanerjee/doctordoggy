@@ -55,14 +55,14 @@ function Layout({ children }) {
       <Toaster
         position="top-center"
         containerStyle={{
-          top: 60,
+          top: 140,
           right: 50,
         }}
         toastOptions={{
           style: {
-            background: "#000",
-            color: "#fff",
-            borderRadius: 0,
+            background: "#fff",
+            color: "#000",
+            borderRadius: 4,
             fontSize: "0.8rem",
           },
         }}
