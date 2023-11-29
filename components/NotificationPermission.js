@@ -73,7 +73,6 @@ function NotificationPermission() {
       session.status == "authenticated" &&
       session.data.user.onBoardingSuccess == true
     ) {
-      localStorage.setItem("notificationPermissionLastAsked", today);
       if (checkUserAgent() == "safari") {
         if (checkIfAppIsInstalled() == true) {
           if (Notification.permission !== "granted") {
@@ -85,6 +84,7 @@ function NotificationPermission() {
               setIsBlocked(true);
             }
 
+            localStorage.setItem("notificationPermissionLastAsked", today);
             setIsVisible(true);
           }
         } else {
@@ -92,6 +92,7 @@ function NotificationPermission() {
         }
       } else {
         if (Notification.permission !== "granted") {
+          localStorage.setItem("notificationPermissionLastAsked", today);
           setIsVisible(true);
         } else {
         }
