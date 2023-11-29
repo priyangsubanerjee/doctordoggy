@@ -63,11 +63,11 @@ function InstallApp() {
     }
   }, []);
 
-  useEffect(() => {
-    isVisible
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
-  }, [isVisible, setIsVisible]);
+  //   useEffect(() => {
+  //     isVisible
+  //       ? (document.body.style.overflow = "hidden")
+  //       : (document.body.style.overflow = "auto");
+  //   }, [isVisible, setIsVisible]);
 
   const FAB = ({}) => {
     return (
