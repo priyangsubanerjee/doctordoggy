@@ -34,7 +34,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [prescriptionProps, setPrescriptionProps] = React.useState({
     reasonOfVisit: "",
-    dateOfVisit: "",
+    dateOfVisit: new Date().toISOString().split("T")[0],
     doctorName: "",
     bodyWeight: "",
     temperature: "",
@@ -230,8 +230,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
               });
             }}
             value={prescriptionProps.dateOfVisit}
-            className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
-            name=""
+            className="bg-transparent text-sm w-full h-full lg:w-full pl-4 appearance-none outline-none"
             id="datPicker"
           />
         </div>
