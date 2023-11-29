@@ -18,12 +18,6 @@ export const retrieveToken = async () => {
               "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
           });
           if (currentToken) {
-            alert(
-              "FCM generated: " + currentToken + " for " + session.user.email
-            );
-            console.log(
-              "FCM generated: " + currentToken + " for " + session.user.email
-            );
             token = currentToken;
             try {
               await axios.post(
@@ -44,29 +38,23 @@ export const retrieveToken = async () => {
               return null;
             }
           } else {
-            await retrieveToken();
+            retrieveToken();
           }
         } else {
-          console.log("Unable to get permission to notify.");
           return null;
         }
       } else {
-        console.log("Service worker not available");
         return null;
       }
     }
   } catch (error) {
-    console.log("An error occurred while retrieving token:", error);
     navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
       .then(async function (reg) {
         if (reg.installing) {
-          console.log("Service worker installing");
         } else if (reg.waiting) {
-          console.log("Service worker installed");
         } else if (reg.active) {
           await retrieveToken();
-          console.log("Service worker active");
         }
       });
     await retrieveToken();

@@ -14,7 +14,7 @@ import { retrieveToken } from "@/helper/token";
 function Layout({ children }) {
   const session = useSession();
 
-  const RefreshToken = async () => {
+  const checkIfNeedsRefresh = async () => {
     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
     if (tokenUpdatedInSession == null) {
       sessionStorage.setItem("tokenUpdated", true);
@@ -28,7 +28,7 @@ function Layout({ children }) {
       session.data.user.onBoardingSuccess == true &&
       Notification.permission == "granted"
     ) {
-      RefreshToken();
+      checkIfNeedsRefresh();
     }
   }, [session.status]);
 

@@ -91,10 +91,16 @@ function NotificationPermission() {
           setIsVisible(false);
         }
       } else {
-        if (Notification.permission !== "granted") {
-          localStorage.setItem("notificationPermissionLastAsked", today);
-          setIsVisible(true);
+        if (checkIfAppIsInstalled() == true) {
+          if (Notification.permission !== "granted") {
+            localStorage.setItem("notificationPermissionLastAsked", today);
+            setIsVisible(true);
+          }
         } else {
+          if (Notification.permission !== "granted") {
+            localStorage.setItem("notificationPermissionLastAsked", today);
+            setIsVisible(true);
+          }
         }
       }
     }
@@ -105,7 +111,7 @@ function NotificationPermission() {
       localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
-      navigator.serviceWorker.register("sw.js");
+      await navigator.serviceWorker.register("sw.js");
       Notification.requestPermission(async function (result) {
         if (result === "granted") {
           localStorage.setItem("notificationPermission", "granted");

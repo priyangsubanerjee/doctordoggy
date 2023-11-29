@@ -19,6 +19,7 @@ export const getAllTokens = async () => {
     tokens: tokens,
   };
 };
+
 export const updateToken = async (email, token) => {
   let tokenExist = await getTokens(email);
   if (tokenExist) {
