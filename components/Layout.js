@@ -18,7 +18,7 @@ function Layout({ children }) {
     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
     if (tokenUpdatedInSession == null) {
       sessionStorage.setItem("tokenUpdated", true);
-      await retrieveToken();
+      retrieveToken();
     }
   };
 
