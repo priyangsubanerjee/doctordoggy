@@ -17,16 +17,22 @@ function Layout({ children }) {
   const [isAppIsInstalled, setIsAppIsInstalled] = React.useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      const messaging = getMessaging(firebaseApp);
-      const unsubscribe = onMessage(messaging, (payload) => {
-        alert("Foreground push notification received:", payload);
-      });
-      return () => {
-        unsubscribe(); // Unsubscribe from the onMessage event
-      };
+    if (
+      session.status === "authenticated" &&
+      session.data.user.onBoardingSuccess == true &&
+      Notification.permission == "granted"
+    ) {
+      if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+        const messaging = getMessaging(firebaseApp);
+        const unsubscribe = onMessage(messaging, (payload) => {
+          alert("Foreground push notification received:", payload);
+        });
+        return () => {
+          unsubscribe(); // Unsubscribe from the onMessage event
+        };
+      }
     }
-  }, []);
+  }, [session.status]);
 
   const retrieveToken = async () => {
     try {
