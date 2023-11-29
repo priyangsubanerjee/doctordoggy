@@ -53,14 +53,12 @@ function NotificationPermission() {
     let today = new Date();
 
     if (permissionLastAsked == null) {
-      localStorage.setItem("notificationPermissionLastAsked", today);
       return true;
     } else {
       let lastAsked = new Date(permissionLastAsked);
       let diff = today - lastAsked;
       let days = diff / (1000 * 3600 * 24);
       if (days > 1) {
-        localStorage.setItem("notificationPermissionLastAsked", today);
         return true;
       } else {
         return false;
@@ -75,6 +73,7 @@ function NotificationPermission() {
       session.status == "authenticated" &&
       session.data.user.onBoardingSuccess == true
     ) {
+      localStorage.setItem("notificationPermissionLastAsked", today);
       if (checkUserAgent() == "safari") {
         if (checkIfAppIsInstalled() == true) {
           if (Notification.permission !== "granted") {
@@ -85,7 +84,7 @@ function NotificationPermission() {
               localStorage.setItem("notificationPermission", "denied");
               setIsBlocked(true);
             }
-            localStorage.setItem("notificationPermissionLastAsked", today);
+
             setIsVisible(true);
           }
         } else {
@@ -93,7 +92,6 @@ function NotificationPermission() {
         }
       } else {
         if (Notification.permission !== "granted") {
-          localStorage.setItem("notificationPermissionLastAsked", today);
           setIsVisible(true);
         } else {
         }
