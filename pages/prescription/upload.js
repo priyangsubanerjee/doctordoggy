@@ -217,7 +217,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
           className="rounded-none "
         />
 
-        <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+        <div className="flex items-center lg:justify-between h-[56px] bg-neutral-100 px-3">
           <span className="text-sm h-full flex items-center text-neutral-500 shrink-0 border-r border-neutral-200 pr-4">
             Visited on
           </span>
@@ -230,7 +230,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
               });
             }}
             value={prescriptionProps.dateOfVisit}
-            className="bg-transparent text-sm w-full h-full lg:w-full pl-4 appearance-none outline-none"
+            className="bg-transparent text-sm w-fit h-full lg:w-full pl-4 appearance-none outline-none"
             id="datPicker"
           />
         </div>
