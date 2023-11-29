@@ -11,7 +11,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 function NotificationPermission() {
   const session = useSession();
-  console.log(session);
+
   const [isVisible, setIsVisible] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
 
@@ -96,19 +96,6 @@ function NotificationPermission() {
           setIsVisible(true);
         } else {
         }
-      }
-    }
-
-    if (
-      session.status == "authenticated" &&
-      session.data.user.onBoardingSuccess == true &&
-      Notification.permission == "granted"
-    ) {
-      let tokenUpdatedInSession =
-        sessionStorage.getItem("tokenUpdated") || null;
-      if (tokenUpdatedInSession == null) {
-        sessionStorage.setItem("tokenUpdated", true);
-        retrieveToken();
       }
     }
   }, [session.status]);

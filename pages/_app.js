@@ -16,7 +16,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-  console.log(session + "session");
   const [procesingModalOpen, setProcessingModalOpen] = useState(false);
   const [sidebarOpened, setSidebarOpened] = useState(false);
   const [processingModalMessage, setProcessingModalMessage] =
