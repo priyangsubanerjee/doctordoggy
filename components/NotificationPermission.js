@@ -5,6 +5,7 @@ import firebaseApp from "@/firebase/app";
 import { retrieveToken } from "@/helper/token";
 import { Button } from "@nextui-org/react";
 import { getMessaging, getToken } from "firebase/messaging";
+import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
@@ -121,63 +122,73 @@ function NotificationPermission() {
 
   return (
     <>
-      {isVisible && (
-        <div className="fixed inset-0 h-full w-full z-50 bg-black/50 flex items-center">
-          <div className="h-full lg:h-fit lg:w-[500px] w-full bg-white lg:rounded-xl mx-auto lg:py-8 py-16 px-5 lg:px-10">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/9225/9225884.png"
-              className="mx-auto h-20 lg:mt-8"
-              alt=""
-            />
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 1.5 }}
+            className="fixed inset-0 h-full w-full z-50 bg-black/50 flex items-center"
+          >
+            <div className="h-full lg:h-fit lg:w-[500px] w-full bg-white lg:rounded-xl mx-auto lg:py-8 py-16 px-5 lg:px-10">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/9225/9225884.png"
+                className="mx-auto h-20 lg:mt-8"
+                alt=""
+              />
 
-            <h1 className="text-2xl font-semibold text-neutral-700 mt-10 text-center">
-              {isBlocked ? "Notifications are blocked" : "Enable notifications"}
-            </h1>
+              <h1 className="text-2xl font-semibold text-neutral-700 mt-10 text-center">
+                {isBlocked
+                  ? "Notifications are blocked"
+                  : "Enable notifications"}
+              </h1>
 
-            <p className="text-center leading-6 text-neutral-500 text-sm mt-6">
-              We need your permission to send you notifications regarding your
-              pets scheduled appointment, vaccination and other important
-              information.
-            </p>
+              <p className="text-center leading-6 text-neutral-500 text-sm mt-6">
+                We need your permission to send you notifications regarding your
+                pets scheduled appointment, vaccination and other important
+                information.
+              </p>
 
-            {isBlocked == false && (
-              <>
-                <div className="flex justify-center mt-16 lg:mt-10">
-                  <Button
-                    onPress={() => askPermission()}
-                    className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center"
-                  >
-                    Allow
-                  </Button>
+              {isBlocked == false && (
+                <>
+                  <div className="flex justify-center mt-16 lg:mt-10">
+                    <Button
+                      onPress={() => askPermission()}
+                      className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center"
+                    >
+                      Allow
+                    </Button>
+                  </div>
+                  <div className="flex justify-center mt-5">
+                    <button
+                      onClick={() => {
+                        setIsVisible(false);
+                        localStorage.setItem(
+                          "notificationPermissionLastAsked",
+                          today
+                        );
+                      }}
+                      className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center"
+                    >
+                      Remind later
+                    </button>
+                  </div>
+                </>
+              )}
+              {isBlocked && (
+                <div className="flex justify-center mt-16 lg:mt-10 mb-8">
+                  <Link href="/notifications">
+                    <Button className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center">
+                      Learn more
+                    </Button>
+                  </Link>
                 </div>
-                <div className="flex justify-center mt-5">
-                  <button
-                    onClick={() => {
-                      setIsVisible(false);
-                      localStorage.setItem(
-                        "notificationPermissionLastAsked",
-                        today
-                      );
-                    }}
-                    className="w-[250px] text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center"
-                  >
-                    Remind later
-                  </button>
-                </div>
-              </>
-            )}
-            {isBlocked && (
-              <div className="flex justify-center mt-16 lg:mt-10 mb-8">
-                <Link href="/notifications">
-                  <Button className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center">
-                    Learn more
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
