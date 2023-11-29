@@ -174,7 +174,7 @@ function HeroSection() {
           </div>
         </div>
       ) : (
-        <PermissionLayout refresh={() => refreshStatus()} />
+        <PermissionLayout close={() => setIsPermissionLayoutVisible(false)} />
       )}
 
       <ShortcutToPets />

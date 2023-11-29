@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { retrieveToken } from "@/helper/token";
+import { subscribe } from "@/helper/subscribe";
 import { Button } from "@nextui-org/react";
 import { getSession } from "next-auth/react";
 import React from "react";
 
-function PermissionLayout({ refresh }) {
+function PermissionLayout({ close }) {
   const session = getSession();
   const TriggerPermission = async () => {
     let permission = await Notification.requestPermission();
     if (permission == "granted") {
-      await retrieveToken();
-      refresh();
+      close();
+      subscribe();
     }
   };
   return (

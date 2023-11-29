@@ -7,8 +7,8 @@ import { useSession } from "next-auth/react";
 import InstallApp from "./InstallApp";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
-import { retrieveToken } from "@/helper/token";
 import Permission from "./PermissionLayout";
+import { subscribe } from "@/helper/subscribe";
 
 function Layout({ children }) {
   const session = useSession();
@@ -17,7 +17,7 @@ function Layout({ children }) {
     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
     if (tokenUpdatedInSession == null) {
       sessionStorage.setItem("tokenUpdated", true);
-      retrieveToken();
+      subscribe();
     }
   };
 
