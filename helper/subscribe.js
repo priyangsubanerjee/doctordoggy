@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
 export const subscribe = async () => {
+  console.log("Subscribing to push notifications");
   let session = await getSession();
   let messaging = getMessaging(firebaseApp);
   try {
