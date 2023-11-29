@@ -138,7 +138,7 @@ function Onboarding() {
     <>
       {isVisible && (
         <div className="fixed inset-0 h-full w-full bg-black/70 z-30 flex justify-center pt-32">
-          <div className="w-[500px] h-fit min-h-[450px] flex flex-col bg-white rounded-xl p-7">
+          <div className="w-[90%] lg:w-[500px] h-fit min-h-[450px] flex flex-col bg-white rounded-xl p-7">
             {step != 2 && (
               <>
                 <p className="text-xs text-neutral-600">Good morning</p>
