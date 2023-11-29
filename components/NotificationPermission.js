@@ -111,14 +111,14 @@ function NotificationPermission() {
       localStorage.setItem("notificationPermission", "granted");
       return true;
     } else {
-      navigator.serviceWorker.register("sw.js");
-      Notification.requestPermission(function (result) {
+      await navigator.serviceWorker.register("sw.js");
+      Notification.requestPermission(async function (result) {
         if (result === "granted") {
           localStorage.setItem("notificationPermission", "granted");
           setIsVisible(false);
           retrieveToken();
           setTimeout(() => {
-            navigator.serviceWorker.ready.then(function (registration) {
+            navigator.serviceWorker.ready.then(async function (registration) {
               registration.showNotification(
                 `Hi ${session.data.user.name.split(" ")[0]}`,
                 {
