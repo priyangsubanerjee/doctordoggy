@@ -117,16 +117,18 @@ function NotificationPermission() {
           localStorage.setItem("notificationPermission", "granted");
           setIsVisible(false);
           retrieveToken();
-          navigator.serviceWorker.ready.then(async function (registration) {
-            registration.showNotification(
-              `Hi ${session.data.user.name.split(" ")[0]}`,
-              {
-                body: "We are delighted to have you onboard!",
-                icon: "./logoDark.png",
-                tag: "notification-1",
-              }
-            );
-          });
+          setTimeout(() => {
+            navigator.serviceWorker.ready.then(async function (registration) {
+              registration.showNotification(
+                `Hi ${session.data.user.name.split(" ")[0]}`,
+                {
+                  body: "We are delighted to have you onboard!",
+                  icon: "./logoDark.png",
+                  tag: "notification-1",
+                }
+              );
+            });
+          }, 4000);
           return true;
         } else {
           localStorage.setItem("notificationPermission", "denied");
