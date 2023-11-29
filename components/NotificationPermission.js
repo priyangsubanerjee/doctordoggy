@@ -196,12 +196,24 @@ function NotificationPermission() {
                 </>
               )}
               {isBlocked && (
-                <div className="flex justify-center mt-16 lg:mt-10 mb-8">
+                <div className="flex flex-col items-center justify-center mt-16 lg:mt-10 mb-8">
                   <Link href="/notifications">
                     <Button className="w-[250px] text-base h-14 font-semibold bg-neutral-800 text-white rounded-full mx-auto text-center">
                       Learn more
                     </Button>
                   </Link>
+                  <button
+                    onClick={() => {
+                      setIsVisible(false);
+                      localStorage.setItem(
+                        "notificationPermissionLastAsked",
+                        today
+                      );
+                    }}
+                    className="w-[250px] mt-10 text-sm hover:underline h-14 text-neutral-600 rounded-full mx-auto text-center"
+                  >
+                    Remind later
+                  </button>
                 </div>
               )}
             </div>
