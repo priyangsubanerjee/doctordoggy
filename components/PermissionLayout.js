@@ -4,13 +4,13 @@ import { Button } from "@nextui-org/react";
 import { getSession } from "next-auth/react";
 import React from "react";
 
-function PermissionLayout() {
+function PermissionLayout({ refresh }) {
   const session = getSession();
   const TriggerPermission = async () => {
     let permission = await Notification.requestPermission();
     if (permission == "granted") {
-      setIsPermissionLayoutVisible(false);
       await retrieveToken();
+      refresh();
     }
   };
   return (

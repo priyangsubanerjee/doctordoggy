@@ -45,25 +45,24 @@ function HeroSection() {
   }, [session.status]);
 
   useEffect(() => {
-    (async () => {
-      if (
-        session.status == "authenticated" &&
-        session.data.user.onBoardingSuccess == true
-      ) {
-        if ("Notification" in window && Notification.permission !== "granted") {
-          if (
-            checkUserAgent() == "safari" &&
-            checkIfAppIsInstalled() == false
-          ) {
-            console.log("Safari browser needs PWA to be installed");
-          } else {
-            setIsPermissionLayoutVisible(true);
-          }
-        }
-      } else {
-      }
-    })();
+    refreshStatus();
   }, [session.status]);
+
+  const refreshStatus = async () => {
+    if (
+      session.status == "authenticated" &&
+      session.data.user.onBoardingSuccess == true
+    ) {
+      if ("Notification" in window && Notification.permission !== "granted") {
+        if (checkUserAgent() == "safari" && checkIfAppIsInstalled() == false) {
+          console.log("Safari browser needs PWA to be installed");
+        } else {
+          setIsPermissionLayoutVisible(true);
+        }
+      }
+    } else {
+    }
+  };
 
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
@@ -175,7 +174,7 @@ function HeroSection() {
           </div>
         </div>
       ) : (
-        <PermissionLayout />
+        <PermissionLayout refresh={() => refreshStatus()} />
       )}
 
       <ShortcutToPets />
