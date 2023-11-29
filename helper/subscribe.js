@@ -1,4 +1,5 @@
 import firebaseApp from "@/firebase/app";
+import axios from "axios";
 import { getMessaging, getToken } from "firebase/messaging";
 import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
@@ -15,7 +16,6 @@ export const subscribe = async () => {
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
-          alert(token);
           toast.success("Subscribed to push notifications");
           try {
             await axios.post(
