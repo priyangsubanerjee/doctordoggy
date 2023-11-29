@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import firebaseApp from "@/firebase/app";
 import useFcmToken from "@/firebase/useToken";
+import { retrieveToken } from "@/helper/token";
 import { Icon } from "@iconify/react";
 import { getMessaging, getToken } from "firebase/messaging";
 import React, { useEffect } from "react";
@@ -27,31 +28,6 @@ function Notifications() {
     });
     setLastAskedOn(lastAsked);
   }, []);
-
-  const retrieveToken = async () => {
-    try {
-      if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        const messaging = getMessaging(firebaseApp);
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          const currentToken = await getToken(messaging, {
-            vapidKey:
-              "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
-          });
-          if (currentToken) {
-            alert("FCM generated: " + currentToken);
-            navigator.clipboard.writeText(currentToken);
-          } else {
-            console.log(
-              "No registration token available. Request permission to generate one."
-            );
-          }
-        }
-      }
-    } catch (error) {
-      console.log("An error occurred while retrieving token:", error);
-    }
-  };
 
   return (
     <div className="">
@@ -111,7 +87,7 @@ function Notifications() {
       </div>
 
       <div className="flex justify-center mt-16 lg:mt-10 mb-8">
-        <button onClick={() => retrieveToken()}>Retrieve</button>
+        <button onClick={async () => await retrieveToken()}>Retrieve</button>
       </div>
     </div>
   );
