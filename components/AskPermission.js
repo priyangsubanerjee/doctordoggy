@@ -1,16 +1,14 @@
 import React from "react";
 
 function AskPermission() {
-  const askPermission = () => {
+  const askPermission = async () => {
     if ("Notification" in window) {
-      Notification.requestPermission().then(function (result) {
-        console.log("User Choice", result);
-        if (result !== "granted") {
-          console.log("No notification permission granted!");
-        } else {
-          console.log("Notification permission granted!");
-        }
-      });
+      try {
+        const permission = await Notification.requestPermission();
+        document.getElementById("error").innerHTML = permission;
+      } catch (error) {
+        document.getElementById("error").innerHTML = error;
+      }
     }
   };
   return (
@@ -18,6 +16,7 @@ function AskPermission() {
       <div className="border p-8 rounded-xl space-x-8">
         <button>Remind later</button>
         <button onClick={() => askPermission()}>Allow </button>
+        <p id="error"></p>
       </div>
     </div>
   );
