@@ -73,7 +73,7 @@ function Layout({ children }) {
         <Toaster
           position="top-center"
           containerStyle={{
-            top: 100,
+            top: 40,
             right: 50,
           }}
           toastOptions={{

@@ -23,10 +23,6 @@ function HeroSection() {
     React.useState(false);
 
   useEffect(() => {
-    toast.loading("Loading...");
-  }, [session.status]);
-
-  useEffect(() => {
     if (session?.data?.user?.email) {
       axios
         .post(
