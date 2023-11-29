@@ -295,7 +295,7 @@ function UploadPrescription({ pets = [], vaccines = [] }) {
         <Button
           onClick={handleSubmit}
           loading={isLoading}
-          className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
+          className="px-10 h-12 w-full lg:w-fit bg-black text-white rounded-md"
           radius="none"
         >
           Submit
