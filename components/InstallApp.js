@@ -77,7 +77,7 @@ function InstallApp() {
             onClick={() => {
               setIsVisible(!isVisible);
             }}
-            className={`h-14 w-14 text-neutral-700 shadow-xl shadow-black/10 fixed z-50 right-6 bottom-7 rounded-full flex items-center justify-center ${
+            className={`h-14 w-14 text-neutral-700 shadow-xl shadow-black/10 fixed z-50 right-6 bottom-7 rounded-full lg:hidden flex items-center justify-center ${
               isVisible ? "bg-white text-black" : "bg-black text-white"
             }`}
           >
@@ -101,7 +101,7 @@ function InstallApp() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="h-full flex items-end lg:items-center justify-center w-full z-40 bg-black/70 inset-0 fixed"
+            className="h-full lg:hidden flex items-end lg:items-center justify-center w-full z-40 bg-black/70 inset-0 fixed"
           >
             <div className="h-auto w-full px-3 pb-4">
               <div className="w-full h-full relative bg-neutral-100/80 backdrop-blur-lg rounded-3xl py-6">
