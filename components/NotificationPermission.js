@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import GlobalStates from "@/context/GlobalState";
 import firebaseApp from "@/firebase/app";
+import { retrieveToken } from "@/helper/token";
 import { Button } from "@nextui-org/react";
 import { getMessaging, getToken } from "firebase/messaging";
 import { useSession } from "next-auth/react";
@@ -66,35 +67,9 @@ function NotificationPermission() {
     }
   }
 
-  const retrieveToken = async () => {
-    const messaging = getMessaging(firebaseApp);
-    const permission = await Notification.requestPermission();
-
-    // Check if permission is granted before retrieving the token
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      if (permission === "granted") {
-        const currentToken = await getToken(messaging, {
-          vapidKey:
-            "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
-        });
-        if (currentToken) {
-          alert("FCM generated: " + currentToken);
-        } else {
-          alert(
-            "No registration token available. Request permission to generate one."
-          );
-        }
-      } else {
-        console.log("Unable to get permission to notify.");
-      }
-    } else {
-      console.log("Service worker not available");
-    }
-  };
-
   useEffect(() => {
     let today = new Date();
-    if (isAllowed()) {
+    if (isAllowed() == true && session.status == "authenticated") {
       if (checkUserAgent() == "safari") {
         if (checkIfAppIsInstalled() == true) {
           if (Notification.permission !== "granted") {
@@ -121,7 +96,7 @@ function NotificationPermission() {
         }
       }
     }
-  }, []);
+  }, [session.status]);
 
   const askPermission = async () => {
     if (Notification.permission === "granted") {
@@ -130,13 +105,13 @@ function NotificationPermission() {
     } else {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
-        retrieveToken();
-        setIsVisible(false);
         localStorage.setItem("notificationPermission", "granted");
+        setIsVisible(false);
+        await retrieveToken();
         return true;
       } else {
-        setIsBlocked(true);
         localStorage.setItem("notificationPermission", "denied");
+        setIsBlocked(true);
         return false;
       }
     }

@@ -31,6 +31,7 @@ model User {
   prescriptions Prescription[]
   dewormings    Deworming[]
   pathologies   Pathology[]
+  tokens        Token[]
 }
 
 model Pet {
@@ -139,6 +140,8 @@ model Breed {
 
 model Token {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  token     String[]
+  user      User     @relation(fields: [email], references: [email])
+  email String       @unique
+  tokens    String[]
   createdAt DateTime @default(now())
 }
