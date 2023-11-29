@@ -1,5 +1,5 @@
 import firebaseApp from "@/firebase/app";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
