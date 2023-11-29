@@ -29,17 +29,20 @@ function Layout({ children }) {
       Notification.permission == "granted"
     ) {
       RefreshToken();
-      if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-        const messaging = getMessaging(firebaseApp);
-        const unsubscribe = onMessage(messaging, (payload) => {
-          alert("Foreground push notification received:", payload);
-        });
-        return () => {
-          unsubscribe(); // Unsubscribe from the onMessage event
-        };
-      }
     }
   }, [session.status]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const messaging = getMessaging(firebaseApp);
+      const unsubscribe = onMessage(messaging, (payload) => {
+        alert("Foreground push notification received:", payload);
+      });
+      return () => {
+        unsubscribe(); // Unsubscribe from the onMessage event
+      };
+    }
+  }, []);
 
   return (
     <div className="pt-16 lg:pt-28 h-fit">
