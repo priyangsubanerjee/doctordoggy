@@ -4,19 +4,19 @@ import { getMessaging, getToken } from "firebase/messaging";
 import { getSession } from "next-auth/react";
 import toast from "react-hot-toast";
 
-export const subscribe = async (toast) => {
-  console.log("Subscribing to push notifications");
+export const subscribe = async (showToast) => {
   let session = await getSession();
   let messaging = getMessaging(firebaseApp);
   try {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       if (Notification.permission == "granted") {
+        showToast && toast.loading("Subscribing to push notifications");
         const token = await getToken(messaging, {
           vapidKey:
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
-          toast && toast.success("Subscribed to push notifications");
+          showToast && toast.success("Subscribed to push notifications");
           try {
             await axios.post(
               "/api/fcm/update",
@@ -32,13 +32,14 @@ export const subscribe = async (toast) => {
             );
             return token;
           } catch (error) {
-            toast &&
+            showToast &&
               toast.error("Error while subscribing to push notifications");
             console.log(error);
             return null;
           }
         } else {
-          toast && toast.error("Error while subscribing to push notifications");
+          showToast &&
+            toast.error("Error while subscribing to push notifications");
           subscribe();
           return null;
         }

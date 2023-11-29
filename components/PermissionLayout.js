@@ -7,11 +7,12 @@ import toast from "react-hot-toast";
 
 function PermissionLayout({ close }) {
   const session = getSession();
+
   const TriggerPermission = async () => {
     let permission = await Notification.requestPermission();
     if (permission == "granted") {
-      let token = await subscribe(true);
       close();
+      subscribe(true);
     }
   };
   return (
