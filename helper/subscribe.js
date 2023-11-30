@@ -18,6 +18,7 @@ export const subscribe = async (showToast) => {
         if (token) {
           toast.dismiss();
           showToast && toast.success("Subscribed to push notifications");
+          console.log(token);
           try {
             await axios.post(
               "/api/fcm/update",
@@ -41,7 +42,8 @@ export const subscribe = async (showToast) => {
         } else {
           showToast &&
             toast.error("Error while subscribing to push notifications");
-          subscribe();
+
+          await subscribe();
           return null;
         }
       }
@@ -54,9 +56,11 @@ export const subscribe = async (showToast) => {
         if (reg.installing) {
         } else if (reg.waiting) {
         } else if (reg.active) {
-          subscribe();
+          toast.dismiss();
+          await subscribe(true);
         }
       });
-    subscribe();
+    toast.dismiss();
+    await subscribe(true);
   }
 };
