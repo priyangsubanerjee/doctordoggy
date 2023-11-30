@@ -48,7 +48,7 @@ export const subscribe = async (showToast) => {
     }
   } catch (error) {
     console.log("Service worker registration failed, error:", error);
-    navigator.serviceWorker
+    await navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
       .then(async function (reg) {
         if (reg.installing) {

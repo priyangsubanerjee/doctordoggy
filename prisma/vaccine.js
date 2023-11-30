@@ -1,4 +1,5 @@
 import prisma from "./prisma";
+import { getTokens } from "./token";
 
 export const scheduleVaccine = async (vaccineProp) => {
   try {
@@ -70,6 +71,52 @@ export const deleteVaccineById = async (id) => {
       },
     });
     return vaccine;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const vaccinesDueToday = async () => {
+  try {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    let parentEmails = [];
+    let tokens = [];
+    const vaccines = await prisma.vaccination.findMany({
+      where: {
+        status: "DUE",
+        dueDate: {
+          gte: today,
+          lt: tomorrow,
+        },
+      },
+    });
+    let ids = [];
+    if (vaccines.length > 0) {
+      vaccines.forEach(async (vaccine) => {
+        parentEmails.push(vaccine.parentEmail);
+      });
+    }
+
+    // if (parentEmails.length > 0) {
+    //   parentEmails.forEach(async (email) => {
+    //     const token = await prisma.token.findUnique({
+    //       where: {
+    //         email: email,
+    //       },
+    //     });
+    //     console.log(token);
+    //   });
+    // }
+
+    let fcmObject = {
+      emails: parentEmails || [],
+      title: "Vaccination Reminder",
+      body: "Your pet is due for vaccination tomorrow.",
+    };
+    return fcmObject;
   } catch (error) {
     console.log(error);
     return null;

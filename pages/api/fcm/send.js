@@ -4,14 +4,10 @@ import { getAllTokens, getTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
   const { email, title, body } = req.body;
-
   const fcms = email == "all" ? await getAllTokens() : await getTokens(email);
-
   if (!fcms) return res.status(200).json({ message: "No token found" });
-
   if (fcms.tokens.length == 0)
     return res.status(200).json({ message: "No token found" });
-
   try {
     await fetch("https://fcm.googleapis.com/fcm/send", {
       method: "POST",
