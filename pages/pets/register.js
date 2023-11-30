@@ -204,7 +204,7 @@ function RegisterPet({ canine = [], feline = [] }) {
             >
               <input
                 type="file"
-                onChange={(e) => {
+                onChange={async (e) => {
                   const file = e.target.files[0];
                   new Compressor(file, {
                     quality: 0.4,
