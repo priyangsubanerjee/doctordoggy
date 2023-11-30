@@ -207,15 +207,6 @@ function RegisterPet({ canine = [], feline = [] }) {
                 onChange={async (e) => {
                   const file = e.target.files[0];
                   setImageFile(file);
-                  //   new Compressor(file, {
-                  //     quality: 0.4,
-                  //     success(result) {
-                  //       setImageFile(result);
-                  //     },
-                  //     error(err) {
-                  //       console.log(err.message);
-                  //     },
-                  //   });
                 }}
                 name=""
                 hidden
