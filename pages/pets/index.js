@@ -1,9 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
-import { getPersonalPet } from "@/prisma/pet";
 import calculateAge from "@/helper/age";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
@@ -12,20 +9,6 @@ import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FetchPets } from "@/hooks/fetch";
 import { Spinner } from "@nextui-org/react";
-
-// export async function getServerSideProps(context) {
-//   const session = await getServerSession(context.req, context.res, authOptions);
-//   let pets = [];
-//   if (session) {
-//     pets = await getPersonalPet(session?.user?.email);
-//     pets = (await JSON.parse(JSON.stringify(pets))) || [];
-//   } else {
-//     pets = [];
-//   }
-//   return {
-//     props: { pets }, // will be passed to the page component as props
-//   };
-// }
 
 function Pets() {
   const session = useSession();
@@ -66,7 +49,7 @@ function Pets() {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+      <h1 className="text-3xl font-semibold text-center mt-10 lg:mt-16">
         Pets galaxy
       </h1>
 
@@ -95,7 +78,7 @@ function Pets() {
         <>
           <>
             {pets && (
-              <div className="lg:max-w-[75%] mx-6 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
+              <div className="lg:max-w-[75%] mx-8 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
                 {pets.map((pet) => (
                   <PetCard
                     id={pet?.id}

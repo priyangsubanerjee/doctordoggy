@@ -25,10 +25,10 @@ function PermissionLayout({ close }) {
             className="h-24 md:h-32 mx-auto lg:-ml-7"
           />
           <div className="md:ml-5 mt-4 md:mt-0">
-            <h2 className="font-semibold text-base lg:text-xl">
+            <h2 className="font-semibold text-base text-center lg:text-left lg:text-xl">
               Subscribing to push messages
             </h2>
-            <p className="text-xs lg:text-sm text-neutral-500 leading-6 mt-2">
+            <p className="text-xs lg:text-sm text-center lg:text-left text-neutral-500 leading-6 mt-2">
               We need your permission to send you notifications regarding your
               pets scheduled appointment, vaccination and other important dates.
             </p>
