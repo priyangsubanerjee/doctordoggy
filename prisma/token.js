@@ -20,6 +20,23 @@ export const getAllTokens = async () => {
   };
 };
 
+export const getFCMTokens = async (email) => {
+  let tokens =
+    email.length == 0
+      ? await prisma.token.findMany()
+      : await prisma.token.findMany({
+          where: {
+            email,
+          },
+        });
+
+  let fcmTokens = [];
+  tokens.forEach((item) => {
+    fcmTokens.push(...item.tokens);
+  });
+  return fcmTokens;
+};
+
 export const updateToken = async (email, token) => {
   let tokenExist = await getTokens(email);
   if (tokenExist) {
