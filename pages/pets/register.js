@@ -10,24 +10,12 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
 import GlobalStates from "@/context/GlobalState";
-import Router from "next/router";
+
 import {
   Autocomplete,
   AutocompleteSection,
   AutocompleteItem,
 } from "@nextui-org/react";
-
-// export async function getServerSideProps() {
-//   let breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
-//   breeds = await breeds.json();
-
-//   return {
-//     props: {
-//       canine: breeds.caninenames,
-//       feline: breeds.felinenames,
-//     },
-//   };
-// }
 
 function RegisterPet({ canine = [], feline = [] }) {
   const session = useSession();

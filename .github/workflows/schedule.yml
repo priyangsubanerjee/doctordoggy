@@ -1,0 +1,12 @@
+name: Schedule Notifications
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  send-notifications:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send notification
+        run: curl -X GET https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text="Hello world"
