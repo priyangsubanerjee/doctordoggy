@@ -4,11 +4,6 @@ import { getVaccinesDueTomorrow, vaccinesDueToday } from "@/prisma/vaccine";
 import NextCors from "nextjs-cors";
 
 export default async function handler(req, res) {
-  //   await NextCors(req, res, {
-  //     methods: ["GET"],
-  //     origin: "*",
-  //   });
-
   let tokens = [];
   let messageTitle = "Vaccinations Due Tomorrow";
   let messageBody =
