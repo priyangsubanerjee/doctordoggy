@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send notification
-        run: curl -X GET https://api.telegram.org/bot6172710878:AAGZKQR3HpNTJRJ1SJg3a_0ujAO9HeQ6lRg/sendMessage?chat_id=-1001904564145&text=Hello
+        run: curl -X POST https://api.telegram.org/bot6172710878:AAGZKQR3HpNTJRJ1SJg3a_0ujAO9HeQ6lRg/sendMessage?chat_id=-1001904564145&text=Hello
