@@ -27,7 +27,7 @@ function RegisterPet({ canine = [], feline = [] }) {
     species: "",
     breed: "",
     sex: "",
-    dateOfBirth: "",
+    dateOfBirth: new Date().toISOString().split("T")[0],
     bodyWeight: "",
     isPublic: true,
     color: "",
