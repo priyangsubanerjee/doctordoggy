@@ -9,8 +9,6 @@ export default async function handler(req, res) {
     "message send using nexjjs & vercel cronjob"
   }`;
 
-  // https://api.telegram.org/bot6172710878:AAGZKQR3HpNTJRJ1SJg3a_0ujAO9HeQ6lRg/sendMessage?chat_id=-1001904564145&text=Hello
-
   const response = await fetch(url, {
     method: "GET",
   });
