@@ -36,7 +36,9 @@ function Vaccination({ pets = [], vaccines = [] }) {
   const { updatedModal } = useContext(GlobalStates);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [selectedVaccine, setSelectedVaccine] = React.useState(null);
-  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date().toISOString().split("T")[0]
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async () => {
