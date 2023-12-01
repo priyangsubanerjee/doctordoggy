@@ -2,7 +2,7 @@ name: Schedule Notifications
 
 on:
   schedule:
-    - cron: "28 8 * * *"
+    - cron: "30 8 * * *"
 
 jobs:
   send-notifications:
