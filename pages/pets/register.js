@@ -342,7 +342,7 @@ function RegisterPet({ canine = [], feline = [] }) {
                     })
                   }
                   type="date"
-                  className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
+                  className="bg-transparent text-sm w-full h-full pl-4 appearance-none outline-none"
                   name=""
                   id="datPicker"
                 />

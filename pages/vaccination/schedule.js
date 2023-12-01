@@ -139,7 +139,7 @@ function Vaccination({ pets = [], vaccines = [] }) {
               setSelectedDate(event.target.value);
             }}
             value={selectedDate}
-            className="bg-transparent text-sm w-full pl-4 outline-none"
+            className="bg-transparent text-sm w-full h-full pl-4 outline-none"
             name=""
             id="datPicker"
           />
