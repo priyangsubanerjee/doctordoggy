@@ -130,7 +130,7 @@ function Vaccination({ pets = [], vaccines = [] }) {
         </datalist>
 
         <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-          <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+          <span className="text-sm h-full w-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
             Due date
           </span>
           <input
