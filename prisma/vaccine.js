@@ -149,3 +149,30 @@ export const getVaccinesDueTomorrow = async () => {
 
   return emails;
 };
+
+export const getVaccinesDueToday = async () => {
+  let emails = [];
+  let vaccines = [];
+  let today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  vaccines = await prisma.vaccination.findMany({
+    where: {
+      status: "DUE",
+      dueDate: {
+        gte: today,
+        lt: tomorrow,
+      },
+    },
+  });
+
+  if (vaccines.length > 0) {
+    vaccines.forEach(async (vaccine) => {
+      emails.includes(vaccine.parentEmail) == false &&
+        emails.push(vaccine.parentEmail);
+    });
+  }
+
+  return emails;
+};
