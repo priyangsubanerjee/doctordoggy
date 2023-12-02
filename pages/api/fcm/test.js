@@ -2,9 +2,9 @@ import { sendBulkNotification } from "@/helper/fcm/notifications";
 import { getFCMTokens } from "@/prisma/token";
 import NextCors from "nextjs-cors";
 
-export const config = {
-  runtime: "edge",
-};
+// export const config = {
+//   runtime: "edge",
+// };
 
 export default async function handler(req, res) {
   await NextCors(req, res, {
