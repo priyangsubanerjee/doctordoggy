@@ -155,13 +155,15 @@ export const getVaccinesDueToday = async () => {
   let vaccines = [];
   let today = new Date();
   let tomorrow = new Date(today);
+  let yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   vaccines = await prisma.vaccination.findMany({
     where: {
       status: "DUE",
       dueDate: {
-        gte: today,
+        gt: yesterday,
         lt: tomorrow,
       },
     },
