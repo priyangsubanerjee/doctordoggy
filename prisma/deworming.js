@@ -79,17 +79,13 @@ export const deleteDewormingById = async (id) => {
 };
 
 export const getDueDewormingsTomorrow = async () => {
+  let today = new Date();
+  let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+  let dayAfterTomorrow = new Date(new Date().setDate(new Date().getDate() + 2));
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
   try {
     let emails = [];
-    let today = new Date();
-    let tomorrow = new Date(today.setDate(today.getDate() + 1));
-    let dayAfterTomorrow = new Date(today.setDate(today.getDate() + 2));
-
-    console.log(
-      today.toDateString(),
-      tomorrow.toDateString(),
-      dayAfterTomorrow.toDateString()
-    );
 
     const dewormings = await prisma.deworming.findMany({
       where: {
@@ -102,6 +98,38 @@ export const getDueDewormingsTomorrow = async () => {
     });
 
     console.log(dewormings);
+
+    for (let i = 0; i < dewormings.length; i++) {
+      if (!emails.includes(dewormings[i].parentEmail)) {
+        emails.push(dewormings[i].parentEmail);
+      }
+    }
+    return emails;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getDueDewormingsToday = async () => {
+  try {
+    let emails = [];
+    let today = new Date();
+    let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+    let dayAfterTomorrow = new Date(
+      new Date().setDate(new Date().getDate() + 2)
+    );
+    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+    const dewormings = await prisma.deworming.findMany({
+      where: {
+        dueDate: {
+          gt: yesterday,
+          lt: tomorrow,
+        },
+        status: "DUE",
+      },
+    });
 
     for (let i = 0; i < dewormings.length; i++) {
       if (!emails.includes(dewormings[i].parentEmail)) {

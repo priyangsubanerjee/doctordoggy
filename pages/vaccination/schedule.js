@@ -46,10 +46,8 @@ function Vaccination() {
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [selectedVaccine, setSelectedVaccine] = React.useState(null);
   const [selectedDate, setSelectedDate] = React.useState(() => {
-    let date = new Date();
-    let tomorrow = new Date(date);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toISOString().split("T")[0];
+    let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+    return tomorrow.toLocaleDateString("en-CA");
   });
   const [isLoading, setIsLoading] = React.useState(false);
   const [pageLoaded, setPageLoaded] = React.useState(false);

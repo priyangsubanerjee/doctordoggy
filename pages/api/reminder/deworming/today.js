@@ -1,13 +1,13 @@
 import { sendBulkNotification } from "@/helper/fcm/notifications";
-import { getDueDewormingsTomorrow } from "@/prisma/deworming";
+import { getDueDewormingsToday } from "@/prisma/deworming";
 import { getFCMTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
   let tokens = [];
-  let messageTitle = "Dewormings Due Tomorrow";
+  let messageTitle = "Dewormings Due Today";
   let messageBody =
-    "You have scheduled dewormings for your pets tomorrow. Please check the app for more details.";
-  const emails = await getDueDewormingsTomorrow();
+    "You have scheduled dewormings for your pets today. Please check the app for more details.";
+  const emails = await getDueDewormingsToday();
 
   for (let i = 0; i < emails.length; i++) {
     let userTokens = await getFCMTokens(emails[i]);

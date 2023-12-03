@@ -127,10 +127,9 @@ export const getVaccinesDueTomorrow = async () => {
   let emails = [];
   let vaccines = [];
   let today = new Date();
-  let tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  let dayAfterTomorrow = new Date(today);
-  dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+  let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+  let dayAfterTomorrow = new Date(new Date().setDate(new Date().getDate() + 2));
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
   vaccines = await prisma.vaccination.findMany({
     where: {
@@ -156,10 +155,9 @@ export const getVaccinesDueToday = async () => {
   let emails = [];
   let vaccines = [];
   let today = new Date();
-  let tomorrow = new Date(today);
-  let yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  tomorrow.setDate(tomorrow.getDate() + 1);
+  let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+  let dayAfterTomorrow = new Date(new Date().setDate(new Date().getDate() + 2));
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
   vaccines = await prisma.vaccination.findMany({
     where: {

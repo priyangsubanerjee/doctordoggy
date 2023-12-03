@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   let tokens = [];
   let messageTitle = "Vaccinations Due Today";
   let messageBody =
-    "You have schedules vaccinations for your pets today. Please check the app for more details.";
+    "You have scheduled vaccinations for your pets today. Please check the app for more details.";
   const emails = await getVaccinesDueToday();
 
   for (let i = 0; i < emails.length; i++) {
