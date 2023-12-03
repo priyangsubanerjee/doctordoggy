@@ -145,3 +145,12 @@ model Token {
   tokens    String[]
   createdAt DateTime @default(now())
 }
+
+
+model Booster{
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    image String[]
+    description String?
+    createdAt DateTime @default(now())
+}
