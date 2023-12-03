@@ -154,3 +154,12 @@ model Booster{
     description String?
     createdAt DateTime @default(now())
 }
+
+model Dewormer{
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    name String
+    type String
+    image String[]
+    description String?
+    createdAt DateTime @default(now())
+}
