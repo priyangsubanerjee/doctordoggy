@@ -90,12 +90,14 @@ export const getDueDewormingsTomorrow = async () => {
     const dewormings = await prisma.deworming.findMany({
       where: {
         dueDate: {
-          gte: tomorrow,
-          lt: dayAfterTomorrow,
+          gt: today,
+          lte: tomorrow,
         },
         status: "DUE",
       },
     });
+
+    console.log(dewormings);
 
     for (let i = 0; i < dewormings.length; i++) {
       if (!emails.includes(dewormings[i].parentEmail)) {
