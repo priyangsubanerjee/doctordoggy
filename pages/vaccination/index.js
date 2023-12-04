@@ -112,7 +112,7 @@ function VaccinationHistory({}) {
   };
   return (
     <div className="pb-16">
-      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
+      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
         Vaccination History
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">

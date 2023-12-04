@@ -155,7 +155,7 @@ function Deworming() {
 
   return (
     <div className="pb-16">
-      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
+      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
         Schedule Deworming
       </h1>
       <div className="flex items-center justify-center space-x-2 mt-4">
@@ -267,7 +267,7 @@ function Deworming() {
                     setSelectedDate(event.target.value);
                   }}
                   value={selectedDate}
-                  className="h-full text-left bg-transparent text-sm min-w-[200px] w-full pl-4 outline-none appearance-none"
+                  className="bg-transparent text-sm w-full h-full pl-4 outline-none"
                   name=""
                   id="datPicker"
                 />

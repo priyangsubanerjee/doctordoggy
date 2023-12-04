@@ -97,8 +97,6 @@ export const getDueDewormingsTomorrow = async () => {
       },
     });
 
-    console.log(dewormings);
-
     for (let i = 0; i < dewormings.length; i++) {
       if (!emails.includes(dewormings[i].parentEmail)) {
         emails.push(dewormings[i].parentEmail);
