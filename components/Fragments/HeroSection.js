@@ -10,6 +10,7 @@ import Router, { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import PermissionLayout from "../PermissionLayout";
 import toast from "react-hot-toast";
+import { searchMenu } from "@/static/searchMenu";
 
 // TODO: Make the search bar functional
 // TODO: Migrate all the static data to static.js file
@@ -21,6 +22,9 @@ function HeroSection() {
   const [pets, setPets] = React.useState([]);
   const [isPermissionLayoutVisible, setIsPermissionLayoutVisible] =
     React.useState(false);
+
+  const [query, setQuery] = React.useState("");
+  const [searchResults, setSearchResults] = React.useState([]);
 
   useEffect(() => {
     if (session?.data?.user?.email) {
@@ -156,21 +160,37 @@ function HeroSection() {
             className="h-full w-full object-cover"
             alt=""
           />
-          <div className="absolute inset-0 z-10 lg:pb-20 flex items-center lg:items-end justify-center bg-gradient-to-b from-transparent to-black/50">
-            <div className="h-12 lg:h-16 bg-white border w-[93%] lg:w-[60%] rounded-md flex items-center overflow-hidden">
-              <input
-                type="text"
-                className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
-                placeholder="Search for a service or a product"
-                name=""
-                id=""
-              />
-              <button className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full">
-                <Icon
-                  icon="iconoir:search"
-                  className="text-2xl text-gray-900"
+          <div className="absolute inset-0 z-10 lg:pb-32 flex items-center lg:items-end justify-center bg-gradient-to-b from-transparent to-black/50">
+            <div className="relative w-[93%] lg:w-[60%]">
+              <div className="h-12 lg:h-16 bg-white border rounded-md flex items-center overflow-hidden">
+                <input
+                  type="text"
+                  className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
+                  placeholder="Search for a service or a product"
+                  name=""
+                  id=""
                 />
-              </button>
+                <button className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full">
+                  <Icon
+                    icon="iconoir:search"
+                    className="text-2xl text-gray-900"
+                  />
+                </button>
+              </div>
+              {/* <div className="absolute inset-x-0 w-full top-20 h-96 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
+                {searchMenu.map((item, i) => (
+                  <div
+                    className="flex items-center justify-between px-4 py-2 border-b"
+                    key={i}
+                  >
+                    <Link href={item.url}>{item.name}</Link>
+                    <Icon
+                      icon="iconoir:chevron-right"
+                      className="text-xl text-gray-500"
+                    />
+                  </div>
+                ))}
+              </div> */}
             </div>
           </div>
         </div>

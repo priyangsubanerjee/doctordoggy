@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/react";
 import { Avatar, Button, Chip, User } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -18,10 +18,13 @@ function Navbar() {
   const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
+  const [allowed, setAllowed] = React.useState(false);
 
-  const InfoBar = ({}) => {
-    return (
-      <div className="bg-slate-950 text-sm py-3 text-center text-white font-light">
+  const [state, setState] = React.useState(0);
+
+  const infoBarContents = [
+    <>
+      <div className="flex items-center justify-center w-full shrink-0">
         This site is under development.
         <Button
           onClick={() => Router.push("/dev")}
@@ -31,6 +34,80 @@ function Navbar() {
         >
           Learn more
         </Button>
+      </div>
+    </>,
+    <>
+      <div className="flex items-center justify-center w-full shrink-0">
+        This site is under development.
+        <Button
+          onClick={() => Router.push("/dev")}
+          radius="full"
+          size="sm"
+          className="ml-3"
+        >
+          Learn more
+        </Button>
+      </div>
+    </>,
+    <>
+      <div className="flex items-center justify-center w-full shrink-0">
+        This site is under development.
+        <Button
+          onClick={() => Router.push("/dev")}
+          radius="full"
+          size="sm"
+          className="ml-3"
+        >
+          Learn more
+        </Button>
+      </div>
+    </>,
+  ];
+
+  // increment the state every 5 seconds to show different info bar content
+  useEffect(() => {
+    if (allowed) {
+      const interval = setInterval(() => {
+        setState((state) => (state + 1) % 3);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [allowed]);
+
+  useEffect(() => {
+    if (allowed) {
+      if (state < infoBarContents.length) {
+        let container = document.getElementById("container");
+        let width = container.clientWidth;
+        container.scrollLeft = container.scrollLeft + width;
+      } else {
+        let container = document.getElementById("container");
+        let width = container.clientWidth;
+        container.scrollLeft = 0;
+      }
+    }
+  }, [state, allowed, infoBarContents.length]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAllowed(true);
+    }, 5000);
+  }, []);
+
+  const InfoBar = ({}) => {
+    return (
+      <div className="relative overflow-hidden bg-red-200">
+        <div className="w-[40%] z-30 absolute bg-gradient-to-r from-slate-950 to-transparent left-0 inset-y-0"></div>
+        <div
+          id="container"
+          onClick={() => {}}
+          className="bg-slate-950 relative text-sm py-3 flex overflow-hidden text-center text-white font-light scroll-smooth"
+        >
+          {infoBarContents.map((content, index) => {
+            return <>{content}</>;
+          })}
+        </div>
+        <div className="w-[40%] z-30 absolute bg-gradient-to-r to-slate-950 from-transparent right-0 inset-y-0"></div>
       </div>
     );
   };
