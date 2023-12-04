@@ -135,8 +135,8 @@ export const getVaccinesDueTomorrow = async () => {
     where: {
       status: "DUE",
       dueDate: {
-        gte: tomorrow,
-        lt: dayAfterTomorrow,
+        gt: today,
+        lte: tomorrow,
       },
     },
   });
