@@ -38,14 +38,14 @@ function Navbar() {
     </>,
     <>
       <div className="flex items-center justify-center w-full shrink-0">
-        This site is under development.
+        Vaccination is scheduled tomorrow.
         <Button
           onClick={() => Router.push("/dev")}
           radius="full"
           size="sm"
           className="ml-3"
         >
-          Learn more
+          See all
         </Button>
       </div>
     </>,
