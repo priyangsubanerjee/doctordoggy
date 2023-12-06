@@ -69,18 +69,15 @@ function Navbar() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(s.current);
       let container = document.getElementById("container");
       let width = container.clientWidth;
       if (s.current == null) {
         container.scrollLeft = container.scrollLeft + width;
         s.current = 1;
       } else if (s.current < infoBarContents.length - 1) {
-        console.log("scrolling");
         container.scrollLeft = container.scrollLeft + width;
         s.current = s.current + 1;
       } else {
-        console.log("resetting");
         container.scrollLeft = 0;
         s.current = 0;
       }
