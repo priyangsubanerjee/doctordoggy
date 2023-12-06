@@ -55,7 +55,7 @@ function Services() {
     return (
       <div
         className={`flex flex-col items-center justify-center ${
-          index == 3 ? "lg:col-span-3" : "col-span-1"
+          index == 3 ? "md:col-span-3" : "col-span-1"
         }`}
       >
         <img

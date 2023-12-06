@@ -89,9 +89,9 @@ function Navbar() {
   }, [state, allowed, infoBarContents.length]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setAllowed(true);
-    }, 5000);
+    // setTimeout(() => {
+    //   setAllowed(true);
+    // }, 5000);
   }, []);
 
   const InfoBar = ({}) => {

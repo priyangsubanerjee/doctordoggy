@@ -32,7 +32,7 @@ function StepsToEnjoy() {
         style={{
           backgroundImage: `url(${image})`,
         }}
-        className="w-full overflow-hidden rounded-2xl bg-cover bg-no-repeat transform transition-all duration-300 lg:hover:scale-105 z-0"
+        className="w-full h-full overflow-hidden rounded-2xl bg-cover bg-no-repeat transform transition-all duration-300 lg:hover:scale-105 z-0"
       >
         <div className="h-full w-full bg-gradient-to-b from-transparent to-black/50 p-8 flex flex-col lg:min-h-[300px] z-0">
           <h3 className="border border-white text-white tracking-wider text-xs w-fit px-3 py-1 rounded-full font-medium">
@@ -61,7 +61,7 @@ function StepsToEnjoy() {
         {stepsList.map((step, i) => (
           <StepCard {...step} key={i} index={i} />
         ))}
-        <div className="lg:col-span-3 w-full bg-slate-100 rounded-2xl py-10 px-6 flex flex-col items-center justify-center">
+        <div className="md:col-span-3 w-full bg-slate-100 rounded-2xl py-10 px-6 flex flex-col items-center justify-center">
           <img
             src="https://cdn-icons-png.flaticon.com/512/3249/3249904.png"
             alt=""
