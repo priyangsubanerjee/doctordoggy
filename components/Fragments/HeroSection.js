@@ -56,7 +56,7 @@ function HeroSection() {
   }, [session.status]);
 
   useEffect(() => {
-    if (query.length > 0) {
+    if (query.length > 0 && query != " ") {
       let results = [];
       searchMenu.forEach((item) => {
         if (item.name.toLowerCase().includes(query.toLowerCase())) {
@@ -202,7 +202,7 @@ function HeroSection() {
               </div>
 
               {searchResults.length > 0 && (
-                <div className="absolute inset-x-0 w-full py-4 px-4 top-20 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
+                <div className="absolute inset-x-0 w-full py-4 px-4 top-16 lg:top-20 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
                   {searchResults.map((item, i) => (
                     <Link key={i} href={item.url}>
                       <div
