@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 import PermissionLayout from "../PermissionLayout";
 import toast from "react-hot-toast";
 import { searchMenu } from "@/static/searchMenu";
+import { has } from "lodash";
 
 // TODO: Make the search bar functional
 // TODO: Migrate all the static data to static.js file
@@ -23,6 +24,7 @@ function HeroSection() {
   const [isPermissionLayoutVisible, setIsPermissionLayoutVisible] =
     React.useState(false);
 
+  const [hasFocus, setHasFocus] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
 
@@ -52,6 +54,20 @@ function HeroSection() {
   useEffect(() => {
     refreshStatus();
   }, [session.status]);
+
+  useEffect(() => {
+    if (query.length > 0) {
+      let results = [];
+      searchMenu.forEach((item) => {
+        if (item.name.toLowerCase().includes(query.toLowerCase())) {
+          results.push(item);
+        }
+      });
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  }, [query]);
 
   const refreshStatus = async () => {
     if (
@@ -165,6 +181,10 @@ function HeroSection() {
               <div className="h-12 lg:h-16 bg-white border rounded-md flex items-center overflow-hidden">
                 <input
                   type="text"
+                  value={query}
+                  onFocus={() => setHasFocus(true)}
+                  onBlur={() => setHasFocus(false)}
+                  onChange={(e) => setQuery(e.target.value)}
                   className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
                   placeholder="Search for a service or a product"
                   name=""
@@ -172,25 +192,35 @@ function HeroSection() {
                 />
                 <button className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full">
                   <Icon
-                    icon="iconoir:search"
+                    onClick={() => setQuery("")}
+                    icon={
+                      query.length > 0 ? "ep:close" : "fluent:search-24-regular"
+                    }
                     className="text-2xl text-gray-900"
                   />
                 </button>
               </div>
-              {/* <div className="absolute inset-x-0 w-full top-20 h-96 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
-                {searchMenu.map((item, i) => (
-                  <div
-                    className="flex items-center justify-between px-4 py-2 border-b"
-                    key={i}
-                  >
-                    <Link href={item.url}>{item.name}</Link>
-                    <Icon
-                      icon="iconoir:chevron-right"
-                      className="text-xl text-gray-500"
-                    />
-                  </div>
-                ))}
-              </div> */}
+
+              {searchResults.length > 0 && (
+                <div className="absolute inset-x-0 w-full py-4 px-4 top-20 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
+                  {searchResults.map((item, i) => (
+                    <Link key={i} href={item.url}>
+                      <div
+                        className="flex text-neutral-600 text-sm items-center rounded-md px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                        key={i}
+                      >
+                        <Icon height={18} icon={item.icon} />
+                        <span className="ml-5">{item.name}</span>
+
+                        <Icon
+                          className="ml-auto"
+                          icon="icon-park-outline:right"
+                        />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
