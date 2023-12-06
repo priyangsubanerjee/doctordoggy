@@ -145,7 +145,7 @@ function VaccinationHistory({}) {
       {vaccinations != null && (
         <>
           {vaccinations.length != 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 lg:max-w-6xl lg:mx-auto px-5">
               {vaccinations.map((vaccine, index) => (
                 <VaccineCard key={index} vaccine={vaccine} />
               ))}

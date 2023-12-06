@@ -148,7 +148,7 @@ function DewormingRepository() {
       )}
       {dewormings != null && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto px-5">
             {dewormings.map((record, index) => (
               <DewormingCard key={index} deworming={record} />
             ))}
