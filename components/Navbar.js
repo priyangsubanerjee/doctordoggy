@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { Avatar, Button, Chip, User } from "@nextui-org/react";
 import { signOut, useSession } from "next-auth/react";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -13,8 +14,10 @@ import {
 import { Link } from "@nextui-org/react";
 import Router, { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
+import { set } from "lodash";
 
 function Navbar() {
+  var s = useRef(null);
   const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
   const session = useSession();
   const router = useRouter();
@@ -38,22 +41,22 @@ function Navbar() {
     </>,
     <>
       <div className="flex items-center justify-center w-full shrink-0">
-        Vaccination is scheduled tomorrow.
+        Get your pets vaccinated now!
         <Button
-          onClick={() => Router.push("/dev")}
+          onClick={() => Router.push("/vaccination/schedule")}
           radius="full"
           size="sm"
           className="ml-3"
         >
-          See all
+          Schedule
         </Button>
       </div>
     </>,
     <>
       <div className="flex items-center justify-center w-full shrink-0">
-        This site is under development.
+        Want us to remind next deworming?
         <Button
-          onClick={() => Router.push("/dev")}
+          onClick={() => Router.push("/deworming/schedule")}
           radius="full"
           size="sm"
           className="ml-3"
@@ -64,39 +67,30 @@ function Navbar() {
     </>,
   ];
 
-  // increment the state every 5 seconds to show different info bar content
   useEffect(() => {
-    if (allowed) {
-      const interval = setInterval(() => {
-        setState((state) => (state + 1) % 3);
-      }, 5000);
-      return () => clearInterval(interval);
-    }
-  }, [allowed]);
-
-  useEffect(() => {
-    if (allowed) {
-      if (state < infoBarContents.length) {
-        let container = document.getElementById("container");
-        let width = container.clientWidth;
+    const interval = setInterval(() => {
+      console.log(s.current);
+      let container = document.getElementById("container");
+      let width = container.clientWidth;
+      if (s.current == null) {
         container.scrollLeft = container.scrollLeft + width;
+        s.current = 1;
+      } else if (s.current < infoBarContents.length - 1) {
+        console.log("scrolling");
+        container.scrollLeft = container.scrollLeft + width;
+        s.current = s.current + 1;
       } else {
-        let container = document.getElementById("container");
-        let width = container.clientWidth;
+        console.log("resetting");
         container.scrollLeft = 0;
+        s.current = 0;
       }
-    }
-  }, [state, allowed, infoBarContents.length]);
-
-  useEffect(() => {
-    // setTimeout(() => {
-    //   setAllowed(true);
-    // }, 5000);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const InfoBar = ({}) => {
     return (
-      <div className="relative overflow-hidden bg-red-200">
+      <div className="relative overflow-hidden">
         <div className="w-[15%] lg:w-[40%] z-30 absolute bg-gradient-to-r from-slate-950 to-transparent left-0 inset-y-0"></div>
         <div
           id="container"
