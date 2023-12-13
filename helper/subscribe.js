@@ -10,14 +10,11 @@ export const subscribe = async (showToast) => {
   try {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       if (Notification.permission == "granted") {
-        showToast && toast.loading("Subscribing to push notifications");
         const token = await getToken(messaging, {
           vapidKey:
             "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
         });
         if (token) {
-          toast.dismiss();
-          showToast && toast.success("Subscribed to push notifications");
           console.log(token);
           try {
             await axios.post(
