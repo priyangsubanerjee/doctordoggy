@@ -16,7 +16,7 @@ function StepsToEnjoy() {
       description:
         "Choose a date and time that is convenient for you and your pet. We will take care of the rest.",
       image:
-        "https://slidescorner.com/wp-content/uploads/2022/08/01-free-background-image-ppt-google-slides.jpg",
+        "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D",
     },
     {
       title: "Have Relax",

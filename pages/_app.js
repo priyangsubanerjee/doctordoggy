@@ -7,6 +7,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider, getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import { Analytics } from "@vercel/analytics/react";
 
 // using next auth for authentication and next ui for styling
 // TODO: add next seo for seo
@@ -42,6 +43,7 @@ export default function App({
             <Sidebar />
             <Component {...pageProps} />
             <ProcessingModal />
+            <Analytics />
           </Layout>
         </NextUIProvider>
       </SessionProvider>
