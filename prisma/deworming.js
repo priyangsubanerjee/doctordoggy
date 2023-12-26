@@ -113,16 +113,15 @@ export const getDueDewormingsToday = async () => {
   try {
     let emails = [];
     let today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
-    let dayAfterTomorrow = new Date(
-      new Date().setDate(new Date().getDate() + 2)
-    );
-    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    tomorrow.setHours(0, 0, 0, 0);
 
     const dewormings = await prisma.deworming.findMany({
       where: {
         dueDate: {
-          gt: yesterday,
+          gte: today,
           lt: tomorrow,
         },
         status: "DUE",
