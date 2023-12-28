@@ -773,7 +773,7 @@ function PetDashboard({
 
   if (customCode == 100) {
     return (
-      <div>
+      <div className="pb-44">
         <div className="relative">
           <div className="h-48 lg:h-80 w-full overflow-hidden relative">
             <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>

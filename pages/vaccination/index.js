@@ -116,16 +116,14 @@ function VaccinationHistory({}) {
         Vaccination History
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
-        <a
-          href="/vaccination/schedule"
-          rel="noreferrer noopener"
-          className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer"
-        >
-          <span>Schedule vaccination</span>
-          <span className="translate-y-[1px]">
-            <Icon icon="formkit:right" />
-          </span>
-        </a>
+        <Link href="/vaccination/schedule">
+          <div className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer">
+            <span>Schedule vaccination</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </div>
+        </Link>
         <Link
           href={"/vaccination/schedule"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
