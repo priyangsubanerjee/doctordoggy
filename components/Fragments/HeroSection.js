@@ -190,7 +190,10 @@ function HeroSection() {
                   name=""
                   id=""
                 />
-                <button className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full">
+                <button
+                  name="search-submit"
+                  className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full"
+                >
                   <Icon
                     onClick={() => setQuery("")}
                     icon={

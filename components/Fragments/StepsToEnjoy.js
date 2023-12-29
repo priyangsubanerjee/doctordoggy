@@ -35,9 +35,9 @@ function StepsToEnjoy() {
         className="w-full h-full overflow-hidden rounded-2xl bg-cover bg-no-repeat transform transition-all duration-300 lg:hover:scale-105 z-0"
       >
         <div className="h-full w-full bg-gradient-to-b from-transparent to-black/50 p-8 flex flex-col lg:min-h-[300px] z-0">
-          <h3 className="border border-white text-white tracking-wider text-xs w-fit px-3 py-1 rounded-full font-medium">
+          <h1 className="border border-white text-white tracking-wider text-xs w-fit px-3 py-1 rounded-full font-medium">
             STEP {index + 1}
-          </h3>
+          </h1>
           <p className="text-white text-2xl font-semibold mt-10 lg:mt-16">
             {title}
           </p>
