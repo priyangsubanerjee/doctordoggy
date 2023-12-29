@@ -16,13 +16,13 @@ export const searchMenu = [
   {
     id: 3,
     name: "Dewormings",
-    url: "/dewormings",
+    url: "/deworming",
     icon: "tabler:medicine-syrup",
   },
   {
     id: 3,
     name: "Schedule deworming",
-    url: "/dewormings/schedule",
+    url: "/deworming/schedule",
     icon: "solar:calendar-linear",
   },
   {
