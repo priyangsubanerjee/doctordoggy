@@ -5,6 +5,7 @@ import HeroSection from "@/components/Fragments/HeroSection";
 import Services from "@/components/Fragments/Services";
 import StepsToEnjoy from "@/components/Fragments/StepsToEnjoy";
 import Founders from "@/components/Fragments/Founders";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,9 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main>
+      <Head>
+        <title>Doctor Doggy | Home</title>
+      </Head>
       <HeroSection />
       <Services />
       <StepsToEnjoy />
