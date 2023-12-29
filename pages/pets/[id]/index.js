@@ -13,6 +13,8 @@ import {
   Input,
   Select,
   SelectItem,
+  Skeleton,
+  Spinner,
   Switch,
 } from "@nextui-org/react";
 import calculateAge from "@/helper/age";
@@ -94,6 +96,7 @@ function PetDashboard({
 
   const [tabChooserOpen, setTabChooserOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+  const [pageLoaded, setPageLoaded] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -771,56 +774,72 @@ function PetDashboard({
     );
   };
 
-  if (customCode == 100) {
-    return (
-      <div className="pb-44">
-        <div className="relative">
-          <div className="h-48 lg:h-80 w-full overflow-hidden relative">
-            <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
-            <img
-              src={pet.image}
-              className="object-cover w-full h-full blur-2xl opacity-50"
-              alt=""
-            />
-          </div>
-          <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
-            <div className="relative">
-              {isParent && (
-                <div className="absolute bottom-3 right-4">
-                  <QuickAction />
-                </div>
-              )}
+  if (pageLoaded) {
+    if (customCode == 100) {
+      return (
+        <div className="pb-44">
+          <div className="relative">
+            <div className="h-48 lg:h-80 w-full overflow-hidden relative">
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
               <img
                 src={pet.image}
-                className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
+                className="object-cover w-full h-full blur-2xl opacity-50"
                 alt=""
               />
             </div>
+            <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
+              <div className="relative">
+                {isParent && (
+                  <div className="absolute bottom-3 right-4">
+                    <QuickAction />
+                  </div>
+                )}
+                <img
+                  src={pet.image}
+                  className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+            {pet.name.split(" ")[0]}&apos;s{" "}
+            <span className="opacity-60">
+              {pet.sex == "male" ? "Palace" : "Castle"}
+            </span>
+          </h1>
+          <p className="text-center mt-2 text-sm text-neutral-700">
+            Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
+          </p>
+          <Tabs />
+          <TabChooser />
+          <ActiveTab />
+        </div>
+      );
+    } else if (customCode == 101) {
+      return (
+        <div>
+          <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+            This pet is currently private. Please ask the owner to make it
+            public.
+          </h1>
+        </div>
+      );
+    } else if (customCode == 102) {
+    }
+  } else {
+    return (
+      <>
+        <div className="mt-20">
+          <div className="flex items-center justify-center space-x-2 mt-4 text-sm">
+            <p>This page is currently loading, please wait.</p>
+          </div>
+          <div className="flex flex-col items-center justify-center mt-16">
+            <Spinner size="lg" color="primary" />
           </div>
         </div>
-        <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
-          {pet.name.split(" ")[0]}&apos;s{" "}
-          <span className="opacity-60">
-            {pet.sex == "male" ? "Palace" : "Castle"}
-          </span>
-        </h1>
-        <p className="text-center mt-2 text-sm text-neutral-700">
-          Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
-        </p>
-        <Tabs />
-        <TabChooser />
-        <ActiveTab />
-      </div>
+      </>
     );
-  } else if (customCode == 101) {
-    return (
-      <div>
-        <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
-          This pet is currently private. Please ask the owner to make it public.
-        </h1>
-      </div>
-    );
-  } else if (customCode == 102) {
   }
 }
 
