@@ -651,7 +651,7 @@ function PetDashboard({
     return (
       <>
         <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
-          {prescriptions.map((prescription, index) => (
+          {prescriptions.reverse().map((prescription, index) => (
             <PrescriptionCard key={index} prescription={prescription} />
           ))}
         </div>
