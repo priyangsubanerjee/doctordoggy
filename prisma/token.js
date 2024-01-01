@@ -21,9 +21,8 @@ export const getAllTokens = async () => {
 };
 
 export const getFCMTokens = async (email) => {
-  console.log(email);
   let tokens =
-    email.length == 0
+    email.length == 0 || email == undefined
       ? await prisma.token.findMany()
       : await prisma.token.findMany({
           where: {
