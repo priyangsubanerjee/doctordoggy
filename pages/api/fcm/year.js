@@ -4,7 +4,7 @@ import { sendBulkNotification } from "@/helper/fcm/notifications";
 import { getFCMTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
-  const fcms = await getFCMTokens(email);
+  const fcms = await getFCMTokens();
   if (!fcms) return res.status(200).json({ message: "No token found" });
   if (fcms.length == 0)
     return res.status(200).json({ message: "No token found" });
