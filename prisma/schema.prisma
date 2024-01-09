@@ -21,17 +21,17 @@ model Partner {
   state          String
   country        String
   landmark       String?
-  phone          String   
+  phone          String
   email          String?   @unique
   verified       Boolean   @default(false)
   services       String[]
   doesHaveClinic Boolean   @default(false)
   gstin          String?
+  tradeLicense   String?
   images         String[]
   staffCount     Int
   createdAt      DateTime  @default(now())
   service        Service[]
-
 }
 
 model Service {
@@ -39,20 +39,19 @@ model Service {
   name         String
   price        Int
   partner      Partner  @relation(fields: [partnerEmail], references: [email])
-  partnerEmail   String  
+  partnerEmail String
   parent       User?    @relation(fields: [parentEmail], references: [email])
   parentEmail  String?
   createdAt    DateTime @default(now())
   pet          Pet      @relation(fields: [petId], references: [id])
-  petId        String  @db.ObjectId
+  petId        String   @db.ObjectId
   dateIn       DateTime
-    dateOut      DateTime
-    timeIn       String
-    timeOut      String
-    status       String
-    notes        String?
-    files        String[]
-
+  dateOut      DateTime
+  timeIn       String
+  timeOut      String
+  status       String
+  notes        String?
+  files        String[]
 }
 
 model File {
@@ -100,7 +99,6 @@ model Pet {
   dewormings    Deworming[]
   pathologies   Pathology[]
   services      Service[]
-
 }
 
 model Vaccination {
