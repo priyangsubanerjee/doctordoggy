@@ -18,6 +18,7 @@ import {
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { FetchPrescriptions } from "@/hooks/fetch";
+import { useRouter } from "next/router";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -37,6 +38,7 @@ import { FetchPrescriptions } from "@/hooks/fetch";
 // }
 
 function Prescriptions() {
+  const router = useRouter();
   let session = useSession();
   const [prescriptions, setPrescriptions] = React.useState(null);
 
@@ -72,6 +74,7 @@ function Prescriptions() {
             className="h-6 w-6 rounded-full object-cover"
             alt=""
           />
+
           <p className="text-xs ml-2 text-neutral-500">{prescription.name}</p>
           <p className="ml-auto mr-2 flex items-center space-x-1"></p>
           <Dropdown>
@@ -84,10 +87,12 @@ function Prescriptions() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/prescription/${prescription.id}/delete`;
+                    router.push(`/prescription/${prescription.id}/delete`);
+                    //window.location.href = `/prescription/${prescription.id}/delete`;
                     break;
                   case "certificate":
-                    window.location.href = `/prescription/${prescription.id}/`;
+                    router.push(`/prescription/${prescription.id}/`);
+                    //window.location.href = `/prescription/${prescription.id}/`;
                     break;
                   default:
                     break;
@@ -103,9 +108,11 @@ function Prescriptions() {
           </Dropdown>
         </div>
         <div className="mt-3">
-          <h1 className="text-base font-semibold text-neutral-700">
-            {prescription.reasonOfVisit}
-          </h1>
+          <Link href={`/prescription/${prescription.id}`}>
+            <h1 className="text-base font-semibold text-neutral-700 hover:text-blue-600 cursor-pointer">
+              {prescription.reasonOfVisit}
+            </h1>
+          </Link>
           <div className="flex items-center mt-3">
             <Icon icon="solar:calendar-line-duotone" />
             <p className="text-sm text-neutral-500 ml-2">

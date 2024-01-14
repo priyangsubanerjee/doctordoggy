@@ -87,19 +87,20 @@ function HeroSection() {
 
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
-      <div
-        onClick={() => router.push(href)}
-        className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
-      >
-        <img src={icon} alt="" className="h-12" />
-        <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
-        <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
-          <span>{buttonText}</span>
-          <span className="translate-y-[1px]">
-            <Icon icon="formkit:right" />
-          </span>
-        </button>
-      </div>
+      <Link key={index} href={href}>
+        <div
+          className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
+        >
+          <img src={icon} alt="" className="h-12" />
+          <p className="text-base lg:text-xl font-semibold mt-5">{title}</p>
+          <button className="flex items-center text-blue-600 space-x-2 text-sm mt-2 hover:underline">
+            <span>{buttonText}</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </button>
+        </div>
+      </Link>
     );
   };
 

@@ -175,6 +175,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
                   );
                 })}
               </div>
+              <div className="space-y-3 mt-4"></div>
             </div>
             {isParent && (
               <div className="p-5 rounded-md mt-24 border">
