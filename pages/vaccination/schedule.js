@@ -194,10 +194,7 @@ function Vaccination() {
             <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
               <p className="text-sm text-neutral-700 hidden lg:block">
                 Already vaccinated?{" "}
-                <Link
-                  className="text-blue-600 ml-1"
-                  href="/vaccination/certificate"
-                >
+                <Link className="text-blue-600 ml-1" href="/join-waitlist">
                   Upload certificate
                 </Link>
               </p>
@@ -212,10 +209,7 @@ function Vaccination() {
             </div>
             <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
               Already vaccinated?{" "}
-              <Link
-                className="text-blue-600 ml-1"
-                href="/vaccination/certificate"
-              >
+              <Link className="text-blue-600 ml-1" href="/join-waitlist">
                 Upload certificate
               </Link>
             </p>

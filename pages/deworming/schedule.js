@@ -164,7 +164,7 @@ function Deworming() {
         </p>
         <Link
           href={
-            "https://www.bergencountyveterinarycenter.com/importance-of-pet-vaccinations.html"
+            "https://www.dogseechew.in/blog/deworming-for-dogs-how-often-do-dogs-need-to-be-dewormed#:~:text=It%20is%20really%20important%20to,dogs%20is%20an%20absolute%20necessity!"
           }
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
@@ -276,10 +276,7 @@ function Deworming() {
             <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
               <p className="text-sm text-neutral-700 hidden lg:block">
                 Already dewormed?{" "}
-                <Link
-                  className="text-blue-600 ml-1"
-                  href="/vaccination/certificate"
-                >
+                <Link className="text-blue-600 ml-1" href="/join-waitlist">
                   Upload deworming record
                 </Link>
               </p>
@@ -294,10 +291,7 @@ function Deworming() {
             </div>
             <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
               Already dewormed?{" "}
-              <Link
-                className="text-blue-600 ml-1"
-                href="/vaccination/certificate"
-              >
+              <Link className="text-blue-600 ml-1" href="/join-waitlist">
                 Upload deworming record
               </Link>
             </p>

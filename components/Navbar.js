@@ -28,41 +28,32 @@ function Navbar() {
   const infoBarContents = [
     <>
       <div className="flex items-center justify-center w-full shrink-0">
-        This site is under development.
-        <Button
-          onClick={() => Router.push("/dev")}
-          radius="full"
-          size="sm"
-          className="ml-3"
-        >
-          Learn more
-        </Button>
+        Partners program is live!
+        <Link href="https://partners.doctordoggy.vet">
+          <Button radius="full" size="sm" className="ml-3">
+            Learn more
+          </Button>
+        </Link>
       </div>
     </>,
     <>
       <div className="flex items-center justify-center w-full shrink-0">
         Get your pets vaccinated now!
-        <Button
-          onClick={() => Router.push("/vaccination/schedule")}
-          radius="full"
-          size="sm"
-          className="ml-3"
-        >
-          Schedule
-        </Button>
+        <Link href="/vaccination/schedule">
+          <Button radius="full" size="sm" className="ml-3">
+            Schedule
+          </Button>
+        </Link>
       </div>
     </>,
     <>
       <div className="flex items-center justify-center w-full shrink-0">
         Want us to remind next deworming?
-        <Button
-          onClick={() => Router.push("/deworming/schedule")}
-          radius="full"
-          size="sm"
-          className="ml-3"
-        >
-          Learn more
-        </Button>
+        <Link href="/deworming/schedule">
+          <Button radius="full" size="sm" className="ml-3">
+            Learn more
+          </Button>
+        </Link>
       </div>
     </>,
   ];

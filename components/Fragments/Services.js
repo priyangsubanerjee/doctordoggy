@@ -19,7 +19,7 @@ function Services() {
       description:
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
       image:
-        "https://images.ctfassets.net/rt5zmd3ipxai/KfR9K0atj0FZz7Pt4dEZc/d7bcddf90192725bdc2480ac096ddb67/campk9_exterior.jpg?fit=fill&fm=webp&h=480&w=782&q=72,%20https://images.ctfassets.net/rt5zmd3ipxai/KfR9K0atj0FZz7Pt4dEZc/d7bcddf90192725bdc2480ac096ddb67/campk9_exterior.jpg?fit=fill&fm=webp&h=960&w=1564&q=72",
+        "https://vetmed.tamu.edu/news/wp-content/uploads/sites/9/2018/05/20150804-doghouse.jpg",
       buttonText: "Learn more",
       buttonLink: "",
     },
@@ -64,7 +64,7 @@ function Services() {
           alt=""
         />
         <h2 className="lg:text-lg font-bold mt-5">{title}</h2>
-        <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-5 line-clamp-2 mt-2">
+        <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-6 line-clamp-2 mt-2">
           {description}
         </p>
         <Link href={buttonLink} className="mt-3 block">
