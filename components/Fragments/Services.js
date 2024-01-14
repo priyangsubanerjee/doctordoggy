@@ -67,16 +67,14 @@ function Services() {
         <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-5 line-clamp-2 mt-2">
           {description}
         </p>
-        <div href={buttonLink} className="mt-3 block">
-          <a>
-            <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
-              <span>{buttonText}</span>
-              <span className="translate-y-[1px]">
-                <Icon icon="formkit:right" />
-              </span>
-            </button>
-          </a>
-        </div>
+        <a href={buttonLink} className="mt-3 block">
+          <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+            <span>{buttonText}</span>
+            <span className="translate-y-[1px]">
+              <Icon icon="formkit:right" />
+            </span>
+          </button>
+        </a>
       </div>
     );
   };
