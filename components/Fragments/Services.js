@@ -19,7 +19,7 @@ function Services() {
       description:
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
       image:
-        "https://www.pawspace.in/wp-content/uploads/2021/10/benefit-of-home-dog-boarding.jpg",
+        "https://images.ctfassets.net/rt5zmd3ipxai/KfR9K0atj0FZz7Pt4dEZc/d7bcddf90192725bdc2480ac096ddb67/campk9_exterior.jpg?fit=fill&fm=webp&h=480&w=782&q=72,%20https://images.ctfassets.net/rt5zmd3ipxai/KfR9K0atj0FZz7Pt4dEZc/d7bcddf90192725bdc2480ac096ddb67/campk9_exterior.jpg?fit=fill&fm=webp&h=960&w=1564&q=72",
       buttonText: "Learn more",
       buttonLink: "",
     },
@@ -67,14 +67,14 @@ function Services() {
         <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-5 line-clamp-2 mt-2">
           {description}
         </p>
-        <a href={buttonLink} className="mt-3 block">
+        <Link href={buttonLink} className="mt-3 block">
           <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
             <span>{buttonText}</span>
             <span className="translate-y-[1px]">
               <Icon icon="formkit:right" />
             </span>
           </button>
-        </a>
+        </Link>
       </div>
     );
   };

@@ -88,7 +88,7 @@ function HeroSection() {
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
       <div
-        onClick={() => router.replace(href)}
+        onClick={() => router.push(href)}
         className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
       >
         <img src={icon} alt="" className="h-12" />
