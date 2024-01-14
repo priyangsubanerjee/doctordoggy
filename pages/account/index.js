@@ -132,7 +132,7 @@ function Account() {
   };
 
   return (
-    <div className="lg:px-44 px-6 py-20 lg:py-16">
+    <div className="lg:px-44 px-6 py-16 lg:py-16">
       <h1 className="text-2xl lg:text-3xl font-medium">Account</h1>
       <div className="flex items-center space-x-2 mt-3 text-neutral-600 text-xs lg:text-sm">
         <span>Unable to access this page?</span>
