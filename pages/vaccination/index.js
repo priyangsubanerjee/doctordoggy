@@ -38,6 +38,7 @@ import { FetchVaccinations } from "@/hooks/fetch";
 
 function VaccinationHistory({}) {
   const session = useSession();
+  const router = useRouter();
   const [vaccinations, setVaccinations] = React.useState(null);
 
   useEffect(() => {
@@ -73,8 +74,13 @@ function VaccinationHistory({}) {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/vaccination/${vaccine.id}/delete`;
+                    router.push(`/vaccination/${vaccine.id}/delete`);
                     break;
+
+                  case "update":
+                    router.push(`/vaccination/${vaccine.id}/update`);
+                    break;
+
                   default:
                     break;
                 }
@@ -82,7 +88,7 @@ function VaccinationHistory({}) {
               aria-label="Static Actions"
             >
               <DropdownItem key="certificate">Certificate</DropdownItem>
-              <DropdownItem key="copy">Update record</DropdownItem>
+              <DropdownItem key="update">Update record</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
               </DropdownItem>
