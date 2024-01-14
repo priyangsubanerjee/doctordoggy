@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 function Services() {
+  const router = useRouter();
+
   const servicesList = [
     {
       title: "Grooming & Spa",
@@ -67,14 +70,19 @@ function Services() {
         <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-5 line-clamp-2 mt-2">
           {description}
         </p>
-        <Link href={buttonLink} className="mt-3 block">
+        <div
+          onClick={() => {
+            router.push(buttonLink);
+          }}
+          className="mt-3 block"
+        >
           <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
             <span>{buttonText}</span>
             <span className="translate-y-[1px]">
               <Icon icon="formkit:right" />
             </span>
           </button>
-        </Link>
+        </div>
       </div>
     );
   };

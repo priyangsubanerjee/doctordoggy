@@ -15,6 +15,8 @@ model Partner {
   name           String
   regisNo        String?
   password       String?
+  needPassReset  Boolean   @default(true)
+  oneTimePass    String?
   address        String
   pincode        String
   city           String
@@ -24,34 +26,34 @@ model Partner {
   phone          String
   email          String?   @unique
   verified       Boolean   @default(false)
-  services       String[]
   doesHaveClinic Boolean   @default(false)
   gstin          String?
   tradeLicense   String?
   images         String[]
-  staffCount     Int
+  staffCount     String?
+  workingDays    String[]
+  servicesPromised String[]
+  services       Service[]
   createdAt      DateTime  @default(now())
-  service        Service[]
+  agreedTerms    Boolean  @default(false)
 }
 
 model Service {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
-  price        Int
-  partner      Partner  @relation(fields: [partnerEmail], references: [email])
-  partnerEmail String
-  parent       User?    @relation(fields: [parentEmail], references: [email])
-  parentEmail  String?
+  type         String
+  description  String?
+  image        String[]
+  partner      Partner  @relation(fields: [partnerId], references: [id])
+  partnerId String  @db.ObjectId
+  estDuration     String
+  estPrice        Int
   createdAt    DateTime @default(now())
-  pet          Pet      @relation(fields: [petId], references: [id])
-  petId        String   @db.ObjectId
-  dateIn       DateTime
-  dateOut      DateTime
-  timeIn       String
-  timeOut      String
-  status       String
-  notes        String?
-  files        String[]
+  isActive       String?  @default("active")
+  daysActive   String[]
+  hoursActive  String[]
+  isPromoted   Boolean  @default(false)
+  prmotionEndsAt DateTime? 
 }
 
 model File {
@@ -76,7 +78,6 @@ model User {
   dewormings    Deworming[]
   pathologies   Pathology[]
   tokens        Token[]
-  service       Service[]
 }
 
 model Pet {
@@ -98,7 +99,6 @@ model Pet {
   prescriptions Prescription[]
   dewormings    Deworming[]
   pathologies   Pathology[]
-  services      Service[]
 }
 
 model Vaccination {
