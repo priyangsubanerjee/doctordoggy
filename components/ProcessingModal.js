@@ -16,7 +16,7 @@ function ProcessingModal() {
     <>
       {procesingModalOpen && (
         <div className="fixed inset-0 h-full w-full bg-black/50 flex items-center justify-center z-40">
-          <div className="w-[95%] lg:w-[450px] bg-white rounded-lg overflow-hidden">
+          <div className="w-[95%] lg:w-[450px] max-w-[450px] bg-white rounded-lg overflow-hidden">
             <img
               src="https://cdn.dribbble.com/users/2054184/screenshots/6335402/framesequence-dog.gif"
               alt=""

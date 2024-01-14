@@ -178,3 +178,29 @@ export const getVaccinesDueToday = async () => {
 
   return emails;
 };
+
+export const updateVaccineById = async (
+  id,
+  status,
+  doneDate,
+  doneBy,
+  files
+) => {
+  try {
+    const vaccine = await prisma.vaccination.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: status,
+        doneDate: doneDate,
+        doneBy: doneBy,
+        files: files,
+      },
+    });
+    return { vaccine };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

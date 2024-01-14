@@ -59,8 +59,13 @@ function VaccinationHistory({}) {
             className="h-6 w-6 rounded-full object-cover"
             alt=""
           />
-          <p className="text-xs ml-2 text-neutral-500">{vaccine.name}</p>
-          <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+          <p className="text-xs ml-2 text-neutral-800">{vaccine.name}</p>
+          <p
+            style={{
+              background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
+            }}
+            className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
+          >
             {vaccine.status}
           </p>
           <Dropdown>
