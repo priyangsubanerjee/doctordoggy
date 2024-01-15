@@ -79,7 +79,7 @@ function Navbar() {
   const InfoBar = ({}) => {
     return (
       <div className="relative overflow-hidden">
-        <div className="w-[15%] lg:w-[40%] z-30 absolute bg-gradient-to-r from-slate-950 to-transparent left-0 inset-y-0"></div>
+        <div className="w-0 md:w-[15%] lg:w-[40%] z-30 absolute bg-gradient-to-r from-slate-950 to-transparent left-0 inset-y-0"></div>
         <div
           id="container"
           onClick={() => {}}
