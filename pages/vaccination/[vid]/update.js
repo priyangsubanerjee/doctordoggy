@@ -49,6 +49,7 @@ function Update() {
           }
         }
         fileUrls = [...vaccinatonProp.filesPresent, ...fileUrls];
+        updatedModal(true, "Updating vaccination record");
         try {
           let { data } = await axios.post("/api/vaccine/update", {
             id: router.query.vid,
@@ -134,7 +135,9 @@ function Update() {
           dueDate: data.vaccination.dueDate,
           filesPresent: data.vaccination.files,
           doneBy: data.vaccination.doneBy,
-          vaccinatedOn: data.vaccination.doneDate.split("T")[0],
+          vaccinatedOn: data.vaccination.doneDate
+            ? data.vaccination?.doneDate?.split("T")[0]
+            : new Date().toLocaleDateString("en-CA"),
         });
         setPageLoaded(true);
       }

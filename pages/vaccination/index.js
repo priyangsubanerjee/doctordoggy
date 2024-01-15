@@ -136,10 +136,10 @@ function VaccinationHistory({}) {
           </div>
         </Link>
         <Link
-          href={"/join-waitlist?ref=find-vaccination-centres"}
+          href={"/vaccination/uploadOld"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
-          <span>Find centres</span>
+          <span>Upload old records</span>
           <span className="translate-y-[1px]">
             <Icon icon="formkit:right" />
           </span>

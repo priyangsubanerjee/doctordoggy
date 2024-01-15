@@ -204,3 +204,26 @@ export const updateVaccineById = async (
     return null;
   }
 };
+
+export const uploadOldVaccine = async (vaccinatonProp) => {
+  try {
+    const vaccine = await prisma.vaccination.create({
+      data: {
+        status: "DONE",
+        vaccineName: vaccinatonProp.vaccineName,
+        petId: vaccinatonProp.petId,
+        name: vaccinatonProp.name,
+        image: vaccinatonProp.image,
+        parentEmail: vaccinatonProp.parent,
+        doneBy: vaccinatonProp.doneBy,
+        dueDate: vaccinatonProp.dueDate,
+        doneDate: vaccinatonProp.doneDate,
+        files: vaccinatonProp.files,
+      },
+    });
+    return { vaccine };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};

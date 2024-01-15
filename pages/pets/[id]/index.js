@@ -96,7 +96,7 @@ function PetDashboard({
 
   const [tabChooserOpen, setTabChooserOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
-  const [pageLoaded, setPageLoaded] = useState(true);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -114,6 +114,12 @@ function PetDashboard({
       );
     })();
   }, [isPublic, pet?.id]);
+
+  useEffect(() => {
+    if (pet) {
+      setPageLoaded(true);
+    }
+  }, [pet]);
 
   const Capitalize = (str) => {
     if (str == null) return "--";

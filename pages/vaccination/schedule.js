@@ -53,6 +53,17 @@ function Vaccination() {
   const [pageLoaded, setPageLoaded] = React.useState(false);
 
   const handleSubmit = async () => {
+    if (!selectedPet) {
+      toast.error("Please select a pet");
+      return;
+    } else if (!selectedVaccine) {
+      toast.error("Please select a vaccine");
+      return;
+    } else if (!selectedDate) {
+      toast.error("Please select a date");
+      return;
+    }
+
     updatedModal(true, "Scheduling vaccination");
     setIsLoading(true);
     const vaccineProp = {
