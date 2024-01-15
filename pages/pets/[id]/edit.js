@@ -190,9 +190,19 @@ function EditProfile({ pet, canine, feline }) {
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files[0];
+                  console.log(
+                    "Size before compression",
+                    file.size / 1024 / 1024
+                  );
+
                   new Compressor(file, {
-                    quality: 0.4,
+                    quality: 0,
                     success(result) {
+                      console.log("compressed");
+                      console.log(
+                        "Size after compression",
+                        result.size / 1024 / 1024
+                      );
                       setImageFile(result);
                     },
                     error(err) {

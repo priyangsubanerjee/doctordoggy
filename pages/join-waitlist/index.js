@@ -6,7 +6,7 @@ import React from "react";
 
 function Waitlist() {
   return (
-    <div className="pb-16 px-4">
+    <div className="pb-16">
       <div className="relative">
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/007/100/608/small_2x/abstract-geometric-white-and-gray-on-light-silver-gradient-background-modern-banner-design-illustration-free-vector.jpg"
@@ -38,12 +38,14 @@ function Waitlist() {
             />
           </div>
           <div className="flex items-center justify-between mt-10">
-            <button
-              type="button"
-              className="text-sm mr-4 text-neutral-600 hover:underline"
-            >
-              Cancel and go back
-            </button>
+            <Link href={"/"}>
+              <button
+                type="button"
+                className="text-sm mr-4 text-neutral-600 hover:underline"
+              >
+                Cancel and go back
+              </button>
+            </Link>
             <Button
               type="submit"
               className="bg-black text-white rounded-md text-sm"

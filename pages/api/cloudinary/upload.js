@@ -1,6 +1,6 @@
 import formidable from "formidable";
 import { v2 as cloudinary } from "cloudinary";
-
+import sharp from "sharp";
 // Store environment variables in your .env.local file
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -27,6 +27,11 @@ export default async function handler(req, res) {
       });
     });
 
+    let fileFinal = await sharp(file.filepath)
+      .resize(500)
+      .toFile(`./public/${file.name}`);
+
+    console.log("Uploading image to cloudinary");
     const data = await cloudinary.uploader.unsigned_upload(
       file.filepath,
       "ilwilnmq"
