@@ -147,7 +147,7 @@ function Prescriptions() {
           </div>
         </Link>
         <a
-          href={"/vaccination/schedule"}
+          href={"/join-waitlist?ref=find-help"}
           rel="noreferrer noopener"
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >

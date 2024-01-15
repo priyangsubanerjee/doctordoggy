@@ -131,7 +131,7 @@ function DewormingRepository() {
           </span>
         </button>
         <Link
-          href={"/vaccination/schedule"}
+          href={"/join-waitlist?ref=find-help"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
           <span>Find help</span>

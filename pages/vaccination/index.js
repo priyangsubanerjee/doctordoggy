@@ -136,7 +136,7 @@ function VaccinationHistory({}) {
           </div>
         </Link>
         <Link
-          href={"/vaccination/schedule"}
+          href={"/join-waitlist?ref=find-vaccination-centres"}
           className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
         >
           <span>Find centres</span>

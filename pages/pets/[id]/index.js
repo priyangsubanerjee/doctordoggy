@@ -199,7 +199,12 @@ function PetDashboard({
             alt=""
           />
           <p className="text-xs ml-2 text-neutral-500">{vaccine.name}</p>
-          <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+          <p
+            style={{
+              background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
+            }}
+            className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
+          >
             {vaccine.status}
           </p>
           <Dropdown>
@@ -216,8 +221,12 @@ function PetDashboard({
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/vaccination/${vaccine.id}/delete?redirect=${window.location}`;
+                    router.push(
+                      `/vaccination/${vaccine.id}/delete?redirect=${window.location}`
+                    );
                     break;
+                  case "update":
+                    router.push(`/vaccination/${vaccine.id}/update`);
                   default:
                     break;
                 }

@@ -12,7 +12,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import { set } from "lodash";
 
@@ -28,11 +28,11 @@ function Navbar() {
   const infoBarContents = [
     <>
       <div className="flex items-center justify-center w-full shrink-0">
-        Partners program is live!
-        <Link href="https://partners.doctordoggy.vet">
-          <Button radius="full" size="sm" className="ml-3">
-            Learn more
-          </Button>
+        <span className="mr-2 text-base">🎊</span> Partners program is live!
+        <Link className="ml-2" href="https://partners.doctordoggy.vet">
+          <button className="text-black bg-white py-1 px-3 rounded-full text-xs">
+            Join
+          </button>
         </Link>
       </div>
     </>,
@@ -40,7 +40,7 @@ function Navbar() {
       <div className="flex items-center justify-center w-full shrink-0">
         Get your pets vaccinated now!
         <Link href="/vaccination/schedule">
-          <Button radius="full" size="sm" className="ml-3">
+          <Button radius="full" size="sm" className="ml-3 bg-white">
             Schedule
           </Button>
         </Link>
@@ -49,32 +49,28 @@ function Navbar() {
     <>
       <div className="flex items-center justify-center w-full shrink-0">
         Want us to remind next deworming?
-        <Link href="/deworming/schedule">
-          <Button radius="full" size="sm" className="ml-3">
-            Learn more
-          </Button>
-        </Link>
+        <Link href="/deworming/schedule">Schedule</Link>
       </div>
     </>,
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      let container = document.getElementById("container");
-      let width = container.clientWidth;
-      if (s.current == null) {
-        container.scrollLeft = container.scrollLeft + width;
-        s.current = 1;
-      } else if (s.current < infoBarContents.length - 1) {
-        container.scrollLeft = container.scrollLeft + width;
-        s.current = s.current + 1;
-      } else {
-        container.scrollLeft = 0;
-        s.current = 0;
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  //   useEffect(() => {
+  //     const interval = setInterval(() => {
+  //       let container = document.getElementById("container");
+  //       let width = container.clientWidth;
+  //       if (s.current == null) {
+  //         container.scrollLeft = container.scrollLeft + width;
+  //         s.current = 1;
+  //       } else if (s.current < infoBarContents.length - 1) {
+  //         container.scrollLeft = container.scrollLeft + width;
+  //         s.current = s.current + 1;
+  //       } else {
+  //         container.scrollLeft = 0;
+  //         s.current = 0;
+  //       }
+  //     }, 5000);
+  //     return () => clearInterval(interval);
+  //   }, []);
 
   const InfoBar = ({}) => {
     return (
@@ -83,7 +79,7 @@ function Navbar() {
         <div
           id="container"
           onClick={() => {}}
-          className="bg-slate-950 relative text-sm py-3 flex overflow-hidden text-center text-white font-light scroll-smooth"
+          className="relative text-sm py-3 flex overflow-hidden text-center text-white font-light scroll-smooth bg-neutral-900 bg-no-repeat bg-cover"
         >
           {infoBarContents.map((content, index) => {
             return <>{content}</>;
@@ -191,13 +187,13 @@ function Navbar() {
           </li>
           <li
             className="cursor-pointer"
-            onClick={() => Router.push("/dev/progress")}
+            onClick={() => router.push("/join-waitlist?ref=about-navbar")}
           >
             About
           </li>
           <li
             className="cursor-pointer"
-            onClick={() => Router.push("/dev/progress")}
+            onClick={() => router.push("/join-waitlist?ref=services-navbar")}
           >
             Services
           </li>
