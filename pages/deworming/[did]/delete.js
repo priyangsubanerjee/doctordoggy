@@ -20,6 +20,13 @@ export async function getServerSideProps(context) {
     if (record) {
       if (session?.user?.email == record.parentEmail) {
         isParent = true;
+      } else {
+        return {
+          redirect: {
+            permanent: false,
+            destination: "/deworming",
+          },
+        };
       }
     }
   }

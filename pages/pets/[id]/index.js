@@ -175,6 +175,7 @@ function PetDashboard({
                     router.push(
                       `/deworming/${deworming.id}/delete?redirect=${window.location}`
                     );
+                    break;
                   case "done":
                     toast.loading("Updating status...");
                     UpdateStatus(deworming.id, "DONE");
@@ -182,6 +183,7 @@ function PetDashboard({
                   case "due":
                     toast.loading("Updating status...");
                     UpdateStatus(deworming.id, "DUE");
+                    break;
                   default:
                     break;
                 }
