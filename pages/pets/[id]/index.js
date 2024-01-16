@@ -253,7 +253,7 @@ function PetDashboard({
         </div>
         <div className="mt-3">
           <Link href={`/vaccination/${vaccine.id}/certificate`}>
-            <h1 className="text-base font-semibold text-neutral-700">
+            <h1 className="text-base hover:text-blue-600 font-semibold text-neutral-700">
               {vaccine.vaccineName}
             </h1>
           </Link>
