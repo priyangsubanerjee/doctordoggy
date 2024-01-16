@@ -19,6 +19,8 @@ import { useRouter } from "next/router";
 import { getDewormingsByEmail } from "@/prisma/deworming";
 import { useSession } from "next-auth/react";
 import { FetchDewormings } from "@/hooks/fetch";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -49,7 +51,24 @@ function DewormingRepository() {
     });
   }, [session.status]);
 
+  const UpdateStatus = async (id, status) => {
+    let { data } = await axios.post(
+      "/api/deworming/update",
+      { id, status },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (data.deworming) {
+      toast.success(data.message);
+      router.reload();
+    }
+  };
+
   const DewormingCard = ({ deworming }) => {
+    console.log(deworming);
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">
@@ -59,7 +78,12 @@ function DewormingRepository() {
             alt=""
           />
           <p className="text-xs ml-2 text-neutral-500">{deworming.name}</p>
-          <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+          <p
+            style={{
+              background: deworming.status == "DUE" ? "#000" : "rgb(37 99 235)",
+            }}
+            className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
+          >
             {deworming.status}
           </p>
           <Dropdown>
@@ -73,8 +97,16 @@ function DewormingRepository() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/deworming/${deworming.id}/delete?redirect=${window.location}`;
+                    router.push(
+                      `/deworming/${deworming.id}/delete?redirect=${window.location}`
+                    );
+                  case "done":
+                    toast.loading("Updating status...");
+                    UpdateStatus(deworming.id, "DONE");
                     break;
+                  case "due":
+                    toast.loading("Updating status...");
+                    UpdateStatus(deworming.id, "DUE");
                   default:
                     break;
                 }
@@ -82,7 +114,12 @@ function DewormingRepository() {
               aria-label="Static Actions"
             >
               <DropdownItem key="certificate">Certificate</DropdownItem>
-              <DropdownItem key="copy">Update record</DropdownItem>
+              {deworming.status == "DUE" ? (
+                <DropdownItem key="done">Mark as done</DropdownItem>
+              ) : (
+                <DropdownItem key="due">Mark as due</DropdownItem>
+              )}
+
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
               </DropdownItem>
@@ -93,19 +130,36 @@ function DewormingRepository() {
           <h1 className="text-base font-semibold text-neutral-700">
             {deworming.medicineName}
           </h1>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              Due on{" "}
-              <span className="text-neutral-700">
-                {new Date(deworming.dueDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
-          </div>
+
+          {deworming.status == "DONE" ? (
+            <div className="flex items-center mt-3">
+              <Icon icon="solar:calendar-line-duotone" />
+              <p className="text-sm text-neutral-500 ml-2">
+                Done on{" "}
+                <span className="text-neutral-700">
+                  {new Date(deworming.doneDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div className="flex items-center mt-3">
+              <Icon icon="solar:calendar-line-duotone" />
+              <p className="text-sm text-neutral-500 ml-2">
+                Due on{" "}
+                <span className="text-neutral-700">
+                  {new Date(deworming.dueDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </p>
+            </div>
+          )}
           <div className="flex items-center mt-3">
             <Icon icon="icon-park-solid:medicine-bottle-one" />
             <p className="text-sm text-neutral-500 ml-2">{deworming.dosage}</p>

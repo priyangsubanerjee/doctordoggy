@@ -139,3 +139,21 @@ export const getDueDewormingsToday = async () => {
     return null;
   }
 };
+
+export const updateDewormingStatusById = async (id, status) => {
+  try {
+    const deworming = await prisma.deworming.update({
+      where: {
+        id: id,
+      },
+      data: {
+        status: status,
+        doneDate: status == "DONE" ? new Date().toISOString() : null,
+      },
+    });
+    return deworming;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
