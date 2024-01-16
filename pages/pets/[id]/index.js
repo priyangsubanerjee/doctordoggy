@@ -226,6 +226,9 @@ function PetDashboard({
               }
               onAction={(key) => {
                 switch (key) {
+                  case "certificate":
+                    router.push(`/vaccination/${vaccine.id}/certificate`);
+                    break;
                   case "delete":
                     router.push(
                       `/vaccination/${vaccine.id}/delete?redirect=${window.location}`

@@ -114,35 +114,40 @@ function Update() {
 
   useEffect(() => {
     (async () => {
-      let { data } = await axios.post(
-        "/api/vaccine/getbyid",
-        {
-          id: router.query.vid,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+      if (session.status == "authenticated") {
+        let { data } = await axios.post(
+          "/api/vaccine/getbyid",
+          {
+            id: router.query.vid,
           },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (data.vaccination) {
+          console.log(data.vaccination.parentEmail, session.data.user.email);
+          if (data.vaccination.parentEmail != session.data.user.email) {
+            router.push("/vaccination");
+          } else {
+            setVaccinationProp({
+              ...vaccinatonProp,
+              name: data.vaccination.name,
+              vaccineName: data.vaccination.vaccineName,
+              dueDate: data.vaccination.dueDate,
+              filesPresent: data.vaccination.files,
+              doneBy: data.vaccination.doneBy,
+              vaccinatedOn: data.vaccination.doneDate
+                ? data.vaccination?.doneDate?.split("T")[0]
+                : new Date().toLocaleDateString("en-CA"),
+            });
+            setPageLoaded(true);
+          }
         }
-      );
-
-      if (data.vaccination) {
-        console.log(data.vaccination);
-        setVaccinationProp({
-          ...vaccinatonProp,
-          name: data.vaccination.name,
-          vaccineName: data.vaccination.vaccineName,
-          dueDate: data.vaccination.dueDate,
-          filesPresent: data.vaccination.files,
-          doneBy: data.vaccination.doneBy,
-          vaccinatedOn: data.vaccination.doneDate
-            ? data.vaccination?.doneDate?.split("T")[0]
-            : new Date().toLocaleDateString("en-CA"),
-        });
-        setPageLoaded(true);
       }
     })();
-  }, [router.query.vid]);
+  }, [router.query.vid, session.status]);
 
   return (
     <div className="pb-16">
