@@ -78,10 +78,12 @@ function VaccinationHistory({}) {
               disabledKeys={vaccine.status == "DUE" ? ["certificate"] : []}
               onAction={(key) => {
                 switch (key) {
+                  case "certificate":
+                    router.push(`/vaccination/${vaccine.id}/certificate`);
+                    break;
                   case "delete":
                     router.push(`/vaccination/${vaccine.id}/delete`);
                     break;
-
                   case "update":
                     router.push(`/vaccination/${vaccine.id}/update`);
                     break;

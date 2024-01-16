@@ -40,7 +40,7 @@ function Layout({ children }) {
         unsubscribe(); // Unsubscribe from the onMessage event
       };
     } else {
-      console.log("Service worker is not available");
+      console.error("Service worker is not available");
     }
   }, []);
 
