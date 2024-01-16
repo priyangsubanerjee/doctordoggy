@@ -252,9 +252,11 @@ function PetDashboard({
           </Dropdown>
         </div>
         <div className="mt-3">
-          <h1 className="text-base font-semibold text-neutral-700">
-            {vaccine.vaccineName}
-          </h1>
+          <Link href={`/vaccination/${vaccine.id}/certificate`}>
+            <h1 className="text-base font-semibold text-neutral-700">
+              {vaccine.vaccineName}
+            </h1>
+          </Link>
           <div className="flex items-center mt-3">
             <Icon icon="solar:calendar-line-duotone" />
             <p className="text-sm text-neutral-500 ml-2">
