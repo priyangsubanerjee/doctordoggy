@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 import GlobalStates from "@/context/GlobalState";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import prisma from "@/prisma/prisma";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -104,8 +105,9 @@ function Vaccination() {
       if (session.status === "authenticated") {
         let pets = [];
         let vaccines = [];
-        vaccines = await fetch("/api/booster/get");
-        vaccines = await vaccines.json();
+        let response = await axios.get("/api/booster/get");
+        vaccines = response.data;
+
         pets = await axios.post(
           "/api/pet/get",
           {
@@ -153,7 +155,7 @@ function Vaccination() {
           </div>
         ) : (
           <>
-            <div className="mt-10 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
+            <div className="mt-10 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3 text-b max-w-2xl md:max-w-4xl mx-auto px-5">
               <Select
                 onChange={(event) => {
                   setSelectedPet(
@@ -202,10 +204,13 @@ function Vaccination() {
                 />
               </div>
             </div>
-            <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
-              <p className="text-sm text-neutral-700 hidden lg:block">
+            <div className="mt-10 max-w-2xl md:max-w-4xl px-5 mx-auto flex items-center justify-between">
+              <p className="text-sm text-neutral-700 hidden lg:block mr-2">
                 Already vaccinated?{" "}
-                <Link className="text-blue-600 ml-1" href="/join-waitlist">
+                <Link
+                  className="text-blue-600 ml-1"
+                  href="/vaccination/uploadOld"
+                >
                   Upload certificate
                 </Link>
               </p>
@@ -220,7 +225,10 @@ function Vaccination() {
             </div>
             <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
               Already vaccinated?{" "}
-              <Link className="text-blue-600 ml-1" href="/join-waitlist">
+              <Link
+                className="text-blue-600 ml-1"
+                href="/vaccination/uploadOld"
+              >
                 Upload certificate
               </Link>
             </p>
