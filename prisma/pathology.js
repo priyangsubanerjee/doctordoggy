@@ -2,7 +2,7 @@ import prisma from "./prisma";
 
 export async function uploadPathologyReport(report) {
   try {
-    const newReport = await prisma.pathology.create({
+    await prisma.pathology.create({
       data: {
         petId: report.petId,
         name: report.name,
@@ -17,10 +17,16 @@ export async function uploadPathologyReport(report) {
         notes: report.notes,
       },
     });
-    return newReport;
+    return {
+      success: true,
+      message: "Pathology report uploaded successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 }
 
@@ -59,10 +65,16 @@ export async function deletePathologyReportById(id) {
         id: id,
       },
     });
-    return report;
+    return {
+      success: true,
+      message: "Report deleted successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
   }
 }
 
