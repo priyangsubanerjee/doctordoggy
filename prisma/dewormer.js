@@ -18,9 +18,15 @@ export const createDewormer = async (name, type) => {
 export const getDewormers = async () => {
   try {
     const dewormers = await prisma.dewormer.findMany();
-    return dewormers;
+    return {
+      success: true,
+      dewormers: dewormers,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      dewormers: [],
+    };
   }
 };

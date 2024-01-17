@@ -185,12 +185,12 @@ function Navbar() {
           <li className="cursor-pointer" onClick={() => router.push("/")}>
             Home
           </li>
-          <li
+          {/* <li
             className="cursor-pointer"
             onClick={() => router.push("/join-waitlist?ref=about-navbar")}
           >
             About
-          </li>
+          </li> */}
           <li
             className="cursor-pointer"
             onClick={() => router.push("/join-waitlist?ref=services-navbar")}
@@ -205,6 +205,12 @@ function Navbar() {
             className="cursor-pointer"
           >
             Vaccination
+          </li>
+          <li
+            onClick={() => router.push("/deworming")}
+            className="cursor-pointer"
+          >
+            Deworming
           </li>
           <li>
             <Dropdown>
@@ -235,10 +241,10 @@ function Navbar() {
                 }}
                 aria-label="Static Actions"
               >
-                <DropdownItem key="vc">Vaccinations</DropdownItem>
                 <DropdownItem key="ps">Prescriptions</DropdownItem>
-                <DropdownItem key="de">Dewormings</DropdownItem>
                 <DropdownItem key="pa">Pathology</DropdownItem>
+                <DropdownItem key="vc">Vaccinations</DropdownItem>
+                <DropdownItem key="de">Dewormings</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </li>

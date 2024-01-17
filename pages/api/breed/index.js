@@ -1,5 +1,4 @@
-import { createBreed, getBreeds } from "@/prisma/breed";
-import axios from "axios";
+import { getBreeds } from "@/prisma/breed";
 
 export default async function handler(req, res) {
   let { success, breeds } = await getBreeds();

@@ -127,8 +127,10 @@ function Deworming() {
       if (session.status === "authenticated") {
         let pets = [];
         let medicines = [];
-        medicines = await fetch("/api/dewormer/get");
-        medicines = await medicines.json();
+        let dewormerRequest = await axios.get("/api/dewormer/get");
+        medicines = dewormerRequest.data.success
+          ? dewormerRequest.data.dewormers
+          : [];
         console.log(medicines);
         console.log(session?.data?.user?.email);
         pets = await fetch("/api/pet/get", {
@@ -229,7 +231,7 @@ function Deworming() {
                   Dosage
                 </span>
                 <input
-                  type="text"
+                  type="tel"
                   placeholder="0"
                   onChange={(event) => {
                     setDosage({
