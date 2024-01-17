@@ -60,7 +60,7 @@ function Services() {
       >
         <img
           src={image}
-          className="h-[100px] lg:h-[150px] w-[100px] lg:w-[150px] object-cover rounded-full lg:rounded-full"
+          className="h-[100px] lg:h-[150px] w-[100px] lg:w-[150px] object-cover rounded-2xl lg:rounded-2xl"
           alt=""
         />
         <h2 className="lg:text-lg font-bold mt-5">{title}</h2>

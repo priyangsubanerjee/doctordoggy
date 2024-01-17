@@ -26,6 +26,7 @@ import { getPrescriptionsByPetId } from "@/prisma/prescription";
 import { getPathologyReportsByPetId } from "@/prisma/pathology";
 import { getDewormingsByPetId } from "@/prisma/deworming";
 import toast from "react-hot-toast";
+import { FetchDewormings } from "@/hooks/fetch";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -138,8 +139,10 @@ function PetDashboard({
       }
     );
     if (data.deworming) {
+      let dewormings = await FetchDewormings(pet.parentEmail);
+      console.log(dewormings);
       toast.success(data.message);
-      router.reload();
+      //router.reload();
     }
   };
 
@@ -168,7 +171,10 @@ function PetDashboard({
               </button>
             </DropdownTrigger>
             <DropdownMenu
-              disabledKeys={deworming.status == "DUE" ? ["certificate"] : []}
+              disabledKeys={
+                (deworming.status == "DUE" ? ["certificate"] : [],
+                !isParent ? ["delete", "done", "due"] : [])
+              }
               onAction={(key) => {
                 switch (key) {
                   case "delete":
@@ -190,13 +196,11 @@ function PetDashboard({
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
               {deworming.status == "DUE" ? (
                 <DropdownItem key="done">Mark as done</DropdownItem>
               ) : (
                 <DropdownItem key="due">Mark as due</DropdownItem>
               )}
-
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
               </DropdownItem>
@@ -271,8 +275,8 @@ function PetDashboard({
             </DropdownTrigger>
             <DropdownMenu
               disabledKeys={
-                (!isParent ? ["delete", "update"] : [],
-                vaccine.status == "DUE" ? ["certificate"] : [])
+                (vaccine.status == "DUE" ? ["certificate"] : [],
+                !isParent ? ["update", "delete"] : [])
               }
               onAction={(key) => {
                 switch (key) {
@@ -587,8 +591,8 @@ function PetDashboard({
 
   const GeneralTab = ({}) => {
     return (
-      <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-7 ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
+      <div className="max-w-3xl px-3 mx-auto pb-16 mt-10 lg:mt-7 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3">
           <div className="border h-16 rounded-md relative flex items-center px-4">
             <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
               Name
@@ -694,7 +698,7 @@ function PetDashboard({
   const VaccinationTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {vaccinations.map((vaccine, index) => (
             <VaccineCard key={index} vaccine={vaccine} />
           ))}
@@ -722,7 +726,7 @@ function PetDashboard({
   const PrescriptionTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 mx-3 mx-auto pb-16 mt-10 lg:mt-7">
           {prescriptions.reverse().map((prescription, index) => (
             <PrescriptionCard key={index} prescription={prescription} />
           ))}
@@ -751,7 +755,7 @@ function PetDashboard({
   const DewormingTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {dewormings.map((report, index) => (
             <DewormingCard key={index} deworming={report} />
           ))}
@@ -780,7 +784,7 @@ function PetDashboard({
   const PathologyTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 gap-2 lg:grid-cols-2 mx-5 lg:mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {pathologyReports.map((report, index) => (
             <PathologyCard key={index} report={report} />
           ))}
@@ -846,6 +850,24 @@ function PetDashboard({
     );
   };
 
+  const ShareProfile = async () => {
+    if (navigator.share) {
+      try {
+        navigator.share({
+          title: `${pet.name}'s profile on Doctor Doggy`,
+          text: `https://doctordoggy.vet/pets/${pet.id}`,
+        });
+      } catch (error) {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(
+          `https://doctordoggy.vet/pets/${pet.id}`
+        );
+        toast.success("Link copied to clipboard");
+      } catch (error) {}
+    }
+  };
+
   if (pageLoaded) {
     if (customCode == 100) {
       return (
@@ -883,6 +905,15 @@ function PetDashboard({
           <p className="text-center mt-2 text-sm text-neutral-700">
             Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
           </p>
+          <div className="flex items-center justify-center mt-6 space-x-2">
+            <button
+              onClick={() => ShareProfile()}
+              className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
+            >
+              <span>Share</span>
+              <Icon height={13} icon="ic:round-share" />
+            </button>
+          </div>
           <Tabs />
           <TabChooser />
           <ActiveTab />

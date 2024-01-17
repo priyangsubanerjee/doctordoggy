@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import toast from "react-hot-toast";
 
 function Certificate() {
   const router = useRouter();
@@ -20,6 +21,23 @@ function Certificate() {
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const ShareCertificate = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Vaccination certificate",
+          text: `https://doctordoggy.vercel.app/vaccination/${vaccine?.id}/certificate`,
+        })
+        .then(() => toast.success("Shared successfully"))
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      navigator.clipboard.writeText(
+        `https://doctordoggy.vercel.app/vaccination/${vaccine?.id}/certificate`
+      );
+      toast.success("Link copied to clipboard");
+    }
   };
 
   useEffect(() => {
@@ -127,7 +145,10 @@ function Certificate() {
                             <Icon icon="ep:right" />
                           </button>
                         </Link>
-                        <button className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center">
+                        <button
+                          onClick={() => ShareCertificate()}
+                          className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
+                        >
                           <span>Share</span>
                           <Icon height={13} icon="pajamas:doc-text" />
                         </button>

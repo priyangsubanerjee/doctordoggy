@@ -51,6 +51,7 @@ function VaccinationHistory({}) {
   }, [session.status]);
 
   const VaccineCard = ({ vaccine }) => {
+    console.log(vaccine, session.data.user.email);
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">
@@ -75,7 +76,12 @@ function VaccinationHistory({}) {
               </button>
             </DropdownTrigger>
             <DropdownMenu
-              disabledKeys={vaccine.status == "DUE" ? ["certificate"] : []}
+              disabledKeys={[
+                vaccine.status == "DUE" ? ["certificate"] : [],
+                vaccine.parentEmail != session.data.user.email
+                  ? ["update", "delete"]
+                  : [],
+              ]}
               onAction={(key) => {
                 switch (key) {
                   case "certificate":
