@@ -70,7 +70,7 @@ function DeleteRecord({ record, isParent }) {
             if (isParent) {
               setDeleting(true);
               try {
-                await axios.post(
+                let deleteRequest = await axios.post(
                   "/api/deworming/delete",
                   {
                     id: record.id,
@@ -81,9 +81,15 @@ function DeleteRecord({ record, isParent }) {
                     },
                   }
                 );
-                window.location.href = router.query.redirect
-                  ? router.query.redirect
-                  : "/deworming";
+                if (deleteRequest.data.success) {
+                  toast.success(deleteRequest.data.message);
+                  router.push(
+                    router.query.redirect ? router.query.redirect : "/deworming"
+                  );
+                } else {
+                  setDeleting(false);
+                  toast.error(deleteRequest.data.message);
+                }
               } catch (error) {
                 setDeleting(false);
                 toast.error("Something went wrong");

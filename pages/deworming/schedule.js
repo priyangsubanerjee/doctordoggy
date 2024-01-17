@@ -97,7 +97,7 @@ function Deworming() {
         parentEmail: selectedPet.parentEmail,
       };
       try {
-        await axios.post(
+        let scheduleRequest = await axios.post(
           "/api/deworming/create",
           {
             ...dewormingProp,
@@ -108,11 +108,16 @@ function Deworming() {
             },
           }
         );
-        updatedModal(true, "Scheduled 🎉");
-        router.push(
-          router.query.redirect ? router.query.redirect : "/deworming"
-        );
-        updatedModal(false, "Scheduled 🎉");
+        if (scheduleRequest.data.success) {
+          updatedModal(true, "Scheduled 🎉");
+          router.push(
+            router.query.redirect ? router.query.redirect : "/deworming"
+          );
+          updatedModal(false, "Scheduled 🎉");
+        } else {
+          updatedModal(false, "");
+          toast.error(scheduleRequest.data.message);
+        }
       } catch (error) {
         console.log(error);
         updatedModal(true, "Error scheduling vaccination");

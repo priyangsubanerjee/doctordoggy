@@ -40,19 +40,33 @@ import toast from "react-hot-toast";
 function DewormingRepository() {
   const router = useRouter();
   const session = useSession();
-
   const [dewormings, setDewormings] = React.useState(null);
 
-  useEffect(() => {
-    if (session.status === "unauthenticated" || session.status == "loading")
-      return;
-    FetchDewormings(session?.data?.user?.email).then((res) => {
-      setDewormings(res);
-    });
-  }, [session.status]);
+  // fetch dewormings by email
+  const FDBES = async () => {
+    let dewormingsRequest = await axios.post(
+      "/api/deworming/read",
+      {
+        email: session?.data?.user?.email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  const UpdateStatus = async (id, status) => {
-    let { data } = await axios.post(
+    if (dewormingsRequest.data.success) {
+      setDewormings(dewormingsRequest.data.dewormings);
+    } else {
+      toast.error(dewormingsRequest.data.message);
+    }
+  };
+
+  // update deworming status
+  const UDS = async (id, status) => {
+    toast.loading("Updating deworming status...");
+    let updateRequest = await axios.post(
       "/api/deworming/update",
       { id, status },
       {
@@ -61,14 +75,22 @@ function DewormingRepository() {
         },
       }
     );
-    if (data.deworming) {
-      toast.success(data.message);
-      router.reload();
+    toast.remove();
+    if (updateRequest.data.success) {
+      toast.success(updateRequest.data.message);
+      FDBES();
+    } else {
+      toast.error(updateRequest.data.message);
     }
   };
 
+  useEffect(() => {
+    if (session.status === "unauthenticated" || session.status == "loading")
+      return;
+    FDBES();
+  }, [session.status]);
+
   const DewormingCard = ({ deworming }) => {
-    console.log(deworming);
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">
@@ -102,12 +124,10 @@ function DewormingRepository() {
                     );
                     break;
                   case "done":
-                    toast.loading("Updating status...");
-                    UpdateStatus(deworming.id, "DONE");
+                    UDS(deworming.id, "DONE");
                     break;
                   case "due":
-                    toast.loading("Updating status...");
-                    UpdateStatus(deworming.id, "DUE");
+                    UDS(deworming.id, "DUE");
                     break;
                   default:
                     break;

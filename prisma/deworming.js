@@ -15,10 +15,16 @@ export const scheduleDeworming = async (record) => {
         status: "DUE",
       },
     });
-    return newRecord;
+    return {
+      success: true,
+      message: "Deworming scheduled successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 };
 
@@ -29,10 +35,18 @@ export const getDewormingsByEmail = async (email) => {
         parentEmail: email,
       },
     });
-    return dewormings;
+    return {
+      success: true,
+      message: "Dewormings fetched successfully",
+      dewormings: dewormings,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+      dewormings: null,
+    };
   }
 };
 
@@ -71,10 +85,16 @@ export const deleteDewormingById = async (id) => {
         id: id,
       },
     });
-    return deworming;
+    return {
+      success: true,
+      message: "Deworming deleted successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 };
 
@@ -151,9 +171,15 @@ export const updateDewormingStatusById = async (id, status) => {
         doneDate: status == "DONE" ? new Date().toISOString() : null,
       },
     });
-    return deworming;
+    return {
+      success: true,
+      message: "Deworming status updated successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 };
