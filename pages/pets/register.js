@@ -107,7 +107,7 @@ function RegisterPet({ canine = [], feline = [] }) {
   const fetchBreeds = async () => {
     let api = "/api/breed";
     let breeds_ = await axios.get(api);
-    breeds_ = breeds_.data.breeds;
+    breeds_ = breeds_.data.success ? breeds_.data.breeds : [];
     let types = [];
     breeds_.forEach((breed) => {
       !types.includes(breed.type.toLocaleLowerCase()) &&

@@ -18,9 +18,15 @@ export const createBreed = async (name, type) => {
 export const getBreeds = async () => {
   try {
     let breeds = await prisma.breed.findMany();
-    return breeds;
+    return {
+      success: true,
+      breeds: breeds,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      breeds: [],
+    };
   }
 };

@@ -3,7 +3,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
-import { Button, Input, Select, SelectItem, Switch } from "@nextui-org/react";
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  Switch,
+} from "@nextui-org/react";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import GlobalStates from "@/context/GlobalState";
@@ -13,18 +21,30 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { uploadImage } from "@/helper/image";
 import Compressor from "compressorjs";
+import { getBreeds } from "@/prisma/breed";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
   let pet = null;
   let isParent = false;
   let breeds = [];
+  let species = [];
   if (session) {
+    let api = "/api/breed";
+    let breeds_ = await getBreeds();
+    breeds_ = breeds_.success ? breeds_.breeds : [];
+    let types = [];
+    breeds_.forEach((breed) => {
+      !types.includes(breed.type.toLocaleLowerCase()) &&
+        types.push(breed.type.toLocaleLowerCase());
+    });
+    species = types;
+    breeds = breeds_;
     pet = await getPetById(context.params.id);
     pet = await JSON.parse(JSON.stringify(pet));
     if (pet) {
-      breeds = await fetch(process.env.NEXT_PUBLIC_BREED_API);
-      breeds = await breeds.json();
+      let { success, breeds } = getBreeds();
+      breeds = success ? JSON.parse(JSON.stringify(breeds)) : [];
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
       }
@@ -40,13 +60,14 @@ export async function getServerSideProps(context) {
       session,
       pet,
       isParent,
-      canine: breeds.caninenames,
-      feline: breeds.felinenames,
+      sp: species,
+      br: breeds,
     }, // will be passed to the page component as props
   };
 }
 
-function EditProfile({ pet, canine, feline }) {
+function EditProfile({ pet, sp = [], br = [] }) {
+  console.log(pet);
   const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
@@ -66,8 +87,10 @@ function EditProfile({ pet, canine, feline }) {
   });
 
   const [imageFile, setImageFile] = useState(null); // cannot be null
-  const [breedOptions, setBreedOptions] = useState([...canine, ...feline]);
   const [loading, setLoading] = useState(false);
+  const [species, setSpecies] = React.useState(sp);
+  const [breedOptions, setBreedOptions] = React.useState([]);
+  const [breedList, setBreedList] = useState(br);
 
   useEffect(() => {
     if (pet.dateOfBirth != "") {
@@ -93,6 +116,24 @@ function EditProfile({ pet, canine, feline }) {
       setStoredProp({ ...storedProp, dateOfBirth: dateStr });
     }
   }, []);
+
+  useEffect(() => {
+    setBreedOptions([]);
+    if (storedProp.species.length != 0) {
+      let breed_names = [];
+      breedList.forEach((breed) => {
+        if (
+          breed.type.toLocaleLowerCase() ==
+          storedProp.species.toLocaleLowerCase()
+        ) {
+          breed_names.push(breed.name);
+        }
+        setBreedOptions(breed_names);
+      });
+    } else {
+      setBreedOptions([]);
+    }
+  }, [breedList, storedProp.species]);
 
   const performChecks = () => {
     if (storedProp.parentEmail == "") {
@@ -277,46 +318,36 @@ function EditProfile({ pet, canine, feline }) {
 
               <Select
                 onChange={(e) => {
-                  setStoredProp({
-                    ...storedProp,
-                    species: e.target.value,
-                  });
+                  setStoredProp({ ...storedProp, species: e.target.value });
                 }}
                 selectedKeys={[storedProp.species]}
                 radius="none"
                 label="Species"
               >
-                <SelectItem key="canine" value="canine">
-                  Canine 🦮
-                </SelectItem>
-                <SelectItem key="feline" value="feline">
-                  Feline 🐈
-                </SelectItem>
-              </Select>
-
-              <Input
-                label="Breed"
-                value={storedProp.breed}
-                onChange={(e) =>
-                  setStoredProp({
-                    ...storedProp,
-                    breed: e.target.value,
-                  })
-                }
-                type="text"
-                radius="none"
-                className="rounded-none "
-                list="breeds"
-              />
-              <datalist id="breeds">
-                {breedOptions.map((breed, index) => {
+                {species.map((type, index) => {
                   return (
-                    <option key={breed} value={breed}>
-                      {breed}
-                    </option>
+                    <SelectItem key={type} value={type}>
+                      {type.substring(0, 1).toUpperCase() + type.substring(1)}
+                    </SelectItem>
                   );
                 })}
-              </datalist>
+              </Select>
+
+              <Autocomplete
+                isDisabled={storedProp.species.length == 0}
+                onSelectionChange={(value) => {
+                  setStoredProp({ ...storedProp, breed: value });
+                }}
+                selectedKey={storedProp.breed}
+                radius="none"
+                label="Select breed"
+              >
+                {breedOptions.map((animal) => (
+                  <AutocompleteItem key={animal} value={animal}>
+                    {animal}
+                  </AutocompleteItem>
+                ))}
+              </Autocomplete>
 
               <Select
                 onChange={(e) => {
