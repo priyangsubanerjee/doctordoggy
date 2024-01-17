@@ -63,3 +63,45 @@ export async function FetchDewormings(email) {
 
   return dewormings.data.dewormings;
 }
+
+export async function FetchPetById(id) {
+  let pet = await axios.post(
+    "/api/pet/getbyid",
+    {
+      id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (pet.data.success) {
+    return {
+      success: true,
+      pet: pet.data.pet,
+    };
+  } else {
+    return {
+      success: false,
+      data: null,
+    };
+  }
+}
+
+export async function FetchVaccinationsByPetId(id) {
+  let vaccinations = await axios.post(
+    "/api/vaccine/getbyid",
+    {
+      id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return vaccinations.data.vaccinations;
+}
