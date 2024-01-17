@@ -20,10 +20,10 @@ function SignIn() {
           <Icon height={28} icon="devicon:google" />
           <span className="text-base">Sign in with Google</span>
         </Button>
-        <Button className="border bg-transparent flex items-center justify-center space-x-3 h-16 outline-none">
+        {/* <Button className="border bg-transparent flex items-center justify-center space-x-3 h-16 outline-none">
           <Icon height={28} icon="devicon:github" />
           <span className="text-base">Sign in with Github</span>
-        </Button>
+        </Button> */}
       </div>
       <div className="w-full max-w-2xl mx-auto mt-24 bg-[url('https://static.vecteezy.com/system/resources/thumbnails/001/078/362/small/overlapping-white-grey-gradient-circles-background.jpg')] bg-cover bg-no-repeat rounded-2xl p-6 pb-10 flex flex-col items-center justify-center">
         <Icon height={44} icon="ph:globe-thin" className="mx-auto" />
