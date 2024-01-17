@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }/sendMessage?chat_id=${process.env.TELEGRAM_CHAT_ID}&text=${
     new Date().toLocaleString() +
     " - " +
-    "message send using nexjjs & vercel cronjob"
+    "message send using nextjs & vercel cronjob"
   }`;
 
   const response = await fetch(url, {
