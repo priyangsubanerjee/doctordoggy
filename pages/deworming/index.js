@@ -135,7 +135,6 @@ function DewormingRepository() {
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
               {deworming.status == "DUE" ? (
                 <DropdownItem key="done">Mark as done</DropdownItem>
               ) : (
