@@ -106,7 +106,7 @@ function Vaccination() {
         let pets = [];
         let vaccines = [];
         let response = await axios.get("/api/booster/get");
-        vaccines = response.data;
+        vaccines = response.data.success ? response.data.boosters : [];
 
         pets = await axios.post(
           "/api/pet/get",

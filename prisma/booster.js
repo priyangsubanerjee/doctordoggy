@@ -17,9 +17,14 @@ export const createBooster = async (name) => {
 export const getBoosters = async () => {
   try {
     const boosters = await prisma.booster.findMany();
-    return boosters;
+    return {
+      success: true,
+      boosters: boosters,
+    };
   } catch (error) {
-    console.log(error);
-    return null;
+    return {
+      success: false,
+      boosters: [],
+    };
   }
 };

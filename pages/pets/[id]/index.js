@@ -86,6 +86,7 @@ function PetDashboard({
   pathologyReports,
   dewormings,
 }) {
+  console.log(customCode);
   const router = useRouter();
   const [isPublic, setIsPublic] = useState(pet?.isPublic);
   const tabOptions = [
@@ -98,7 +99,7 @@ function PetDashboard({
 
   const [tabChooserOpen, setTabChooserOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
-  const [pageLoaded, setPageLoaded] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -116,12 +117,6 @@ function PetDashboard({
       );
     })();
   }, [isPublic, pet?.id]);
-
-  useEffect(() => {
-    if (pet) {
-      setPageLoaded(true);
-    }
-  }, [pet]);
 
   const Capitalize = (str) => {
     if (str == null) return "--";
@@ -922,13 +917,20 @@ function PetDashboard({
     } else if (customCode == 101) {
       return (
         <div>
-          <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+          <h1 className="text-sm text-center mt-20 lg:mt-16">
             This pet is currently private. Please ask the owner to make it
             public.
           </h1>
         </div>
       );
     } else if (customCode == 102) {
+      return (
+        <div>
+          <h1 className="text-sm text-center mt-20 lg:mt-16">
+            This pet profile does not exist. Please check the URL.
+          </h1>
+        </div>
+      );
     }
   } else {
     return (

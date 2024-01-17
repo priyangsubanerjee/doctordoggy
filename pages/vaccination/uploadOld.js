@@ -133,7 +133,7 @@ function Update() {
 
         if (pets) {
           setPets(pets.data);
-          setVaccines(vaccines.data);
+          setVaccines(vaccines.data.success ? vaccines.data.boosters : []);
           setPageLoaded(true);
         }
       })();
