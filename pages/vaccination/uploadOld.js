@@ -117,8 +117,8 @@ function Update() {
   useEffect(() => {
     if (session.status == "authenticated") {
       (async () => {
-        var pets = await axios.post(
-          "/api/pet/get",
+        let petRequest = await axios.post(
+          "/api/pet/get_rf",
           {
             email: session?.data?.user?.email,
           },
@@ -128,12 +128,12 @@ function Update() {
             },
           }
         );
-
-        var vaccines = await axios.get("/api/booster/get");
-
-        if (pets) {
-          setPets(pets.data);
-          setVaccines(vaccines.data.success ? vaccines.data.boosters : []);
+        var vaccineRequest = await axios.get("/api/booster/get");
+        if (petRequest.data.success) {
+          setPets(pets.data.pets);
+          setVaccines(
+            vaccineRequest.data.success ? vaccineRequest.data.boosters : []
+          );
           setPageLoaded(true);
         }
       })();

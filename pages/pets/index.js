@@ -9,30 +9,51 @@ import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { FetchPets } from "@/hooks/fetch";
 import { Spinner } from "@nextui-org/react";
+import axios from "axios";
 
 function Pets() {
   const session = useSession();
   const router = useRouter();
-  const [pets, setPets] = React.useState(null);
+  const [pets, setPets] = React.useState([]);
+  const [pageLoaded, setPageLoaded] = React.useState(false);
 
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
       return;
 
-    FetchPets(session?.data?.user?.email).then((data) => {
-      setPets(data);
-    });
+    (async () => {
+      let petsRequest = await axios.post(
+        "/api/pet/get_rf",
+        {
+          email: session?.data?.user?.email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (petsRequest.data.success) {
+        setPets(petsRequest.data.pets);
+        setPageLoaded(true);
+      } else {
+        toast.error(petsRequest.data.message);
+      }
+    })();
   }, [session.status]);
 
   const PetCard = ({ name, age, image, id }) => {
     return (
       <Link href={`/pets/${id}`}>
-        <div className="flex flex-col lg:flex-row items-center justify-center">
+        <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-start w-full">
           <div className="h-20 lg:h-24 w-20 shrink-0 lg:w-24 rounded-full overflow-hidden">
             <img src={image} className="h-full w-full object-cover" alt="" />
           </div>
           <div className="mt-3 lg:mt-0 lg:ml-5 flex flex-col lg:block items-center justify-center">
-            <h2 className="text-slate-800 font-medium text-base">{name}</h2>
+            <h2 className="text-slate-800 font-medium text-base text-center lg:text-left">
+              {name}
+            </h2>
             <p className="text-xs mt-1 text-neutral-600">{age}</p>
 
             <button className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-3">
@@ -48,7 +69,7 @@ function Pets() {
   };
 
   return (
-    <div>
+    <div className="pb-16">
       <h1 className="text-3xl font-semibold text-center mt-10 lg:mt-16">
         Pets galaxy
       </h1>
@@ -68,30 +89,24 @@ function Pets() {
         </button>
       </div>
 
-      {pets == null && (
+      {pageLoaded == false ? (
         <div className="flex flex-col items-center justify-center mt-32">
           <Spinner size="lg" color="primary" />
         </div>
-      )}
-
-      {pets !== null && (
+      ) : (
         <>
-          <>
-            {pets && (
-              <div className="lg:max-w-[75%] mx-8 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3 place-content-center place-items-center">
-                {pets.map((pet) => (
-                  <PetCard
-                    id={pet?.id}
-                    key={pet?.id}
-                    name={pet?.name}
-                    age={calculateAge(pet?.dateOfBirth)}
-                    image={pet?.image}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-          <>
+          <div className="lg:max-w-[75%] mx-8 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3">
+            {pets.map((pet) => (
+              <PetCard
+                id={pet?.id}
+                key={pet?.id}
+                name={pet?.name}
+                age={calculateAge(pet?.dateOfBirth)}
+                image={pet?.image}
+              />
+            ))}
+          </div>
+          <div>
             {pets?.length == 0 && (
               <div className="flex flex-col items-center justify-center mt-32">
                 <img
@@ -104,7 +119,7 @@ function Pets() {
                 </p>
               </div>
             )}
-          </>
+          </div>
         </>
       )}
     </div>

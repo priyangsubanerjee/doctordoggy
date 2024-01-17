@@ -103,13 +103,9 @@ function Vaccination() {
   useEffect(() => {
     (async () => {
       if (session.status === "authenticated") {
-        let pets = [];
-        let vaccines = [];
-        let response = await axios.get("/api/booster/get");
-        vaccines = response.data.success ? response.data.boosters : [];
-
-        pets = await axios.post(
-          "/api/pet/get",
+        let boosterRequest = await axios.get("/api/booster/get");
+        let petRequest = await axios.post(
+          "/api/pet/get_rf",
           {
             email: session?.data?.user?.email,
           },
@@ -119,9 +115,10 @@ function Vaccination() {
             },
           }
         );
-        pets = pets.data;
-        setPets(pets);
-        setVaccines(vaccines);
+        setPets(petRequest.data.success ? petRequest.data.pets : []);
+        setVaccines(
+          boosterRequest.data.success ? boosterRequest.data.boosters : []
+        );
         setPageLoaded(true);
       }
     })();

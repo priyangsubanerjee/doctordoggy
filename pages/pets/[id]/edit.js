@@ -67,7 +67,6 @@ export async function getServerSideProps(context) {
 }
 
 function EditProfile({ pet, sp = [], br = [] }) {
-  console.log(pet);
   const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
@@ -192,8 +191,9 @@ function EditProfile({ pet, sp = [], br = [] }) {
           }
         );
         setLoading(false);
-        updatedModal(true, "Pet updated successfully");
-        window.location.href = `/pets`;
+        updatedModal(false, "Pet updated successfully");
+        toast.success("Pet updated successfully");
+        router.push(`/pets/${pet.id}`);
       } catch (error) {
         console.log(error.message);
         toast.error("Something went wrong with image.");

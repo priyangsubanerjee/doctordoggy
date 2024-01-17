@@ -32,7 +32,7 @@ function HeroSection() {
     if (session?.data?.user?.email) {
       axios
         .post(
-          `/api/pet/get`,
+          `/api/pet/get_rf`,
           {
             email: session?.data?.user?.email,
           },
@@ -43,7 +43,9 @@ function HeroSection() {
           }
         )
         .then((res) => {
-          setPets(res.data);
+          if (res.data.success) {
+            setPets(res.data.pets);
+          }
         })
         .catch((err) => {
           console.log(err);

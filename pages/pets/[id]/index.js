@@ -101,25 +101,28 @@ function PetDashboard({
   const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
   const [pageLoaded, setPageLoaded] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      await axios.post(
-        "/api/pet/visibility",
-        {
-          id: pet?.id,
-          isPublic: isPublic,
+  // update profile visibility
+  const UPV = async () => {
+    toast.loading("Updating profile visibility...");
+    setIsPublic(!isPublic);
+    await axios.post(
+      "/api/pet/visibility",
+      {
+        id: pet?.id,
+        isPublic: !isPublic,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    })();
-  }, [isPublic, pet?.id]);
+      }
+    );
+    toast.remove();
+    toast.success("Profile visibility updated");
+  };
 
   const Capitalize = (str) => {
-    if (str == null) return "--";
+    if (str == null || str == "" || str == undefined) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
@@ -655,7 +658,9 @@ function PetDashboard({
               </div>
               <Switch
                 isSelected={isPublic}
-                onValueChange={() => setIsPublic(!isPublic)}
+                onValueChange={() => {
+                  UPV();
+                }}
               />
             </div>
             <div className="p-5 rounded-md mt-24 border">

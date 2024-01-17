@@ -4,7 +4,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPetById } from "@/prisma/pet";
 import { Button } from "@nextui-org/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -32,6 +32,7 @@ export async function getServerSideProps(context) {
 }
 
 function Delete({ session, pet, isParent }) {
+  const router = useRouter();
   const [deleting, setDeleting] = React.useState(false);
   return (
     <div>
@@ -64,7 +65,7 @@ function Delete({ session, pet, isParent }) {
             if (isParent) {
               setDeleting(true);
               try {
-                await axios.post(
+                let deleteRequest = await axios.post(
                   "/api/pet/delete",
                   {
                     id: pet.id,
@@ -75,7 +76,14 @@ function Delete({ session, pet, isParent }) {
                     },
                   }
                 );
-                window.location.href = "/pets";
+                if (deleteRequest.data.success) {
+                  setDeleting(false);
+                  toast.success("Pet deleted successfully");
+                  router.push("/pets");
+                } else {
+                  setDeleting(false);
+                  toast.error(deleteRequest.data.message);
+                }
               } catch (error) {
                 toast.error("Something went wrong");
               }

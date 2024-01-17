@@ -144,9 +144,8 @@ function UploadPrescription() {
   useEffect(() => {
     (async () => {
       if (session.status === "authenticated") {
-        let pets = [];
-        pets = await axios.post(
-          "/api/pet/get",
+        let petRequest = await axios.post(
+          "/api/pet/get_rf",
           {
             email: session?.data?.user?.email,
           },
@@ -156,8 +155,7 @@ function UploadPrescription() {
             },
           }
         );
-        pets = pets.data;
-        setPets(pets);
+        setPets(petRequest.data.success ? petRequest.data.pets : []);
         setPageLoaded(true);
       }
     })();

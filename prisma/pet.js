@@ -16,10 +16,16 @@ export const registerPet = async (pet, sessionEmail) => {
         createdBy: sessionEmail,
       },
     });
-    return petCreated;
+    return {
+      success: true,
+      message: "Pet created successfully",
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 };
 
@@ -113,14 +119,20 @@ export const updatePetData = async (id, pet) => {
 
 export const deletePetById = async (id) => {
   try {
-    const pet = await prisma.pet.delete({
+    await prisma.pet.delete({
       where: {
         id: id,
       },
     });
-    return pet;
+    return {
+      success: true,
+      message: "Pet deleted successfully",
+    };
   } catch (error) {
-    return null;
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 };
 

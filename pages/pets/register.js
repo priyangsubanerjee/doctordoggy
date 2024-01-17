@@ -16,8 +16,10 @@ import {
   AutocompleteSection,
   AutocompleteItem,
 } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
 function RegisterPet({ canine = [], feline = [] }) {
+  const router = useRouter();
   const session = useSession();
   const imageRef = React.useRef(null);
   const { updatedModal } = useContext(GlobalStates);
@@ -83,7 +85,7 @@ function RegisterPet({ canine = [], feline = [] }) {
       try {
         const { fileUrl, publicId } = await uploadImage(imageFile);
         updatedModal(true, "Storing pet information ...");
-        await axios.post(
+        let registerRequest = await axios.post(
           "/api/pet/create",
           {
             pet: { ...registerProp, image: fileUrl },
@@ -95,9 +97,16 @@ function RegisterPet({ canine = [], feline = [] }) {
             },
           }
         );
-        setLoading(false);
-        updatedModal(true, "Pet created successfully");
-        window.location.href = `/pets`;
+        if (registerRequest.data.success) {
+          setLoading(false);
+          updatedModal(false, "Pet created successfully");
+          toast.success(registerRequest.data.message);
+          router.push("/pets");
+        } else {
+          setLoading(false);
+          updatedModal(false, "Something went wrong with pet registration.");
+          toast.error(registerRequest.data.message);
+        }
       } catch (error) {
         toast.error("Something went wrong with image.");
       }

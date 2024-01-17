@@ -130,27 +130,22 @@ function Deworming() {
   useEffect(() => {
     (async () => {
       if (session.status === "authenticated") {
-        let pets = [];
-        let medicines = [];
         let dewormerRequest = await axios.get("/api/dewormer/get");
-        medicines = dewormerRequest.data.success
-          ? dewormerRequest.data.dewormers
+        dewormerRequest.data.success
+          ? setMedicines(dewormerRequest.data.dewormers)
           : [];
-        console.log(medicines);
-        console.log(session?.data?.user?.email);
-        pets = await fetch("/api/pet/get", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        let petsRequest = await axios.post(
+          "/api/pet/get_rf",
+          {
             email: session?.data?.user?.email,
-          }),
-        });
-        pets = await pets.json();
-        console.log(pets);
-        setPets(pets);
-        setMedicines(medicines);
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        petsRequest.data.success ? setPets(petsRequest.data.pets) : [];
         setPageLoaded(true);
       }
     })();
