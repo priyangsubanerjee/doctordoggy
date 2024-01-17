@@ -130,7 +130,7 @@ function Update() {
         );
         var vaccineRequest = await axios.get("/api/booster/get");
         if (petRequest.data.success) {
-          setPets(pets.data.pets);
+          setPets(petRequest.data.pets);
           setVaccines(
             vaccineRequest.data.success ? vaccineRequest.data.boosters : []
           );
