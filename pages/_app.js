@@ -8,6 +8,7 @@ import { SessionProvider, getSession, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // using next auth for authentication and next ui for styling
 // TODO: add next seo for seo
@@ -44,6 +45,7 @@ export default function App({
             <Component {...pageProps} />
             <ProcessingModal />
             <Analytics />
+            <SpeedInsights />
           </Layout>
         </NextUIProvider>
       </SessionProvider>
