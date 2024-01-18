@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import {
@@ -9,27 +9,57 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Spinner,
 } from "@nextui-org/react";
 import { getPathologyReportsByEmail } from "@/prisma/pathology";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let pathologyReports = [];
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
+//   let pathologyReports = [];
 
-  if (session) {
-    pathologyReports = await getPathologyReportsByEmail(session?.user?.email);
-    pathologyReports = JSON.parse(JSON.stringify(pathologyReports));
-  }
+//   if (session) {
+//     pathologyReports = await getPathologyReportsByEmail(session?.user?.email);
+//     pathologyReports = JSON.parse(JSON.stringify(pathologyReports));
+//   }
 
-  return {
-    props: {
-      pathologyReports,
-    },
-  };
-}
+//   return {
+//     props: {
+//       pathologyReports,
+//     },
+//   };
+// }
 
-function Pathology({ pathologyReports }) {
+function Pathology() {
+  const session = useSession();
+  const [pageLoaded, setPageLoaded] = React.useState(false);
+  const [pathologyReports, setPathologyReports] = React.useState([]);
+
+  useEffect(() => {
+    if (session.status == "authenticated") {
+      (async () => {
+        let pathologyRequest = await axios.post(
+          "/api/pathology/get",
+          {
+            email: session?.user?.email,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        pathologyRequest.data.success
+          ? setPathologyReports(pathologyRequest.data.reports)
+          : null;
+
+        setPageLoaded(true);
+      })();
+    }
+  }, [session.status]);
+
   const PathologyCard = ({ report }) => {
     return (
       <div className="border rounded-md p-4">
@@ -114,11 +144,19 @@ function Pathology({ pathologyReports }) {
           </span>
         </a>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
-        {pathologyReports.map((report, index) => (
-          <PathologyCard key={index} report={report} />
-        ))}
-      </div>
+      {pageLoaded ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+            {pathologyReports.map((report, index) => (
+              <PathologyCard key={index} report={report} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center mt-16">
+          <Spinner size="lg" color="primary" />
+        </div>
+      )}
     </div>
   );
 }

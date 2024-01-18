@@ -37,10 +37,18 @@ export async function getPathologyReportsByEmail(email) {
         parentEmail: email,
       },
     });
-    return reports;
+    return {
+      success: true,
+      message: "Pathology reports retrieved successfully",
+      reports: reports,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Something went wrong",
+      reports: null,
+    };
   }
 }
 
