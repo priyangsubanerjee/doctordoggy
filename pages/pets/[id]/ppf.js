@@ -1,179 +1,108 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useState } from "react";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
-import calculateAge from "@/helper/age";
 import {
   Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Input,
+  Select,
+  SelectItem,
+  Skeleton,
   Spinner,
   Switch,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
+import calculateAge from "@/helper/age";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
 import axios from "axios";
+import Router, { useRouter } from "next/router";
+import { getVaccineByPetId } from "@/prisma/vaccine";
+import { getPrescriptionsByPetId } from "@/prisma/prescription";
+import { getPathologyReportsByPetId } from "@/prisma/pathology";
+import { getDewormingsByPetId } from "@/prisma/deworming";
 import toast from "react-hot-toast";
+import { FetchDewormings } from "@/hooks/fetch";
 
-function Profile() {
-  const session = useSession();
-  const [pageLoaded, setPageLoaded] = React.useState(false);
-  const [pet, setPet] = React.useState({
-    name: "",
-  });
-  const [vaccinations, setVaccinations] = React.useState([]);
-  const [prescriptions, setPrescriptions] = React.useState([]);
-  const [dewormings, setDewormings] = React.useState([]);
-  const [pathologyReports, setPathologyReports] = React.useState([]);
-  const [isPublic, setIsPublic] = React.useState(false);
-  const [isParent, setIsParent] = React.useState(false);
-  const [isAllowed, setIsAllowed] = React.useState(false);
-  const [petDoesNotExist, setPetDoesNotExist] = React.useState(false);
-  const [selectedTab, setSelectedTab] = React.useState("General");
-  const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
-  const [tabOptions, setTabOptions] = React.useState([
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+  let customCode = 100;
+  let petD = null;
+  let isParent = false;
+  let vaccinations = [];
+  let prescriptions = [];
+  let pathologyReports = [];
+  let dewormings = [];
+  if (session) {
+    let { success, message, pet } = await getPetById(context.params.id);
+    if (success) {
+      console.log(pet, "pet");
+      petD = pet;
+      vaccinations = await getVaccineByPetId(pet.id);
+      vaccinations = await JSON.parse(JSON.stringify(vaccinations));
+      prescriptions = await getPrescriptionsByPetId(pet.id);
+      prescriptions = await JSON.parse(JSON.stringify(prescriptions));
+      pathologyReports = await getPathologyReportsByPetId(pet.id);
+      pathologyReports = await JSON.parse(JSON.stringify(pathologyReports));
+      dewormings = await getDewormingsByPetId(pet.id);
+      dewormings = await JSON.parse(JSON.stringify(dewormings));
+
+      if (session?.user?.email == pet.parentEmail) {
+        isParent = true;
+      }
+      if (!pet.isPublic) {
+        if (pet.parentEmail !== session?.user?.email) {
+          customCode = 101;
+          pet = null;
+        }
+      }
+    } else {
+      customCode = 102;
+    }
+  }
+  return {
+    props: {
+      session,
+      pet,
+      vaccinations,
+      isParent,
+      customCode,
+      prescriptions,
+      pathologyReports,
+      dewormings,
+    }, // will be passed to the page component as props
+  };
+}
+
+function PetDashboard({
+  pet,
+  isParent,
+  customCode,
+  vaccinations,
+  prescriptions,
+  pathologyReports,
+  dewormings,
+}) {
+  console.log(customCode);
+  const router = useRouter();
+  const [isPublic, setIsPublic] = useState(pet?.isPublic);
+  const tabOptions = [
     "General",
-    "Vaccinations",
     "Prescriptions",
+    "Vaccinations",
     "Deworming",
     "Pathology",
-  ]);
+  ];
 
-  const router = useRouter();
+  const [tabChooserOpen, setTabChooserOpen] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(tabOptions[0]);
+  const [pageLoaded, setPageLoaded] = useState(true);
 
-  const LPD = async () => {
-    let petRequest = await axios.post(
-      "/api/pet/getbyid",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let vaccinationRequest = await axios.post(
-      "/api/vaccine/getByPetId",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let dewormingRequest = await axios.post(
-      "/api/deworming/getByPetId",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let prescriptionRequest = await axios.post(
-      "/api/prescription/getByPetId",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let pathologyRequest = await axios.post(
-      "/api/pathology/getByPetId",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    petRequest.data.success ? setPet(petRequest.data.pet) : setPet({});
-    vaccinationRequest.data.success
-      ? setVaccinations(vaccinationRequest.data.vaccines)
-      : setVaccinations([]);
-    prescriptionRequest.data.success
-      ? setPrescriptions(prescriptionRequest.data.prescriptions)
-      : setPrescriptions([]);
-    dewormingRequest.data.success
-      ? setDewormings(dewormingRequest.data.dewormings)
-      : setDewormings([]);
-    pathologyRequest.data.success
-      ? setPathologyReports(pathologyRequest.data.reports)
-      : setPathologyReports([]);
-
-    if (petRequest.data.pet?.isPublic) {
-      setIsPublic(true);
-    }
-    if (petRequest.data.pet?.parentEmail == session.data.user.email) {
-      setIsParent(true);
-    }
-    setPageLoaded(true);
-  };
-
-  useEffect(() => {
-    if (session.status == "authenticated") {
-      (async () => {
-        let petExistsRequest = await axios.post(
-          "/api/pet/exists",
-          {
-            id: router.query.id,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (!petExistsRequest.data.exists) {
-          setPetDoesNotExist(true);
-          setPageLoaded(true);
-        } else {
-          let petProfileVisibilityRequest = await axios.post(
-            "/api/pet/read_vis",
-            {
-              id: router.query.id,
-              email: session.data.user.email,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          if (petProfileVisibilityRequest.data.success) {
-            if (!petProfileVisibilityRequest.data.isParent) {
-              if (petProfileVisibilityRequest.data.isPublic) {
-                setIsAllowed(true);
-                LPD();
-              } else {
-                setPageLoaded(true);
-                setIsAllowed(false);
-              }
-            } else {
-              setIsAllowed(true);
-              LPD();
-            }
-          }
-        }
-      })();
-    }
-  }, [router.query.id, session.status]);
-
+  // update profile visibility
   const UPV = async () => {
     toast.loading("Updating profile visibility...");
     setIsPublic(!isPublic);
@@ -196,6 +125,24 @@ function Profile() {
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const UpdateStatus = async (id, status) => {
+    let { data } = await axios.post(
+      "/api/deworming/update",
+      { id, status },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (data.deworming) {
+      let dewormings = await FetchDewormings(pet.parentEmail);
+      console.log(dewormings);
+      toast.success(data.message);
+      //router.reload();
+    }
   };
 
   const DewormingCard = ({ deworming }) => {
@@ -235,9 +182,11 @@ function Profile() {
                     );
                     break;
                   case "done":
+                    toast.loading("Updating status...");
                     UpdateStatus(deworming.id, "DONE");
                     break;
                   case "due":
+                    toast.loading("Updating status...");
                     UpdateStatus(deworming.id, "DUE");
                     break;
                   default:
@@ -920,117 +869,89 @@ function Profile() {
     }
   };
 
-  const UpdateStatus = async (id, status) => {
-    toast.loading("Updating status...");
-    let { data } = await axios.post(
-      "/api/deworming/update",
-      { id, status },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    toast.remove();
-    if (data.success) {
-      LPD();
-      toast.success(data.message);
-    } else {
-      toast.error(data.message);
-    }
-  };
-
-  return (
-    <div className="pb-44">
-      {pageLoaded ? (
-        <>
-          {petDoesNotExist ? (
-            <div className="flex flex-col items-center justify-center mt-16">
-              <Icon icon="teenyicons:lock-solid" height={24} />
-              <h2 className="text-2xl font-semibold mt-5">Profile not found</h2>
-              <p className="text-sm text-neutral-500 mt-3">
-                This pet&apos;s profile does not exist or has been deleted. If
-                you think this is a mistake, please contact us.
-              </p>
+  if (pageLoaded) {
+    if (customCode == 100) {
+      return (
+        <div className="pb-44">
+          <div className="relative">
+            <div className="h-48 lg:h-80 w-full overflow-hidden relative">
+              <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
+              <img
+                src={pet.image}
+                className="object-cover w-full h-full blur-2xl opacity-50"
+                alt=""
+              />
             </div>
-          ) : (
-            <>
-              {isAllowed ? (
-                <>
-                  <div className="relative">
-                    <div className="h-48 lg:h-80 w-full overflow-hidden relative">
-                      <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
-                      <img
-                        src={pet.image}
-                        className="object-cover w-full h-full blur-2xl opacity-50"
-                        alt=""
-                      />
-                    </div>
-                    <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
-                      <div className="relative">
-                        {isParent && (
-                          <div className="absolute bottom-3 right-4">
-                            <QuickAction />
-                          </div>
-                        )}
-                        <img
-                          src={pet.image}
-                          className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
-                          alt=""
-                        />
-                      </div>
-                    </div>
+            <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
+              <div className="relative">
+                {isParent && (
+                  <div className="absolute bottom-3 right-4">
+                    <QuickAction />
                   </div>
-                  <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
-                    {pet.name.split(" ")[0]}&apos;s{" "}
-                    <span className="opacity-60">
-                      {pet.sex == "male" ? "Palace" : "Castle"}
-                    </span>
-                  </h1>
-                  <p className="text-center mt-2 text-sm text-neutral-700">
-                    Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
-                  </p>
-                  <div className="flex items-center justify-center mt-6 space-x-2">
-                    <button
-                      onClick={() => ShareProfile()}
-                      className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
-                    >
-                      <span>Share</span>
-                      <Icon height={13} icon="ic:round-share" />
-                    </button>
-                  </div>
-                  <Tabs />
-                  <TabChooser />
-                  <ActiveTab />
-                </>
-              ) : (
-                <div className="flex flex-col items-center justify-center mt-16">
-                  <Icon icon="teenyicons:lock-solid" height={24} />
-                  <h2 className="text-2xl font-semibold mt-5">
-                    Profile not public
-                  </h2>
-                  <p className="text-sm text-neutral-500 mt-3">
-                    This pet&apos;s profile is not public yet, ask the owner to
-                    make it public.
-                  </p>
-                </div>
-              )}
-            </>
-          )}
-        </>
-      ) : (
+                )}
+                <img
+                  src={pet.image}
+                  className="h-36 lg:h-56 w-36 lg:w-56 rounded-full object-cover"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+            {pet.name.split(" ")[0]}&apos;s{" "}
+            <span className="opacity-60">
+              {pet.sex == "male" ? "Palace" : "Castle"}
+            </span>
+          </h1>
+          <p className="text-center mt-2 text-sm text-neutral-700">
+            Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
+          </p>
+          <div className="flex items-center justify-center mt-6 space-x-2">
+            <button
+              onClick={() => ShareProfile()}
+              className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
+            >
+              <span>Share</span>
+              <Icon height={13} icon="ic:round-share" />
+            </button>
+          </div>
+          <Tabs />
+          <TabChooser />
+          <ActiveTab />
+        </div>
+      );
+    } else if (customCode == 101) {
+      return (
         <div>
+          <h1 className="text-sm text-center mt-20 lg:mt-16">
+            This pet is currently private. Please ask the owner to make it
+            public.
+          </h1>
+        </div>
+      );
+    } else if (customCode == 102) {
+      return (
+        <div>
+          <h1 className="text-sm text-center mt-20 lg:mt-16">
+            This pet profile does not exist. Please check the URL.
+          </h1>
+        </div>
+      );
+    }
+  } else {
+    return (
+      <>
+        <div className="mt-20">
+          <div className="flex items-center justify-center space-x-2 mt-4 text-sm">
+            <p>This page is currently loading, please wait.</p>
+          </div>
           <div className="flex flex-col items-center justify-center mt-16">
-            <h2 className="text-2xl font-semibold">Loading profile</h2>
-            <p className="text-sm text-neutral-500 mt-4">
-              Please wait while we load additional data for your pet
-            </p>
-            <Spinner color="primary" size="lg" className="mt-10" />
+            <Spinner size="lg" color="primary" />
           </div>
         </div>
-      )}
-    </div>
-  );
+      </>
+    );
+  }
 }
 
-export default Profile;
+export default PetDashboard;

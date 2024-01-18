@@ -7,7 +7,6 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { FetchPets } from "@/hooks/fetch";
 import { Spinner } from "@nextui-org/react";
 import axios from "axios";
 

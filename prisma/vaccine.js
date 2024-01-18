@@ -56,10 +56,17 @@ export const getVaccineByPetId = async (petId) => {
         petId: petId,
       },
     });
-    return vaccines;
+    return {
+      success: true,
+      message: "Vaccines fetched successfully",
+      vaccines: vaccines,
+    };
   } catch (error) {
-    console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Error fetching vaccines",
+      vaccines: null,
+    };
   }
 };
 

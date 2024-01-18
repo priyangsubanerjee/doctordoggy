@@ -228,21 +228,25 @@ function Update() {
               <Input
                 radius="none"
                 label="Vaccination for"
+                className="cursor-not-allowed"
+                isDisabled
                 isReadOnly
                 value={vaccinatonProp.name}
               />
               <Input
                 radius="none"
+                isDisabled
                 label="Vaccine name"
+                className="cursor-not-allowed"
                 isReadOnly
                 value={vaccinatonProp.vaccineName}
               />
               <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-                <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                <span className="text-sm h-full flex items-center text-neutral-400 shrink-0 border-r border-neutral-200 pr-4">
                   Due date
                 </span>
                 <input
-                  className="bg-transparent text-sm w-full h-full pl-4 outline-none"
+                  className="bg-transparent text-sm w-full h-full pl-4 outline-none opacity-40"
                   value={new Date(vaccinatonProp.dueDate).toLocaleDateString()}
                   readOnly
                   name=""

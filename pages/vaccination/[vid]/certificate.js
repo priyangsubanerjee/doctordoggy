@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import { Button, Spinner } from "@nextui-org/react";
@@ -57,10 +58,8 @@ function Certificate() {
           }
         );
 
-        console.log(vaccineData.data.vaccination);
-
         if (vaccineData.data.vaccination != null) {
-          let pet = await axios.post(
+          let petRequest = await axios.post(
             "/api/pet/getbyid",
             {
               id: vaccineData.data.vaccination.petId,
@@ -72,15 +71,17 @@ function Certificate() {
             }
           );
           setVaccine(vaccineData.data.vaccination);
-          setPet(pet.data);
+          setPet(petRequest.data.success ? petRequest.data.pet : null);
+          setIsParent(
+            session.data.user.email == petRequest.data.pet.parentEmail
+          );
+          setIsPublic(petRequest.data.pet.isPublic);
           setPageLoaded(true);
-          setIsParent(session.data.user.email == pet.data.parentEmail);
-          setIsPublic(pet.data.isPublic);
 
-          if (session.data.user.email == pet.data.parentEmail) {
+          if (session.data.user.email == petRequest.data.pet.parentEmail) {
             setIsAllowed(true);
           } else {
-            if (pet.data.isPublic) {
+            if (petRequest.data.pet.isPublic) {
               setIsAllowed(true);
             } else {
               setIsAllowed(false);

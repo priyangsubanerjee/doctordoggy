@@ -70,9 +70,17 @@ export const getPetById = async (id) => {
         id: id,
       },
     });
-    return pet;
+    return {
+      success: true,
+      message: "Pet fetched successfully",
+      pet: pet,
+    };
   } catch (error) {
-    return null;
+    return {
+      success: false,
+      message: error.message,
+      pet: null,
+    };
   }
 };
 

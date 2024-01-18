@@ -69,8 +69,17 @@ export const getPrescriptionsByPetId = async (id) => {
         petId: id,
       },
     });
-    return prescriptions;
+    return {
+      success: true,
+      message: "Prescriptions retrieved successfully",
+      prescriptions: prescriptions,
+    };
   } catch (error) {
     console.log(error);
+    return {
+      success: false,
+      message: "Unable to retrieve prescriptions",
+      prescriptions: [],
+    };
   }
 };

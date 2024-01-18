@@ -57,10 +57,18 @@ export const getDewormingsByPetId = async (petId) => {
         petId: petId,
       },
     });
-    return dewormings;
+    return {
+      success: true,
+      message: "Dewormings fetched successfully",
+      dewormings: dewormings,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: error.message,
+      dewormings: null,
+    };
   }
 };
 
