@@ -86,7 +86,7 @@ export default function Prescription() {
             <>
               {isAllowed ? (
                 <div>
-                  <p className="text-center mt-20 text-sm lg:mt-16 text-neutral-500">
+                  <p className="text-center mt-10 text-sm lg:mt-16 text-neutral-500">
                     Prescription uploaded for
                   </p>
 
