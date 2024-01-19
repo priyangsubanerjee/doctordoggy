@@ -8,6 +8,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Skeleton,
   Spinner,
   Switch,
 } from "@nextui-org/react";
@@ -1019,13 +1020,19 @@ function Profile() {
           )}
         </>
       ) : (
-        <div>
-          <div className="flex flex-col items-center justify-center mt-16">
-            <h2 className="text-2xl font-semibold">Loading profile</h2>
-            <p className="text-sm text-neutral-500 mt-4">
-              Please wait while we load additional data for your pet
-            </p>
-            <Spinner color="primary" size="lg" className="mt-10" />
+        <div className="relative">
+          <div className="h-48 lg:h-80 w-full overflow-hidden relative">
+            <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
+            <img
+              src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1701263641/assets/iuogg9t6zxovpqs717sf.jpg"
+              className="object-cover w-full h-full blur-2xl opacity-50"
+              alt=""
+            />
+          </div>
+          <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
+            <div className="relative">
+              <Skeleton className="h-36 lg:h-56 w-36 lg:w-56 rounded-full bg-white flex items-center justify-center"></Skeleton>
+            </div>
           </div>
         </div>
       )}
