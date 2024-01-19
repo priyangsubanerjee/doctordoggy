@@ -1030,9 +1030,7 @@ function Profile() {
             />
           </div>
           <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
-            <div className="relative">
-              <Skeleton className="h-36 lg:h-56 w-36 lg:w-56 rounded-full bg-white flex items-center justify-center"></Skeleton>
-            </div>
+            <Skeleton className="h-36 lg:h-56 w-36 lg:w-56 rounded-full bg-white flex items-center justify-center"></Skeleton>
           </div>
         </div>
       )}
