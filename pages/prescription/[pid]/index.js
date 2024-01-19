@@ -14,38 +14,6 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
-  let pet = null;
-  let record = null;
-  let isParent = false;
-  let statusCode = 100;
-  if (session) {
-    record = await getPrescriptionById(context.params.pid);
-    record = await JSON.parse(JSON.stringify(record));
-    if (record) {
-      pet = await getPetById(record.petId);
-      pet = await JSON.parse(JSON.stringify(pet));
-      if (session?.user?.email == record.parentEmail) {
-        isParent = true;
-        statusCode == 100;
-      } else {
-        if (pet.isPublic) {
-          isParent = false;
-          statusCode = 100;
-        } else {
-          isParent = false;
-          statusCode = 101;
-        }
-      }
-    } else {
-      statusCode = 102;
-    }
-  }
-  return {
-    props: { session, record, isParent, pet, statusCode }, // will be passed to the page component as props
-  };
-}
 export default function Prescription() {
   const [pageLoaded, setPageLoaded] = React.useState(false);
   const session = useSession();
