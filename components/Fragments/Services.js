@@ -11,7 +11,7 @@ function Services() {
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
       image:
         "https://www.groomers-online.com/blog/wp-content/uploads/2023/04/GettyImages-1277453154.jpg",
-      buttonText: "Learn more",
+      buttonText: "Coming soon",
       buttonLink: "",
     },
     {
@@ -20,7 +20,7 @@ function Services() {
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
       image:
         "https://vetmed.tamu.edu/news/wp-content/uploads/sites/9/2018/05/20150804-doghouse.jpg",
-      buttonText: "Learn more",
+      buttonText: "Coming soon",
       buttonLink: "",
     },
     {
@@ -29,7 +29,7 @@ function Services() {
         "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
       image:
         "https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg",
-      buttonText: "Learn more",
+      buttonText: "Coming soon",
       buttonLink: "",
     },
 
@@ -39,7 +39,7 @@ function Services() {
         "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
       image:
         "https://www.dailypaws.com/thmb/qlpLn9xomUWCs0KDmHyzDkOoFzc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/man-training-dog-735898051-2000-eef075257ca44a22828da97373d88e2a.jpg",
-      buttonText: "Learn more",
+      buttonText: "Coming soon",
       buttonLink: "",
     },
   ];
