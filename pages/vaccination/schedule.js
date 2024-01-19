@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Icon } from "@iconify/react";
 import {
@@ -152,83 +153,107 @@ function Vaccination() {
           </div>
         ) : (
           <>
-            <div className="mt-10 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3 text-b max-w-2xl md:max-w-4xl mx-auto px-5">
-              <Select
-                onChange={(event) => {
-                  setSelectedPet(
-                    pets.find((pet) => pet.id === event.target.value)
-                  );
-                }}
-                radius="none"
-                label="Whom do you want to vaccinate?"
-              >
-                {pets.map((pet) => {
-                  return (
-                    <SelectItem key={pet.id} value={pet.id}>
-                      {pet.name}
-                    </SelectItem>
-                  );
-                })}
-              </Select>
-
-              <Autocomplete
-                onSelectionChange={(value) => {
-                  setSelectedVaccine(value);
-                }}
-                radius="none"
-                label="Select vaccine"
-              >
-                {vaccines.map((vaccine) => (
-                  <AutocompleteItem key={vaccine.name} value={vaccine.name}>
-                    {vaccine.name}
-                  </AutocompleteItem>
-                ))}
-              </Autocomplete>
-
-              <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-                <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
-                  Due date
-                </span>
-                <input
-                  type="date"
-                  onChange={(event) => {
-                    setSelectedDate(event.target.value);
-                  }}
-                  value={selectedDate}
-                  className="bg-transparent text-sm w-full h-full pl-4 outline-none"
-                  name=""
-                  id="datPicker"
+            {pets.length == 0 ? (
+              <div className="flex flex-col items-center justify-center mt-16">
+                <img
+                  src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
+                  className="h-24"
+                  alt=""
                 />
-              </div>
-            </div>
-            <div className="mt-10 max-w-2xl md:max-w-4xl px-5 mx-auto flex items-center justify-between">
-              <p className="text-sm text-neutral-700 hidden lg:block mr-2">
-                Already vaccinated?{" "}
-                <Link
-                  className="text-blue-600 ml-1"
-                  href="/vaccination/uploadOld"
-                >
-                  Upload certificate
+                <p className="mt-6 text-sm text-neutral-500">
+                  You have not registered any pet yet.{" "}
+                </p>
+
+                <Link href="/pets/register" className="mt-8">
+                  <Button
+                    radius="none"
+                    className="bg-black text-white px-4 rounded-md"
+                  >
+                    Register first pet ⌛️
+                  </Button>
                 </Link>
-              </p>
-              <Button
-                loading={isLoading}
-                onClick={handleSubmit}
-                className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
-                radius="none"
-              >
-                Submit
-              </Button>
-            </div>
-            <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
-              Already vaccinated?{" "}
-              <Link
-                className="text-blue-600 ml-1"
-                href="/vaccination/uploadOld"
-              >
-                Upload certificate
-              </Link>
-            </p>
+              </div>
+            ) : (
+              <>
+                <div className="mt-10 lg:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3 text-b max-w-2xl md:max-w-4xl mx-auto px-5">
+                  <Select
+                    onChange={(event) => {
+                      setSelectedPet(
+                        pets.find((pet) => pet.id === event.target.value)
+                      );
+                    }}
+                    radius="none"
+                    label="Whom do you want to vaccinate?"
+                  >
+                    {pets.map((pet) => {
+                      return (
+                        <SelectItem key={pet.id} value={pet.id}>
+                          {pet.name}
+                        </SelectItem>
+                      );
+                    })}
+                  </Select>
+
+                  <Autocomplete
+                    onSelectionChange={(value) => {
+                      setSelectedVaccine(value);
+                    }}
+                    radius="none"
+                    label="Select vaccine"
+                  >
+                    {vaccines.map((vaccine) => (
+                      <AutocompleteItem key={vaccine.name} value={vaccine.name}>
+                        {vaccine.name}
+                      </AutocompleteItem>
+                    ))}
+                  </Autocomplete>
+
+                  <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+                    <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                      Due date
+                    </span>
+                    <input
+                      type="date"
+                      onChange={(event) => {
+                        setSelectedDate(event.target.value);
+                      }}
+                      value={selectedDate}
+                      className="bg-transparent text-sm w-full h-full pl-4 outline-none"
+                      name=""
+                      id="datPicker"
+                    />
+                  </div>
+                </div>
+                <div className="mt-10 max-w-2xl md:max-w-4xl px-5 mx-auto flex items-center justify-between">
+                  <p className="text-sm text-neutral-700 hidden lg:block mr-2">
+                    Already vaccinated?{" "}
+                    <Link
+                      className="text-blue-600 ml-1"
+                      href="/vaccination/uploadOld"
+                    >
+                      Upload certificate
+                    </Link>
+                  </p>
+                  <Button
+                    loading={isLoading}
+                    onClick={handleSubmit}
+                    className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
+                    radius="none"
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
+                  Already vaccinated?{" "}
+                  <Link
+                    className="text-blue-600 ml-1"
+                    href="/vaccination/uploadOld"
+                  >
+                    Upload certificate
+                  </Link>
+                </p>
+              </>
+            )}
           </>
         )}
       </>

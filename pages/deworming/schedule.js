@@ -184,119 +184,146 @@ function Deworming() {
           </div>
         ) : (
           <>
-            <div className="mt-10 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
-              <Select
-                onChange={(event) => {
-                  setSelectedPet(
-                    pets.find((pet) => pet.id === event.target.value)
-                  );
-                }}
-                radius="none"
-                label="Whom do you want to deworm?"
-              >
-                {pets.map((pet) => {
-                  return (
-                    <SelectItem key={pet.id} value={pet.id}>
-                      {pet.name}
-                    </SelectItem>
-                  );
-                })}
-              </Select>
-
-              <Autocomplete
-                onSelectionChange={(value) => {
-                  let medicine = medicines.find(
-                    (medicine) => medicine.name === value
-                  );
-
-                  medicine &&
-                    medicine.length != 0 &&
-                    setDosage({
-                      ...dosage,
-                      unit: medicine.type == "Tabs" ? "tablet(s)" : "ml",
-                    });
-                  setSelectedMedicine(value);
-                }}
-                radius="none"
-                label="Select vaccine"
-              >
-                {medicines.map((medicine) => (
-                  <AutocompleteItem key={medicine.name} value={medicine.name}>
-                    {medicine.name}
-                  </AutocompleteItem>
-                ))}
-              </Autocomplete>
-              <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-                <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
-                  Dosage
-                </span>
-                <input
-                  type="tel"
-                  placeholder="0"
-                  onChange={(event) => {
-                    setDosage({
-                      ...dosage,
-                      value: event.target.value,
-                    });
-                  }}
-                  value={dosage.value}
-                  className="bg-transparent text-sm w-full pl-4 outline-none"
-                  name=""
+            {pets.length == 0 ? (
+              <div className="flex flex-col items-center justify-center mt-16">
+                <img
+                  src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
+                  className="h-24"
+                  alt=""
                 />
-                <select
-                  value={dosage.unit}
-                  onChange={(e) => {
-                    setDosage({
-                      ...dosage,
-                      unit: e.target.value,
-                    });
-                  }}
-                  name=""
-                  id=""
-                  className="w-44 h-full text-sm border-l bg-transparent pl-4 outline-none"
-                >
-                  <option value="ml">ml</option>
-                  <option value="tablet(s)">tablet(s)</option>
-                </select>
-              </div>
-              <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-                <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
-                  Due date
-                </span>
-                <input
-                  type="date"
-                  onChange={(event) => {
-                    setSelectedDate(event.target.value);
-                  }}
-                  value={selectedDate}
-                  className="bg-transparent text-sm w-full h-full pl-4 outline-none"
-                  name=""
-                  id="datPicker"
-                />
-              </div>
-            </div>
-            <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
-              <p className="text-sm text-neutral-700 hidden lg:block">
-                Already dewormed?{" "}
-                <Link className="text-blue-600 ml-1" href="/join-waitlist">
-                  Upload deworming record
+                <p className="mt-6 text-sm text-neutral-500">
+                  You have not registered any pet yet.{" "}
+                </p>
+
+                <Link href="/pets/register" className="mt-8">
+                  <Button
+                    radius="none"
+                    className="bg-black text-white px-4 rounded-md"
+                  >
+                    Register first pet ⌛️
+                  </Button>
                 </Link>
-              </p>
-              <Button
-                loading={isLoading}
-                onClick={handleSubmit}
-                className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
-                radius="none"
-              >
-                Submit
-              </Button>
-            </div>
-            <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
-              Already dewormed?{" "}
-              <Link className="text-blue-600 ml-1" href="/join-waitlist">
-                Upload deworming record
-              </Link>
-            </p>
+              </div>
+            ) : (
+              <>
+                <div className="mt-10 lg:mt-16 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b max-w-4xl lg:mx-auto mx-5">
+                  <Select
+                    onChange={(event) => {
+                      setSelectedPet(
+                        pets.find((pet) => pet.id === event.target.value)
+                      );
+                    }}
+                    radius="none"
+                    label="Whom do you want to deworm?"
+                  >
+                    {pets.map((pet) => {
+                      return (
+                        <SelectItem key={pet.id} value={pet.id}>
+                          {pet.name}
+                        </SelectItem>
+                      );
+                    })}
+                  </Select>
+
+                  <Autocomplete
+                    onSelectionChange={(value) => {
+                      let medicine = medicines.find(
+                        (medicine) => medicine.name === value
+                      );
+
+                      medicine &&
+                        medicine.length != 0 &&
+                        setDosage({
+                          ...dosage,
+                          unit: medicine.type == "Tabs" ? "tablet(s)" : "ml",
+                        });
+                      setSelectedMedicine(value);
+                    }}
+                    radius="none"
+                    label="Select vaccine"
+                  >
+                    {medicines.map((medicine) => (
+                      <AutocompleteItem
+                        key={medicine.name}
+                        value={medicine.name}
+                      >
+                        {medicine.name}
+                      </AutocompleteItem>
+                    ))}
+                  </Autocomplete>
+                  <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+                    <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                      Dosage
+                    </span>
+                    <input
+                      type="tel"
+                      placeholder="0"
+                      onChange={(event) => {
+                        setDosage({
+                          ...dosage,
+                          value: event.target.value,
+                        });
+                      }}
+                      value={dosage.value}
+                      className="bg-transparent text-sm w-full pl-4 outline-none"
+                      name=""
+                    />
+                    <select
+                      value={dosage.unit}
+                      onChange={(e) => {
+                        setDosage({
+                          ...dosage,
+                          unit: e.target.value,
+                        });
+                      }}
+                      name=""
+                      id=""
+                      className="w-44 h-full text-sm border-l bg-transparent pl-4 outline-none"
+                    >
+                      <option value="ml">ml</option>
+                      <option value="tablet(s)">tablet(s)</option>
+                    </select>
+                  </div>
+                  <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+                    <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                      Due date
+                    </span>
+                    <input
+                      type="date"
+                      onChange={(event) => {
+                        setSelectedDate(event.target.value);
+                      }}
+                      value={selectedDate}
+                      className="bg-transparent text-sm w-full h-full pl-4 outline-none"
+                      name=""
+                      id="datPicker"
+                    />
+                  </div>
+                </div>
+                <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
+                  <p className="text-sm text-neutral-700 hidden lg:block">
+                    Already dewormed?{" "}
+                    <Link className="text-blue-600 ml-1" href="/join-waitlist">
+                      Upload deworming record
+                    </Link>
+                  </p>
+                  <Button
+                    loading={isLoading}
+                    onClick={handleSubmit}
+                    className="px-10 w-full lg:w-fit bg-black text-white rounded-md"
+                    radius="none"
+                  >
+                    Submit
+                  </Button>
+                </div>
+                <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
+                  Already dewormed?{" "}
+                  <Link className="text-blue-600 ml-1" href="/join-waitlist">
+                    Upload deworming record
+                  </Link>
+                </p>
+              </>
+            )}
           </>
         )}
       </>

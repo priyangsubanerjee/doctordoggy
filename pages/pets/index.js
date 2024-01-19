@@ -7,7 +7,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { Spinner } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import axios from "axios";
 
 function Pets() {
@@ -107,15 +107,24 @@ function Pets() {
           </div>
           <div>
             {pets?.length == 0 && (
-              <div className="flex flex-col items-center justify-center mt-32">
+              <div className="flex flex-col items-center justify-center mt-8">
                 <img
                   src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
-                  className="h-32"
+                  className="h-24"
                   alt=""
                 />
                 <p className="mt-6 text-sm text-neutral-500">
                   You have not registered any pet yet.{" "}
                 </p>
+
+                <Link href="/pets/register" className="mt-8">
+                  <Button
+                    radius="none"
+                    className="bg-black text-white px-4 rounded-md"
+                  >
+                    Register first pet ⌛️
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
