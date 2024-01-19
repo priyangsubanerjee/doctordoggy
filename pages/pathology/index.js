@@ -15,6 +15,7 @@ import { getPathologyReportsByEmail } from "@/prisma/pathology";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import UploadFirstPathology from "@/components/Cards/UploadFirstPathology";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -146,6 +147,7 @@ function Pathology() {
       </div>
       {pageLoaded ? (
         <>
+          {pathologyReports.length == 0 && <UploadFirstPathology />}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
             {pathologyReports.map((report, index) => (
               <PathologyCard key={index} report={report} />

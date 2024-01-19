@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { FetchVaccinations } from "@/hooks/fetch";
+import ScheduleFirstVaccination from "@/components/Cards/ScheduleFirstVaccination";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -170,16 +171,7 @@ function VaccinationHistory({}) {
               ))}
             </div>
           )}
-          {vaccinations.length == 0 && (
-            <div className="flex flex-col items-center justify-center mt-7">
-              <img
-                src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
-                className="h-44"
-                alt=""
-              />
-              <p className="text-sm -mt-4">No vaccination records found.</p>
-            </div>
-          )}
+          {vaccinations.length == 0 && <ScheduleFirstVaccination />}
         </>
       )}
     </div>

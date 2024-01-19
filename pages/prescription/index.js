@@ -19,6 +19,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { FetchPrescriptions } from "@/hooks/fetch";
 import { useRouter } from "next/router";
+import UploadFirstPrescription from "@/components/Cards/UploadFirstPrescription";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -166,6 +167,7 @@ function Prescriptions() {
         </>
       ) : (
         <>
+          {prescriptions.length == 0 && <UploadFirstPrescription />}
           {prescriptions.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 mt-10 lg:mt-16 max-w-6xl lg:mx-auto mx-5">
               {prescriptions.reverse().map((prescription, index) => (

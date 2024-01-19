@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { authOptions } from "pages/api/auth/[...nextauth]";
@@ -19,6 +20,7 @@ import axios from "axios";
 import { uploadImage } from "@/helper/image";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -184,25 +186,7 @@ function UploadPrescription() {
       {pageLoaded == true ? (
         <>
           {pets.length == 0 ? (
-            <div className="flex flex-col items-center justify-center mt-16">
-              <img
-                src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
-                className="h-24"
-                alt=""
-              />
-              <p className="mt-6 text-sm text-neutral-500">
-                You have not registered any pet yet.{" "}
-              </p>
-
-              <Link href="/pets/register" className="mt-8">
-                <Button
-                  radius="none"
-                  className="bg-black text-white px-4 rounded-md"
-                >
-                  Register first pet ⌛️
-                </Button>
-              </Link>
-            </div>
+            <RegisterFirstPet />
           ) : (
             <>
               <div className="mt-10 flex items-center max-w-4xl ml-5 lg:mx-auto  overflow-auto whitespace-nowrap">

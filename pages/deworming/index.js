@@ -21,6 +21,7 @@ import { useSession } from "next-auth/react";
 import { FetchDewormings } from "@/hooks/fetch";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ScheduleFirstDeworming from "@/components/Cards/ScheduleFirstDeworming";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -223,21 +224,12 @@ function DewormingRepository() {
       )}
       {dewormings != null && (
         <>
+          {dewormings.length === 0 && <ScheduleFirstDeworming />}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto px-5">
             {dewormings.map((record, index) => (
               <DewormingCard key={index} deworming={record} />
             ))}
           </div>
-          {dewormings.length === 0 && (
-            <div className="flex flex-col items-center justify-center mt-7">
-              <img
-                src="https://img.freepik.com/premium-vector/dog-vaccination-line-icon-white_116137-6952.jpg?w=2000"
-                className="h-44"
-                alt=""
-              />
-              <p className="text-sm -mt-4">No deworming records found.</p>
-            </div>
-          )}
         </>
       )}
     </div>

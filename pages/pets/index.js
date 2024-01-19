@@ -9,6 +9,7 @@ import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, Spinner } from "@nextui-org/react";
 import axios from "axios";
+import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
 
 function Pets() {
   const session = useSession();
@@ -69,7 +70,7 @@ function Pets() {
 
   return (
     <div className="pb-16">
-      <h1 className="text-3xl font-semibold text-center mt-10 lg:mt-16">
+      <h1 className="text-2xl md:text-3xl font-semibold text-center mt-10 lg:mt-16">
         Pets galaxy
       </h1>
 
@@ -87,47 +88,27 @@ function Pets() {
           </span>
         </button>
       </div>
-
       {pageLoaded == false ? (
         <div className="flex flex-col items-center justify-center mt-32">
           <Spinner size="lg" color="primary" />
         </div>
       ) : (
         <>
-          <div className="lg:max-w-[75%] mx-8 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3">
-            {pets.map((pet) => (
-              <PetCard
-                id={pet?.id}
-                key={pet?.id}
-                name={pet?.name}
-                age={calculateAge(pet?.dateOfBirth)}
-                image={pet?.image}
-              />
-            ))}
-          </div>
-          <div>
-            {pets?.length == 0 && (
-              <div className="flex flex-col items-center justify-center mt-8">
-                <img
-                  src="https://i.pinimg.com/736x/4d/56/55/4d5655184db8716367bad5e6009dfc61.jpg"
-                  className="h-24"
-                  alt=""
+          {pets.length == 0 ? (
+            <RegisterFirstPet />
+          ) : (
+            <div className="lg:max-w-[75%] mx-8 lg:mx-auto mt-16 grid grid-cols-2 gap-8 lg:gap-12 lg:grid-cols-3">
+              {pets.map((pet) => (
+                <PetCard
+                  id={pet?.id}
+                  key={pet?.id}
+                  name={pet?.name}
+                  age={calculateAge(pet?.dateOfBirth)}
+                  image={pet?.image}
                 />
-                <p className="mt-6 text-sm text-neutral-500">
-                  You have not registered any pet yet.{" "}
-                </p>
-
-                <Link href="/pets/register" className="mt-8">
-                  <Button
-                    radius="none"
-                    className="bg-black text-white px-4 rounded-md"
-                  >
-                    Register first pet ⌛️
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </>
       )}
     </div>
