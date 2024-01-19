@@ -44,10 +44,6 @@ function RegisterPet({ canine = [], feline = [] }) {
   const [breedList, setBreedList] = useState([]);
 
   const performChecks = () => {
-    if (imageFile == null) {
-      toast("Please choose a photo of your pet");
-      return false;
-    }
     if (registerProp.parentEmail == "") {
       toast("No parent email found");
       return false;
@@ -83,12 +79,16 @@ function RegisterPet({ canine = [], feline = [] }) {
       updatedModal(true, "Uploading image ...");
       setLoading(true);
       try {
-        const { fileUrl, publicId } = await uploadImage(imageFile);
+        //const { fileUrl, publicId } = await uploadImage(imageFile);
         updatedModal(true, "Storing pet information ...");
         let registerRequest = await axios.post(
           "/api/pet/create",
           {
-            pet: { ...registerProp, image: fileUrl },
+            pet: {
+              ...registerProp,
+              image:
+                "https://media.istockphoto.com/id/639454418/photo/close-up-of-beagle-against-gray-background.jpg?s=612x612&w=0&k=20&c=dlac4lCaSPRkVwD2wLB7J1y1DCb9rKcjY6eBSxYyOEM=",
+            },
             sessionEmail: session?.data?.user?.email,
           },
           {
