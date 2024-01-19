@@ -43,9 +43,18 @@ export const getPrescriptionById = async (id) => {
         id: id,
       },
     });
-    return prescription;
+    return {
+      success: true,
+      message: "Prescription retrieved successfully",
+      prescription: prescription,
+    };
   } catch (error) {
     console.log(error);
+    return {
+      success: false,
+      message: "Unable to retrieve prescription",
+      prescription: null,
+    };
   }
 };
 

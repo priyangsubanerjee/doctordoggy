@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect } from "react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { getPrescriptionById } from "@/prisma/prescription";
@@ -9,6 +9,9 @@ import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
 import Router, { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -42,7 +45,13 @@ export async function getServerSideProps(context) {
     props: { session, record, isParent, pet, statusCode }, // will be passed to the page component as props
   };
 }
-export default function Prescription({ record, pet, statusCode, isParent }) {
+export default function Prescription() {
+  const [pageLoaded, setPageLoaded] = React.useState(false);
+  const session = useSession();
+  const [pet, setPet] = React.useState(null);
+  const [record, setRecord] = React.useState(null);
+  const [isParent, setIsParent] = React.useState(false);
+  const [isAllowed, setIsAllowed] = React.useState(false);
   const router = useRouter();
 
   const Capitalize = (str) => {
@@ -50,9 +59,60 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      (async () => {
+        let prescriptionRequest = await axios.post(
+          "/api/prescription/getbyid",
+          { id: router.query.pid },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.data?.accessToken}`,
+            },
+          }
+        );
+        if (prescriptionRequest.data.success) {
+          let petRequest = await axios.post(
+            "/api/pet/getbyid",
+            { id: prescriptionRequest.data.prescription.petId },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${session?.data?.accessToken}`,
+              },
+            }
+          );
+          if (petRequest.data.success) {
+            if (
+              session?.user?.email ==
+              prescriptionRequest.data.prescription.parentEmail
+            ) {
+              setIsParent(true);
+              setIsAllowed(true);
+            } else {
+              if (petRequest.data.pet.isPublic) {
+                setIsParent(false);
+                setIsAllowed(true);
+              } else {
+                setIsParent(false);
+                setIsAllowed(false);
+              }
+            }
+            setPet(petRequest.data.pet);
+            setRecord(prescriptionRequest.data.prescription);
+            setPageLoaded(true);
+          } else {
+            toast.error(petRequest.data.message);
+          }
+        }
+      })();
+    }
+  }, [session.status]);
+
   return (
     <>
-      {statusCode == 100 ? (
+      {isAllowed ? (
         <div>
           <p className="text-center mt-20 text-sm lg:mt-16 text-neutral-500">
             Prescription uploaded for
@@ -197,15 +257,11 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
             )}
           </div>
         </div>
-      ) : statusCode == 101 ? (
+      ) : (
         <p className="text-center text-sm mx-5 leading-6 mt-16">
           This record is private and can only be viewed by the parent. Ask
           parent to make their pet&apos;s profile public.
         </p>
-      ) : statusCode == 102 ? (
-        <p>Record not found</p>
-      ) : (
-        <p>Not authorized</p>
       )}
     </>
   );
