@@ -27,10 +27,6 @@ export default async function handler(req, res) {
       });
     });
 
-    let fileFinal = await sharp(file.filepath)
-      .resize(500)
-      .toFile(`./public/${file.name}`);
-
     console.log("Uploading image to cloudinary");
     const data = await cloudinary.uploader.unsigned_upload(
       file.filepath,

@@ -21,6 +21,7 @@ import { uploadImage } from "@/helper/image";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import { useRouter } from "next/router";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -41,7 +42,7 @@ function UploadPrescription() {
   const fileRef = useRef(null);
   const { updatedModal } = useContext(GlobalStates);
   const session = useSession();
-
+  const router = useRouter();
   const [pets, setPets] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedPet, setSelectedPet] = React.useState(null);
@@ -97,8 +98,12 @@ function UploadPrescription() {
           updatedModal(true, "Uploading files");
           for (let i = 0; i < prescriptionProps.files.length; i++) {
             let file = prescriptionProps.files[i];
-            let { fileUrl } = await uploadImage(file);
-            fileUrls.push(fileUrl);
+            try {
+              let { fileUrl } = await uploadImage(file);
+              fileUrls.push(fileUrl);
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
         console.log(fileUrls);
@@ -111,8 +116,9 @@ function UploadPrescription() {
           parentEmail: selectedPet.parentEmail,
           files: fileUrls,
         });
-        updatedModal(true, "Uploaded prescription");
-        window.location.href = "/prescription";
+        updatedModal(false, "Uploaded prescription");
+        toast.success("Uploaded prescription");
+        router.push("/prescription");
       } catch (error) {
         toast.error("Error uploading prescription");
       }
@@ -163,6 +169,20 @@ function UploadPrescription() {
       }
     })();
   }, [session.status]);
+
+  const dataURLtoFile = (dataurl, filename, type) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type });
+  };
 
   return (
     <div className="pb-16">

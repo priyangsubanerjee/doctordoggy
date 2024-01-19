@@ -14,8 +14,10 @@ export async function getServerSideProps(context) {
   let record = null;
   let isParent = false;
   if (session) {
-    record = await getPrescriptionById(context.params.pid);
-    record = await JSON.parse(JSON.stringify(record));
+    let { prescription, success } = await getPrescriptionById(
+      context.params.pid
+    );
+    record = success ? await JSON.parse(JSON.stringify(prescription)) : null;
     if (record) {
       if (session?.user?.email == record.parentEmail) {
         isParent = true;

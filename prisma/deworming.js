@@ -79,10 +79,18 @@ export const getDewormingById = async (id) => {
         id: id,
       },
     });
-    return deworming;
+    return {
+      success: true,
+      message: "Deworming fetched successfully",
+      deworming: deworming,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Error fetching deworming",
+      deworming: null,
+    };
   }
 };
 

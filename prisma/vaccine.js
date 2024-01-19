@@ -42,10 +42,18 @@ export const getVaccineById = async (id) => {
         id: id,
       },
     });
-    return vaccine;
+    return {
+      success: true,
+      message: "Vaccine fetched successfully",
+      vaccine: vaccine,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Error fetching vaccine",
+      vaccine: null,
+    };
   }
 };
 

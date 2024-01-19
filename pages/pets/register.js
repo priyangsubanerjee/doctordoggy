@@ -78,16 +78,20 @@ function RegisterPet({ canine = [], feline = [] }) {
     if (performChecks()) {
       updatedModal(true, "Uploading image ...");
       setLoading(true);
+      let fileUploadUrl =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS15_HipQtHuEkRtZEm4RLpBP3U2ay5Zrz5EpJ19PftLWDfiSb1ZKuRCHVc_w_4zKmraus&usqp=CAU";
       try {
-        //const { fileUrl, publicId } = await uploadImage(imageFile);
+        if (imageFile !== null) {
+          const { fileUrl, publicId } = await uploadImage(imageFile);
+          fileUploadUrl = fileUrl;
+        }
         updatedModal(true, "Storing pet information ...");
         let registerRequest = await axios.post(
           "/api/pet/create",
           {
             pet: {
               ...registerProp,
-              image:
-                "https://media.istockphoto.com/id/639454418/photo/close-up-of-beagle-against-gray-background.jpg?s=612x612&w=0&k=20&c=dlac4lCaSPRkVwD2wLB7J1y1DCb9rKcjY6eBSxYyOEM=",
+              image: fileUploadUrl,
             },
             sessionEmail: session?.data?.user?.email,
           },
@@ -156,148 +160,174 @@ function RegisterPet({ canine = [], feline = [] }) {
     console.log(registerProp.breed);
   }, [registerProp.breed]);
 
-  if (breedList.length == 0) {
-    return (
-      <div className="flex flex-col items-center justify-center mt-16">
-        <h1 className="text-3xl font-semibold text-center">
-          Register your pet
-        </h1>
-        <div className="flex items-center justify-center space-x-2 mt-4">
-          <p className="text-center text-neutral-600 text-sm">
-            * marked fields are mandatory.
-          </p>
-          <p className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
-            <span>Learn more</span>
-            <span className="translate-y-[1px]">
-              <Icon icon="formkit:right" />
-            </span>
-          </p>
-        </div>
-        <Spinner className="mt-10" color="primary" size="lg" />
+  const dataURLtoFile = (dataurl, filename, type) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type });
+  };
+
+  return (
+    <div className="pb-16">
+      <h1 className="text-3xl font-semibold text-center mt-16">
+        Register your pet
+      </h1>
+      <div className="flex items-center justify-center space-x-2 mt-4">
+        <p className="text-center text-neutral-600 text-sm">
+          * marked fields are mandatory.
+        </p>
+        <p className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+          <span>Learn more</span>
+          <span className="translate-y-[1px]">
+            <Icon icon="formkit:right" />
+          </span>
+        </p>
       </div>
-    );
-  } else {
-    return (
-      <div className="pb-16">
-        <h1 className="text-3xl font-semibold text-center mt-16">
-          Register your pet
-        </h1>
-        <div className="flex items-center justify-center space-x-2 mt-4">
-          <p className="text-center text-neutral-600 text-sm">
-            * marked fields are mandatory.
-          </p>
-          <p className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
-            <span>Learn more</span>
-            <span className="translate-y-[1px]">
-              <Icon icon="formkit:right" />
-            </span>
-          </p>
-        </div>
-        <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
-          <div className="lg:w-fit w-full shrink-0">
-            <div
-              onClick={() => imageRef?.current.click()}
-              className="h-[200px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
-            >
-              <input
-                type="file"
-                onChange={async (e) => {
-                  const file = e.target.files[0];
-                  setImageFile(file);
-                }}
-                name=""
-                hidden
-                ref={imageRef}
-                id=""
-              />
-              {imageFile == null ? (
-                <>
-                  <div className="h-full w-full flex flex-col items-center justify-center">
+      <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
+        <div className="lg:w-fit w-full shrink-0">
+          <div
+            onClick={() => imageRef?.current.click()}
+            className="h-[200px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
+          >
+            <input
+              type="file"
+              onChange={async (e) => {
+                const file = e.target.files[0];
+                console.log("Initial file size: ", file.size / 1024 / 1024);
+                let canvas = document.createElement("canvas");
+                let ctx = canvas.getContext("2d");
+                let cw = canvas.width;
+                let ch = canvas.height;
+                let maxW = 500;
+                let maxH = 500;
+                let img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = function () {
+                  let iw = img.width;
+                  let ih = img.height;
+                  let scale = Math.min(maxW / iw, maxH / ih);
+                  let iwScaled = iw * scale;
+                  let ihScaled = ih * scale;
+                  canvas.width = iwScaled;
+                  canvas.height = ihScaled;
+                  ctx.drawImage(img, 0, 0, iwScaled, ihScaled);
+                  let dataURL = canvas.toDataURL("image/jpeg", 0.1);
+                  let resizedImage = dataURL.replace(
+                    /^data:image\/(png|jpg|jpeg);base64,/,
+                    ""
+                  );
+                  let fileResized = dataURLtoFile(
+                    dataURL,
+                    file.name,
+                    file.type
+                  );
+                  console.log(
+                    "Resized file size: ",
+                    fileResized.size / 1024 / 1024
+                  );
+                  setImageFile(fileResized);
+                };
+              }}
+              name=""
+              hidden
+              ref={imageRef}
+              id=""
+            />
+            {imageFile == null ? (
+              <>
+                <div className="h-full w-full flex flex-col items-center justify-center">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
+                    className="h-8 w-8"
+                    alt=""
+                  />
+                  <p className="mt-3 font-medium">Choose a photo</p>
+                  <p className="text-xs text-neutral-500 mt-2">
+                    .png, .jpg, .jpeg, .heic
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="h-full w-full flex flex-col items-center justify-center">
+                  <img
+                    src={URL.createObjectURL(imageFile)}
+                    className="h-full w-full object-cover"
+                    alt=""
+                  />
+                  <div className="absolute opacity-0 hover:opacity-100 inset-0 h-full w-full bg-white/70 flex flex-col items-center justify-center">
                     <img
                       src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
                       className="h-8 w-8"
                       alt=""
                     />
-                    <p className="mt-3 font-medium">Choose a photo</p>
+                    <p className="mt-3 font-medium">Choose another photo</p>
                     <p className="text-xs text-neutral-500 mt-2">
                       .png, .jpg, .jpeg, .heic
                     </p>
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="h-full w-full flex flex-col items-center justify-center">
-                    <img
-                      src={URL.createObjectURL(imageFile)}
-                      className="h-full w-full object-cover"
-                      alt=""
-                    />
-                    <div className="absolute opacity-0 hover:opacity-100 inset-0 h-full w-full bg-white/70 flex flex-col items-center justify-center">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1998/1998342.png"
-                        className="h-8 w-8"
-                        alt=""
-                      />
-                      <p className="mt-3 font-medium">Choose another photo</p>
-                      <p className="text-xs text-neutral-500 mt-2">
-                        .png, .jpg, .jpeg, .heic
-                      </p>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
+                </div>
+              </>
+            )}
           </div>
-          <div className="w-full mt-16 lg:mt-0">
-            <p className="text-xs text-neutral-600">
-              General information about your pet
-            </p>
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b">
-              <Input
-                label="Name of your pet"
-                type="text"
-                required
-                radius="none"
-                value={registerProp.name}
-                onChange={(e) =>
-                  setRegisterProp({ ...registerProp, name: e.target.value })
-                }
-                size="md"
-                className="rounded-none text-base lg:col-span-2"
-              />
+        </div>
+        <div className="w-full mt-16 lg:mt-0">
+          <p className="text-xs text-neutral-600">
+            General information about your pet
+          </p>
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3 text-b">
+            <Input
+              label="Name of your pet"
+              type="text"
+              required
+              radius="none"
+              value={registerProp.name}
+              onChange={(e) =>
+                setRegisterProp({ ...registerProp, name: e.target.value })
+              }
+              size="md"
+              className="rounded-none text-base lg:col-span-2"
+            />
 
-              <Select
-                onChange={(e) => {
-                  setRegisterProp({ ...registerProp, species: e.target.value });
-                }}
-                radius="none"
-                label="Species"
-              >
-                {species.map((type, index) => {
-                  return (
-                    <SelectItem key={type} value={type}>
-                      {type.substring(0, 1).toUpperCase() + type.substring(1)}
-                    </SelectItem>
-                  );
-                })}
-              </Select>
+            <Select
+              onChange={(e) => {
+                setRegisterProp({ ...registerProp, species: e.target.value });
+              }}
+              radius="none"
+              label="Species"
+            >
+              {species.map((type, index) => {
+                return (
+                  <SelectItem key={type} value={type}>
+                    {type.substring(0, 1).toUpperCase() + type.substring(1)}
+                  </SelectItem>
+                );
+              })}
+            </Select>
 
-              <Autocomplete
-                isDisabled={registerProp.species.length == 0}
-                onSelectionChange={(value) => {
-                  setRegisterProp({ ...registerProp, breed: value });
-                }}
-                radius="none"
-                label="Select breed"
-              >
-                {breedOptions.map((animal) => (
-                  <AutocompleteItem key={animal} value={animal}>
-                    {animal}
-                  </AutocompleteItem>
-                ))}
-              </Autocomplete>
+            <Autocomplete
+              isDisabled={registerProp.species.length == 0}
+              onSelectionChange={(value) => {
+                setRegisterProp({ ...registerProp, breed: value });
+              }}
+              radius="none"
+              label="Select breed"
+            >
+              {breedOptions.map((animal) => (
+                <AutocompleteItem key={animal} value={animal}>
+                  {animal}
+                </AutocompleteItem>
+              ))}
+            </Autocomplete>
 
-              {/* <Input
+            {/* <Input
                 label="Breed"
                 value={registerProp.breed}
                 onChange={(e) =>
@@ -311,125 +341,124 @@ function RegisterPet({ canine = [], feline = [] }) {
                 className="rounded-none "
                 list="breeds"
               /> */}
-              <datalist id="breeds">
-                {breedOptions != undefined &&
-                  breedOptions.length !== 0 &&
-                  breedOptions.map((breed, index) => {
-                    return (
-                      <option key={breed} value={breed}>
-                        {breed}
-                      </option>
-                    );
-                  })}
-              </datalist>
+            <datalist id="breeds">
+              {breedOptions != undefined &&
+                breedOptions.length !== 0 &&
+                breedOptions.map((breed, index) => {
+                  return (
+                    <option key={breed} value={breed}>
+                      {breed}
+                    </option>
+                  );
+                })}
+            </datalist>
 
-              <Select
-                onChange={(e) => {
-                  setRegisterProp({ ...registerProp, sex: e.target.value });
-                }}
-                radius="none"
-                label="Sex"
+            <Select
+              onChange={(e) => {
+                setRegisterProp({ ...registerProp, sex: e.target.value });
+              }}
+              radius="none"
+              label="Sex"
+            >
+              <SelectItem key="male" value="male">
+                Male ♂
+              </SelectItem>
+              <SelectItem key="female" value="female">
+                Female ♀
+              </SelectItem>
+            </Select>
+
+            <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+              <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
+                D.O.B
+              </span>
+              <input
+                value={registerProp.dateOfBirth}
+                onChange={(e) =>
+                  setRegisterProp({
+                    ...registerProp,
+                    dateOfBirth: e.target.value,
+                  })
+                }
+                type="date"
+                className="bg-transparent text-sm w-full h-full pl-4 appearance-none outline-none"
+                name=""
+                id="datPicker"
+              />
+            </div>
+
+            <Input
+              label="Body weight (Kg)"
+              value={registerProp.bodyWeight}
+              onChange={(e) =>
+                setRegisterProp({
+                  ...registerProp,
+                  bodyWeight: e.target.value,
+                })
+              }
+              type="tel"
+              radius="none"
+              className="rounded-none "
+            />
+
+            <Input
+              label="Color"
+              value={registerProp.color}
+              onChange={(e) =>
+                setRegisterProp({
+                  ...registerProp,
+                  color: e.target.value,
+                })
+              }
+              type="text"
+              radius="none"
+              className="rounded-none "
+            />
+          </div>
+
+          <div className="h-[1px] w-full my-8"></div>
+
+          <div className="flex items-center justify-between mt-5">
+            <div>
+              <p className="text-neutral-800 text-sm">
+                Is your pet&apos;s profile public?
+              </p>
+              <Link
+                href="/pets/register"
+                className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
               >
-                <SelectItem key="male" value="male">
-                  Male ♂
-                </SelectItem>
-                <SelectItem key="female" value="female">
-                  Female ♀
-                </SelectItem>
-              </Select>
-
-              <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
-                <span className="text-sm h-full flex items-center text-neutral-600 shrink-0 border-r border-neutral-200 pr-4">
-                  D.O.B
+                <span>Learn about public profiles</span>
+                <span className="translate-y-[1px]">
+                  <Icon icon="formkit:right" />
                 </span>
-                <input
-                  value={registerProp.dateOfBirth}
-                  onChange={(e) =>
-                    setRegisterProp({
-                      ...registerProp,
-                      dateOfBirth: e.target.value,
-                    })
-                  }
-                  type="date"
-                  className="bg-transparent text-sm w-full h-full pl-4 appearance-none outline-none"
-                  name=""
-                  id="datPicker"
-                />
-              </div>
-
-              <Input
-                label="Body weight (Kg)"
-                value={registerProp.bodyWeight}
-                onChange={(e) =>
-                  setRegisterProp({
-                    ...registerProp,
-                    bodyWeight: e.target.value,
-                  })
-                }
-                type="tel"
-                radius="none"
-                className="rounded-none "
-              />
-
-              <Input
-                label="Color"
-                value={registerProp.color}
-                onChange={(e) =>
-                  setRegisterProp({
-                    ...registerProp,
-                    color: e.target.value,
-                  })
-                }
-                type="text"
-                radius="none"
-                className="rounded-none "
-              />
+              </Link>
             </div>
+            <Switch
+              isSelected={registerProp.isPublic}
+              onValueChange={() => {
+                setRegisterProp({
+                  ...registerProp,
+                  isPublic: !registerProp.isPublic,
+                });
+              }}
+            />
+          </div>
 
-            <div className="h-[1px] w-full my-8"></div>
-
-            <div className="flex items-center justify-between mt-5">
-              <div>
-                <p className="text-neutral-800 text-sm">
-                  Is your pet&apos;s profile public?
-                </p>
-                <Link
-                  href="/pets/register"
-                  className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
-                >
-                  <span>Learn about public profiles</span>
-                  <span className="translate-y-[1px]">
-                    <Icon icon="formkit:right" />
-                  </span>
-                </Link>
-              </div>
-              <Switch
-                isSelected={registerProp.isPublic}
-                onValueChange={() => {
-                  setRegisterProp({
-                    ...registerProp,
-                    isPublic: !registerProp.isPublic,
-                  });
-                }}
-              />
-            </div>
-
-            <div className="mt-20 flex space-x-2 items-center justify-end">
-              <Button
-                isLoading={loading}
-                onPress={handleSubmit}
-                radius="none"
-                className="w-full rounded-md h-12 bg-black text-white"
-              >
-                {" "}
-                Register{" "}
-              </Button>
-            </div>
+          <div className="mt-20 flex space-x-2 items-center justify-end">
+            <Button
+              isLoading={loading}
+              onPress={handleSubmit}
+              radius="none"
+              className="w-full rounded-md h-12 bg-black text-white"
+            >
+              {" "}
+              Register{" "}
+            </Button>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default RegisterPet;

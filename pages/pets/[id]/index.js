@@ -722,7 +722,7 @@ function Profile() {
               </p>
               <Button
                 radius="full"
-                onPress={() => Router.push(`/pets/${pet?.id}/edit`)}
+                onPress={() => router.push(`/pets/${pet?.id}/edit`)}
                 className="px-6 py-2 bg-neutral-800 text-sm text-white mt-5"
               >
                 Edit
@@ -734,7 +734,7 @@ function Profile() {
                 This action is irreversible & will delete this pet completely.
               </p>
               <Button
-                onPress={() => Router.push(`/pets/${pet?.id}/delete`)}
+                onPress={() => router.push(`/pets/${pet?.id}/delete`)}
                 radius="full"
                 className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
               >

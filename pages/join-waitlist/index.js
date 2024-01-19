@@ -20,7 +20,7 @@ function Waitlist() {
           Page in development
         </h1>
         <div className="flex items-center justify-center space-x-4 mt-4">
-          <p>
+          <p className="text-center text-sm">
             You can still join the waitlist to be notified when we launch this
             feature.
           </p>

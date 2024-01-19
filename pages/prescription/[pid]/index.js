@@ -85,10 +85,7 @@ export default function Prescription() {
             }
           );
           if (petRequest.data.success) {
-            if (
-              session?.user?.email ==
-              prescriptionRequest.data.prescription.parentEmail
-            ) {
+            if (session?.data?.user?.email == petRequest.data.pet.parentEmail) {
               setIsParent(true);
               setIsAllowed(true);
             } else {

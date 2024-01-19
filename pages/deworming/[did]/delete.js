@@ -15,8 +15,8 @@ export async function getServerSideProps(context) {
   let record = null;
   let isParent = false;
   if (session) {
-    record = await getDewormingById(context.params.did);
-    record = await JSON.parse(JSON.stringify(record));
+    let { success, deworming } = await getDewormingById(context.params.did);
+    record = success ? await JSON.parse(JSON.stringify(deworming)) : null;
     if (record) {
       if (session?.user?.email == record.parentEmail) {
         isParent = true;

@@ -14,8 +14,8 @@ export async function getServerSideProps(context) {
   let record = null;
   let isParent = false;
   if (session) {
-    record = await getVaccineById(context.params.vid);
-    record = await JSON.parse(JSON.stringify(record));
+    let { success, vaccine } = await getVaccineById(context.params.vid);
+    record = success ? await JSON.parse(JSON.stringify(vaccine)) : null;
     if (record) {
       if (session?.user?.email == record.parentEmail) {
         isParent = true;

@@ -13,8 +13,10 @@ export async function getServerSideProps(context) {
   let pet = null;
   let isParent = false;
   if (session) {
-    pet = await getPetById(context.params.id);
-    pet = await JSON.parse(JSON.stringify(pet));
+    let petRequest = await getPetById(context.params.id);
+    pet = petRequest.success
+      ? JSON.parse(JSON.stringify(petRequest.pet))
+      : null;
     if (pet) {
       if (session?.user?.email == pet.parentEmail) {
         isParent = true;
