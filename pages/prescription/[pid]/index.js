@@ -107,10 +107,24 @@ export default function Prescription() {
                   <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-4">
                     {record.name}
                   </h1>
-                  <div className="flex items-center justify-center mt-3">
-                    <button className="text-sm text-neutral-500">
-                      Something&apos;s wrong with this record?{" "}
-                      <span className="text-blue-600">Report</span>
+                  <div className="flex items-center justify-center mt-6 space-x-2">
+                    <button
+                      onClick={() => {
+                        try {
+                          navigator.share({
+                            title: "Petmeds",
+                            text: `Check out this prescription for ${pet?.name} on DoctorDoggy`,
+                            url: window.location.href,
+                          });
+                        } catch (error) {
+                          navigator.clipboard.writeText(window.location.href);
+                          toast.success("Link copied to clipboard");
+                        }
+                      }}
+                      className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
+                    >
+                      <span>Share</span>
+                      <Icon height={13} icon="ic:round-share" />
                     </button>
                   </div>
                   <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-16 ">
