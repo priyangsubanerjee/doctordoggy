@@ -779,7 +779,7 @@ function Profile() {
   const PrescriptionTab = ({}) => {
     return (
       <>
-        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 mx-3 mx-auto pb-16 mt-10 lg:mt-7">
+        <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {prescriptions.reverse().map((prescription, index) => (
             <PrescriptionCard key={index} prescription={prescription} />
           ))}
