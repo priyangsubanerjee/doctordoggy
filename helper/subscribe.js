@@ -9,6 +9,7 @@ export const subscribe = async (showToast) => {
   let messaging = getMessaging(firebaseApp);
   try {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      console.log("Service worker is available");
       if (Notification.permission == "granted") {
         const token = await getToken(messaging, {
           vapidKey:
@@ -43,6 +44,8 @@ export const subscribe = async (showToast) => {
           await subscribe();
           return null;
         }
+      } else {
+        console.log("Permission not granted for push notifications");
       }
     }
   } catch (error) {

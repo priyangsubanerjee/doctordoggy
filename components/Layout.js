@@ -15,8 +15,11 @@ function Layout({ children }) {
   const checkIfNeedsRefresh = async () => {
     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
     if (tokenUpdatedInSession == null) {
+      console.log("Token not updated");
       sessionStorage.setItem("tokenUpdated", true);
       subscribe();
+    } else {
+      console.log("Token updated");
     }
   };
 
