@@ -299,7 +299,6 @@ function Profile() {
   };
 
   const VaccineCard = ({ vaccine }) => {
-    console.log(vaccine);
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">

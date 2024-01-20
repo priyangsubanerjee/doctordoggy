@@ -61,7 +61,7 @@ function Certificate() {
         if (vaccineData.data.vaccination.vaccine != null) {
           if (vaccineData.data.vaccination.vaccine.status == "DUE") {
             toast.error("This vaccination is due. Please update it.");
-            router.push(`/vaccination`);
+            router.back();
           }
           let petRequest = await axios.post(
             "/api/pet/getbyid",
