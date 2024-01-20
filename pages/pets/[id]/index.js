@@ -965,7 +965,7 @@ function Profile() {
                         alt=""
                       />
                     </div>
-                    <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
+                    <div className="absolute z-10 -bottom-0 lg:bottom-0 left-1/2 -translate-x-1/2">
                       <div className="relative">
                         {isParent && (
                           <div className="absolute bottom-3 right-4">
@@ -980,7 +980,7 @@ function Profile() {
                       </div>
                     </div>
                   </div>
-                  <h1 className="text-3xl font-semibold text-center mt-20 lg:mt-16">
+                  <h1 className="text-2xl md:text-3xl font-semibold text-center mt-5 lg:mt-6">
                     {pet.name.split(" ")[0]}&apos;s{" "}
                     <span className="opacity-60">
                       {pet.sex == "male" ? "Palace" : "Castle"}
