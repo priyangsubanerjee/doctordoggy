@@ -15,12 +15,12 @@ function Waitlist() {
         />
         <div className="absolute inset-0 w-full h-[300px] bg-gradient-to-b from-white to-transparent"></div>
       </div>
-      <div className="z-10 relative px-4 mt-16">
+      <div className="z-10 relative px-4 mt-10 md:mt-16">
         <h1 className="text-2xl lg:text-3xl font-semibold text-center">
           Page in development
         </h1>
-        <div className="flex items-center justify-center space-x-4 mt-4">
-          <p className="text-center text-sm">
+        <div className="flex items-center justify-center space-x-4 mt-3">
+          <p className="text-center text-xs md:text-sm leading-6 text-neutral-500">
             You can still join the waitlist to be notified when we launch this
             feature.
           </p>

@@ -2,8 +2,11 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
+import ScheduleCall from "../Cards/ScheduleCall";
 
 function StepsToEnjoy() {
+  const [scheduleCall, setScheduleCall] = React.useState(false);
+
   const stepsList = [
     {
       title: "Choose a service you want to avail.",
@@ -73,13 +76,18 @@ function StepsToEnjoy() {
             cleared.
           </p>
           <div className="flex items-center justify-center space-x-5 mt-6">
-            <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
-              <span>Choose a service</span>
-              <span className="translate-y-[1px]">
-                <Icon icon="formkit:right" />
-              </span>
-            </button>
-            <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+            <Link href="/join-waitlist?ref=choose-service">
+              <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline">
+                <span>Choose a service</span>
+                <span className="translate-y-[1px]">
+                  <Icon icon="formkit:right" />
+                </span>
+              </button>
+            </Link>
+            <button
+              onClick={() => setScheduleCall(true)}
+              className="flex items-center text-blue-600 space-x-2 text-sm hover:underline"
+            >
               <span>Schedule a call</span>
               <span className="translate-y-[1px]">
                 <Icon icon="formkit:right" />
@@ -88,6 +96,7 @@ function StepsToEnjoy() {
           </div>
         </div>
       </div>
+      {scheduleCall && <ScheduleCall close={() => setScheduleCall(false)} />}
     </div>
   );
 }

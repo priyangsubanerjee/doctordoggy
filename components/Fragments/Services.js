@@ -12,7 +12,7 @@ function Services() {
       image:
         "https://www.groomers-online.com/blog/wp-content/uploads/2023/04/GettyImages-1277453154.jpg",
       buttonText: "Coming soon",
-      buttonLink: "",
+      buttonLink: `/join-waitlist?ref=Grooming&Spa`,
     },
     {
       title: "Boarding",
@@ -21,7 +21,7 @@ function Services() {
       image:
         "https://vetmed.tamu.edu/news/wp-content/uploads/sites/9/2018/05/20150804-doghouse.jpg",
       buttonText: "Coming soon",
-      buttonLink: "",
+      buttonLink: `/join-waitlist?ref=Boarding`,
     },
     {
       title: "Dog Walking",
@@ -30,7 +30,7 @@ function Services() {
       image:
         "https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg",
       buttonText: "Coming soon",
-      buttonLink: "",
+      buttonLink: `/join-waitlist?ref=Dog-Walking`,
     },
 
     {
@@ -40,7 +40,7 @@ function Services() {
       image:
         "https://www.dailypaws.com/thmb/qlpLn9xomUWCs0KDmHyzDkOoFzc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/man-training-dog-735898051-2000-eef075257ca44a22828da97373d88e2a.jpg",
       buttonText: "Coming soon",
-      buttonLink: "",
+      buttonLink: `/join-waitlist?ref=Training`,
     },
   ];
 
