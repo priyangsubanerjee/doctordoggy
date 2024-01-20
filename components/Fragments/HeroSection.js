@@ -173,63 +173,64 @@ function HeroSection() {
   return (
     <div>
       {isPermissionLayoutVisible == false ? (
-        <div className="h-[250px] md:h-[500px] lg:h-[500px] relative">
-          <img
-            src="/static/hero.jpg"
-            className="h-full w-full object-cover"
-            alt=""
-          />
-          <div className="absolute inset-0 z-10 lg:pb-32 flex items-center lg:items-end justify-center bg-gradient-to-b from-transparent to-black/50">
-            <div className="relative w-[93%] lg:w-[60%]">
-              <div className="h-12 lg:h-16 bg-white border rounded-md flex items-center overflow-hidden">
-                <input
-                  type="text"
-                  value={query}
-                  onFocus={() => setHasFocus(true)}
-                  onBlur={() => setHasFocus(false)}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
-                  placeholder="Search for a service or a product"
-                  name=""
-                  id=""
-                />
-                <button
-                  name="search-submit"
-                  className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full"
-                >
-                  <Icon
-                    onClick={() => setQuery("")}
-                    icon={
-                      query.length > 0 ? "ep:close" : "fluent:search-24-regular"
-                    }
-                    className="text-2xl text-gray-900"
-                  />
-                </button>
-              </div>
+        // <div className="h-[250px] md:h-[500px] lg:h-[500px] relative">
+        //   <img
+        //     src="/static/hero.jpg"
+        //     className="h-full w-full object-cover"
+        //     alt=""
+        //   />
+        //   <div className="absolute inset-0 z-10 lg:pb-32 flex items-center lg:items-end justify-center bg-gradient-to-b from-transparent to-black/50">
+        //     <div className="relative w-[93%] lg:w-[60%]">
+        //       <div className="h-12 lg:h-16 bg-white border rounded-md flex items-center overflow-hidden">
+        //         <input
+        //           type="text"
+        //           value={query}
+        //           onFocus={() => setHasFocus(true)}
+        //           onBlur={() => setHasFocus(false)}
+        //           onChange={(e) => setQuery(e.target.value)}
+        //           className="h-full px-6 lg:px-12 lg:text-lg w-full outline-none"
+        //           placeholder="Search for a service or a product"
+        //           name=""
+        //           id=""
+        //         />
+        //         <button
+        //           name="search-submit"
+        //           className="shrink-0 px-5 lg:px-10 bg-slate-100 h-full"
+        //         >
+        //           <Icon
+        //             onClick={() => setQuery("")}
+        //             icon={
+        //               query.length > 0 ? "ep:close" : "fluent:search-24-regular"
+        //             }
+        //             className="text-2xl text-gray-900"
+        //           />
+        //         </button>
+        //       </div>
 
-              {searchResults.length > 0 && (
-                <div className="absolute inset-x-0 w-full py-4 px-4 top-16 lg:top-20 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
-                  {searchResults.map((item, i) => (
-                    <Link key={i} href={item.url}>
-                      <div
-                        className="flex text-neutral-600 text-sm items-center rounded-md px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                        key={i}
-                      >
-                        <Icon height={18} icon={item.icon} />
-                        <span className="ml-5">{item.name}</span>
+        //       {searchResults.length > 0 && (
+        //         <div className="absolute inset-x-0 w-full py-4 px-4 top-16 lg:top-20 bg-white border shadow-xl shadow-black/5 z-10 rounded-lg">
+        //           {searchResults.map((item, i) => (
+        //             <Link key={i} href={item.url}>
+        //               <div
+        //                 className="flex text-neutral-600 text-sm items-center rounded-md px-4 py-3 hover:bg-gray-100 cursor-pointer"
+        //                 key={i}
+        //               >
+        //                 <Icon height={18} icon={item.icon} />
+        //                 <span className="ml-5">{item.name}</span>
 
-                        <Icon
-                          className="ml-auto"
-                          icon="icon-park-outline:right"
-                        />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        //                 <Icon
+        //                   className="ml-auto"
+        //                   icon="icon-park-outline:right"
+        //                 />
+        //               </div>
+        //             </Link>
+        //           ))}
+        //         </div>
+        //       )}
+        //     </div>
+        //   </div>
+        // </div>
+        <div></div>
       ) : (
         <PermissionLayout close={() => setIsPermissionLayoutVisible(false)} />
       )}
