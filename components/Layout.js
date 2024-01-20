@@ -12,37 +12,44 @@ import { subscribe } from "@/helper/subscribe";
 function Layout({ children }) {
   const session = useSession();
 
-  //   const checkIfNeedsRefresh = async () => {
-  //     let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
-  //     if (tokenUpdatedInSession == null) {
-  //       sessionStorage.setItem("tokenUpdated", true);
-  //       subscribe();
-  //     }
-  //   };
+  const checkIfNeedsRefresh = async () => {
+    let tokenUpdatedInSession = sessionStorage.getItem("tokenUpdated") || null;
+    if (tokenUpdatedInSession == null) {
+      sessionStorage.setItem("tokenUpdated", true);
+      subscribe();
+    }
+  };
 
-  //   useEffect(() => {
-  //     if (
-  //       session.status === "authenticated" &&
-  //       session.data.user.onBoardingSuccess == true &&
-  //       Notification.permission == "granted"
-  //     ) {
-  //       checkIfNeedsRefresh();
-  //     }
-  //   }, [session.status]);
+  useEffect(() => {
+    if (
+      session.status === "authenticated" &&
+      session.data.user.onBoardingSuccess == true
+    ) {
+      if (!("Notification" in window)) {
+        console.log("This browser does not support notification");
+      }
 
-  //   useEffect(() => {
-  //     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-  //       const messaging = getMessaging(firebaseApp);
-  //       const unsubscribe = onMessage(messaging, (payload) => {
-  //         alert("Foreground push notification received:", payload);
-  //       });
-  //       return () => {
-  //         unsubscribe(); // Unsubscribe from the onMessage event
-  //       };
-  //     } else {
-  //       console.error("Service worker is not available");
-  //     }
-  //   }, []);
+      if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+          checkIfNeedsRefresh();
+        }
+      }
+    }
+  }, [session.status]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      const messaging = getMessaging(firebaseApp);
+      const unsubscribe = onMessage(messaging, (payload) => {
+        alert("Foreground push notification received:", payload);
+      });
+      return () => {
+        unsubscribe(); // Unsubscribe from the onMessage event
+      };
+    } else {
+      console.error("Service worker is not available");
+    }
+  }, []);
 
   return (
     <div className="pt-[104px] lg:pt-28 h-fit">
