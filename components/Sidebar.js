@@ -1,8 +1,11 @@
 import GlobalStates from "@/context/GlobalState";
 import { Icon } from "@iconify/react";
-import React, { useContext } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
 
 function Sidebar() {
+  const router = useRouter();
   const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
   const menu = [
     {
@@ -13,7 +16,7 @@ function Sidebar() {
     {
       name: "Services",
       icon: "solar:bath-bold-duotone",
-      link: "/dev/progress",
+      link: "/join-waitlist?ref=services",
     },
     {
       name: "Pets",
@@ -38,7 +41,7 @@ function Sidebar() {
     {
       name: "Pathology",
       icon: "lucide:microscope",
-      link: "/dev/progress",
+      link: "/pathology",
     },
     {
       name: "Appointments",
@@ -46,6 +49,12 @@ function Sidebar() {
       link: "/join-waitlist?ref=appointments",
     },
   ];
+
+  useEffect(() => {
+    router.events.on("routeChangeComplete", () => {
+      setSidebarOpened(false);
+    });
+  }, [router]);
   return (
     <>
       {sidebarOpened && (
@@ -58,13 +67,15 @@ function Sidebar() {
             </div>
             <ul className="text-neutral-700">
               {menu.map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-center space-x-2 py-5 px-6 hover:bg-gray-100 cursor-pointer"
-                >
-                  <Icon height={24} icon={item.icon} />
-                  <span>{item.name}</span>
-                </li>
+                <Link href={item.link} key={i}>
+                  <li
+                    key={i}
+                    className="flex items-center space-x-2 py-5 px-6 hover:bg-gray-100 cursor-pointer"
+                  >
+                    <Icon height={24} icon={item.icon} />
+                    <span>{item.name}</span>
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>
