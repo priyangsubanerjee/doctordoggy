@@ -22,6 +22,7 @@ function Navbar() {
   const session = useSession();
   const router = useRouter();
   const [allowed, setAllowed] = React.useState(false);
+  const [hideInfoBar, setHideInfoBar] = React.useState(false);
 
   const [state, setState] = React.useState(0);
 
@@ -71,6 +72,14 @@ function Navbar() {
   //     }, 5000);
   //     return () => clearInterval(interval);
   //   }, []);
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      setTimeout(() => {
+        setHideInfoBar(true);
+      }, 10000);
+    }
+  }, [session.status]);
 
   const InfoBar = ({}) => {
     return (
