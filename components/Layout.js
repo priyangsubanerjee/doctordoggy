@@ -64,7 +64,6 @@ function Layout({ children }) {
         position="top-center"
         containerStyle={{
           top: 140,
-          right: 50,
         }}
         toastOptions={{
           style: {
