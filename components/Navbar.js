@@ -175,7 +175,7 @@ function Navbar() {
 
   return (
     <nav className="fixed top-0 inset-x-0 z-20">
-      <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white/90 backdrop-blur-2xl">
+      <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white backdrop-blur-2xl">
         <div>
           <Link aria-label="home" href={"/"}>
             <img src="/logoDark.png" className="lg:h-9 h-7" alt="" />
