@@ -3,8 +3,8 @@ import React from "react";
 
 function ScheduleCall({ close }) {
   return (
-    <div className="fixed inset-0 h-full w-full bg-black/50 z-50 flex items-center justify-center">
-      <div className="p-8 bg-white rounded-md w-[500px] max-w-[450px]">
+    <div className="fixed inset-0 h-full w-full bg-black/50 z-50 flex items-end md:items-center justify-center">
+      <div className="p-8 bg-white md:rounded-md w-full md:w-[500px] max-w-[450px]">
         <h1 className="text-2xl font-semibold">Schedule a call</h1>
         <p className="text-sm text-neutral-600 mt-2 leading-6">
           Please select a date and time for the call according to your comfort.
