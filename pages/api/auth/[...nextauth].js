@@ -43,23 +43,23 @@ export const authOptions = {
         },
       };
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      let isPhoneEmpty = false;
-      let isZipEmpty = false;
+    // async jwt({ token, user, account, profile, isNewUser }) {
+    //   let isPhoneEmpty = false;
+    //   let isZipEmpty = false;
 
-      let userDB = await get_user(token.email);
-      if (!userDB) {
-        let createdUser = await create_user(
-          session.user.name,
-          session.user.email
-        );
-        userDB = createdUser;
-      }
-      return {
-        ...token,
-        onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
-      };
-    },
+    //   let userDB = await get_user(token.email);
+    //   if (!userDB) {
+    //     let createdUser = await create_user(
+    //       session.user.name,
+    //       session.user.email
+    //     );
+    //     userDB = createdUser;
+    //   }
+    //   return {
+    //     ...token,
+    //     onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
+    //   };
+    // },
   },
   secret: process.env.AUTH_SECRET_SALT,
 };
