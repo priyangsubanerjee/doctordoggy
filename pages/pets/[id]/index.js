@@ -970,7 +970,7 @@ function Profile() {
       <>
         {confirmDeleteOpen && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+            <div className="bg-white -translate-y-20 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
               <h1 className="text-2xl font-semibold text-center">
                 Delete pet ?
               </h1>
