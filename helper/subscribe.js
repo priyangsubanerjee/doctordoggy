@@ -9,7 +9,6 @@ export const subscribe = async (showToast) => {
   let messaging = getMessaging(firebaseApp);
   try {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      console.log("Service worker is available");
       if (Notification.permission == "granted") {
         const token = await getToken(messaging, {
           vapidKey:
@@ -51,16 +50,52 @@ export const subscribe = async (showToast) => {
   } catch (error) {
     alert("Error while subscribing to push notifications");
     console.log("Service worker registration failed, error:", error);
-    await navigator.serviceWorker
-      .register("/firebase-messaging-sw.js")
-      .then(async function (reg) {
-        if (reg.installing) {
-        } else if (reg.waiting) {
-        } else if (reg.active) {
-          toast.dismiss();
-          await subscribe(true);
+    navigator.serviceWorker
+      .register("firebase-messaging-sw.js", { scope: "/" })
+      .then(
+        function (reg) {
+          var serviceWorker;
+          if (reg.installing) {
+            serviceWorker = reg.installing;
+            // console.log('Service worker installing');
+          } else if (reg.waiting) {
+            serviceWorker = reg.waiting;
+            // console.log('Service worker installed & waiting');
+          } else if (reg.active) {
+            serviceWorker = reg.active;
+          }
+
+          if (serviceWorker) {
+            console.log("sw current state", serviceWorker.state);
+            if (serviceWorker.state == "activated") {
+              //If push subscription wasnt done yet have to do here
+              subscribe();
+            }
+            serviceWorker.addEventListener("statechange", function (e) {
+              console.log("sw statechange : ", e.target.state);
+              if (e.target.state == "activated") {
+                // use pushManger for subscribing here.
+                console.log(
+                  "Just now activated. now we can subscribe for push notification"
+                );
+                subscribe();
+              }
+            });
+          }
+        },
+        function (err) {
+          console.error("unsuccessful registration with ", workerFileName, err);
         }
-      });
-    await subscribe(true);
+      );
+    // await navigator.serviceWorker
+    //   .register("/firebase-messaging-sw.js")
+    //   .then(async function (reg) {
+    //     if (reg.installing) {
+    //     } else if (reg.waiting) {
+    //     } else if (reg.active) {
+    //       toast.dismiss();
+    //       await subscribe(true);
+    //     }
+    //   });
   }
 };
