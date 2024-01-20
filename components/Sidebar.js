@@ -4,6 +4,48 @@ import React, { useContext } from "react";
 
 function Sidebar() {
   const { sidebarOpened, setSidebarOpened } = useContext(GlobalStates);
+  const menu = [
+    {
+      name: "Home",
+      icon: "ri:home-line",
+      link: "/",
+    },
+    {
+      name: "Services",
+      icon: "solar:bath-bold-duotone",
+      link: "/dev/progress",
+    },
+    {
+      name: "Pets",
+      icon: "material-symbols:pets",
+      link: "/pets",
+    },
+    {
+      name: "Vaccinations",
+      icon: "game-icons:love-injection",
+      link: "/vaccination",
+    },
+    {
+      name: "Dewormings",
+      icon: "material-symbols:admin-meds",
+      link: "/deworming",
+    },
+    {
+      name: "Prescriptions",
+      icon: "healthicons:rx-outline",
+      link: "/prescription",
+    },
+    {
+      name: "Pathology",
+      icon: "lucide:microscope",
+      link: "/dev/progress",
+    },
+    {
+      name: "Appointments",
+      icon: "carbon:calendar",
+      link: "/join-waitlist?ref=appointments",
+    },
+  ];
   return (
     <>
       {sidebarOpened && (
@@ -14,70 +56,16 @@ function Sidebar() {
                 <Icon height={30} icon="iconamoon:close-thin" />
               </button>
             </div>
-            <ul className="text-sm text-neutral-600">
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/"}
+            <ul className="text-neutral-700">
+              {menu.map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-center space-x-2 py-5 px-6 hover:bg-gray-100 cursor-pointer"
                 >
-                  Home
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/dev/progress"}
-                >
-                  About
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/dev/progress"}
-                >
-                  Services
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/pets"}
-                >
-                  Pets
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/vaccination"}
-                >
-                  Vaccinations
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/prescription"}
-                >
-                  Prescriptions
-                </a>
-              </li>
-              <li className="px-6 py-4">
-                <a
-                  rel="noopener noreferrer"
-                  className="text-sm text-black"
-                  href={"/dev/progress"}
-                >
-                  Appointments
-                </a>
-              </li>
+                  <Icon height={24} icon={item.icon} />
+                  <span>{item.name}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

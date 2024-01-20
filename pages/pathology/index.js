@@ -148,7 +148,7 @@ function Pathology() {
       {pageLoaded ? (
         <>
           {pathologyReports.length == 0 && <UploadFirstPathology />}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16 max-w-6xl lg:mx-auto mx-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 max-w-6xl lg:mx-auto mx-5">
             {pathologyReports.map((report, index) => (
               <PathologyCard key={index} report={report} />
             ))}
