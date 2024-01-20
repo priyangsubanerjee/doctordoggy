@@ -71,14 +71,51 @@ export const subscribe = async (showToast) => {
               //If push subscription wasnt done yet have to do here
               subscribe();
             }
-            serviceWorker.addEventListener("statechange", function (e) {
+            serviceWorker.addEventListener("statechange", async function (e) {
               console.log("sw statechange : ", e.target.state);
               if (e.target.state == "activated") {
                 // use pushManger for subscribing here.
-                console.log(
-                  "Just now activated. now we can subscribe for push notification"
-                );
-                subscribe();
+                if (Notification.permission == "granted") {
+                  const token = await getToken(messaging, {
+                    vapidKey:
+                      "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
+                  });
+                  if (token) {
+                    console.log(token);
+                    try {
+                      await axios.post(
+                        "/api/fcm/update",
+                        {
+                          email: session.user.email,
+                          token: token,
+                        },
+                        {
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                        }
+                      );
+                      return token;
+                    } catch (error) {
+                      showToast &&
+                        toast.error(
+                          "Error while subscribing to push notifications"
+                        );
+                      console.log(error);
+                      return null;
+                    }
+                  } else {
+                    showToast &&
+                      toast.error(
+                        "Error while subscribing to push notifications"
+                      );
+
+                    await subscribe();
+                    return null;
+                  }
+                } else {
+                  console.log("Permission not granted for push notifications");
+                }
               }
             });
           }
