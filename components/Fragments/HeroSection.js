@@ -89,7 +89,7 @@ function HeroSection() {
 
   const FeatureCard = ({ title, icon, buttonText, index, href }) => {
     return (
-      <Link key={index} href={href}>
+      <Link key={index} href={href} className="w-full">
         <div
           className={`flex w-full flex-col items-center justify-center p-3 cursor-pointer`}
         >
@@ -242,7 +242,7 @@ function HeroSection() {
         <p className="text-center mt-4 lg:mt-6 text-base lg:text-xl font-light">
           For all your parenting needs
         </p>
-        <div className="mt-16 lg:mt-20 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-0 lg:mx-auto">
+        <div className="mt-16 lg:mt-20 gap-x-0 grid gap-y-9 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-3xl place-content-center place-items-center mx-6 lg:mx-auto">
           {quickNavOptions.map((feature, i) => (
             <FeatureCard {...feature} key={i} index={i} />
           ))}
