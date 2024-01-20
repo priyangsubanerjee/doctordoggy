@@ -284,13 +284,7 @@ function Deworming() {
                     />
                   </div>
                 </div>
-                <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-between space-x-2">
-                  <p className="text-sm text-neutral-700 hidden lg:block">
-                    Already dewormed?{" "}
-                    <Link className="text-blue-600 ml-1" href="/join-waitlist">
-                      Upload deworming record
-                    </Link>
-                  </p>
+                <div className="mt-10 max-w-4xl mx-5 lg:mx-auto flex items-center justify-end space-x-2">
                   <Button
                     loading={isLoading}
                     onClick={handleSubmit}
@@ -300,12 +294,6 @@ function Deworming() {
                     Submit
                   </Button>
                 </div>
-                <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
-                  Already dewormed?{" "}
-                  <Link className="text-blue-600 ml-1" href="/join-waitlist">
-                    Upload deworming record
-                  </Link>
-                </p>
               </>
             )}
           </>

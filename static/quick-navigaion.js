@@ -2,7 +2,7 @@ const quickNavOptions = [
   {
     title: "Pet's profile",
     icon: "https://cdn-icons-png.flaticon.com/512/2437/2437791.png",
-    buttonText: "Register pet",
+    buttonText: "View pets",
     href: "/pets",
   },
   {
