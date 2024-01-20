@@ -126,20 +126,19 @@ function Update() {
             },
           }
         );
-        if (data.vaccination) {
-          console.log(data.vaccination.parentEmail, session.data.user.email);
-          if (data.vaccination.parentEmail != session.data.user.email) {
+        if (data.vaccination.success) {
+          if (data.vaccination.vaccine.parentEmail != session.data.user.email) {
             router.push("/vaccination");
           } else {
             setVaccinationProp({
               ...vaccinatonProp,
-              name: data.vaccination.name,
-              vaccineName: data.vaccination.vaccineName,
-              dueDate: data.vaccination.dueDate,
-              filesPresent: data.vaccination.files,
-              doneBy: data.vaccination.doneBy,
-              vaccinatedOn: data.vaccination.doneDate
-                ? data.vaccination?.doneDate?.split("T")[0]
+              name: data.vaccination.vaccine.name,
+              vaccineName: data.vaccination.vaccine.vaccineName,
+              dueDate: data.vaccination.vaccine.dueDate,
+              filesPresent: data.vaccination.vaccine.files,
+              doneBy: data.vaccination.vaccine.doneBy,
+              vaccinatedOn: data.vaccination.vaccine.doneDate
+                ? data.vaccination?.vaccine.doneDate?.split("T")[0]
                 : new Date().toLocaleDateString("en-CA"),
             });
             setPageLoaded(true);

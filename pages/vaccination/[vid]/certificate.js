@@ -58,11 +58,15 @@ function Certificate() {
           }
         );
 
-        if (vaccineData.data.vaccination != null) {
+        if (vaccineData.data.vaccination.vaccine != null) {
+          if (vaccineData.data.vaccination.vaccine.status == "DUE") {
+            toast.error("This vaccination is due. Please update it.");
+            router.push(`/vaccination`);
+          }
           let petRequest = await axios.post(
             "/api/pet/getbyid",
             {
-              id: vaccineData.data.vaccination.petId,
+              id: vaccineData.data.vaccination.vaccine.petId,
             },
             {
               headers: {
@@ -70,7 +74,7 @@ function Certificate() {
               },
             }
           );
-          setVaccine(vaccineData.data.vaccination);
+          setVaccine(vaccineData.data.vaccination.vaccine);
           setPet(petRequest.data.success ? petRequest.data.pet : null);
           setIsParent(
             session.data.user.email == petRequest.data.pet.parentEmail
