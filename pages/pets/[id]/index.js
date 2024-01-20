@@ -37,20 +37,14 @@ function Profile() {
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
-  const [confirmDeleteVaccinationOpen, setConfirmDeleteVaccinationOpen] =
-    React.useState({
-      id: "",
-      open: false,
-    });
-  const [confirmDeletePrescriptionOpen, setConfirmDeletePrescriptionOpen] =
-    React.useState(false);
-  const [confirmDeleteDewormingOpen, setConfirmDeleteDewormingOpen] =
-    React.useState({
-      id: "",
-      open: false,
-    });
-  const [confirmDeletePathologyOpen, setConfirmDeletePathologyOpen] =
-    React.useState(false);
+  const [confirmDeleteVaccination, setconfirmDeleteVaccination] =
+    React.useState("");
+  const [confirmDeletePrescription, setconfirmDeletePrescription] =
+    React.useState("");
+  const [confirmDeleteDeworming, setconfirmDeleteDeworming] =
+    React.useState("");
+  const [confirmDeletePathology, setconfirmDeletePathology] =
+    React.useState("");
 
   const [tabOptions, setTabOptions] = React.useState([
     "General",
@@ -224,25 +218,29 @@ function Profile() {
           },
         }
       );
+      toast.remove();
       if (deleteRequest.data.success) {
-        toast.remove();
         toast.success(deleteRequest.data.message);
         router.push("/pets");
+      } else {
+        toast.error(deleteRequest.data.message);
+        setLoading(false);
+        setConfirmDeletePetOpen(false);
       }
     } catch (error) {
       toast.remove();
       toast.error(error.message);
-      console.log(error);
+      setLoading(false);
+      setConfirmDeletePetOpen(false);
     }
   };
-
-  const handleConfirmDeleteVaccination = async (id) => {
+  const handleConfirmDeleteVaccination = async () => {
     toast.loading("Deleting vaccination...");
     try {
       let deleteRequest = await axios.post(
         "/api/vaccine/delete",
         {
-          id: id,
+          id: confirmDeleteVaccination,
         },
         {
           headers: {
@@ -253,26 +251,31 @@ function Profile() {
       toast.remove();
       if (deleteRequest.data.success) {
         toast.success(deleteRequest.data.message);
-        setVaccinations(vaccinations.filter((vaccine) => vaccine.id != id));
-        setConfirmDeleteVaccinationOpen({
-          id: "",
-          open: false,
-        });
+        setVaccinations(
+          vaccinations.filter(
+            (vaccine) => vaccine.id != confirmDeleteVaccination
+          )
+        );
+        setconfirmDeleteVaccination("");
       } else {
         toast.error(deleteRequest.data.message);
+        setconfirmDeleteVaccination("");
+        setLoading(false);
       }
     } catch (error) {
       toast.remove();
       toast.error(error.message);
+      setconfirmDeleteVaccination("");
+      setLoading(false);
     }
   };
-  const handleConfirmDeleteDeworming = async (id) => {
+  const handleConfirmDeleteDeworming = async () => {
     toast.loading("Deleting deworming...");
     try {
       let deleteRequest = await axios.post(
         "/api/deworming/delete",
         {
-          id: id,
+          id: confirmDeleteDeworming,
         },
         {
           headers: {
@@ -283,21 +286,97 @@ function Profile() {
       toast.remove();
       if (deleteRequest.data.success) {
         toast.success(deleteRequest.data.message);
-        setDewormings(dewormings.filter((deworming) => deworming.id != id));
-        setConfirmDeleteDewormingOpen({
-          id: "",
-          open: false,
-        });
+        setDewormings(
+          dewormings.filter(
+            (deworming) => deworming.id != confirmDeleteDeworming
+          )
+        );
+        setconfirmDeleteDeworming("");
+        setLoading(false);
       } else {
         toast.error(deleteRequest.data.message);
+        setconfirmDeleteDeworming("");
+        setLoading(false);
       }
     } catch (error) {
       toast.remove();
       toast.error(error.message);
+      setconfirmDeleteDeworming();
+      setLoading(false);
     }
   };
-  const handleConfirmDeletePrescription = async () => {};
-  const handleConfirmDeletePathology = async () => {};
+  const handleConfirmDeletePrescription = async () => {
+    toast.loading("Deleting prescription...");
+    try {
+      let deleteRequest = await axios.post(
+        "/api/prescription/delete",
+        {
+          id: confirmDeletePrescription,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setPrescriptions(
+          prescriptions.filter(
+            (prescription) => prescription.id != confirmDeletePrescription
+          )
+        );
+        setconfirmDeletePrescription("");
+        setLoading(false);
+      } else {
+        toast.error(deleteRequest.data.message);
+        setconfirmDeletePrescription("");
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+      setconfirmDeletePrescription();
+      setLoading(false);
+    }
+  };
+  const handleConfirmDeletePathology = async () => {
+    toast.loading("Deleting pathology report...");
+    try {
+      let deleteRequest = await axios.post(
+        "/api/pathology/delete",
+        {
+          id: confirmDeletePathology,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setPathologyReports(
+          pathologyReports.filter(
+            (report) => report.id != confirmDeletePathology
+          )
+        );
+        setconfirmDeletePathology("");
+        setLoading(false);
+      } else {
+        toast.error(deleteRequest.data.message);
+        setconfirmDeletePathology("");
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+      setconfirmDeletePathology("");
+      setLoading(false);
+    }
+  };
 
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
@@ -336,10 +415,7 @@ function Profile() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    setConfirmDeleteDewormingOpen({
-                      id: deworming.id,
-                      open: true,
-                    });
+                    setconfirmDeleteDeworming(deworming.id);
                     break;
                   case "done":
                     UpdateStatus(deworming.id, "DONE");
@@ -442,10 +518,7 @@ function Profile() {
                     router.push(`/vaccination/${vaccine.id}/certificate`);
                     break;
                   case "delete":
-                    setConfirmDeleteVaccinationOpen({
-                      id: vaccine.id,
-                      open: true,
-                    });
+                    setconfirmDeleteVaccination(vaccine.id);
                     break;
                   case "update":
                     router.push(`/vaccination/${vaccine.id}/update`);
@@ -511,7 +584,7 @@ function Profile() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/prescription/${prescription.id}/delete?redirect=${window.location}`;
+                    setconfirmDeletePrescription(prescription.id);
                     break;
                   case "certificate":
                     window.location.href = `/prescription/${prescription.id}/`;
@@ -577,7 +650,7 @@ function Profile() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    window.location.href = `/pathology/${report.id}/delete?redirect=${window.location}`;
+                    setconfirmDeletePathology(report.id);
                     break;
                   case "certificate":
                     window.location.href = `/pathology/${report.id}/`;
@@ -844,7 +917,7 @@ function Profile() {
                 This action is irreversible & will delete this pet completely.
               </p>
               <Button
-                onPress={() => setConfirmDeleteOpen(true)}
+                onPress={() => setConfirmDeletePetOpen(true)}
                 radius="full"
                 className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
               >
@@ -1055,7 +1128,7 @@ function Profile() {
       <>
         {confirmDeletePetOpen && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+            <div className="bg-white -translate-y-20 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
               <h1 className="text-2xl font-semibold text-center">
                 Delete pet ?
               </h1>
@@ -1064,7 +1137,11 @@ function Profile() {
               </p>
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
-                  onPress={() => setConfirmDeletePetOpen(false)}
+                  onPress={() => {
+                    toast.remove();
+                    setConfirmDeletePetOpen(false);
+                    setLoading(false);
+                  }}
                   radius="none"
                   className="rounded-md"
                 >
@@ -1091,7 +1168,7 @@ function Profile() {
   const ConfirmDeleteVaccineModal = () => {
     return (
       <>
-        {confirmDeleteVaccinationOpen.open && (
+        {confirmDeleteVaccination.length > 0 && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
               <h1 className="text-2xl font-semibold text-center">
@@ -1103,7 +1180,7 @@ function Profile() {
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
                   onPress={() =>
-                    setConfirmDeleteVaccinationOpen({
+                    setconfirmDeleteVaccination({
                       open: false,
                       id: null,
                     })
@@ -1118,9 +1195,7 @@ function Profile() {
                   className="rounded-md bg-red-600"
                   color="danger"
                   onPress={() =>
-                    handleConfirmDeleteVaccination(
-                      confirmDeleteVaccinationOpen.id
-                    )
+                    handleConfirmDeleteVaccination(confirmDeleteVaccination.id)
                   }
                   isLoading={loading}
                   isDisabled={loading}
@@ -1138,7 +1213,7 @@ function Profile() {
   const ConfirmDeleteDewormingModal = () => {
     return (
       <>
-        {confirmDeleteDewormingOpen.open && (
+        {confirmDeleteDeworming.length != 0 && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
               <h1 className="text-2xl font-semibold text-center">
@@ -1149,12 +1224,10 @@ function Profile() {
               </p>
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
-                  onPress={() =>
-                    setConfirmDeleteDewormingOpen({
-                      open: false,
-                      id: null,
-                    })
-                  }
+                  onPress={() => {
+                    setconfirmDeleteDeworming("");
+                    setLoading(false);
+                  }}
                   radius="none"
                   className="rounded-md"
                 >
@@ -1164,9 +1237,89 @@ function Profile() {
                   radius="none"
                   className="rounded-md bg-red-600"
                   color="danger"
-                  onPress={() =>
-                    handleConfirmDeleteDeworming(confirmDeleteDewormingOpen.id)
-                  }
+                  onPress={() => handleConfirmDeleteDeworming()}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const ConfirmDeletePrescriptionModal = () => {
+    return (
+      <>
+        {confirmDeletePrescription.length != 0 && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+              <h1 className="text-2xl font-semibold text-center">
+                Delete this prescription ?
+              </h1>
+              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
+                This action is irreversible and will delete this record.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() => {
+                    setconfirmDeletePrescription("");
+                    setLoading(false);
+                  }}
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() => handleConfirmDeletePrescription()}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const ConfirmDeletePathologyModal = () => {
+    return (
+      <>
+        {confirmDeletePathology.length != 0 && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+              <h1 className="text-2xl font-semibold text-center">
+                Delete this report ?
+              </h1>
+              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
+                This action is irreversible and will delete this record.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() => {
+                    setconfirmDeletePathology("");
+                    setLoading(false);
+                  }}
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() => handleConfirmDeletePathology()}
                   isLoading={loading}
                   isDisabled={loading}
                 >
@@ -1245,6 +1398,8 @@ function Profile() {
                   <ConfirmDeletePetModal />
                   <ConfirmDeleteVaccineModal />
                   <ConfirmDeleteDewormingModal />
+                  <ConfirmDeletePrescriptionModal />
+                  <ConfirmDeletePathologyModal />
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center mt-16">

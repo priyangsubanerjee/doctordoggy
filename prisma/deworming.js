@@ -97,23 +97,63 @@ export const getDewormingById = async (id) => {
   }
 };
 
-export const deleteDewormingById = async (id) => {
-  try {
-    const deworming = await prisma.deworming.delete({
+export const deleteDewormingById = async (id, email) => {
+  if (email == null) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (email.length == 0) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (id == null) {
+    return {
+      success: false,
+      message: "You must provide a deworming id.",
+    };
+  } else if (id.length == 0) {
+    return {
+      success: false,
+      message: "You must provide a deworming id.",
+    };
+  } else {
+    let deworming = await prisma.deworming.findUnique({
       where: {
         id: id,
       },
     });
-    return {
-      success: true,
-      message: "Deworming deleted successfully",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      message: error.message,
-    };
+    if (deworming == null) {
+      return {
+        success: false,
+        message: "Deworming not found",
+      };
+    } else {
+      if (deworming.parentEmail !== email) {
+        return {
+          success: false,
+          message: "You are not authorized to delete this deworming",
+        };
+      } else {
+        try {
+          await prisma.deworming.delete({
+            where: {
+              id: id,
+            },
+          });
+          return {
+            success: true,
+            message: "Deworming deleted successfully",
+          };
+        } catch (error) {
+          return {
+            success: false,
+            message: error.message,
+          };
+        }
+      }
+    }
   }
 };
 

@@ -1,14 +1,17 @@
 import { deleteVaccineById } from "@/prisma/vaccine";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 
 export default async function handler(req, res) {
   const { id } = req.body;
-  try {
-    const vaccine = await deleteVaccineById(id);
-    res.status(200).json({
-      success: true,
-      message: "Vaccine deleted successfully",
-    });
-  } catch (error) {
-    res.status(200).json({ success: false, message: "Something went wrong" });
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    res.status(401).json({ success: false, message: "You must be logged in." });
+    return;
   }
+  const { success, message } = await deleteVaccineById(id, session.user.email);
+  res.status(200).json({
+    success,
+    message,
+  });
 }

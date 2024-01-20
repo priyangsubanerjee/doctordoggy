@@ -81,17 +81,63 @@ export const getVaccineByPetId = async (petId) => {
   }
 };
 
-export const deleteVaccineById = async (id) => {
-  try {
-    const vaccine = await prisma.vaccination.delete({
+export const deleteVaccineById = async (id, email) => {
+  if (email == null) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (email.length == 0) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (id == null) {
+    return {
+      success: false,
+      message: "You must provide a vaccine id.",
+    };
+  } else if (id.length == 0) {
+    return {
+      success: false,
+      message: "You must provide a vaccine id.",
+    };
+  } else {
+    let vaccine = await prisma.vaccination.findUnique({
       where: {
         id: id,
       },
     });
-    return vaccine;
-  } catch (error) {
-    console.log(error);
-    return null;
+    if (vaccine == null) {
+      return {
+        success: false,
+        message: "Vaccine not found",
+      };
+    } else {
+      if (vaccine.parentEmail !== email) {
+        return {
+          success: false,
+          message: "You are not authorized to delete this vaccine",
+        };
+      } else {
+        try {
+          await prisma.vaccination.delete({
+            where: {
+              id: id,
+            },
+          });
+          return {
+            success: true,
+            message: "Vaccine deleted successfully",
+          };
+        } catch (error) {
+          return {
+            success: false,
+            message: error.message,
+          };
+        }
+      }
+    }
   }
 };
 

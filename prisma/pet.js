@@ -125,22 +125,63 @@ export const updatePetData = async (id, pet) => {
   }
 };
 
-export const deletePetById = async (id) => {
-  try {
-    await prisma.pet.delete({
+export const deletePetById = async (id, email) => {
+  if (email == null) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (email.length == 0) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (id == null) {
+    return {
+      success: false,
+      message: "You must provide a pet id.",
+    };
+  } else if (id.length == 0) {
+    return {
+      success: false,
+      message: "You must provide a pet id.",
+    };
+  } else {
+    let pet = await prisma.pet.findUnique({
       where: {
         id: id,
       },
     });
-    return {
-      success: true,
-      message: "Pet deleted successfully",
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: error.message,
-    };
+    if (pet == null) {
+      return {
+        success: false,
+        message: "Pet not found",
+      };
+    } else {
+      if (pet.parentEmail !== email) {
+        return {
+          success: false,
+          message: "You are not authorized to delete this pet",
+        };
+      } else {
+        try {
+          await prisma.pet.delete({
+            where: {
+              id: id,
+            },
+          });
+          return {
+            success: true,
+            message: "Pet deleted successfully",
+          };
+        } catch (error) {
+          return {
+            success: false,
+            message: error.message,
+          };
+        }
+      }
+    }
   }
 };
 

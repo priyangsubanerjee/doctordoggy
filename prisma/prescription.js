@@ -61,16 +61,63 @@ export const getPrescriptionById = async (id) => {
   }
 };
 
-export const deletePrescriptionById = async (id) => {
-  try {
-    let prescription = await prisma.prescription.delete({
+export const deletePrescriptionById = async (id, email) => {
+  if (email == null) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (email.length == 0) {
+    return {
+      success: false,
+      message: "You must be logged in.",
+    };
+  } else if (id == null) {
+    return {
+      success: false,
+      message: "You must provide a prescription id.",
+    };
+  } else if (id.length == 0) {
+    return {
+      success: false,
+      message: "You must provide a prescription id.",
+    };
+  } else {
+    let prescription = await prisma.prescription.findUnique({
       where: {
         id: id,
       },
     });
-    return prescription;
-  } catch (error) {
-    console.log(error);
+    if (prescription == null) {
+      return {
+        success: false,
+        message: "Prescription not found",
+      };
+    } else {
+      if (prescription.parentEmail !== email) {
+        return {
+          success: false,
+          message: "You are not authorized to delete this prescription",
+        };
+      } else {
+        try {
+          await prisma.prescription.delete({
+            where: {
+              id: id,
+            },
+          });
+          return {
+            success: true,
+            message: "Prescription deleted successfully",
+          };
+        } catch (error) {
+          return {
+            success: false,
+            message: error.message,
+          };
+        }
+      }
+    }
   }
 };
 
