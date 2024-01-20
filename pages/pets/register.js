@@ -76,7 +76,7 @@ function RegisterPet({ canine = [], feline = [] }) {
 
   const handleSubmit = async () => {
     if (performChecks()) {
-      updatedModal(true, "Uploading image ...");
+      toast.loading("Storing pet photo ...");
       setLoading(true);
       let fileUploadUrl =
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS15_HipQtHuEkRtZEm4RLpBP3U2ay5Zrz5EpJ19PftLWDfiSb1ZKuRCHVc_w_4zKmraus&usqp=CAU";
@@ -85,7 +85,8 @@ function RegisterPet({ canine = [], feline = [] }) {
           const { fileUrl, publicId } = await uploadImage(imageFile);
           fileUploadUrl = fileUrl;
         }
-        updatedModal(true, "Storing pet information ...");
+        toast.remove();
+        toast.loading("Registering pet ...");
         let registerRequest = await axios.post(
           "/api/pet/create",
           {
@@ -103,12 +104,12 @@ function RegisterPet({ canine = [], feline = [] }) {
         );
         if (registerRequest.data.success) {
           setLoading(false);
-          updatedModal(false, "Pet created successfully");
+          toast.remove();
           toast.success(registerRequest.data.message);
           router.push("/pets");
         } else {
           setLoading(false);
-          updatedModal(false, "Something went wrong with pet registration.");
+          toast.remove();
           toast.error(registerRequest.data.message);
         }
       } catch (error) {
@@ -191,10 +192,10 @@ function RegisterPet({ canine = [], feline = [] }) {
         </p>
       </div>
       <div className="lg:flex lg:w-[80%] mx-6 lg:mx-auto lg:space-x-12 mt-10 lg:mt-16">
-        <div className="lg:w-fit w-full shrink-0">
+        <div className="lg:w-fit w-full max-w-md shrink-0 mx-auto">
           <div
             onClick={() => imageRef?.current.click()}
-            className="h-[200px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
+            className="h-[300px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
           >
             <input
               type="file"

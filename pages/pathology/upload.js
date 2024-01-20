@@ -110,7 +110,7 @@ function UploadPathology() {
             fileUrls.push(fileUrl);
           }
         }
-        updatedModal(true, "Uploading prescription");
+        updatedModal(true, "Uploading pathology report");
         await axios.post("/api/pathology/create", {
           ...pathProps,
           image: selectedPet.image,
@@ -119,7 +119,7 @@ function UploadPathology() {
           parentEmail: selectedPet.parentEmail,
           files: fileUrls,
         });
-        updatedModal(true, "Uploaded prescription");
+        updatedModal(false, "Uploaded pathology report");
         router.push(router.query.redirect || "/pathology");
       } catch (error) {
         toast.error("Error uploading prescription");

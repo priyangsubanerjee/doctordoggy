@@ -35,6 +35,9 @@ export async function getPathologyReportsByEmail(email) {
     const reports = await prisma.pathology.findMany({
       where: {
         parentEmail: email,
+        petId: {
+          not: null,
+        },
       },
     });
     return {

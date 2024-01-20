@@ -26,6 +26,9 @@ export const getVaccinesByEmail = async (email) => {
     const vaccines = await prisma.vaccination.findMany({
       where: {
         parentEmail: email,
+        petId: {
+          not: null,
+        },
       },
     });
     return vaccines;

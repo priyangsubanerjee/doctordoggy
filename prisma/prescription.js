@@ -28,6 +28,9 @@ export const getPrescriptionsByEmail = async (email) => {
     let prescriptions = await prisma.prescription.findMany({
       where: {
         parentEmail: email,
+        petId: {
+          not: null,
+        },
       },
     });
     return prescriptions;

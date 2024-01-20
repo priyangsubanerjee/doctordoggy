@@ -25,6 +25,7 @@ function Profile() {
   const [pet, setPet] = React.useState({
     name: "",
   });
+  const [loading, setLoading] = React.useState(false);
   const [vaccinations, setVaccinations] = React.useState([]);
   const [prescriptions, setPrescriptions] = React.useState([]);
   const [dewormings, setDewormings] = React.useState([]);
@@ -35,6 +36,7 @@ function Profile() {
   const [petDoesNotExist, setPetDoesNotExist] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = React.useState(false);
   const [tabOptions, setTabOptions] = React.useState([
     "General",
     "Vaccinations",
@@ -190,6 +192,28 @@ function Profile() {
     );
     toast.remove();
     toast.success("Profile visibility updated");
+  };
+
+  const handleConfirmDelete = async () => {
+    setLoading(true);
+    toast.loading("Deleting pet...");
+    let deleteRequest = await axios.post(
+      "/api/pet/delete",
+      {
+        id: router.query.id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (deleteRequest.data.success) {
+      toast.remove();
+      toast.success(deleteRequest.data.message);
+      router.push("/pets");
+    }
   };
 
   const Capitalize = (str) => {
@@ -735,7 +759,7 @@ function Profile() {
                 This action is irreversible & will delete this pet completely.
               </p>
               <Button
-                onPress={() => router.push(`/pets/${pet?.id}/delete`)}
+                onPress={() => setConfirmDeleteOpen(true)}
                 radius="full"
                 className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
               >
@@ -941,8 +965,46 @@ function Profile() {
     }
   };
 
+  const ConfirmDelete = () => {
+    return (
+      <>
+        {confirmDeleteOpen && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+              <h1 className="text-2xl font-semibold text-center">
+                Delete pet ?
+              </h1>
+              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
+                This action is irreversible and will delete this pet.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() => setConfirmDeleteOpen(false)}
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() => handleConfirmDelete()}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
   return (
-    <div className="pb-44">
+    <div className="pb-20">
       {pageLoaded ? (
         <>
           {petDoesNotExist ? (
@@ -1003,6 +1065,7 @@ function Profile() {
                   <Tabs />
                   <TabChooser />
                   <ActiveTab />
+                  <ConfirmDelete />
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center mt-16">
@@ -1020,20 +1083,8 @@ function Profile() {
           )}
         </>
       ) : (
-        <div className="relative">
-          <div className="h-48 lg:h-80 w-full overflow-hidden relative">
-            <div className="absolute inset-0 h-full w-full bg-gradient-to-b from-transparent to-white z-10"></div>
-            <img
-              src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1701263641/assets/iuogg9t6zxovpqs717sf.jpg"
-              className="object-cover w-full h-full blur-2xl opacity-50"
-              alt=""
-            />
-          </div>
-          <div className="absolute z-10 -bottom-12 lg:-bottom-8 left-1/2 -translate-x-1/2">
-            <div className="h-36 lg:h-56 w-36 lg:w-56 rounded-full bg-white flex items-center justify-center overflow-hidden">
-              <div className="border-2 border-t-transparent border-neutral-700 h-36 lg:h-56 w-36 lg:w-56 rounded-full animate-spin"></div>
-            </div>
-          </div>
+        <div className="relative flex items-center justify-center py-40">
+          <Spinner color="default" size="lg" />
         </div>
       )}
     </div>

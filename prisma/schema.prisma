@@ -105,8 +105,8 @@ model Vaccination {
   id               String    @id @default(auto()) @map("_id") @db.ObjectId
   name             String
   image            String
-  pet              Pet       @relation(fields: [petId], references: [id])
-  petId            String    @db.ObjectId
+  pet              Pet ?      @relation(fields: [petId], references: [id])
+  petId            String ?    @db.ObjectId
   Parent           User?     @relation(fields: [parentEmail], references: [email])
   parentEmail      String?
   vaccineName      String
@@ -127,8 +127,8 @@ model Prescription {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
   image           String?
   name            String?
-  pet             Pet      @relation(fields: [petId], references: [id])
-  petId           String   @db.ObjectId
+  pet             Pet ?     @relation(fields: [petId], references: [id])
+  petId           String ?   @db.ObjectId
   Parent          User?    @relation(fields: [parentEmail], references: [email])
   parentEmail     String?
   reasonOfVisit   String
@@ -146,8 +146,8 @@ model Deworming {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   image        String
-  pet          Pet       @relation(fields: [petId], references: [id])
-  petId        String    @db.ObjectId
+  pet          Pet?       @relation(fields: [petId], references: [id])
+  petId        String?    @db.ObjectId
   Parent       User?     @relation(fields: [parentEmail], references: [email])
   parentEmail  String?
   bodyWeight   String?
@@ -164,8 +164,8 @@ model Pathology {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   image        String
-  pet          Pet      @relation(fields: [petId], references: [id])
-  petId        String   @db.ObjectId
+  pet          Pet ?     @relation(fields: [petId], references: [id])
+  petId        String ?   @db.ObjectId
   Parent       User?    @relation(fields: [parentEmail], references: [email])
   date         DateTime
   testName     String?

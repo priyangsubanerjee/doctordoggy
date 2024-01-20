@@ -33,6 +33,9 @@ export const getDewormingsByEmail = async (email) => {
     const dewormings = await prisma.deworming.findMany({
       where: {
         parentEmail: email,
+        petId: {
+          not: null,
+        },
       },
     });
     return {
