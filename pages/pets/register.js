@@ -176,7 +176,7 @@ function RegisterPet({ canine = [], feline = [] }) {
 
   return (
     <div className="pb-16">
-      <h1 className="text-3xl font-semibold text-center mt-16">
+      <h1 className="text-3xl font-semibold text-center mt-10 lg:mt-16">
         Register your pet
       </h1>
       <div className="flex items-center justify-center space-x-2 mt-4">
