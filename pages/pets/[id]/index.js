@@ -57,6 +57,14 @@ function Profile() {
         },
       }
     );
+    petRequest.data.success ? setPet(petRequest.data.pet) : setPet({});
+    if (petRequest.data.pet?.isPublic) {
+      setIsPublic(true);
+    }
+    if (petRequest.data.pet?.parentEmail == session.data.user.email) {
+      setIsParent(true);
+    }
+    setPageLoaded(true);
     let vaccinationRequest = await axios.post(
       "/api/vaccine/getByPetId",
       {
@@ -68,6 +76,9 @@ function Profile() {
         },
       }
     );
+    vaccinationRequest.data.success
+      ? setVaccinations(vaccinationRequest.data.vaccines)
+      : setVaccinations([]);
     let dewormingRequest = await axios.post(
       "/api/deworming/getByPetId",
       {
@@ -79,6 +90,9 @@ function Profile() {
         },
       }
     );
+    dewormingRequest.data.success
+      ? setDewormings(dewormingRequest.data.dewormings)
+      : setDewormings([]);
     let prescriptionRequest = await axios.post(
       "/api/prescription/getByPetId",
       {
@@ -90,6 +104,9 @@ function Profile() {
         },
       }
     );
+    prescriptionRequest.data.success
+      ? setPrescriptions(prescriptionRequest.data.prescriptions)
+      : setPrescriptions([]);
     let pathologyRequest = await axios.post(
       "/api/pathology/getByPetId",
       {
@@ -101,28 +118,9 @@ function Profile() {
         },
       }
     );
-
-    petRequest.data.success ? setPet(petRequest.data.pet) : setPet({});
-    vaccinationRequest.data.success
-      ? setVaccinations(vaccinationRequest.data.vaccines)
-      : setVaccinations([]);
-    prescriptionRequest.data.success
-      ? setPrescriptions(prescriptionRequest.data.prescriptions)
-      : setPrescriptions([]);
-    dewormingRequest.data.success
-      ? setDewormings(dewormingRequest.data.dewormings)
-      : setDewormings([]);
     pathologyRequest.data.success
       ? setPathologyReports(pathologyRequest.data.reports)
       : setPathologyReports([]);
-
-    if (petRequest.data.pet?.isPublic) {
-      setIsPublic(true);
-    }
-    if (petRequest.data.pet?.parentEmail == session.data.user.email) {
-      setIsParent(true);
-    }
-    setPageLoaded(true);
   };
 
   useEffect(() => {
