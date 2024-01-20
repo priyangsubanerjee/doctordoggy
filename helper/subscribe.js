@@ -10,37 +10,43 @@ export const subscribe = async (showToast) => {
   try {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       if (Notification.permission == "granted") {
-        const token = await getToken(messaging, {
-          vapidKey:
-            "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
-        });
-        if (token) {
-          console.log(token);
-          try {
-            await axios.post(
-              "/api/fcm/update",
-              {
-                email: session.user.email,
-                token: token,
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
+        try {
+          const token = await getToken(messaging, {
+            vapidKey:
+              "BMz9a6zyrHPgp5jBxXv_QjIhcJaunKrX2zinqT1ThGEeckAsbD2J0BdQYpd-SHSf8beu9ngbsUfI3iTVoklKLOo",
+          });
+          if (token) {
+            console.log(token);
+            try {
+              await axios.post(
+                "/api/fcm/update",
+                {
+                  email: session.user.email,
+                  token: token,
                 },
-              }
-            );
-            return token;
-          } catch (error) {
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+              return token;
+            } catch (error) {
+              showToast &&
+                toast.error("Error while subscribing to push notifications");
+              console.log(error);
+              return null;
+            }
+          } else {
             showToast &&
               toast.error("Error while subscribing to push notifications");
-            console.log(error);
+
+            await subscribe();
             return null;
           }
-        } else {
-          showToast &&
-            toast.error("Error while subscribing to push notifications");
-
-          await subscribe();
+        } catch (error) {
+          toast.error("Error while subscribing to push notifications");
+          console.log(error);
           return null;
         }
       }
