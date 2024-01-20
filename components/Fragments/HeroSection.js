@@ -28,30 +28,30 @@ function HeroSection() {
   const [query, setQuery] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
 
-  useEffect(() => {
-    if (session?.data?.user?.email) {
-      axios
-        .post(
-          `/api/pet/get_rf`,
-          {
-            email: session?.data?.user?.email,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data.success) {
-            setPets(res.data.pets);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [session.status]);
+  //   useEffect(() => {
+  //     if (session?.data?.user?.email) {
+  //       axios
+  //         .post(
+  //           `/api/pet/get_rf`,
+  //           {
+  //             email: session?.data?.user?.email,
+  //           },
+  //           {
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //           }
+  //         )
+  //         .then((res) => {
+  //           if (res.data.success) {
+  //             setPets(res.data.pets);
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   }, [session.status]);
 
   useEffect(() => {
     refreshStatus();
@@ -106,37 +106,37 @@ function HeroSection() {
     );
   };
 
-  const ShortcutToPets = ({}) => {
-    if (pets.length > 0)
-      return (
-        <div className="w-fit mx-auto rounded-full border relative px-3 mt-8">
-          <span className="absolute whitespace-nowrap top-0 text-[10px] tracking-widest text-neutral-500 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 bg-white">
-            LOVE
-          </span>
-          <div className="py-3 flex items-center justify-center space-x-2">
-            {pets.length > 0 &&
-              pets.slice(0, 2).map((pet, i) => (
-                <Link href={`/pets/${pet.id}`} key={i}>
-                  <Avatar key={i} src={pet.image} size="lg" />
-                </Link>
-              ))}
+  //   const ShortcutToPets = ({}) => {
+  //     if (pets.length > 0)
+  //       return (
+  //         <div className="w-fit mx-auto rounded-full border relative px-3 mt-8">
+  //           <span className="absolute whitespace-nowrap top-0 text-[10px] tracking-widest text-neutral-500 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 bg-white">
+  //             LOVE
+  //           </span>
+  //           <div className="py-3 flex items-center justify-center space-x-2">
+  //             {pets.length > 0 &&
+  //               pets.slice(0, 2).map((pet, i) => (
+  //                 <Link href={`/pets/${pet.id}`} key={i}>
+  //                   <Avatar key={i} src={pet.image} size="lg" />
+  //                 </Link>
+  //               ))}
 
-            <Avatar
-              onClick={() => (window.location.href = "/pets")}
-              className="bg-neutral-100 hover:bg-neutral-200 cursor-pointer"
-              icon={
-                <Icon
-                  icon="icon-park-outline:right"
-                  height={25}
-                  className="text-neutral-700"
-                />
-              }
-              size="lg"
-            />
-          </div>
-        </div>
-      );
-  };
+  //             <Avatar
+  //               onClick={() => (window.location.href = "/pets")}
+  //               className="bg-neutral-100 hover:bg-neutral-200 cursor-pointer"
+  //               icon={
+  //                 <Icon
+  //                   icon="icon-park-outline:right"
+  //                   height={25}
+  //                   className="text-neutral-700"
+  //                 />
+  //               }
+  //               size="lg"
+  //             />
+  //           </div>
+  //         </div>
+  //       );
+  //   };
 
   function checkUserAgent() {
     if (
@@ -234,7 +234,7 @@ function HeroSection() {
         <PermissionLayout close={() => setIsPermissionLayoutVisible(false)} />
       )}
 
-      <ShortcutToPets />
+      {/* <ShortcutToPets /> */}
       <div className="py-10 lg:py-20 lg:-mt-8">
         <h1 className="text-3xl lg:text-5xl font-semibold text-center">
           One Stop Solution
