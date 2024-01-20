@@ -50,7 +50,6 @@ function Layout({ children }) {
       <InstallApp />
       <Navbar />
       {children}
-
       <Toaster
         position="top-center"
         containerStyle={{
