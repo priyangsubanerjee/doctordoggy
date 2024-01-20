@@ -299,6 +299,7 @@ function Profile() {
   };
 
   const VaccineCard = ({ vaccine }) => {
+    console.log(vaccine);
     return (
       <div className="border rounded-md p-4">
         <div className="flex items-center">
@@ -324,8 +325,9 @@ function Profile() {
             </DropdownTrigger>
             <DropdownMenu
               disabledKeys={
-                (vaccine.status == "DUE" ? ["certificate"] : [],
-                !isParent ? ["update", "delete"] : [])
+                vaccine.parentEmail != session.data.user.email
+                  ? ["delete", "update"]
+                  : []
               }
               onAction={(key) => {
                 switch (key) {
@@ -345,8 +347,9 @@ function Profile() {
               }}
               aria-label="Static Actions"
             >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
-
+              {vaccine.status == "DONE" && (
+                <DropdownItem key="certificate">Certificate</DropdownItem>
+              )}
               <DropdownItem key="update">Update record</DropdownItem>
               <DropdownItem key="delete" className="text-danger" color="danger">
                 Delete record
