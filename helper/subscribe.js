@@ -46,6 +46,7 @@ export const subscribe = async (showToast) => {
       }
     }
   } catch (error) {
+    alert("Error while subscribing to push notifications");
     console.log("Service worker registration failed, error:", error);
     await navigator.serviceWorker
       .register("/firebase-messaging-sw.js")
@@ -57,7 +58,6 @@ export const subscribe = async (showToast) => {
           await subscribe(true);
         }
       });
-    toast.dismiss();
     await subscribe(true);
   }
 };
