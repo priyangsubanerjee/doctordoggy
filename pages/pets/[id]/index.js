@@ -36,7 +36,22 @@ function Profile() {
   const [petDoesNotExist, setPetDoesNotExist] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
-  const [confirmDeleteOpen, setConfirmDeleteOpen] = React.useState(false);
+  const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
+  const [confirmDeleteVaccinationOpen, setConfirmDeleteVaccinationOpen] =
+    React.useState({
+      id: "",
+      open: false,
+    });
+  const [confirmDeletePrescriptionOpen, setConfirmDeletePrescriptionOpen] =
+    React.useState(false);
+  const [confirmDeleteDewormingOpen, setConfirmDeleteDewormingOpen] =
+    React.useState({
+      id: "",
+      open: false,
+    });
+  const [confirmDeletePathologyOpen, setConfirmDeletePathologyOpen] =
+    React.useState(false);
+
   const [tabOptions, setTabOptions] = React.useState([
     "General",
     "Vaccinations",
@@ -194,27 +209,95 @@ function Profile() {
     toast.success("Profile visibility updated");
   };
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDeletePet = async () => {
     setLoading(true);
     toast.loading("Deleting pet...");
-    let deleteRequest = await axios.post(
-      "/api/pet/delete",
-      {
-        id: router.query.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    try {
+      let deleteRequest = await axios.post(
+        "/api/pet/delete",
+        {
+          id: router.query.id,
         },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (deleteRequest.data.success) {
+        toast.remove();
+        toast.success(deleteRequest.data.message);
+        router.push("/pets");
       }
-    );
-
-    if (deleteRequest.data.success) {
+    } catch (error) {
       toast.remove();
-      toast.success(deleteRequest.data.message);
-      router.push("/pets");
+      toast.error(error.message);
+      console.log(error);
     }
   };
+
+  const handleConfirmDeleteVaccination = async (id) => {
+    toast.loading("Deleting vaccination...");
+    try {
+      let deleteRequest = await axios.post(
+        "/api/vaccine/delete",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setVaccinations(vaccinations.filter((vaccine) => vaccine.id != id));
+        setConfirmDeleteVaccinationOpen({
+          id: "",
+          open: false,
+        });
+      } else {
+        toast.error(deleteRequest.data.message);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+    }
+  };
+  const handleConfirmDeleteDeworming = async (id) => {
+    toast.loading("Deleting deworming...");
+    try {
+      let deleteRequest = await axios.post(
+        "/api/deworming/delete",
+        {
+          id: id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setDewormings(dewormings.filter((deworming) => deworming.id != id));
+        setConfirmDeleteDewormingOpen({
+          id: "",
+          open: false,
+        });
+      } else {
+        toast.error(deleteRequest.data.message);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+    }
+  };
+  const handleConfirmDeletePrescription = async () => {};
+  const handleConfirmDeletePathology = async () => {};
 
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
@@ -253,9 +336,10 @@ function Profile() {
               onAction={(key) => {
                 switch (key) {
                   case "delete":
-                    router.push(
-                      `/deworming/${deworming.id}/delete?redirect=${window.location}`
-                    );
+                    setConfirmDeleteDewormingOpen({
+                      id: deworming.id,
+                      open: true,
+                    });
                     break;
                   case "done":
                     UpdateStatus(deworming.id, "DONE");
@@ -358,9 +442,10 @@ function Profile() {
                     router.push(`/vaccination/${vaccine.id}/certificate`);
                     break;
                   case "delete":
-                    router.push(
-                      `/vaccination/${vaccine.id}/delete?redirect=${window.location}`
-                    );
+                    setConfirmDeleteVaccinationOpen({
+                      id: vaccine.id,
+                      open: true,
+                    });
                     break;
                   case "update":
                     router.push(`/vaccination/${vaccine.id}/update`);
@@ -965,10 +1050,10 @@ function Profile() {
     }
   };
 
-  const ConfirmDelete = () => {
+  const ConfirmDeletePetModal = () => {
     return (
       <>
-        {confirmDeleteOpen && (
+        {confirmDeletePetOpen && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
               <h1 className="text-2xl font-semibold text-center">
@@ -979,7 +1064,7 @@ function Profile() {
               </p>
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
-                  onPress={() => setConfirmDeleteOpen(false)}
+                  onPress={() => setConfirmDeletePetOpen(false)}
                   radius="none"
                   className="rounded-md"
                 >
@@ -989,7 +1074,99 @@ function Profile() {
                   radius="none"
                   className="rounded-md bg-red-600"
                   color="danger"
-                  onPress={() => handleConfirmDelete()}
+                  onPress={() => handleConfirmDeletePet()}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const ConfirmDeleteVaccineModal = () => {
+    return (
+      <>
+        {confirmDeleteVaccinationOpen.open && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+              <h1 className="text-2xl font-semibold text-center">
+                Delete this vaccination ?
+              </h1>
+              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
+                This action is irreversible and will delete this record.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() =>
+                    setConfirmDeleteVaccinationOpen({
+                      open: false,
+                      id: null,
+                    })
+                  }
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() =>
+                    handleConfirmDeleteVaccination(
+                      confirmDeleteVaccinationOpen.id
+                    )
+                  }
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const ConfirmDeleteDewormingModal = () => {
+    return (
+      <>
+        {confirmDeleteDewormingOpen.open && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
+              <h1 className="text-2xl font-semibold text-center">
+                Delete this deworming ?
+              </h1>
+              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
+                This action is irreversible and will delete this record.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() =>
+                    setConfirmDeleteDewormingOpen({
+                      open: false,
+                      id: null,
+                    })
+                  }
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() =>
+                    handleConfirmDeleteDeworming(confirmDeleteDewormingOpen.id)
+                  }
                   isLoading={loading}
                   isDisabled={loading}
                 >
@@ -1065,7 +1242,9 @@ function Profile() {
                   <Tabs />
                   <TabChooser />
                   <ActiveTab />
-                  <ConfirmDelete />
+                  <ConfirmDeletePetModal />
+                  <ConfirmDeleteVaccineModal />
+                  <ConfirmDeleteDewormingModal />
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center mt-16">
