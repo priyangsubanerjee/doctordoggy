@@ -1,6 +1,8 @@
 import { sendBulkNotification } from "@/helper/fcm/notifications";
+import { sendBulkMail } from "@/helper/sendMail";
 import { getDueDewormingsToday } from "@/prisma/deworming";
 import { getFCMTokens } from "@/prisma/token";
+import { DewormingDue } from "@/templates/Reminer";
 
 export default async function handler(req, res) {
   let tokens = [];
@@ -12,6 +14,13 @@ export default async function handler(req, res) {
   if (emails.length == 0) {
     res.status(200).json({ message: "No notifications sent" });
   } else {
+    await sendBulkMail(
+      process.env.ZOHO_MAIL,
+      process.env.ZOHO_PASS,
+      emails,
+      "Deworming due today ⏰",
+      DewormingDue("today")
+    );
     for (let i = 0; i < emails.length; i++) {
       let userTokens = await getFCMTokens(emails[i]);
       tokens = tokens.concat(userTokens);

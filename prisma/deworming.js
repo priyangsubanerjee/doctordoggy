@@ -1,4 +1,3 @@
-import { sendBulkMail } from "@/helper/sendMail";
 import prisma from "./prisma";
 import { DewormingDue } from "@/templates/Reminer";
 
@@ -185,13 +184,13 @@ export const getDueDewormingsTomorrow = async () => {
       }
     }
 
-    await sendBulkMail(
-      process.env.ZOHO_MAIL,
-      process.env.ZOHO_PASS,
-      emails,
-      "Deworming due tomorrow ⏰",
-      DewormingDue("tomorrow")
-    );
+    // await sendBulkMail(
+    //   process.env.ZOHO_MAIL,
+    //   process.env.ZOHO_PASS,
+    //   emails,
+    //   "Deworming due tomorrow ⏰",
+    //   DewormingDue("tomorrow")
+    // );
 
     return emails;
   } catch (error) {
@@ -226,13 +225,13 @@ export const getDueDewormingsToday = async () => {
       }
     }
 
-    await sendBulkMail(
-      process.env.ZOHO_MAIL,
-      process.env.ZOHO_PASS,
-      emails,
-      "Deworming due today ⏰",
-      DewormingDue("today")
-    );
+    // await sendBulkMail(
+    //   process.env.ZOHO_MAIL,
+    //   process.env.ZOHO_PASS,
+    //   emails,
+    //   "Deworming due today ⏰",
+    //   DewormingDue("today")
+    // );
 
     return emails;
   } catch (error) {
