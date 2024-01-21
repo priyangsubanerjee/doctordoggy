@@ -1,5 +1,7 @@
+import { sendBulkMail } from "@/helper/sendMail";
 import prisma from "./prisma";
 import { getTokens } from "./token";
+import { VaccinationDue } from "@/templates/Reminer";
 
 export const scheduleVaccine = async (vaccineProp) => {
   try {
@@ -218,6 +220,14 @@ export const getVaccinesDueTomorrow = async () => {
     });
   }
 
+  await sendBulkMail(
+    process.env.ZOHO_MAIL,
+    process.env.ZOHO_PASS,
+    emails,
+    "Vaccination due tomorrow ⏰",
+    VaccinationDue("tomorrow")
+  );
+
   return emails;
 };
 
@@ -247,6 +257,16 @@ export const getVaccinesDueToday = async () => {
         emails.push(vaccine.parentEmail);
     });
   }
+
+  await sendBulkMail(
+    process.env.ZOHO_MAIL,
+    process.env.ZOHO_PASS,
+    emails,
+    "Vaccination due today ⏰",
+    VaccinationDue("today")
+  );
+
+  console.log(emails);
 
   return emails;
 };

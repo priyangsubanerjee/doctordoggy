@@ -1,4 +1,6 @@
+import { sendBulkMail } from "@/helper/sendMail";
 import prisma from "./prisma";
+import { DewormingDue } from "@/templates/Reminer";
 
 export const scheduleDeworming = async (record) => {
   try {
@@ -182,6 +184,15 @@ export const getDueDewormingsTomorrow = async () => {
         emails.push(dewormings[i].parentEmail);
       }
     }
+
+    await sendBulkMail(
+      process.env.ZOHO_MAIL,
+      process.env.ZOHO_PASS,
+      emails,
+      "Deworming due tomorrow ⏰",
+      DewormingDue("tomorrow")
+    );
+
     return emails;
   } catch (error) {
     console.log(error);
@@ -209,13 +220,20 @@ export const getDueDewormingsToday = async () => {
       },
     });
 
-    console.log(dewormings);
-
     for (let i = 0; i < dewormings.length; i++) {
       if (!emails.includes(dewormings[i].parentEmail)) {
         emails.push(dewormings[i].parentEmail);
       }
     }
+
+    await sendBulkMail(
+      process.env.ZOHO_MAIL,
+      process.env.ZOHO_PASS,
+      emails,
+      "Deworming due today ⏰",
+      DewormingDue("today")
+    );
+
     return emails;
   } catch (error) {
     console.log(error);
