@@ -9,8 +9,7 @@ function Services() {
       title: "Grooming & Spa",
       description:
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
-      image:
-        "https://www.groomers-online.com/blog/wp-content/uploads/2023/04/GettyImages-1277453154.jpg",
+      image: "https://cdn-icons-png.flaticon.com/512/8817/8817469.png",
       buttonText: "Coming soon",
       buttonLink: `/join-waitlist?ref=Grooming&Spa`,
     },
@@ -18,8 +17,7 @@ function Services() {
       title: "Boarding",
       description:
         "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
-      image:
-        "https://vetmed.tamu.edu/news/wp-content/uploads/sites/9/2018/05/20150804-doghouse.jpg",
+      image: "https://cdn-icons-png.flaticon.com/512/10811/10811682.png",
       buttonText: "Coming soon",
       buttonLink: `/join-waitlist?ref=Boarding`,
     },
@@ -27,8 +25,7 @@ function Services() {
       title: "Dog Walking",
       description:
         "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
-      image:
-        "https://image.petmd.com/files/styles/863x625/public/2023-02/how-often-should-you-walk-your-dog.jpg",
+      image: "https://cdn-icons-png.flaticon.com/512/7699/7699724.png",
       buttonText: "Coming soon",
       buttonLink: `/join-waitlist?ref=Dog-Walking`,
     },
@@ -37,8 +34,7 @@ function Services() {
       title: "Training",
       description:
         "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
-      image:
-        "https://www.dailypaws.com/thmb/qlpLn9xomUWCs0KDmHyzDkOoFzc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/man-training-dog-735898051-2000-eef075257ca44a22828da97373d88e2a.jpg",
+      image: "https://cdn-icons-png.flaticon.com/512/6381/6381356.png",
       buttonText: "Coming soon",
       buttonLink: `/join-waitlist?ref=Training`,
     },
@@ -60,7 +56,7 @@ function Services() {
       >
         <img
           src={image}
-          className="h-[80px] lg:h-[150px] w-[80px] lg:w-[150px] object-cover rounded-2xl lg:rounded-2xl"
+          className="h-[80px] lg:h-[80px] w-[80px] lg:w-[80px] object-cover rounded-2xl lg:rounded-2xl"
           alt=""
         />
         <h2 className="lg:text-lg font-bold mt-5">{title}</h2>
