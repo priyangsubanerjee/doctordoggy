@@ -694,12 +694,11 @@ function Profile() {
                 </div>
               </div>
               <h1 className="font-semibold text-xl text-center mt-4">
-                Delete this pathology ?
+                Delete this pet ?
               </h1>
               <p className="text-xs text-neutral-500 text-center leading-6 mt-2">
-                Are you sure you want to delete this pathology pathology? This
-                is an irreversible action and will delete this record
-                permanently.
+                Are you sure you want to delete this pet? This is an
+                irreversible action and will delete this record permanently.
               </p>
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
