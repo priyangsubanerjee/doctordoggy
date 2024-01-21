@@ -18,13 +18,12 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
   const router = useRouter();
   const session = useSession();
   const [loading, setLoading] = React.useState(false);
-  const [confirmDeleteVaccination, setconfirmDeleteVaccination] =
-    React.useState(false);
+  const [confirmDelete, setconfirmDelete] = React.useState(false);
 
-  const ConfirmDeleteVaccineModal = () => {
+  const ConfirmDeleteModal = () => {
     return (
       <>
-        {confirmDeleteVaccination && (
+        {confirmDelete && (
           <div className="fixed inset-0 h-full :w-full z-50 bg-slate-200/50 backdrop-blur-sm flex items-center justify-center">
             <div className="bg-white -translate-y-20 md:translate-y-0 rounded-md shadow-md px-5 md:px-10 py-7 h-fit w-full max-w-[95%] md:max-w-[450px]">
               <div className="flex items-center justify-center">
@@ -51,7 +50,7 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
               </p>
               <div className="grid grid-cols-2 mt-7 gap-2">
                 <Button
-                  onPress={() => setconfirmDeleteVaccination(false)}
+                  onPress={() => setconfirmDelete(false)}
                   radius="none"
                   className="rounded-md"
                 >
@@ -61,9 +60,7 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
                   radius="none"
                   className="rounded-md bg-red-600"
                   color="danger"
-                  onPress={() =>
-                    handleConfirmDeleteVaccination(confirmDeleteVaccination.id)
-                  }
+                  onPress={() => handleConfirmDelete()}
                   isLoading={loading}
                   isDisabled={loading}
                 >
@@ -77,7 +74,7 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
     );
   };
 
-  const handleConfirmDeleteVaccination = async () => {
+  const handleConfirmDelete = async () => {
     try {
       setLoading(true);
       toast.loading("Deleting vaccination record...");
@@ -96,18 +93,18 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
       if (deleteRequest.data.success) {
         toast.success(deleteRequest.data.message);
         setLoading(false);
-        setconfirmDeleteVaccination(false);
+        setconfirmDelete(false);
         setVaccinations(vaccinations.filter((v) => v.id != vaccine.id));
       } else {
         toast.error(deleteRequest.data.message);
         setLoading(false);
-        setconfirmDeleteVaccination(false);
+        setconfirmDelete(false);
       }
     } catch (error) {
       toast.remove();
       toast.error(error.message);
       setLoading(false);
-      setconfirmDeleteVaccination(false);
+      setconfirmDelete(false);
     }
   };
 
@@ -146,7 +143,7 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
                   router.push(`/vaccination/${vaccine.id}/certificate`);
                   break;
                 case "delete":
-                  setconfirmDeleteVaccination(true);
+                  setconfirmDelete(true);
                   break;
                 case "update":
                   router.push(`/vaccination/${vaccine.id}/update`);
@@ -169,26 +166,48 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
         </Dropdown>
       </div>
       <div className="mt-3">
-        <Link href={`/vaccination/${vaccine.id}/certificate`}>
-          <h1 className="text-base hover:text-blue-600 font-semibold text-neutral-700">
-            {vaccine.vaccineName}
-          </h1>
-        </Link>
-        <div className="flex items-center mt-3">
-          <Icon icon="solar:calendar-line-duotone" />
-          <p className="text-sm text-neutral-500 ml-2">
-            Due on{" "}
-            <span className="text-neutral-700">
-              {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </span>
-          </p>
-        </div>
+        <h1
+          onClick={() => {
+            vaccine.status == "DUE"
+              ? toast.error("Vaccination is not done yet")
+              : router.push(`/vaccination/${vaccine.id}/certificate`);
+          }}
+          className="text-base hover:text-blue-600 font-semibold text-neutral-700 cursor-pointer"
+        >
+          {vaccine.vaccineName}
+        </h1>
+
+        {vaccine.status == "DUE" ? (
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              Due on{" "}
+              <span className="text-neutral-700">
+                {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          </div>
+        ) : (
+          <div className="flex items-center mt-3">
+            <Icon icon="solar:calendar-line-duotone" />
+            <p className="text-sm text-neutral-500 ml-2">
+              Done on{" "}
+              <span className="text-neutral-700">
+                {new Date(vaccine.doneDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+            </p>
+          </div>
+        )}
       </div>
-      <ConfirmDeleteVaccineModal />
+      <ConfirmDeleteModal />
     </div>
   );
 }
