@@ -18,7 +18,7 @@ import GlobalStates from "@/context/GlobalState";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import prisma from "@/prisma/prisma";
-import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

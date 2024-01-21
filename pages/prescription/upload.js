@@ -20,7 +20,7 @@ import axios from "axios";
 import { uploadImage } from "@/helper/image";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 import { useRouter } from "next/router";
 
 // export async function getServerSideProps(context) {

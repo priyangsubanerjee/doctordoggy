@@ -21,7 +21,7 @@ import { useSession } from "next-auth/react";
 import { FetchDewormings } from "@/hooks/fetch";
 import axios from "axios";
 import toast from "react-hot-toast";
-import ScheduleFirstDeworming from "@/components/Cards/ScheduleFirstDeworming";
+import ScheduleFirstDeworming from "@/components/FirstAction/ScheduleFirstDeworming";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

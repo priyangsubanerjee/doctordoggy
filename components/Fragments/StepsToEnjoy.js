@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
-import ScheduleCall from "../Cards/ScheduleCall";
+import ScheduleCall from "../FirstAction/ScheduleCall";
 
 function StepsToEnjoy() {
   const [scheduleCall, setScheduleCall] = React.useState(false);

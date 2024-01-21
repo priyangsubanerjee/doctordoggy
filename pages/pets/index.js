@@ -9,7 +9,7 @@ import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Button, Spinner } from "@nextui-org/react";
 import axios from "axios";
-import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 
 function Pets() {
   const session = useSession();

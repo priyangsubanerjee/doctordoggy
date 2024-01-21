@@ -21,7 +21,7 @@ import { uploadImage } from "@/helper/image";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

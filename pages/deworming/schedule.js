@@ -20,8 +20,8 @@ import toast from "react-hot-toast";
 import GlobalStates from "@/context/GlobalState";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import ScheduleFirstDeworming from "@/components/Cards/ScheduleFirstDeworming";
-import RegisterFirstPet from "@/components/Cards/RegisterFirstPet";
+import ScheduleFirstDeworming from "@/components/FirstAction/ScheduleFirstDeworming";
+import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

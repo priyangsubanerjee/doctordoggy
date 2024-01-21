@@ -15,7 +15,7 @@ import { getPathologyReportsByEmail } from "@/prisma/pathology";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import axios from "axios";
-import UploadFirstPathology from "@/components/Cards/UploadFirstPathology";
+import UploadFirstPathology from "@/components/FirstAction/UploadFirstPathology";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

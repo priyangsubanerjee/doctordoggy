@@ -19,7 +19,7 @@ import { useSession } from "next-auth/react";
 import axios from "axios";
 import { FetchPrescriptions } from "@/hooks/fetch";
 import { useRouter } from "next/router";
-import UploadFirstPrescription from "@/components/Cards/UploadFirstPrescription";
+import UploadFirstPrescription from "@/components/FirstAction/UploadFirstPrescription";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);

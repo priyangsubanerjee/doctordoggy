@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { FetchVaccinations } from "@/hooks/fetch";
-import ScheduleFirstVaccination from "@/components/Cards/ScheduleFirstVaccination";
+import ScheduleFirstVaccination from "@/components/FirstAction/ScheduleFirstVaccination";
 import toast from "react-hot-toast";
 
 // export async function getServerSideProps(context) {
