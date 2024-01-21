@@ -56,10 +56,10 @@ function Services() {
       >
         <img
           src={image}
-          className="h-[80px] lg:h-[80px] w-[80px] lg:w-[80px] object-cover rounded-2xl lg:rounded-2xl"
+          className="h-[50px] lg:h-[80px] w-[50px] lg:w-[80px] object-cover rounded-2xl lg:rounded-2xl"
           alt=""
         />
-        <h2 className="lg:text-lg font-bold mt-5">{title}</h2>
+        <h2 className="lg:text-lg font-semibold lg:font-bold mt-5">{title}</h2>
         <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-6 line-clamp-2 mt-2">
           {description}
         </p>
