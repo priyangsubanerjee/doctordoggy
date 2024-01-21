@@ -90,14 +90,9 @@ function Vaccination() {
         }
       );
       updatedModal(false, "Scheduled vaccination");
-      try {
-        router.back();
-      } catch (error) {
-        router.push(
-          router.query.redirect ? router.query.redirect : "/vaccination"
-        );
-        updatedModal(false, "Scheduled 🎉");
-      }
+      router.push(
+        router.query.redirect ? router.query.redirect : "/vaccination"
+      );
     } catch (error) {
       console.log(error);
       updatedModal(true, "Error scheduling vaccination");

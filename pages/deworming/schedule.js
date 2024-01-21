@@ -112,13 +112,9 @@ function Deworming() {
         );
         if (scheduleRequest.data.success) {
           updatedModal(true, "Scheduled 🎉");
-          try {
-            router.back();
-          } catch (error) {
-            router.push(
-              router.query.redirect ? router.query.redirect : "/deworming"
-            );
-          }
+          router.push(
+            router.query.redirect ? router.query.redirect : "/deworming"
+          );
           updatedModal(false, "Scheduled 🎉");
         } else {
           updatedModal(false, "");
