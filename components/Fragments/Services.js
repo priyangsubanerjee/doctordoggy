@@ -50,16 +50,18 @@ function Services() {
   }) => {
     return (
       <div
-        className={`flex flex-col items-center justify-center ${
+        className={`flex flex-col items-center justify-center rounded-md p-6 ${
           index == 3 ? "md:col-span-3" : "col-span-1"
+        }  ${
+          index == 0 || index == 3 ? "bg-slate-50 md:bg-white" : "bg-white"
         }`}
       >
         <img
           src={image}
-          className="h-[50px] lg:h-[80px] w-[50px] lg:w-[80px] object-cover rounded-2xl lg:rounded-2xl"
+          className="h-[50px] lg:h-[60px] w-[50px] lg:w-[60px] object-cover rounded-2xl lg:rounded-2xl"
           alt=""
         />
-        <h2 className="lg:text-lg font-semibold lg:font-bold mt-5">{title}</h2>
+        <h2 className="lg:text-lg font-semibold mt-5">{title}</h2>
         <p className="text-xs max-w-[300px] text-neutral-600 text-center leading-6 line-clamp-2 mt-2">
           {description}
         </p>
@@ -84,7 +86,7 @@ function Services() {
         Make your experience as a pet parent smoother by selecting from our
         extensive variety of pet care services.
       </p>
-      <div className="mt-16 lg:mt-24 grid gap-y-9 gap-x-6 lg:gap-x-6 lg:gap-y-16 grid-cols-2 md:grid-cols-3 lg:max-w-6xl place-content-center place-items-center mx-6 lg:mx-auto">
+      <div className="mt-16 lg:mt-24 grid grid-cols-2 md:grid-cols-3 md:space-y-10 lg:max-w-6xl place-content-center place-items-center mx-3 lg:mx-auto">
         {servicesList.map((service, i) => (
           <ServiceCard {...service} key={i} index={i} />
         ))}
