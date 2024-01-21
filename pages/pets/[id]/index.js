@@ -19,6 +19,7 @@ import React, { useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import VaccineCard from "@/components/Cards/VaccineCard";
+import DewormingCard from "@/components/Cards/DewormingCard";
 
 function Profile() {
   const session = useSession();
@@ -39,8 +40,6 @@ function Profile() {
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
   const [confirmDeletePrescription, setconfirmDeletePrescription] =
-    React.useState("");
-  const [confirmDeleteDeworming, setconfirmDeleteDeworming] =
     React.useState("");
   const [confirmDeletePathology, setconfirmDeletePathology] =
     React.useState("");
@@ -233,44 +232,6 @@ function Profile() {
       setConfirmDeletePetOpen(false);
     }
   };
-
-  const handleConfirmDeleteDeworming = async () => {
-    toast.loading("Deleting deworming...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/deworming/delete",
-        {
-          id: confirmDeleteDeworming,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        setDewormings(
-          dewormings.filter(
-            (deworming) => deworming.id != confirmDeleteDeworming
-          )
-        );
-        setconfirmDeleteDeworming("");
-        setLoading(false);
-      } else {
-        toast.error(deleteRequest.data.message);
-        setconfirmDeleteDeworming("");
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setconfirmDeleteDeworming();
-      setLoading(false);
-    }
-  };
-
   const handleConfirmDeletePrescription = async () => {
     toast.loading("Deleting prescription...");
     try {
@@ -348,105 +309,6 @@ function Profile() {
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
-  const DewormingCard = ({ deworming }) => {
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={deworming.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-          <p className="text-xs ml-2 text-neutral-500">{deworming.name}</p>
-          <p
-            style={{
-              background: deworming.status == "DUE" ? "#000" : "rgb(37 99 235)",
-            }}
-            className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
-          >
-            {deworming.status}
-          </p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disabledKeys={
-                (deworming.status == "DUE" ? ["certificate"] : [],
-                !isParent ? ["delete", "done", "due"] : [])
-              }
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    setconfirmDeleteDeworming(deworming.id);
-                    break;
-                  case "done":
-                    UpdateStatus(deworming.id, "DONE");
-                    break;
-                  case "due":
-                    UpdateStatus(deworming.id, "DUE");
-                    break;
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              {deworming.status == "DUE" ? (
-                <DropdownItem key="done">Mark as done</DropdownItem>
-              ) : (
-                <DropdownItem key="due">Mark as due</DropdownItem>
-              )}
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <h1 className="text-base font-semibold text-neutral-700">
-            {deworming.medicineName}
-          </h1>
-          {deworming.status == "DONE" ? (
-            <div className="flex items-center mt-3">
-              <Icon icon="solar:calendar-line-duotone" />
-              <p className="text-sm text-neutral-500 ml-2">
-                Done on{" "}
-                <span className="text-neutral-700">
-                  {new Date(deworming.doneDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              </p>
-            </div>
-          ) : (
-            <div className="flex items-center mt-3">
-              <Icon icon="solar:calendar-line-duotone" />
-              <p className="text-sm text-neutral-500 ml-2">
-                Due on{" "}
-                <span className="text-neutral-700">
-                  {new Date(deworming.dueDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
-              </p>
-            </div>
-          )}
-          <div className="flex items-center mt-3">
-            <Icon icon="icon-park-solid:medicine-bottle-one" />
-            <p className="text-sm text-neutral-500 ml-2">{deworming.dosage}</p>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   const PrescriptionCard = ({ prescription }) => {
@@ -884,7 +746,12 @@ function Profile() {
       <>
         <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {dewormings.map((report, index) => (
-            <DewormingCard key={index} deworming={report} />
+            <DewormingCard
+              key={index}
+              deworming={report}
+              dewormings={dewormings}
+              setDewormings={setDewormings}
+            />
           ))}
         </div>
 
@@ -997,26 +864,6 @@ function Profile() {
     }
   };
 
-  const UpdateStatus = async (id, status) => {
-    toast.loading("Updating status...");
-    let { data } = await axios.post(
-      "/api/deworming/update",
-      { id, status },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    toast.remove();
-    if (data.success) {
-      LPD();
-      toast.success(data.message);
-    } else {
-      toast.error(data.message);
-    }
-  };
-
   const ConfirmDeletePetModal = () => {
     return (
       <>
@@ -1046,47 +893,6 @@ function Profile() {
                   className="rounded-md bg-red-600"
                   color="danger"
                   onPress={() => handleConfirmDeletePet()}
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const ConfirmDeleteDewormingModal = () => {
-    return (
-      <>
-        {confirmDeleteDeworming.length != 0 && (
-          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
-              <h1 className="text-2xl font-semibold text-center">
-                Delete this deworming ?
-              </h1>
-              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
-                This action is irreversible and will delete this record.
-              </p>
-              <div className="grid grid-cols-2 mt-7 gap-2">
-                <Button
-                  onPress={() => {
-                    setconfirmDeleteDeworming("");
-                    setLoading(false);
-                  }}
-                  radius="none"
-                  className="rounded-md"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  radius="none"
-                  className="rounded-md bg-red-600"
-                  color="danger"
-                  onPress={() => handleConfirmDeleteDeworming()}
                   isLoading={loading}
                   isDisabled={loading}
                 >
@@ -1245,7 +1051,6 @@ function Profile() {
                   <TabChooser />
                   <ActiveTab />
                   <ConfirmDeletePetModal />
-                  <ConfirmDeleteDewormingModal />
                   <ConfirmDeletePrescriptionModal />
                   <ConfirmDeletePathologyModal />
                 </>
