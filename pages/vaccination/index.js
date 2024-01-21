@@ -22,6 +22,7 @@ import axios from "axios";
 import { FetchVaccinations } from "@/hooks/fetch";
 import ScheduleFirstVaccination from "@/components/FirstAction/ScheduleFirstVaccination";
 import toast from "react-hot-toast";
+import VaccineCard from "@/components/Cards/VaccineCard";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -136,88 +137,88 @@ function VaccinationHistory({}) {
     });
   }, [session.status]);
 
-  const VaccineCard = ({ vaccine }) => {
-    console.log(vaccine, session.data.user.email);
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={vaccine.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-          <p className="text-xs ml-2 text-neutral-800">{vaccine.name}</p>
-          <p
-            style={{
-              background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
-            }}
-            className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
-          >
-            {vaccine.status}
-          </p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disabledKeys={
-                vaccine.parentEmail != session.data.user.email
-                  ? ["delete", "update"]
-                  : []
-              }
-              onAction={(key) => {
-                switch (key) {
-                  case "certificate":
-                    router.push(`/vaccination/${vaccine.id}/certificate`);
-                    break;
-                  case "delete":
-                    setconfirmDeleteVaccination(vaccine.id);
-                    break;
-                  case "update":
-                    router.push(`/vaccination/${vaccine.id}/update`);
-                    break;
+  //   const VaccineCard = ({ vaccine }) => {
+  //     console.log(vaccine, session.data.user.email);
+  //     return (
+  //       <div className="border rounded-md p-4">
+  //         <div className="flex items-center">
+  //           <img
+  //             src={vaccine.image}
+  //             className="h-6 w-6 rounded-full object-cover"
+  //             alt=""
+  //           />
+  //           <p className="text-xs ml-2 text-neutral-800">{vaccine.name}</p>
+  //           <p
+  //             style={{
+  //               background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
+  //             }}
+  //             className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
+  //           >
+  //             {vaccine.status}
+  //           </p>
+  //           <Dropdown>
+  //             <DropdownTrigger>
+  //               <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
+  //                 <Icon height={20} icon="pepicons-pencil:dots-y" />
+  //               </button>
+  //             </DropdownTrigger>
+  //             <DropdownMenu
+  //               disabledKeys={
+  //                 vaccine.parentEmail != session.data.user.email
+  //                   ? ["delete", "update"]
+  //                   : []
+  //               }
+  //               onAction={(key) => {
+  //                 switch (key) {
+  //                   case "certificate":
+  //                     router.push(`/vaccination/${vaccine.id}/certificate`);
+  //                     break;
+  //                   case "delete":
+  //                     setconfirmDeleteVaccination(vaccine.id);
+  //                     break;
+  //                   case "update":
+  //                     router.push(`/vaccination/${vaccine.id}/update`);
+  //                     break;
 
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              {vaccine.status == "DONE" && (
-                <DropdownItem key="certificate">Certificate</DropdownItem>
-              )}
-              <DropdownItem key="update">Update record</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <Link href={`/vaccination/${vaccine.id}/certificate`}>
-            <h1 className="text-base hover:text-blue-600 font-semibold text-neutral-700">
-              {vaccine.vaccineName}
-            </h1>
-          </Link>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              Due on{" "}
-              <span className="text-neutral-700">
-                {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  //                   default:
+  //                     break;
+  //                 }
+  //               }}
+  //               aria-label="Static Actions"
+  //             >
+  //               {vaccine.status == "DONE" && (
+  //                 <DropdownItem key="certificate">Certificate</DropdownItem>
+  //               )}
+  //               <DropdownItem key="update">Update record</DropdownItem>
+  //               <DropdownItem key="delete" className="text-danger" color="danger">
+  //                 Delete record
+  //               </DropdownItem>
+  //             </DropdownMenu>
+  //           </Dropdown>
+  //         </div>
+  //         <div className="mt-3">
+  //           <Link href={`/vaccination/${vaccine.id}/certificate`}>
+  //             <h1 className="text-base hover:text-blue-600 font-semibold text-neutral-700">
+  //               {vaccine.vaccineName}
+  //             </h1>
+  //           </Link>
+  //           <div className="flex items-center mt-3">
+  //             <Icon icon="solar:calendar-line-duotone" />
+  //             <p className="text-sm text-neutral-500 ml-2">
+  //               Due on{" "}
+  //               <span className="text-neutral-700">
+  //                 {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
+  //                   year: "numeric",
+  //                   month: "long",
+  //                   day: "numeric",
+  //                 })}
+  //               </span>
+  //             </p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   };
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
