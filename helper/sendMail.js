@@ -33,7 +33,7 @@ export async function sendMail(
   } catch (error) {
     return {
       success: false,
-      message: "Failure",
+      message: error.message,
     };
   }
 }

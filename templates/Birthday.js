@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+export function TodayBirthday(name) {
+  return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -90,10 +91,11 @@
             text-align: center;
             display: flex;
             align-items: center;
-            justify-content: center;
+            width: fit-content;
+            margin: 0 auto;
           "
         >
-          <span>Laddoo!</span>
+          <span>${name} !</span>
           <img
             src="https://static-00.iconduck.com/assets.00/birthday-cake-emoji-2048x2043-t032bj8k.png"
             style="
@@ -117,7 +119,7 @@
           great day and wish you all the best for the coming year. We hope all
           your dreams come true. We also have a small surprise for you.
         </p>
-        <a class="surprise-button" href="">
+        <a class="surprise-button" href="https://doctordoggy.vet/birthdays?name=${name}">
           <strong>Click here to see your surprise</strong>
         </a>
       </div>
@@ -162,3 +164,5 @@
     </div>
   </body>
 </html>
+`;
+}

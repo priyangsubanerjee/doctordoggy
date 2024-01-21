@@ -197,3 +197,41 @@ export const getAllPets = async () => {
     return null;
   }
 };
+
+export const getBirthdaysToday = async () => {
+  let today = new Date();
+  let selectedPets = [];
+  try {
+    const pets = await prisma.pet.findMany({
+      where: {
+        isPublic: true,
+        parentEmail: {
+          not: null,
+        },
+      },
+    });
+    pets.forEach((pet) => {
+      let birthday = new Date(pet.dateOfBirth);
+      if (
+        birthday.getDate() == today.getDate() &&
+        birthday.getMonth() == today.getMonth()
+      ) {
+        selectedPets.push({
+          name: pet.name,
+          email: pet.parentEmail,
+        });
+      }
+    });
+    return {
+      success: true,
+      message: "Pets fetched successfully",
+      pets: selectedPets,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
+};
