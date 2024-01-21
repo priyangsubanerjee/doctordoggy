@@ -1018,7 +1018,7 @@ function Profile() {
                     <div className="absolute z-10 -bottom-0 lg:bottom-0 left-1/2 -translate-x-1/2">
                       <div className="relative">
                         {isParent && (
-                          <div className="absolute bottom-3 right-4">
+                          <div className="absolute bottom-2 right-0 lg:bottom-3 lg:right-4">
                             <QuickAction />
                           </div>
                         )}
