@@ -14,7 +14,7 @@ function ScheduleFirstDeworming() {
       />
       <Link className="mt-3" href="/deworming/schedule">
         <Button
-          className="w-fit rounded-md bg-black text-sm text-white"
+          className="w-fit rounded-md bg-neutral-100 text-sm text-black"
           radius="none"
         >
           <Icon height={20} icon="solar:calendar-outline" />
