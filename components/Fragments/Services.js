@@ -52,13 +52,11 @@ function Services() {
       <div
         className={`flex flex-col items-center justify-center rounded-md p-6 ${
           index == 3 ? "md:col-span-3" : "col-span-1"
-        }  ${
-          index == 0 || index == 3 ? "bg-slate-50 md:bg-white" : "bg-white"
-        }`}
+        } `}
       >
         <img
           src={image}
-          className="h-[50px] lg:h-[60px] w-[50px] lg:w-[60px] object-cover rounded-2xl lg:rounded-2xl"
+          className="h-[70px] bg-sky-50 p-4 lg:h-[80px] w-[70px] lg:w-[80px] object-cover rounded-2xl lg:rounded-2xl"
           alt=""
         />
         <h2 className="lg:text-lg font-semibold mt-5">{title}</h2>
@@ -86,7 +84,7 @@ function Services() {
         Make your experience as a pet parent smoother by selecting from our
         extensive variety of pet care services.
       </p>
-      <div className="mt-16 lg:mt-24 grid grid-cols-2 md:grid-cols-3 md:space-y-10 lg:max-w-6xl place-content-center place-items-center mx-3 lg:mx-auto">
+      <div className="mt-16 lg:mt-16 grid grid-cols-2 md:grid-cols-3 gap-y-10 lg:max-w-6xl place-content-center place-items-center mx-3 lg:mx-auto">
         {servicesList.map((service, i) => (
           <ServiceCard {...service} key={i} index={i} />
         ))}
