@@ -37,8 +37,6 @@ function Profile() {
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
-  const [confirmDeleteVaccination, setconfirmDeleteVaccination] =
-    React.useState("");
   const [confirmDeletePrescription, setconfirmDeletePrescription] =
     React.useState("");
   const [confirmDeleteDeworming, setconfirmDeleteDeworming] =

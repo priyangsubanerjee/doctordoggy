@@ -7,13 +7,16 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 
 function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
+  const router = useRouter();
   const session = useSession();
-
   const [loading, setLoading] = React.useState(false);
   const [confirmDeleteVaccination, setconfirmDeleteVaccination] =
     React.useState(false);
@@ -74,7 +77,39 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
     );
   };
 
-  const handleConfirmDeleteVaccination = async () => {};
+  const handleConfirmDeleteVaccination = async () => {
+    try {
+      setLoading(true);
+      toast.loading("Deleting vaccination record...");
+      let deleteRequest = await axios.post(
+        "/api/vaccine/delete",
+        {
+          id: vaccine.id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setLoading(false);
+        setconfirmDeleteVaccination(false);
+        setVaccinations(vaccinations.filter((v) => v.id != vaccine.id));
+      } else {
+        toast.error(deleteRequest.data.message);
+        setLoading(false);
+        setconfirmDeleteVaccination(false);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+      setLoading(false);
+      setconfirmDeleteVaccination(false);
+    }
+  };
 
   return (
     <div className="border rounded-md p-4">

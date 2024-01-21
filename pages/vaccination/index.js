@@ -41,92 +41,7 @@ import VaccineCard from "@/components/Cards/VaccineCard";
 
 function VaccinationHistory({}) {
   const session = useSession();
-  const router = useRouter();
-  const [loading, setLoading] = React.useState(false);
   const [vaccinations, setVaccinations] = React.useState(null);
-  const [confirmDeleteVaccination, setconfirmDeleteVaccination] =
-    React.useState("");
-
-  const handleConfirmDeleteVaccination = async () => {
-    toast.loading("Deleting vaccination...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/vaccine/delete",
-        {
-          id: confirmDeleteVaccination,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        setVaccinations(
-          vaccinations.filter(
-            (vaccine) => vaccine.id != confirmDeleteVaccination
-          )
-        );
-        setconfirmDeleteVaccination("");
-      } else {
-        toast.error(deleteRequest.data.message);
-        setconfirmDeleteVaccination("");
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setconfirmDeleteVaccination("");
-      setLoading(false);
-    }
-  };
-
-  const ConfirmDeleteVaccineModal = () => {
-    return (
-      <>
-        {confirmDeleteVaccination.length > 0 && (
-          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
-              <h1 className="text-2xl font-semibold text-center">
-                Delete this vaccination ?
-              </h1>
-              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
-                This action is irreversible and will delete this record.
-              </p>
-              <div className="grid grid-cols-2 mt-7 gap-2">
-                <Button
-                  onPress={() =>
-                    setconfirmDeleteVaccination({
-                      open: false,
-                      id: null,
-                    })
-                  }
-                  radius="none"
-                  className="rounded-md"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  radius="none"
-                  className="rounded-md bg-red-600"
-                  color="danger"
-                  onPress={() =>
-                    handleConfirmDeleteVaccination(confirmDeleteVaccination.id)
-                  }
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
 
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
@@ -181,7 +96,6 @@ function VaccinationHistory({}) {
             </div>
           )}
           {vaccinations.length == 0 && <ScheduleFirstVaccination />}
-          <ConfirmDeleteVaccineModal />
         </>
       )}
     </div>
