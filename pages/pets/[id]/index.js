@@ -182,6 +182,17 @@ function Profile() {
     }
   }, [router.query.id, session.status]);
 
+  useEffect(() => {
+    window.addEventListener("focus", () => LPD());
+    window.addEventListener("blur", null);
+    // Calls onFocus when the window first loads
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener("focus", () => LPD());
+      window.removeEventListener("blur", null);
+    };
+  }, []);
+
   const UPV = async () => {
     toast.loading("Updating profile visibility...");
     setIsPublic(!isPublic);
@@ -232,6 +243,7 @@ function Profile() {
       setConfirmDeletePetOpen(false);
     }
   };
+
   const handleConfirmDeletePrescription = async () => {
     toast.loading("Deleting prescription...");
     try {
