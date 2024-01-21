@@ -20,6 +20,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import VaccineCard from "@/components/Cards/VaccineCard";
 import DewormingCard from "@/components/Cards/DewormingCard";
+import PrescriptionCard from "@/components/Cards/PrescriptionCard";
 
 function Profile() {
   const session = useSession();
@@ -39,8 +40,6 @@ function Profile() {
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
-  const [confirmDeletePrescription, setconfirmDeletePrescription] =
-    React.useState("");
   const [confirmDeletePathology, setconfirmDeletePathology] =
     React.useState("");
 
@@ -233,43 +232,6 @@ function Profile() {
     }
   };
 
-  const handleConfirmDeletePrescription = async () => {
-    toast.loading("Deleting prescription...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/prescription/delete",
-        {
-          id: confirmDeletePrescription,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        setPrescriptions(
-          prescriptions.filter(
-            (prescription) => prescription.id != confirmDeletePrescription
-          )
-        );
-        setconfirmDeletePrescription("");
-        setLoading(false);
-      } else {
-        toast.error(deleteRequest.data.message);
-        setconfirmDeletePrescription("");
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setconfirmDeletePrescription();
-      setLoading(false);
-    }
-  };
-
   const handleConfirmDeletePathology = async () => {
     toast.loading("Deleting pathology report...");
     try {
@@ -310,72 +272,6 @@ function Profile() {
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
-  const PrescriptionCard = ({ prescription }) => {
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={prescription.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-          <p className="text-xs ml-2 text-neutral-500">{prescription.name}</p>
-          <p className="ml-auto mr-2 flex items-center space-x-1"></p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disabledKeys={!isParent ? ["delete"] : []}
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    setconfirmDeletePrescription(prescription.id);
-                    break;
-                  case "certificate":
-                    window.location.href = `/prescription/${prescription.id}/`;
-                    break;
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <Link href={`/prescription/${prescription.id}`}>
-            <h1 className="text-base font-semibold text-neutral-700 hover:text-blue-600 cursor-pointer">
-              {prescription.reasonOfVisit}
-            </h1>
-          </Link>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              <span className="text-neutral-700">
-                {new Date(prescription.dateOfVisit).toLocaleDateString(
-                  "en-US",
-                  {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }
-                )}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   const PathologyCard = ({ report }) => {
@@ -718,7 +614,12 @@ function Profile() {
       <>
         <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {prescriptions.reverse().map((prescription, index) => (
-            <PrescriptionCard key={index} prescription={prescription} />
+            <PrescriptionCard
+              prescriptions={prescriptions}
+              setPrescriptions={setPrescriptions}
+              key={index}
+              prescription={prescription}
+            />
           ))}
         </div>
 
@@ -907,47 +808,6 @@ function Profile() {
     );
   };
 
-  const ConfirmDeletePrescriptionModal = () => {
-    return (
-      <>
-        {confirmDeletePrescription.length != 0 && (
-          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
-              <h1 className="text-2xl font-semibold text-center">
-                Delete this prescription ?
-              </h1>
-              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
-                This action is irreversible and will delete this record.
-              </p>
-              <div className="grid grid-cols-2 mt-7 gap-2">
-                <Button
-                  onPress={() => {
-                    setconfirmDeletePrescription("");
-                    setLoading(false);
-                  }}
-                  radius="none"
-                  className="rounded-md"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  radius="none"
-                  className="rounded-md bg-red-600"
-                  color="danger"
-                  onPress={() => handleConfirmDeletePrescription()}
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
-
   const ConfirmDeletePathologyModal = () => {
     return (
       <>
@@ -1052,7 +912,6 @@ function Profile() {
                   <TabChooser />
                   <ActiveTab />
                   <ConfirmDeletePetModal />
-                  <ConfirmDeletePrescriptionModal />
                   <ConfirmDeletePathologyModal />
                 </>
               ) : (

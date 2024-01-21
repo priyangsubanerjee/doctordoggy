@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     res.status(401).json({ success: false, message: "You must be logged in." });
     return;
   }
-
   const { success, message } = await deletePrescriptionById(
     id,
     session.user.email

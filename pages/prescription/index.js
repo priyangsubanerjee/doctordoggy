@@ -20,43 +20,12 @@ import axios from "axios";
 import { FetchPrescriptions } from "@/hooks/fetch";
 import { useRouter } from "next/router";
 import UploadFirstPrescription from "@/components/FirstAction/UploadFirstPrescription";
-
-// export async function getServerSideProps(context) {
-//   const session = await getServerSession(context.req, context.res, authOptions);
-//   let prescriptions = [];
-
-//   if (session) {
-//     //prescriptions = await getPrescriptionsByEmail(session?.user?.email);
-//     //prescriptions = JSON.parse(JSON.stringify(prescriptions));
-//   }
-
-//   return {
-//     props: {
-//       session,
-//       prescriptions,
-//     },
-//   };
-// }
+import PrescriptionCard from "@/components/Cards/PrescriptionCard";
 
 function Prescriptions() {
   const router = useRouter();
   let session = useSession();
   const [prescriptions, setPrescriptions] = React.useState(null);
-
-  //   const fetchPrescriptions = async () => {
-  //     let prescriptions = await axios.post(
-  //       "/api/prescription/read",
-  //       {
-  //         email: session.data.user.email,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     setPrescriptions(prescriptions.data.prescriptions);
-  //   };
 
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
@@ -66,73 +35,6 @@ function Prescriptions() {
     });
   }, [session.status]);
 
-  const PrescriptionCard = ({ prescription }) => {
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={prescription.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-
-          <p className="text-xs ml-2 text-neutral-500">{prescription.name}</p>
-          <p className="ml-auto mr-2 flex items-center space-x-1"></p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    router.push(`/prescription/${prescription.id}/delete`);
-                    //window.location.href = `/prescription/${prescription.id}/delete`;
-                    break;
-                  case "certificate":
-                    router.push(`/prescription/${prescription.id}/`);
-                    //window.location.href = `/prescription/${prescription.id}/`;
-                    break;
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <Link href={`/prescription/${prescription.id}`}>
-            <h1 className="text-base font-semibold text-neutral-700 hover:text-blue-600 cursor-pointer">
-              {prescription.reasonOfVisit}
-            </h1>
-          </Link>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              <span className="text-neutral-700">
-                {new Date(prescription.dateOfVisit).toLocaleDateString(
-                  "en-US",
-                  {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }
-                )}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  };
   return (
     <div>
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
@@ -171,7 +73,12 @@ function Prescriptions() {
           {prescriptions.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5 mt-10 lg:mt-16 max-w-6xl lg:mx-auto mx-5">
               {prescriptions.reverse().map((prescription, index) => (
-                <PrescriptionCard key={index} prescription={prescription} />
+                <PrescriptionCard
+                  prescriptions={prescriptions}
+                  setPrescriptions={setPrescriptions}
+                  key={index}
+                  prescription={prescription}
+                />
               ))}
             </div>
           )}
