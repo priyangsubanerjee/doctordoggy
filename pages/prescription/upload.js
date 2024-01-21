@@ -62,10 +62,6 @@ function UploadPrescription() {
       toast.error("Please select a pet");
       return false;
     }
-    if (prescriptionProps.files.length === 0) {
-      toast.error("Please upload a prescription");
-      return false;
-    }
     if (!prescriptionProps.reasonOfVisit) {
       toast.error("Please enter the reason for visit");
       return false;
