@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import VaccineCard from "@/components/Cards/VaccineCard";
 import DewormingCard from "@/components/Cards/DewormingCard";
 import PrescriptionCard from "@/components/Cards/PrescriptionCard";
+import PathologyCard from "@/components/Cards/PathologyCard";
 
 function Profile() {
   const session = useSession();
@@ -40,8 +41,6 @@ function Profile() {
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDeletePetOpen, setConfirmDeletePetOpen] = React.useState(false);
-  const [confirmDeletePathology, setconfirmDeletePathology] =
-    React.useState("");
 
   const [tabOptions, setTabOptions] = React.useState([
     "General",
@@ -232,107 +231,9 @@ function Profile() {
     }
   };
 
-  const handleConfirmDeletePathology = async () => {
-    toast.loading("Deleting pathology report...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/pathology/delete",
-        {
-          id: confirmDeletePathology,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        setPathologyReports(
-          pathologyReports.filter(
-            (report) => report.id != confirmDeletePathology
-          )
-        );
-        setconfirmDeletePathology("");
-        setLoading(false);
-      } else {
-        toast.error(deleteRequest.data.message);
-        setconfirmDeletePathology("");
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setconfirmDeletePathology("");
-      setLoading(false);
-    }
-  };
-
   const Capitalize = (str) => {
     if (str == null || str == "" || str == undefined) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
-  const PathologyCard = ({ report }) => {
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={report.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-          <p className="text-xs ml-2 text-neutral-500">{report.name}</p>
-          <p className="ml-auto mr-2 flex items-center space-x-1"></p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disabledKeys={!isParent ? ["delete"] : []}
-              onAction={(key) => {
-                switch (key) {
-                  case "delete":
-                    setconfirmDeletePathology(report.id);
-                    break;
-                  case "certificate":
-                    window.location.href = `/pathology/${report.id}/`;
-                    break;
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              <DropdownItem key="certificate">Certificate</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <h1 className="text-base font-semibold text-neutral-700">
-            {report.testName}
-          </h1>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              <span className="text-neutral-700">
-                {new Date(report.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   const TabChooser = ({}) => {
@@ -682,7 +583,12 @@ function Profile() {
       <>
         <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {pathologyReports.map((report, index) => (
-            <PathologyCard key={index} report={report} />
+            <PathologyCard
+              key={index}
+              pathology={report}
+              pathologies={pathologyReports}
+              setPathologies={setPathologyReports}
+            />
           ))}
         </div>
 
@@ -808,47 +714,6 @@ function Profile() {
     );
   };
 
-  const ConfirmDeletePathologyModal = () => {
-    return (
-      <>
-        {confirmDeletePathology.length != 0 && (
-          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
-              <h1 className="text-2xl font-semibold text-center">
-                Delete this report ?
-              </h1>
-              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
-                This action is irreversible and will delete this record.
-              </p>
-              <div className="grid grid-cols-2 mt-7 gap-2">
-                <Button
-                  onPress={() => {
-                    setconfirmDeletePathology("");
-                    setLoading(false);
-                  }}
-                  radius="none"
-                  className="rounded-md"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  radius="none"
-                  className="rounded-md bg-red-600"
-                  color="danger"
-                  onPress={() => handleConfirmDeletePathology()}
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
-
   return (
     <div className="pb-20">
       {pageLoaded ? (
@@ -912,7 +777,6 @@ function Profile() {
                   <TabChooser />
                   <ActiveTab />
                   <ConfirmDeletePetModal />
-                  <ConfirmDeletePathologyModal />
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center mt-16">

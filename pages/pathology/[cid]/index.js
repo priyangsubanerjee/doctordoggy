@@ -10,6 +10,8 @@ import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/react";
 import Router, { useRouter } from "next/router";
 import { getPathologyReportById } from "@/prisma/pathology";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -45,9 +47,100 @@ export async function getServerSideProps(context) {
 }
 export default function Prescription({ record, pet, statusCode, isParent }) {
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+  const [confirmDelete, setconfirmDelete] = React.useState(false);
   const Capitalize = (str) => {
     if (str == null) return "--";
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const ConfirmDeleteModal = () => {
+    return (
+      <>
+        {confirmDelete && (
+          <div className="fixed inset-0 h-full :w-full z-50 bg-slate-200/50 backdrop-blur-sm flex items-center justify-center">
+            <div className="bg-white -translate-y-20 md:translate-y-0 rounded-md shadow-md px-5 md:px-10 py-7 h-fit w-full max-w-[95%] md:max-w-[450px]">
+              <div className="flex items-center justify-center">
+                <div className="h-12 w-12 text-red-700 bg-red-50 rounded-lg flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M18 19a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7H4V4h4.5l1-1h4l1 1H19v3h-1zM6 7v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V7zm12-1V5h-4l-1-1h-3L9 5H5v1zM8 9h1v10H8zm6 0h1v10h-1z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <h1 className="font-semibold text-xl text-center mt-4">
+                Delete this pathology ?
+              </h1>
+              <p className="text-xs text-neutral-500 text-center leading-6 mt-2">
+                Are you sure you want to delete this pathology pathology? This
+                is an irreversible action and will delete this record
+                permanently.
+              </p>
+              <div className="grid grid-cols-2 mt-7 gap-2">
+                <Button
+                  onPress={() => setconfirmDelete(false)}
+                  radius="none"
+                  className="rounded-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  radius="none"
+                  className="rounded-md bg-red-600"
+                  color="danger"
+                  onPress={() => handleConfirmDelete()}
+                  isLoading={loading}
+                  isDisabled={loading}
+                >
+                  Delete
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      setLoading(true);
+      toast.loading("Deleting pathology...");
+      let deleteRequest = await axios.post(
+        "/api/pathology/delete",
+        {
+          id: record.id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.remove();
+      if (deleteRequest.data.success) {
+        toast.success(deleteRequest.data.message);
+        setLoading(false);
+        setconfirmDelete(false);
+        router.push(`/pathology`);
+      } else {
+        toast.error(deleteRequest.data.message);
+        setLoading(false);
+        setconfirmDelete(false);
+      }
+    } catch (error) {
+      toast.remove();
+      toast.error(error.message);
+      setLoading(false);
+      setconfirmDelete(false);
+    }
   };
 
   return (
@@ -184,16 +277,13 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
                   completely.
                 </p>
                 <Button
-                  onPress={() =>
-                    router.push(
-                      `/prescription/${record?.id}/delete?redirect=${window.location}`
-                    )
-                  }
+                  onPress={() => setconfirmDelete(true)}
                   radius="full"
                   className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
                 >
                   Delete
                 </Button>
+                <ConfirmDeleteModal />
               </div>
             )}
           </div>
