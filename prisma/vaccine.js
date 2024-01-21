@@ -251,7 +251,7 @@ export const updateVaccineById = async (
   files
 ) => {
   try {
-    const vaccine = await prisma.vaccination.update({
+    await prisma.vaccination.update({
       where: {
         id: id,
       },
@@ -262,10 +262,15 @@ export const updateVaccineById = async (
         files: files,
       },
     });
-    return { vaccine };
+    return {
+      success: true,
+      message: "Vaccine updated successfully",
+    };
   } catch (error) {
-    console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Error updating vaccine",
+    };
   }
 };
 

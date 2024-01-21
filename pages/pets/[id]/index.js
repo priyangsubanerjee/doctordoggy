@@ -15,9 +15,10 @@ import {
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import VaccineCard from "@/components/Cards/VaccineCard";
 
 function Profile() {
   const session = useSession();
@@ -232,41 +233,7 @@ function Profile() {
       setConfirmDeletePetOpen(false);
     }
   };
-  const handleConfirmDeleteVaccination = async () => {
-    toast.loading("Deleting vaccination...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/vaccine/delete",
-        {
-          id: confirmDeleteVaccination,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        setVaccinations(
-          vaccinations.filter(
-            (vaccine) => vaccine.id != confirmDeleteVaccination
-          )
-        );
-        setconfirmDeleteVaccination("");
-      } else {
-        toast.error(deleteRequest.data.message);
-        setconfirmDeleteVaccination("");
-        setLoading(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setconfirmDeleteVaccination("");
-      setLoading(false);
-    }
-  };
+
   const handleConfirmDeleteDeworming = async () => {
     toast.loading("Deleting deworming...");
     try {
@@ -303,6 +270,7 @@ function Profile() {
       setLoading(false);
     }
   };
+
   const handleConfirmDeletePrescription = async () => {
     toast.loading("Deleting prescription...");
     try {
@@ -339,6 +307,7 @@ function Profile() {
       setLoading(false);
     }
   };
+
   const handleConfirmDeletePathology = async () => {
     toast.loading("Deleting pathology report...");
     try {
@@ -474,86 +443,6 @@ function Profile() {
           <div className="flex items-center mt-3">
             <Icon icon="icon-park-solid:medicine-bottle-one" />
             <p className="text-sm text-neutral-500 ml-2">{deworming.dosage}</p>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const VaccineCard = ({ vaccine }) => {
-    return (
-      <div className="border rounded-md p-4">
-        <div className="flex items-center">
-          <img
-            src={vaccine.image}
-            className="h-6 w-6 rounded-full object-cover"
-            alt=""
-          />
-          <p className="text-xs ml-2 text-neutral-500">{vaccine.name}</p>
-          <p
-            style={{
-              background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
-            }}
-            className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
-          >
-            {vaccine.status}
-          </p>
-          <Dropdown>
-            <DropdownTrigger>
-              <button className="hover:bg-neutral-200 h-8 w-8 flex items-center justify-center rounded-full outline-none">
-                <Icon height={20} icon="pepicons-pencil:dots-y" />
-              </button>
-            </DropdownTrigger>
-            <DropdownMenu
-              disabledKeys={
-                vaccine.parentEmail != session.data.user.email
-                  ? ["delete", "update"]
-                  : []
-              }
-              onAction={(key) => {
-                switch (key) {
-                  case "certificate":
-                    router.push(`/vaccination/${vaccine.id}/certificate`);
-                    break;
-                  case "delete":
-                    setconfirmDeleteVaccination(vaccine.id);
-                    break;
-                  case "update":
-                    router.push(`/vaccination/${vaccine.id}/update`);
-                  default:
-                    break;
-                }
-              }}
-              aria-label="Static Actions"
-            >
-              {vaccine.status == "DONE" && (
-                <DropdownItem key="certificate">Certificate</DropdownItem>
-              )}
-              <DropdownItem key="update">Update record</DropdownItem>
-              <DropdownItem key="delete" className="text-danger" color="danger">
-                Delete record
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
-        <div className="mt-3">
-          <Link href={`/vaccination/${vaccine.id}/certificate`}>
-            <h1 className="text-base hover:text-blue-600 font-semibold text-neutral-700">
-              {vaccine.vaccineName}
-            </h1>
-          </Link>
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              Due on{" "}
-              <span className="text-neutral-700">
-                {new Date(vaccine.dueDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
           </div>
         </div>
       </div>
@@ -933,7 +822,12 @@ function Profile() {
       <>
         <div className="max-w-3xl grid grid-cols-1 gap-2 md:grid-cols-2 px-3 mx-auto pb-16 mt-10 lg:mt-7">
           {vaccinations.map((vaccine, index) => (
-            <VaccineCard key={index} vaccine={vaccine} />
+            <VaccineCard
+              key={index}
+              vaccine={vaccine}
+              setVaccinations={setVaccinations}
+              vaccinations={vaccinations}
+            />
           ))}
         </div>
         {vaccinations.length == 0 && (
@@ -1057,7 +951,9 @@ function Profile() {
           onAction={(key) => {
             switch (key) {
               case "sd_v":
-                window.location.href = `/vaccination/schedule?redirect=${window.location}`;
+                router.push(
+                  `/vaccination/schedule?redirect=${window.location}?tab=Vaccinations`
+                );
                 break;
               case "up_p":
                 window.location.href = `/prescription/upload?redirect=${window.location}`;
@@ -1150,51 +1046,6 @@ function Profile() {
                   className="rounded-md bg-red-600"
                   color="danger"
                   onPress={() => handleConfirmDeletePet()}
-                  isLoading={loading}
-                  isDisabled={loading}
-                >
-                  Delete
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const ConfirmDeleteVaccineModal = () => {
-    return (
-      <>
-        {confirmDeleteVaccination.length > 0 && (
-          <div className="fixed inset-0 h-full :w-full z-50 bg-neutral-200/50 backdrop-blur-sm flex items-center justify-center">
-            <div className="bg-white -translate-y-32 md:translate-y-0 rounded-lg shadow-md px-10 py-10 w-full max-w-[90%] md:max-w-[450px]">
-              <h1 className="text-2xl font-semibold text-center">
-                Delete this vaccination ?
-              </h1>
-              <p className="text-sm mt-2 text-neutral-500 leading-6 text-center">
-                This action is irreversible and will delete this record.
-              </p>
-              <div className="grid grid-cols-2 mt-7 gap-2">
-                <Button
-                  onPress={() =>
-                    setconfirmDeleteVaccination({
-                      open: false,
-                      id: null,
-                    })
-                  }
-                  radius="none"
-                  className="rounded-md"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  radius="none"
-                  className="rounded-md bg-red-600"
-                  color="danger"
-                  onPress={() =>
-                    handleConfirmDeleteVaccination(confirmDeleteVaccination.id)
-                  }
                   isLoading={loading}
                   isDisabled={loading}
                 >
@@ -1394,7 +1245,6 @@ function Profile() {
                   <TabChooser />
                   <ActiveTab />
                   <ConfirmDeletePetModal />
-                  <ConfirmDeleteVaccineModal />
                   <ConfirmDeleteDewormingModal />
                   <ConfirmDeletePrescriptionModal />
                   <ConfirmDeletePathologyModal />

@@ -38,35 +38,44 @@ function Update() {
         return;
       } else {
         setIsLoading(true);
-        updatedModal(true, "Updating vaccination record");
         let fileUrls = [];
         if (vaccinatonProp.files.length > 0) {
-          updatedModal(true, "Uploading files");
+          toast.loading("Uploading vaccination files");
           for (let i = 0; i < vaccinatonProp.files.length; i++) {
             let file = vaccinatonProp.files[i];
             let { fileUrl } = await uploadImage(file);
             fileUrls.push(fileUrl);
           }
         }
+        toast.remove();
+        toast.loading("Updating vaccination record");
         fileUrls = [...vaccinatonProp.filesPresent, ...fileUrls];
-        updatedModal(true, "Updating vaccination record");
         try {
-          let { data } = await axios.post("/api/vaccine/update", {
+          let updateRequest = await axios.post("/api/vaccine/update", {
             id: router.query.vid,
             doneBy: vaccinatonProp.doneBy,
             doneDate: new Date(vaccinatonProp.vaccinatedOn).toISOString(),
             files: fileUrls,
           });
 
-          if (data.vaccine) {
+          toast.remove();
+          if (updateRequest.data.success) {
+            toast.success(updateRequest.data.message);
             setIsLoading(false);
-            updatedModal(false, "Vaccination record updated");
-            router.push("/vaccination");
+            try {
+              router.back();
+            } catch (error) {
+              router.push(
+                router.query.redirect ? router.query.redirect : "/vaccination"
+              );
+            }
+          } else {
+            toast.error(updateRequest.data.message);
+            setIsLoading(false);
           }
         } catch (error) {
           console.log(error);
           setIsLoading(false);
-          updatedModal(false, "Error updating vaccination record");
           toast.error("Error updating vaccination record");
         }
       }
