@@ -73,10 +73,6 @@ function UploadPathology() {
       toast.error("Please enter the test name");
       return false;
     }
-    if (pathProps.files.length === 0) {
-      toast.error("Please upload a prescription");
-      return false;
-    }
     if (!pathProps.referredBy) {
       toast.error("Please enter the reason for visit");
       return false;
