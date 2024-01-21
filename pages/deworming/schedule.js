@@ -112,9 +112,13 @@ function Deworming() {
         );
         if (scheduleRequest.data.success) {
           updatedModal(true, "Scheduled 🎉");
-          router.push(
-            router.query.redirect ? router.query.redirect : "/deworming"
-          );
+          try {
+            router.back();
+          } catch (error) {
+            router.push(
+              router.query.redirect ? router.query.redirect : "/deworming"
+            );
+          }
           updatedModal(false, "Scheduled 🎉");
         } else {
           updatedModal(false, "");
@@ -224,7 +228,7 @@ function Deworming() {
                       setSelectedMedicine(value);
                     }}
                     radius="none"
-                    label="Select vaccine"
+                    label="Select dewormer"
                   >
                     {medicines.map((medicine) => (
                       <AutocompleteItem

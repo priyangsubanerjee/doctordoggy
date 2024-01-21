@@ -952,7 +952,7 @@ function Profile() {
             switch (key) {
               case "sd_v":
                 router.push(
-                  `/vaccination/schedule?redirect=${window.location}?tab=Vaccinations`
+                  `/vaccination/schedule?redirect=${window.location}`
                 );
                 break;
               case "up_p":
