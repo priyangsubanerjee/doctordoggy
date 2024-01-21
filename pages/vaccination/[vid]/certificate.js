@@ -117,11 +117,7 @@ function Certificate() {
         toast.success(deleteRequest.data.message);
         setLoading(false);
         setconfirmDelete(false);
-        try {
-          router.back();
-        } catch (error) {
-          router.push("/vaccination");
-        }
+        router.push("/vaccination");
       } else {
         toast.error(deleteRequest.data.message);
         setLoading(false);

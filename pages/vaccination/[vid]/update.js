@@ -62,13 +62,9 @@ function Update() {
           if (updateRequest.data.success) {
             toast.success(updateRequest.data.message);
             setIsLoading(false);
-            try {
-              router.back();
-            } catch (error) {
-              router.push(
-                router.query.redirect ? router.query.redirect : "/vaccination"
-              );
-            }
+            router.push(
+              router.query.redirect ? router.query.redirect : "/vaccination"
+            );
           } else {
             toast.error(updateRequest.data.message);
             setIsLoading(false);
