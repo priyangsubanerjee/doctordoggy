@@ -5,10 +5,6 @@ import { getBirthdaysToday } from "@/prisma/pet";
 import { TodayBirthday } from "@/templates/Birthday";
 
 export default async function handler(req, res) {
-  if (req.headers.authorization !== process.env.AUTHORIZATION) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
-
   let { pets, success, message } = await getBirthdaysToday();
 
   for (let i = 0; i < pets.length; i++) {
