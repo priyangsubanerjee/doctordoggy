@@ -241,8 +241,6 @@ export const getVaccinesDueToday = async () => {
     },
   });
 
-  console.log(vaccines);
-
   if (vaccines.length > 0) {
     vaccines.forEach(async (vaccine) => {
       emails.includes(vaccine.parentEmail) == false &&
