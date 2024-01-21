@@ -170,6 +170,9 @@ export const getDueDewormingsTomorrow = async () => {
           gt: today,
           lte: tomorrow,
         },
+        petId: {
+          not: null,
+        },
         status: "DUE",
       },
     });
@@ -190,8 +193,6 @@ export const getDueDewormingsToday = async () => {
   try {
     let emails = [];
     let today = new Date();
-    today.setHours(0, 0, 0, 0);
-
     let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
 
@@ -199,11 +200,16 @@ export const getDueDewormingsToday = async () => {
       where: {
         dueDate: {
           gt: yesterday,
-          lt: tomorrow,
+          lte: today,
+        },
+        petId: {
+          not: null,
         },
         status: "DUE",
       },
     });
+
+    console.log(dewormings);
 
     for (let i = 0; i < dewormings.length; i++) {
       if (!emails.includes(dewormings[i].parentEmail)) {
