@@ -11,6 +11,7 @@ import {
   Skeleton,
   Spinner,
   Switch,
+  Tooltip,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -372,7 +373,27 @@ function Profile() {
   const GeneralTab = ({}) => {
     return (
       <div className="max-w-3xl px-3 mx-auto pb-16 mt-10 lg:mt-7 ">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3">
+        <div className="flex items-center justify-between mt-10 border rounded-md p-5">
+          <div>
+            <p className="text-neutral-800 text-base">Public profile?</p>
+            <Link
+              href="/pets/register"
+              className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
+            >
+              <span>Learn about public profiles</span>
+              <span className="translate-y-[1px]">
+                <Icon icon="formkit:right" />
+              </span>
+            </Link>
+          </div>
+          <Switch
+            isSelected={isPublic}
+            onValueChange={() => {
+              UPV();
+            }}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3 mt-6">
           <div className="border h-16 rounded-md relative flex items-center px-4">
             <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
               Name
@@ -422,57 +443,6 @@ function Profile() {
             <p>{Capitalize(pet?.bodyWeight)} Kg</p>
           </div>
         </div>
-
-        {isParent && (
-          <>
-            <div className="flex items-center justify-between mt-10 border rounded-md p-5">
-              <div>
-                <p className="text-neutral-800 text-base">Public profile?</p>
-                <Link
-                  href="/pets/register"
-                  className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
-                >
-                  <span>Learn about public profiles</span>
-                  <span className="translate-y-[1px]">
-                    <Icon icon="formkit:right" />
-                  </span>
-                </Link>
-              </div>
-              <Switch
-                isSelected={isPublic}
-                onValueChange={() => {
-                  UPV();
-                }}
-              />
-            </div>
-            <div className="p-5 rounded-md mt-24 border">
-              <h1>Edit zone</h1>
-              <p className="text-xs text-neutral-500 mt-2">
-                Edit pet information
-              </p>
-              <Button
-                radius="full"
-                onPress={() => router.push(`/pets/${pet?.id}/edit`)}
-                className="px-6 py-2 bg-neutral-800 text-sm text-white mt-5"
-              >
-                Edit
-              </Button>
-            </div>
-            <div className="p-5 rounded-md mt-5 border">
-              <h1>Danger zone</h1>
-              <p className="text-xs text-neutral-500 mt-2">
-                This action is irreversible & will delete this pet completely.
-              </p>
-              <Button
-                onPress={() => setconfirmDelete(true)}
-                radius="full"
-                className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
-              >
-                Delete
-              </Button>
-            </div>
-          </>
-        )}
       </div>
     );
   };
@@ -658,10 +628,12 @@ function Profile() {
     if (navigator.share) {
       try {
         navigator.share({
-          title: `${pet.name}'s profile on Doctor Doggy`,
+          title: `Check out ${pet.name}'s profile on Doctor Doggy: https://doctordoggy.vet/pets/${pet.id} & stay updated with ${pet.name}'s health & wellness`,
           text: `https://doctordoggy.vet/pets/${pet.id}`,
         });
-      } catch (error) {}
+      } catch (error) {
+        toast.error(error.message);
+      }
     } else {
       try {
         await navigator.clipboard.writeText(
@@ -810,15 +782,54 @@ function Profile() {
                   <p className="text-center mt-2 text-sm text-neutral-700">
                     Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
                   </p>
-                  <div className="flex items-center justify-center mt-6 space-x-2">
-                    <button
-                      onClick={() => ShareProfile()}
-                      className="text-xs py-1 px-3 border active:scale-95 rounded-full space-x-2 bg-neutral-50 flex items-center"
-                    >
-                      <span>Share</span>
-                      <Icon height={13} icon="ic:round-share" />
-                    </button>
+
+                  <div className="flex items-center justify-center px-10 gap-3 mt-8 max-w-sm mx-auto">
+                    <Tooltip delay={500} content="Copy profile link">
+                      <Button
+                        onPress={() => {
+                          let text = `Check out ${pet.name}'s profile on Doctor Doggy: https://doctordoggy.vet/pets/${pet.id} & stay updated with ${pet.name}'s health & wellness`;
+                          navigator.clipboard.writeText(text);
+                          toast.success("Link copied to clipboard");
+                        }}
+                        isIconOnly
+                        className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
+                      >
+                        <Icon height={24} icon="basil:copy-solid" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip delay={500} content="Share pet profile">
+                      <Button
+                        onPress={() => ShareProfile()}
+                        isIconOnly
+                        className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
+                      >
+                        <Icon height={26} icon="basil:forward-solid" />
+                      </Button>
+                    </Tooltip>
+                    {isParent && (
+                      <>
+                        <Tooltip delay={500} content="Edit pet profile">
+                          <Button
+                            onPress={() => router.push(`/pets/${pet.id}/edit`)}
+                            isIconOnly
+                            className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
+                          >
+                            <Icon height={22} icon="basil:edit-outline" />
+                          </Button>
+                        </Tooltip>
+                        <Tooltip delay={500} content="Delete pet profile">
+                          <Button
+                            onPress={() => setconfirmDelete(true)}
+                            isIconOnly
+                            className="h-12 w-12 border text-neutral-600 hover:text-red-600 bg-transparent rounded-md flex items-center justify-center"
+                          >
+                            <Icon height={22} icon="basil:trash-solid" />
+                          </Button>
+                        </Tooltip>
+                      </>
+                    )}
                   </div>
+
                   <Tabs />
                   <TabChooser />
                   <ActiveTab />

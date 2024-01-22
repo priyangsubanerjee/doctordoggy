@@ -37,6 +37,7 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
         dewormings.map((d) => {
           if (d.id == id) {
             d.status = status == "DONE" ? "DONE" : "DUE";
+            d.doneDate = status == "DONE" ? new Date().toISOString() : null;
           }
           return d;
         })
