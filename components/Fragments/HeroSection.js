@@ -28,30 +28,30 @@ function HeroSection() {
   const [query, setQuery] = React.useState("");
   const [searchResults, setSearchResults] = React.useState([]);
 
-  useEffect(() => {
-    if (session?.data?.user?.email) {
-      axios
-        .post(
-          `/api/pet/get_rf`,
-          {
-            email: session?.data?.user?.email,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          if (res.data.success) {
-            setPets(res.data.pets);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [session.status]);
+  //   useEffect(() => {
+  //     if (session?.data?.user?.email) {
+  //       axios
+  //         .post(
+  //           `/api/pet/get_rf`,
+  //           {
+  //             email: session?.data?.user?.email,
+  //           },
+  //           {
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+  //           }
+  //         )
+  //         .then((res) => {
+  //           if (res.data.success) {
+  //             setPets(res.data.pets);
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   }, [session.status]);
 
   useEffect(() => {
     refreshStatus();
@@ -234,7 +234,28 @@ function HeroSection() {
         <PermissionLayout close={() => setIsPermissionLayoutVisible(false)} />
       )}
 
-      <ShortcutToPets />
+      {/* <ShortcutToPets /> */}
+
+      <div className="flex items-center justify-center mt-6 space-x-4">
+        <Link href="/due/today">
+          <div className="w-fit flex items-center justify-center border rounded-full px-2 py-2  hover:bg-neutral-50 transition-all">
+            <div className="flex items-center justify-center rounded-full bg-blue-100 p-1 text-black">
+              <Icon height={20} icon="solar:calendar-broken" />
+            </div>
+            <span className="ml-2 text-sm">Due today</span>
+            <Icon className="ml-auto" icon="icon-park-outline:right" />
+          </div>
+        </Link>
+        <Link href="/due/tomorrow">
+          <div className="w-fit flex items-center justify-center border rounded-full px-2 py-2 hover:bg-neutral-50 transition-all">
+            <div className="flex items-center justify-center rounded-full bg-teal-100 p-1 text-black">
+              <Icon height={20} icon="solar:calendar-broken" />
+            </div>
+            <span className="ml-2 text-sm">Due tomorrow</span>
+            <Icon className="ml-auto" icon="icon-park-outline:right" />
+          </div>
+        </Link>
+      </div>
       <div className="py-10 lg:py-20 lg:-mt-8">
         <h1 className="text-3xl lg:text-5xl font-semibold text-center">
           One Stop Solution
