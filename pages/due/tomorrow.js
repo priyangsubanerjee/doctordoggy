@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-function Today() {
+function Tomorrow() {
   const router = useRouter();
   const session = useSession();
   const [selected, setSelected] = React.useState("all");
@@ -22,7 +22,7 @@ function Today() {
     if (session.status == "authenticated") {
       (async () => {
         let dueRquest = await axios.post(
-          "/api/due/today",
+          "/api/due/tomorrow",
           {
             email: session?.data?.user?.email,
           },
@@ -64,12 +64,12 @@ function Today() {
   return (
     <div>
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
-        Scheduled for today
+        Scheduled for tomorrow
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
-        <Link href="/due/tomorrow">
+        <Link href="/due/today">
           <div className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer">
-            <span>View due tomorrow</span>
+            <span>View due today</span>
             <span className="translate-y-[1px]">
               <Icon icon="formkit:right" />
             </span>
@@ -130,7 +130,7 @@ function Today() {
               <Icon height={24} icon="solar:calendar-broken" />
               <p className="text-sm text-neutral-800">
                 No scheduled {selected == "all" ? "activities" : selected} for
-                today.{" "}
+                tomorrow.{" "}
               </p>
             </div>
           )}
@@ -144,4 +144,4 @@ function Today() {
   );
 }
 
-export default Today;
+export default Tomorrow;
