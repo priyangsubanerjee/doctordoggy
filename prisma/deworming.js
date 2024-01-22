@@ -3,7 +3,7 @@ import { DewormingDue } from "@/templates/Reminer";
 
 export const scheduleDeworming = async (record) => {
   try {
-    const newRecord = await prisma.deworming.create({
+    let newRecord = await prisma.deworming.create({
       data: {
         petId: record.petId,
         name: record.name,
@@ -22,7 +22,6 @@ export const scheduleDeworming = async (record) => {
       deworming: newRecord,
     };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       message: error.message,

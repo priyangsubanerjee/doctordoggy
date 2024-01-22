@@ -4,7 +4,7 @@ import { VaccinationDue } from "@/templates/Reminer";
 
 export const scheduleVaccine = async (vaccineProp) => {
   try {
-    const vaccineCreated = await prisma.vaccination.create({
+    let vaccineCreated = await prisma.vaccination.create({
       data: {
         image: vaccineProp.image,
         name: vaccineProp.name,
@@ -15,6 +15,17 @@ export const scheduleVaccine = async (vaccineProp) => {
         status: "DUE",
       },
     });
+    let user = await prisma.user.findUnique({
+      where: {
+        email: vaccineCreated.parentEmail,
+      },
+    });
+    console.log(user);
+    vaccineCreated = {
+      ...vaccineCreated,
+      parentName: user.name,
+      parentPhone: user.phone,
+    };
     return {
       success: true,
       message: "Vaccine scheduled successfully",
