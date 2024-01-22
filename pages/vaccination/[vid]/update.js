@@ -369,8 +369,8 @@ function Update() {
               </Button>
             </div>
             {isCroppperOn && (
-              <div className="fixed inset-0 h-full w-full bg-black/50 z-50 flex items-end md:items-center justify-center">
-                <div className="px-2 pt-6 pb-4 bg-white md:rounded-md w-full max-w-[350px] md:w-fit">
+              <div className="fixed inset-0 h-full w-full backdrop-blur-sm bg-black/50 z-50 flex items-top md:items-center justify-center">
+                <div className="px-6 pt-6 pb-4 mt-6 bg-white rounded-md w-[95%] max-w-[410px] md:w-fit h-fit">
                   <h1 className="text-xl font-semibold text-center">
                     Crop label
                   </h1>
@@ -378,11 +378,11 @@ function Update() {
                     Crop the label to remove any unwanted information
                   </p>
 
-                  <div className="relative h-[250px] w-[300px] mx-auto bg-slate-50 mt-6">
+                  <div className="relative h-[250px] w-[320px] mx-auto bg-slate-50 mt-6">
                     <Cropper
                       style={{
                         containerStyle: {
-                          width: "300px",
+                          width: "320px",
                           height: "250px",
                           position: "absolute",
                           top: "0",
