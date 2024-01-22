@@ -240,7 +240,7 @@ function EditProfile() {
               <div className="lg:w-fit w-full shrink-0">
                 <div
                   onClick={() => imageRef?.current.click()}
-                  className="h-[200px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
+                  className="h-[300px] lg:h-full lg:max-h-[350px] lg:w-96 bg-neutral-100 hover:bg-neutral-200 rounded-md relative cursor-pointer transition-all overflow-hidden"
                 >
                   <input
                     type="file"
