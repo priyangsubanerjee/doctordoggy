@@ -61,6 +61,16 @@ function Today() {
     }
   }, [selected]);
 
+  useEffect(() => {
+    if (router.query.type == "vaccination") {
+      setSelected("vaccinations");
+    } else if (router.query.type == "deworming") {
+      setSelected("dewormings");
+    } else {
+      setSelected("all");
+    }
+  }, [router]);
+
   return (
     <div>
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">

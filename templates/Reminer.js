@@ -102,7 +102,7 @@ export const VaccinationDue = (due) => {
           <br />
         </p>
         <a
-          href="https://doctordoggy.vet/vaccination"
+          href="https://doctordoggy.vet/due/${due}?type=vaccination"
           style="
             margin-top: 15px;
             margin: 0 auto;
@@ -258,7 +258,7 @@ export const DewormingDue = (due) => {
           <br />
         </p>
         <a
-          href="https://doctordoggy.vet/dewormings"
+          href="https://doctordoggy.vet/due/${due}?type=deworming"
           style="
             margin-top: 15px;
             margin: 0 auto;
