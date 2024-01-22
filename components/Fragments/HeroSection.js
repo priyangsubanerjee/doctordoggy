@@ -238,7 +238,7 @@ function HeroSection() {
 
       <div className="flex items-center justify-center mt-6 space-x-4">
         <Link href="/due/today">
-          <div className="w-fit flex items-center justify-center border rounded-full px-2 py-2  hover:bg-neutral-50 transition-all">
+          <div className="w-fit flex items-center justify-center border rounded-full px-1 py-1  hover:bg-neutral-50 transition-all">
             <div className="flex items-center justify-center rounded-full bg-blue-100 p-1 text-black">
               <Icon height={20} icon="solar:calendar-broken" />
             </div>
@@ -247,7 +247,7 @@ function HeroSection() {
           </div>
         </Link>
         <Link href="/due/tomorrow">
-          <div className="w-fit flex items-center justify-center border rounded-full px-2 py-2 hover:bg-neutral-50 transition-all">
+          <div className="w-fit flex items-center justify-center border rounded-full px-2 py-1 hover:bg-neutral-50 transition-all">
             <div className="flex items-center justify-center rounded-full bg-teal-100 p-1 text-black">
               <Icon height={20} icon="solar:calendar-broken" />
             </div>
