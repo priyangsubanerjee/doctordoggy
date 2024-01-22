@@ -232,14 +232,14 @@ function Navbar() {
               <DropdownMenu
                 onAction={(key) => {
                   switch (key) {
-                    case "vc":
-                      router.push("/vaccination");
+                    case "dtm":
+                      router.push("/due/tomorrow");
                       break;
                     case "ps":
                       router.push("/prescription");
                       break;
-                    case "de":
-                      router.push("/deworming");
+                    case "dt":
+                      router.push("/due/today");
                       break;
                     case "pa":
                       router.push("/pathology");
@@ -252,8 +252,8 @@ function Navbar() {
               >
                 <DropdownItem key="ps">Prescriptions</DropdownItem>
                 <DropdownItem key="pa">Pathology</DropdownItem>
-                <DropdownItem key="vc">Vaccinations</DropdownItem>
-                <DropdownItem key="de">Dewormings</DropdownItem>
+                <DropdownItem key="dt">Due today</DropdownItem>
+                <DropdownItem key="dtm">Due tomorrow</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </li>

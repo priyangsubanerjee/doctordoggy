@@ -263,3 +263,53 @@ export const updateDewormingStatusById = async (id, status) => {
     };
   }
 };
+
+export const dewormingsDueTodayByEmail = async (email) => {
+  let today = new Date();
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+  let dewormings = await prisma.deworming.findMany({
+    where: {
+      status: "DUE",
+      dueDate: {
+        gt: yesterday,
+        lte: today,
+      },
+      petId: {
+        not: null,
+      },
+      parentEmail: email,
+    },
+  });
+
+  return {
+    success: true,
+    message: "Dewormings fetched successfully",
+    dewormings: dewormings,
+  };
+};
+
+export const dewormingsDueTomorrowByEmail = async (email) => {
+  let today = new Date();
+  let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+
+  let dewormings = await prisma.deworming.findMany({
+    where: {
+      status: "DUE",
+      dueDate: {
+        gt: today,
+        lte: tomorrow,
+      },
+      petId: {
+        not: null,
+      },
+      parentEmail: email,
+    },
+  });
+
+  return {
+    success: true,
+    message: "Dewormings fetched successfully",
+    dewormings: dewormings,
+  };
+};

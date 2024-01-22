@@ -323,3 +323,63 @@ export const uploadOldVaccine = async (vaccinatonProp) => {
     return null;
   }
 };
+
+export const vaccinesDueTodayByEmail = async (email) => {
+  try {
+    const today = new Date();
+    const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+    const vaccines = await prisma.vaccination.findMany({
+      where: {
+        status: "DUE",
+        dueDate: {
+          gt: yesterday,
+          lte: today,
+        },
+        petId: {
+          not: null,
+        },
+      },
+    });
+    return {
+      success: true,
+      message: "Vaccines fetched successfully",
+      vaccines: vaccines,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Error fetching vaccines",
+      vaccines: null,
+    };
+  }
+};
+
+export const vaccinesDueTomorrowEmail = async (email) => {
+  try {
+    const today = new Date();
+    const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+    const vaccines = await prisma.vaccination.findMany({
+      where: {
+        status: "DUE",
+        dueDate: {
+          gt: today,
+          lte: tomorrow,
+        },
+        petId: {
+          not: null,
+        },
+      },
+    });
+    return {
+      success: true,
+      message: "Vaccines fetched successfully",
+      vaccines: vaccines,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Error fetching vaccines",
+      vaccines: null,
+    };
+  }
+};

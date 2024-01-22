@@ -109,7 +109,7 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
   };
 
   return (
-    <div className="border rounded-md p-4">
+    <div className="border rounded-md p-4 h-full">
       <div className="flex items-center">
         <img
           src={vaccine.image}
