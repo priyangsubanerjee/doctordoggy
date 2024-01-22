@@ -15,7 +15,11 @@ export const scheduleVaccine = async (vaccineProp) => {
         status: "DUE",
       },
     });
-    return vaccineCreated;
+    return {
+      success: true,
+      message: "Vaccine scheduled successfully",
+      vaccine: vaccineCreated,
+    };
   } catch (error) {
     console.log(error);
     return null;

@@ -19,6 +19,7 @@ export const scheduleDeworming = async (record) => {
     return {
       success: true,
       message: "Deworming scheduled successfully",
+      deworming: newRecord,
     };
   } catch (error) {
     console.log(error);

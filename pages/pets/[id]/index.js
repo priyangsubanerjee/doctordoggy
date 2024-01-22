@@ -11,6 +11,8 @@ import {
   Skeleton,
   Spinner,
   Switch,
+  Tab,
+  Tabs,
   Tooltip,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
@@ -290,7 +292,7 @@ function Profile() {
     }
   };
 
-  const Tabs = ({}) => {
+  const TabsCusom = ({}) => {
     return (
       <>
         <div className="hidden lg:flex items-center justify-center space-x-8 h-16 border-b mt-8">
@@ -830,7 +832,20 @@ function Profile() {
                     )}
                   </div>
 
-                  <Tabs />
+                  {/* <div className="overflow-x-auto px-7 mt-7">
+                    <div className="w-fit mx-auto">
+                      <Tabs
+                        s
+                        selectedKey={selectedTab}
+                        onSelectionChange={setSelectedTab}
+                      >
+                        {tabOptions.map((tab, index) => {
+                          return <Tab key={tab} title={tab} />;
+                        })}
+                      </Tabs>
+                    </div>
+                  </div> */}
+                  <TabsCusom />
                   <TabChooser />
                   <ActiveTab />
                   <ConfirmDeleteModal />

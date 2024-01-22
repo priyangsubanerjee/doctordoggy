@@ -1,12 +1,33 @@
+import { sendMail } from "@/helper/sendMail";
 import { scheduleVaccine } from "@/prisma/vaccine";
+import { GeneralMessage } from "@/templates/General";
 
 export default async function handler(req, res) {
   const vaccineProp = req.body;
   try {
-    let vaccineCreated = await scheduleVaccine(vaccineProp);
+    let { success, vaccine, message } = await scheduleVaccine(vaccineProp);
+    let date = new Date(vaccine.dueDate).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    if (success) {
+      await sendMail(
+        process.env.ZOHO_MAIL,
+        process.env.ZOHO_PASS,
+        vaccine.parentEmail,
+        "Vaccination scheduled 📅",
+        GeneralMessage(
+          `Vaccination scheduled`,
+          `Dear pet parent, ${vaccine.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details.`
+        )
+      );
+    }
     res.status(200).json({
-      message: "Vaccine scheduled successfully",
-      vaccine: vaccineCreated,
+      success,
+      vaccine,
+      message,
     });
   } catch (error) {
     res.status(200).json({ message: "Something went wrong" });
