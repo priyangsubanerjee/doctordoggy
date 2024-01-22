@@ -64,14 +64,7 @@ function Today() {
   return (
     <div>
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
-        Due on{" "}
-        <span className="text-black">
-          {new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })}
-        </span>
+        Activites due today
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
         <Link href="/pathology/upload">
