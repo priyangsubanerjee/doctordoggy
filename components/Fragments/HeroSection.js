@@ -248,7 +248,7 @@ function HeroSection() {
         </Link>
         <Link href="/due/tomorrow">
           <div className="w-fit flex items-center justify-center border rounded-full px-2 py-1 hover:bg-neutral-50 transition-all">
-            <div className="flex items-center justify-center rounded-full bg-teal-100 p-1 text-black">
+            <div className="flex items-center justify-center rounded-full bg-pink-100 p-1 text-black">
               <Icon height={20} icon="solar:calendar-broken" />
             </div>
             <span className="ml-2 text-sm">Due tomorrow</span>
