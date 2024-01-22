@@ -331,6 +331,7 @@ export const vaccinesDueTodayByEmail = async (email) => {
     const vaccines = await prisma.vaccination.findMany({
       where: {
         status: "DUE",
+        parentEmail: email,
         dueDate: {
           gt: yesterday,
           lte: today,
@@ -361,6 +362,7 @@ export const vaccinesDueTomorrowEmail = async (email) => {
     const vaccines = await prisma.vaccination.findMany({
       where: {
         status: "DUE",
+        parentEmail: email,
         dueDate: {
           gt: today,
           lte: tomorrow,
