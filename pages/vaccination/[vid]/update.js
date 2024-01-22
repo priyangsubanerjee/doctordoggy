@@ -2,12 +2,13 @@
 import GlobalStates from "@/context/GlobalState";
 import { uploadImage } from "@/helper/image";
 import { Icon } from "@iconify/react";
-import { Button, Input, Select, Spinner } from "@nextui-org/react";
+import { Button, Input, Select, Slider, Spinner } from "@nextui-org/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef } from "react";
+import Cropper from "react-easy-crop";
 import toast from "react-hot-toast";
 
 function Update() {
@@ -16,6 +17,15 @@ function Update() {
   const fileRef = useRef(null);
   const [pageLoaded, setPageLoaded] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [cropppedImage, setCroppedImage] = React.useState(null);
+  const [tempFile, setTempfile] = React.useState({
+    data: null,
+    name: null,
+    type: null,
+  });
+  const [isCroppperOn, setIsCropperOn] = React.useState(false);
+  const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = React.useState(1);
   const { updatedModal } = useContext(GlobalStates);
   const [vaccinatonProp, setVaccinationProp] = React.useState({
     name: "",
@@ -117,6 +127,55 @@ function Update() {
     );
   };
 
+  const dataURLtoFile = (dataurl, filename, type) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    let random4Alphabets = Math.floor(1000 + Math.random() * 9000);
+    let extension = filename.split(".")[1];
+    return new File([u8arr], random4Alphabets + "." + extension, {
+      type,
+    });
+  };
+
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    // convert to base64 image and set to state to preview in UI
+
+    console.log(croppedArea, croppedAreaPixels);
+
+    let canvas = document.createElement("canvas");
+
+    // height 720 , width 1280px
+
+    canvas.width = 1280;
+    canvas.height = 720;
+    let ctx = canvas.getContext("2d");
+    let image = new Image();
+    image.src = tempFile.data;
+    image.onload = () => {
+      ctx.drawImage(
+        image,
+        croppedAreaPixels.x,
+        croppedAreaPixels.y,
+        croppedAreaPixels.width,
+        croppedAreaPixels.height,
+        0,
+        0,
+        1280,
+        720
+      );
+      let base64Image = canvas.toDataURL("image/jpeg");
+      setCroppedImage(base64Image);
+    };
+  };
+
   useEffect(() => {
     (async () => {
       if (session.status == "authenticated") {
@@ -152,6 +211,12 @@ function Update() {
       }
     })();
   }, [router.query.vid, session.status]);
+
+  useEffect(() => {
+    if (tempFile.data != null) {
+      setIsCropperOn(true);
+    }
+  }, [tempFile]);
 
   return (
     <div className="pb-16">
@@ -193,13 +258,13 @@ function Update() {
                 <div className="px-3 flex items-center">
                   <span className="text-sm text-neutral-700">Choose file</span>
                   <input
-                    multiple
-                    accept="image/*,application/pdf"
+                    accept="image/*"
                     ref={fileRef}
                     onChange={(e) => {
-                      setVaccinationProp({
-                        ...vaccinatonProp,
-                        files: [...vaccinatonProp.files, ...e.target.files],
+                      setTempfile({
+                        data: URL.createObjectURL(e.target.files[0]),
+                        name: e.target.files[0].name,
+                        type: e.target.files[0].type,
                       });
                     }}
                     type="file"
@@ -303,12 +368,79 @@ function Update() {
                 Submit
               </Button>
             </div>
-            <p className="text-sm text-neutral-700 text-center mt-16 lg:hidden">
-              Already vaccinated?{" "}
-              <Link className="text-blue-600 ml-1" href="/join-waitlist">
-                Upload certificate
-              </Link>
-            </p>
+            {isCroppperOn && (
+              <div className="fixed inset-0 h-full w-full bg-black/50 z-50 flex items-end md:items-center justify-center">
+                <div className="px-2 pt-6 pb-4 bg-white md:rounded-md w-full max-w-[350px] md:w-fit">
+                  <h1 className="text-xl font-semibold text-center">
+                    Crop label
+                  </h1>
+                  <p className="text-xs mt-1 text-neutral-500 text-center">
+                    Crop the label to remove any unwanted information
+                  </p>
+
+                  <div className="relative h-[250px] w-[300px] mx-auto bg-slate-50 mt-6">
+                    <Cropper
+                      style={{
+                        containerStyle: {
+                          width: "300px",
+                          height: "250px",
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          right: "0",
+                          bottom: "0",
+                        },
+                      }}
+                      image={tempFile.data}
+                      crop={crop}
+                      zoom={zoom}
+                      aspect={16 / 9}
+                      onCropChange={setCrop}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
+                  </div>
+
+                  <div className="mt-5 flex items-center justify-between">
+                    <Slider
+                      minValue={1}
+                      step={0.01}
+                      maxValue={6}
+                      size="sm"
+                      value={zoom}
+                      className="w-1/2"
+                      onChange={setZoom}
+                    />
+                    <Button
+                      radius="none"
+                      onClick={() => {
+                        let file = dataURLtoFile(
+                          cropppedImage,
+                          tempFile.name,
+                          tempFile.type
+                        );
+
+                        setVaccinationProp({
+                          ...vaccinatonProp,
+                          files: [file],
+                          filesPresent: [],
+                        });
+
+                        setTempfile({
+                          data: null,
+                          name: null,
+                          type: null,
+                        });
+                        setIsCropperOn(false);
+                      }}
+                      className="rounded-md bg-black text-white"
+                    >
+                      Done
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
       </>
