@@ -100,7 +100,7 @@ function Today() {
               <Tab key="dewormings" title="Dewormings"></Tab>
             </Tabs>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 max-w-6xl lg:mx-auto mx-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 px-4 md:mx-auto md:max-w-5xl lg:max-w-6xl">
             {arrayGrid.map((due, index) => {
               return due.type == "vaccine" ? (
                 <div className="relative h-full">

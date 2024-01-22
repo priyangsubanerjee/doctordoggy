@@ -190,7 +190,7 @@ function Navbar() {
             <img src="/logoDark.png" className="lg:h-9 h-7" alt="" />
           </Link>
         </div>
-        <ul className="hidden lg:flex items-center space-x-12 text-sm">
+        <ul className="hidden md:flex items-center space-x-12 text-sm">
           <li className="cursor-pointer" onClick={() => router.push("/")}>
             Home
           </li>
@@ -262,7 +262,7 @@ function Navbar() {
           <AccountButton />
           <button
             onClick={() => setSidebarOpened(true)}
-            className="ml-5 lg:hidden"
+            className="ml-5 md:hidden"
           >
             <Icon height={24} icon="clarity:menu-line" />
           </button>
