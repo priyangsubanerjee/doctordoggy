@@ -16,6 +16,19 @@ export const scheduleDeworming = async (record) => {
         status: "DUE",
       },
     });
+
+    let user = await prisma.user.findUnique({
+      where: {
+        email: record.parentEmail,
+      },
+    });
+
+    newRecord = {
+      ...newRecord,
+      parentName: user.name,
+      parentPhone: user.phone,
+    };
+
     return {
       success: true,
       message: "Deworming scheduled successfully",

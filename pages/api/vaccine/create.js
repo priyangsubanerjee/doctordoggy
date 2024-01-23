@@ -13,16 +13,12 @@ export default async function handler(req, res) {
       month: "long",
       day: "numeric",
     });
-    console.log(success, vaccine);
     if (success) {
-      try {
-        await sendSMS(
-          `+91${vaccine.parentPhone}`,
-          `Vaccination scheduled 📆\n\nDear pet parent, ${vaccine.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet`
-        );
-      } catch (error) {
-        console.log(error);
-      }
+      await sendSMS(
+        `+91${vaccine.parentPhone}`,
+        `Vaccination scheduled 📆\n\nDear pet parent, ${vaccine.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet/vaccination`
+      );
+
       await sendMail(
         process.env.ZOHO_MAIL,
         process.env.ZOHO_PASS,
