@@ -14,6 +14,8 @@ import {
   DropdownItem,
   Button,
   Spinner,
+  Tabs,
+  Tab,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { getDewormingsByEmail } from "@/prisma/deworming";
@@ -28,6 +30,8 @@ function DewormingRepository() {
   const router = useRouter();
   const session = useSession();
   const [dewormings, setDewormings] = React.useState(null);
+  const [selected, setSelected] = React.useState("all");
+  const [mappedDewormings, setmappedDewormings] = React.useState([]);
 
   // fetch dewormings by email
   const FDBES = async () => {
@@ -55,6 +59,47 @@ function DewormingRepository() {
       return;
     FDBES();
   }, [session.status]);
+
+  useEffect(() => {
+    if (dewormings == null) return;
+
+    switch (selected) {
+      case "all":
+        setmappedDewormings(dewormings);
+        break;
+      case "done":
+        setmappedDewormings(dewormings.filter((v) => v.status == "DONE"));
+        break;
+      case "due":
+        setmappedDewormings(dewormings.filter((v) => v.status == "DUE"));
+        break;
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (dewormings == null) return;
+    else {
+      if (router.query.filter) {
+        switch (router.query.filter) {
+          case "all":
+            setSelected("all");
+            break;
+          case "done":
+            setSelected("done");
+            break;
+          case "due":
+            setSelected("due");
+            break;
+          default:
+            setSelected("all");
+        }
+      } else {
+        console.log("no filter");
+        setSelected("all");
+        setmappedDewormings(dewormings);
+      }
+    }
+  }, [dewormings]);
 
   return (
     <div className="pb-16">
@@ -90,16 +135,29 @@ function DewormingRepository() {
       {dewormings != null && (
         <>
           {dewormings.length === 0 && <ScheduleFirstDeworming />}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 max-w-6xl lg:mx-auto px-5">
-            {dewormings.map((record, index) => (
-              <DewormingCard
-                key={index}
-                deworming={record}
-                dewormings={dewormings}
-                setDewormings={setDewormings}
-              />
-            ))}
-          </div>
+          <>
+            <div className="flex items-center justify-center mt-6 md:mt-10">
+              <Tabs
+                aria-label="Options"
+                selectedKey={selected}
+                onSelectionChange={setSelected}
+              >
+                <Tab key="all" title="All"></Tab>
+                <Tab key="done" title="Done"></Tab>
+                <Tab key="due" title="Due"></Tab>
+              </Tabs>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 max-w-6xl lg:mx-auto px-5">
+              {mappedDewormings.map((record, index) => (
+                <DewormingCard
+                  key={index}
+                  deworming={record}
+                  dewormings={dewormings}
+                  setDewormings={setDewormings}
+                />
+              ))}
+            </div>
+          </>
         </>
       )}
     </div>

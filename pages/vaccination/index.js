@@ -78,20 +78,29 @@ function VaccinationHistory({}) {
   }, [selected]);
 
   useEffect(() => {
-    if (router.query.filter == null) return;
-
-    switch (router.query.filter) {
-      case "all":
+    if (vaccinations == null) return;
+    else {
+      if (router.query.filter) {
+        switch (router.query.filter) {
+          case "all":
+            setSelected("all");
+            break;
+          case "done":
+            setSelected("done");
+            break;
+          case "due":
+            setSelected("due");
+            break;
+          default:
+            setSelected("all");
+        }
+      } else {
+        console.log("no filter");
         setSelected("all");
-        break;
-      case "done":
-        setSelected("done");
-        break;
-      case "due":
-        setSelected("due");
-        break;
+        setMappedVaccinations(vaccinations);
+      }
     }
-  }, [router.query.filter]);
+  }, [vaccinations]);
 
   return (
     <div className="pb-16">
