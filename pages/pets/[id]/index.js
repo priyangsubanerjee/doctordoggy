@@ -999,14 +999,16 @@ function Profile() {
                               </td>
 
                               <td className="px-2 py-1 text-xs text-neutral-700">
-                                {new Date(vaccine.doneDate).toDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  }
-                                )}
+                                {vaccine.status == "DONE"
+                                  ? new Date(vaccine.doneDate).toDateString(
+                                      "en-US",
+                                      {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      }
+                                    )
+                                  : "--"}
                               </td>
                               <td className="px-2 py-1 text-xs text-neutral-700">
                                 <img
@@ -1069,14 +1071,16 @@ function Profile() {
                               </td>
 
                               <td className="px-2 py-5 text-xs text-neutral-700">
-                                {new Date(vaccine.doneDate).toDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  }
-                                )}
+                                {vaccine.status == "DONE"
+                                  ? new Date(vaccine.doneDate).toDateString(
+                                      "en-US",
+                                      {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      }
+                                    )
+                                  : "--"}
                               </td>
                             </tr>
                           ))}
