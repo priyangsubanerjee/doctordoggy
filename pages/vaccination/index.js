@@ -127,7 +127,7 @@ function VaccinationHistory({}) {
         <>
           {vaccinations.length != 0 && (
             <>
-              <div className="flex items-center justify-center mt-10">
+              <div className="flex items-center justify-center mt-6 md:mt-10">
                 <Tabs
                   aria-label="Options"
                   selectedKey={selected}
