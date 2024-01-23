@@ -9,13 +9,16 @@ import {
   Input,
   Select,
   SelectItem,
+  Slider,
   Spinner,
 } from "@nextui-org/react";
 import axios from "axios";
+import { set } from "lodash";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef } from "react";
+import Cropper from "react-easy-crop";
 import toast from "react-hot-toast";
 
 function Update() {
@@ -27,6 +30,15 @@ function Update() {
   const { updatedModal } = useContext(GlobalStates);
   const [pets, setPets] = React.useState([]);
   const [files, setFiles] = React.useState([]);
+  const [cropppedImage, setCroppedImage] = React.useState(null);
+  const [tempFile, setTempfile] = React.useState({
+    data: null,
+    name: null,
+    type: null,
+  });
+  const [isCroppperOn, setIsCropperOn] = React.useState(false);
+  const [crop, setCrop] = React.useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = React.useState(1);
   const [selectedPet, setSelectedPet] = React.useState(null);
   const [selectedVaccine, setSelectedVaccine] = React.useState(null);
   const [doneDate, setDoneDate] = React.useState();
@@ -114,6 +126,56 @@ function Update() {
     );
   };
 
+  const dataURLtoFile = (dataurl, filename, type) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    let random4Alphabets = Math.floor(1000 + Math.random() * 9000);
+    let extension = filename.split(".")[1];
+    return new File([u8arr], random4Alphabets + "." + extension, {
+      type,
+    });
+  };
+
+  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+    // convert to base64 image and set to state to preview in UI
+
+    let canvas = document.createElement("canvas");
+    canvas.width = 1280;
+    canvas.height = 720;
+    let ctx = canvas.getContext("2d");
+    let image = new Image();
+    image.src = tempFile.data;
+    image.onload = () => {
+      ctx.drawImage(
+        image,
+        croppedAreaPixels.x,
+        croppedAreaPixels.y,
+        croppedAreaPixels.width,
+        croppedAreaPixels.height,
+        0,
+        0,
+        1280,
+        720
+      );
+      let base64Image = canvas.toDataURL("image/jpeg");
+      setCroppedImage(base64Image);
+    };
+  };
+
+  useEffect(() => {
+    if (tempFile.data != null) {
+      setIsCropperOn(true);
+    }
+  }, [tempFile]);
+
   useEffect(() => {
     if (session.status == "authenticated") {
       (async () => {
@@ -195,11 +257,14 @@ function Update() {
                         Choose file
                       </span>
                       <input
-                        multiple
-                        accept="image/*,application/pdf"
+                        accept="image/*"
                         ref={fileRef}
                         onChange={(e) => {
-                          setFiles([...files, ...e.target.files]);
+                          setTempfile({
+                            data: URL.createObjectURL(e.target.files[0]),
+                            name: e.target.files[0].name,
+                            type: e.target.files[0].type,
+                          });
                         }}
                         type="file"
                         hidden
@@ -305,6 +370,75 @@ function Update() {
                     Submit
                   </Button>
                 </div>
+                {isCroppperOn && (
+                  <div className="fixed inset-0 h-full w-full backdrop-blur-sm bg-black/50 z-50 flex items-top md:items-center justify-center">
+                    <div className="px-6 pt-6 pb-4 mt-6 bg-white rounded-md w-[95%] max-w-[410px] md:w-fit h-fit">
+                      <h1 className="text-xl font-semibold text-center">
+                        Crop label
+                      </h1>
+                      <p className="text-xs mt-1 text-neutral-500 text-center">
+                        Crop the label to remove any unwanted information
+                      </p>
+
+                      <div className="relative h-[250px] w-[320px] mx-auto bg-slate-50 mt-6">
+                        <Cropper
+                          style={{
+                            containerStyle: {
+                              width: "320px",
+                              height: "250px",
+                              position: "absolute",
+                              top: "0",
+                              left: "0",
+                              right: "0",
+                              bottom: "0",
+                            },
+                          }}
+                          image={tempFile.data}
+                          crop={crop}
+                          zoom={zoom}
+                          aspect={16 / 9}
+                          onCropChange={setCrop}
+                          onCropComplete={onCropComplete}
+                          onZoomChange={setZoom}
+                        />
+                      </div>
+
+                      <div className="mt-5 flex items-center justify-between">
+                        <Slider
+                          minValue={1}
+                          step={0.01}
+                          maxValue={6}
+                          size="sm"
+                          value={zoom}
+                          className="w-1/2"
+                          onChange={setZoom}
+                        />
+                        <Button
+                          radius="none"
+                          onClick={() => {
+                            let file = dataURLtoFile(
+                              cropppedImage,
+                              tempFile.name,
+                              tempFile.type
+                            );
+
+                            setFiles([file]);
+
+                            setTempfile({
+                              data: null,
+                              name: null,
+                              type: null,
+                            });
+                            setIsCropperOn(false);
+                          }}
+                          className="rounded-md bg-black text-white"
+                        >
+                          Done
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </>
             )}
           </>

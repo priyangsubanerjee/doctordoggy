@@ -319,10 +319,13 @@ function Certificate() {
                       </div>
 
                       <div className="mt-20">
-                        <h1 className="text-xl font-semibold text-neutral-700">
-                          Attached documents
+                        <h1 className="text-lg font-semibold text-neutral-700">
+                          Vaccination label
                         </h1>
-                        <div className="space-y-3 mt-4">
+                        <p className="text-xs mt-1 text-neutral-500">
+                          Scanned from the original vaccination label.
+                        </p>
+                        <div className="space-y-3 mt-7">
                           {vaccine?.files?.map((file, index) => {
                             return (
                               <Link
@@ -330,8 +333,11 @@ function Certificate() {
                                 className="text-sm text-blue-600 flex items-center hover:underline"
                                 href={file}
                               >
-                                <Icon icon="uiw:paper-clip" />{" "}
-                                <span className="ml-2">View document</span>
+                                <img
+                                  src={file}
+                                  className="h-[100px] w-[200px] object-cover rounded-md overflow-hidden"
+                                  alt=""
+                                />
                               </Link>
                             );
                           })}
