@@ -820,7 +820,7 @@ function Profile() {
                   </div>
                   {shareMenuOpen && (
                     <div className="fixed inset-0 h-full w-full bg-black/50 z-50 backdrop-blur-sm flex items-center justify-center">
-                      <div className="w-[97%] md:w-[450px] max-w-[450px] bg-white shadow-lg rounded-lg relative">
+                      <div className="w-[95%] md:w-[450px] max-w-[450px] bg-white shadow-lg rounded-lg relative">
                         <button
                           onClick={() => setShareMenuOpen(false)}
                           className="absolute right-5 top-5 h-7 w-7 rounded-full bg-neutral-200 flex items-center justify-center"
