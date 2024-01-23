@@ -97,13 +97,17 @@ function VaccinationHistory({}) {
       } else {
         switch (selected) {
           case "all":
-            setMappedVaccinations(dewormings);
+            setMappedVaccinations(vaccinations);
             break;
           case "done":
-            setMappedVaccinations(dewormings.filter((v) => v.status == "DONE"));
+            setMappedVaccinations(
+              vaccinations.filter((v) => v.status == "DONE")
+            );
             break;
           case "due":
-            setMappedVaccinations(dewormings.filter((v) => v.status == "DUE"));
+            setMappedVaccinations(
+              vaccinations.filter((v) => v.status == "DUE")
+            );
             break;
         }
       }
