@@ -318,7 +318,7 @@ export const updateVaccineById = async (
 
 export const uploadOldVaccine = async (vaccinatonProp) => {
   try {
-    const vaccine = await prisma.vaccination.create({
+    let vaccine = await prisma.vaccination.create({
       data: {
         status: "DONE",
         vaccineName: vaccinatonProp.vaccineName,
@@ -332,10 +332,29 @@ export const uploadOldVaccine = async (vaccinatonProp) => {
         files: vaccinatonProp.files,
       },
     });
-    return { vaccine };
+    let user = await prisma.user.findUnique({
+      where: {
+        email: vaccine.parentEmail,
+      },
+    });
+
+    vaccine = {
+      ...vaccine,
+      parentName: user.name,
+      parentPhone: user.phone,
+    };
+
+    return {
+      success: true,
+      message: "Vaccine uploaded successfully",
+      vaccine: vaccine,
+    };
   } catch (error) {
     console.log(error);
-    return null;
+    return {
+      success: false,
+      message: "Error uploading vaccine",
+    };
   }
 };
 
