@@ -62,7 +62,6 @@ function DewormingRepository() {
 
   useEffect(() => {
     if (dewormings == null) return;
-
     switch (selected) {
       case "all":
         setmappedDewormings(dewormings);
@@ -94,9 +93,17 @@ function DewormingRepository() {
             setSelected("all");
         }
       } else {
-        console.log("no filter");
-        setSelected("all");
-        setmappedDewormings(dewormings);
+        switch (selected) {
+          case "all":
+            setmappedDewormings(dewormings);
+            break;
+          case "done":
+            setmappedDewormings(dewormings.filter((v) => v.status == "DONE"));
+            break;
+          case "due":
+            setmappedDewormings(dewormings.filter((v) => v.status == "DUE"));
+            break;
+        }
       }
     }
   }, [dewormings]);
