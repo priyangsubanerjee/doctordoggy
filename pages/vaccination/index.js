@@ -14,6 +14,8 @@ import {
   DropdownItem,
   Button,
   Spinner,
+  Tabs,
+  Tab,
 } from "@nextui-org/react";
 import { getVaccinesByEmail } from "@/prisma/vaccine";
 import { useRouter } from "next/router";
@@ -40,7 +42,10 @@ import VaccineCard from "@/components/Cards/VaccineCard";
 // }
 
 function VaccinationHistory({}) {
+  const router = useRouter();
   const session = useSession();
+  const [mappedVaccinations, setMappedVaccinations] = React.useState([]);
+  const [selected, setSelected] = React.useState("all");
   const [vaccinations, setVaccinations] = React.useState(null);
 
   useEffect(() => {
@@ -50,6 +55,38 @@ function VaccinationHistory({}) {
       setVaccinations(data);
     });
   }, [session.status]);
+
+  useEffect(() => {
+    if (vaccinations == null) return;
+
+    switch (selected) {
+      case "all":
+        setMappedVaccinations(vaccinations);
+        break;
+      case "done":
+        setMappedVaccinations(vaccinations.filter((v) => v.status == "DONE"));
+        break;
+      case "due":
+        setMappedVaccinations(vaccinations.filter((v) => v.status == "DUE"));
+        break;
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (router.query.filter == null) return;
+
+    switch (router.query.filter) {
+      case "all":
+        setSelected("all");
+        break;
+      case "done":
+        setSelected("done");
+        break;
+      case "due":
+        setSelected("due");
+        break;
+    }
+  }, [router.query.filter]);
 
   return (
     <div className="pb-16">
@@ -84,16 +121,35 @@ function VaccinationHistory({}) {
       {vaccinations != null && (
         <>
           {vaccinations.length != 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:t-16 lg:max-w-6xl lg:mx-auto px-5">
-              {vaccinations.map((vaccine, index) => (
-                <VaccineCard
-                  key={index}
-                  vaccine={vaccine}
-                  vaccinations={vaccinations}
-                  setVaccinations={setVaccinations}
-                />
-              ))}
-            </div>
+            <>
+              <div className="flex items-center justify-center mt-10">
+                <Tabs
+                  aria-label="Options"
+                  selectedKey={selected}
+                  onSelectionChange={setSelected}
+                >
+                  <Tab key="all" title="All"></Tab>
+                  <Tab key="done" title="Done"></Tab>
+                  <Tab key="due" title="Due"></Tab>
+                </Tabs>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:t-16 lg:max-w-6xl lg:mx-auto px-5">
+                {mappedVaccinations.map((vaccine, index) => (
+                  <VaccineCard
+                    key={index}
+                    vaccine={vaccine}
+                    vaccinations={vaccinations}
+                    setVaccinations={setVaccinations}
+                  />
+                ))}
+              </div>
+
+              {mappedVaccinations.length == 0 && (
+                <div className="flex items-center justify-center mt-16">
+                  <span className="text-gray-500">No vaccinations found.</span>
+                </div>
+              )}
+            </>
           )}
           {vaccinations.length == 0 && <ScheduleFirstVaccination />}
         </>
