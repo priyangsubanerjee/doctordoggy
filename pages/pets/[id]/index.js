@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
+import { usePDF } from "react-to-pdf";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useLayoutEffect } from "react";
@@ -33,6 +34,7 @@ function Profile() {
   const [pet, setPet] = React.useState({
     name: "",
   });
+  const { toPDF, targetRef } = usePDF({ filename: pet?.name + ".pdf" });
   const [loading, setLoading] = React.useState(false);
   const [vaccinations, setVaccinations] = React.useState([]);
   const [prescriptions, setPrescriptions] = React.useState([]);
@@ -736,7 +738,7 @@ function Profile() {
   };
 
   return (
-    <div className="pb-20">
+    <div>
       {pageLoaded ? (
         <>
           {petDoesNotExist ? (
@@ -835,7 +837,10 @@ function Profile() {
                             Please make sure public profile is enabled.
                           </p>
                           <div className="mt-5 grid grid-cols-2 gap-2">
-                            <div className="flex flex-col cursor-pointer items-center justify-center rounded-md bg-neutral-50 hover:bg-neutral-100 p-2">
+                            <div
+                              onClick={() => toPDF()}
+                              className="flex flex-col cursor-pointer items-center justify-center rounded-md bg-neutral-50 hover:bg-neutral-100 p-2"
+                            >
                               <Icon
                                 height={28}
                                 icon="fluent:arrow-download-20-filled"
@@ -871,6 +876,214 @@ function Profile() {
                       </div>
                     </div>
                   )}
+
+                  <div
+                    ref={targetRef}
+                    className="w-[800px] h-auto bg-white pb-5 fixed top-0 -translate-x-full left-0 z-50"
+                  >
+                    <div className="bg-neutral-100 flex items-center px-14 py-2">
+                      <img src="/logoDark.png" alt="" className="h-8" />
+                      <h2 className="-translate-y-1/2">
+                        <span className="font-semibold text-xl text-neutral-900 ml-2">
+                          Doctor Doggy
+                        </span>
+                      </h2>
+                      <p className="text-neutral-500 italic text-sm ml-auto -translate-y-1/2">
+                        Healing Paws , Empowering tails
+                      </p>
+                    </div>
+                    <div className="px-16 mt-7">
+                      <img
+                        src={pet.image}
+                        className="h-[80px] w-[80px] object-cover appearance-none rounded-sm"
+                        alt=""
+                      />
+                    </div>
+                    <div className="grid grid-cols-3 gap-6 px-16 mt-4">
+                      <div>
+                        <p className="text-xs text-neutral-500">Name</p>
+                        <p className="mt-1 text-sm">{pet.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500">Species</p>
+                        <p className="mt-1 text-sm">
+                          {Capitalize(pet.species)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500">Breed</p>
+                        <p className="mt-1 text-sm">{Capitalize(pet.breed)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500">Colour</p>
+                        <p className="mt-1 text-sm">{Capitalize(pet.color)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500">
+                          Date of birth
+                        </p>
+                        <p className="mt-1 text-sm">
+                          {new Date(pet.dateOfBirth).toDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-neutral-500">Sex</p>
+                        <p className="mt-1 text-sm">{Capitalize(pet.sex)}</p>
+                      </div>
+                    </div>
+
+                    <div className="px-16 mt-10">
+                      <h2 className="font-semibold border-b pb-2">
+                        Vaccination data
+                      </h2>
+                      <table className="w-full mt-5">
+                        <thead>
+                          <tr>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Vaccine
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Due date
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Status
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Verified
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Done date
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Label
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {vaccinations.map((vaccine, index) => (
+                            <tr key={index} className="border-b">
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                {vaccine.vaccineName}
+                              </td>
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                {new Date(vaccine.dueDate).toDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </td>
+
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                {vaccine.status == "DUE" ? (
+                                  <span>Due</span>
+                                ) : vaccine.status == "DONE" ? (
+                                  <span>Done</span>
+                                ) : (
+                                  <span>Overdue</span>
+                                )}
+                              </td>
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                {vaccine.doneAt == null ||
+                                vaccine.doneAt == "" ? (
+                                  <span>No</span>
+                                ) : (
+                                  <span>Yes</span>
+                                )}
+                              </td>
+
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                {new Date(vaccine.doneDate).toDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </td>
+                              <td className="px-2 py-1 text-xs text-neutral-700">
+                                <img
+                                  className="h-12"
+                                  src={vaccine.files[0]}
+                                  alt=""
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="px-16 mt-10">
+                      <h2 className="font-semibold border-b pb-2">
+                        Deworming data
+                      </h2>
+                      <table className="w-full mt-5">
+                        <thead>
+                          <tr>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Dewormer
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Due date
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Status
+                            </th>
+                            <th className="text-left text-xs text-neutral-500 px-2 py-1">
+                              Done date
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dewormings.map((vaccine, index) => (
+                            <tr key={index} className="border-b">
+                              <td className="px-2 py-3 text-xs text-neutral-700">
+                                {vaccine.medicineName}
+                              </td>
+                              <td className="px-2 py-5 text-xs text-neutral-700">
+                                {new Date(vaccine.dueDate).toDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </td>
+
+                              <td className="px-2 py-5 text-xs text-neutral-700">
+                                {vaccine.status == "DUE" ? (
+                                  <span>Due</span>
+                                ) : vaccine.status == "DONE" ? (
+                                  <span>Done</span>
+                                ) : (
+                                  <span>Overdue</span>
+                                )}
+                              </td>
+
+                              <td className="px-2 py-5 text-xs text-neutral-700">
+                                {new Date(vaccine.doneDate).toDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                   {/* <div className="overflow-x-auto px-7 mt-7">
                     <div className="w-fit mx-auto">
                       <Tabs
