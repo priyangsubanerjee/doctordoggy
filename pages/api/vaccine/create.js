@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     if (success) {
       await sendSMS(
         `+91${vaccine.parentPhone}`,
-        `Vaccination scheduled 📆\n\nDear pet parent, ${vaccine.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet/vaccination`
+        `Vaccination scheduled 📆\n\nDear pet parent, ${vaccine.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet/vaccination?filter=due`
       );
 
       await sendMail(
