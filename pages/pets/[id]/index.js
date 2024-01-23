@@ -29,6 +29,7 @@ import PathologyCard from "@/components/Cards/PathologyCard";
 function Profile() {
   const session = useSession();
   const [pageLoaded, setPageLoaded] = React.useState(false);
+  const [shareMenuOpen, setShareMenuOpen] = React.useState(false);
   const [pet, setPet] = React.useState({
     name: "",
   });
@@ -784,24 +785,10 @@ function Profile() {
                   <p className="text-center mt-2 text-sm text-neutral-700">
                     Goodest {pet.sex == "male" ? "boy" : "girl"} in the town !
                   </p>
-
                   <div className="flex items-center justify-center px-10 gap-3 mt-8 max-w-sm mx-auto">
-                    <Tooltip delay={500} content="Copy profile link">
-                      <Button
-                        onPress={() => {
-                          let text = `Check out ${pet.name}'s profile on Doctor Doggy: https://doctordoggy.vet/pets/${pet.id} & stay updated with ${pet.name}'s health & wellness`;
-                          navigator.clipboard.writeText(text);
-                          toast.success("Link copied to clipboard");
-                        }}
-                        isIconOnly
-                        className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
-                      >
-                        <Icon height={24} icon="basil:copy-solid" />
-                      </Button>
-                    </Tooltip>
                     <Tooltip delay={500} content="Share pet profile">
                       <Button
-                        onPress={() => ShareProfile()}
+                        onPress={() => setShareMenuOpen(true)}
                         isIconOnly
                         className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
                       >
@@ -831,7 +818,59 @@ function Profile() {
                       </>
                     )}
                   </div>
-
+                  {shareMenuOpen && (
+                    <div className="fixed inset-0 h-full w-full bg-black/50 z-50 backdrop-blur-sm flex items-center justify-center">
+                      <div className="w-[97%] md:w-[500px] max-w-[500px] bg-white shadow-lg rounded-lg relative">
+                        <button
+                          onClick={() => setShareMenuOpen(false)}
+                          className="absolute right-5 top-5 h-7 w-7 rounded-full bg-neutral-200 flex items-center justify-center"
+                        >
+                          <Icon icon="mingcute:close-fill" height={12} />
+                        </button>
+                        <div className="px-7 py-6">
+                          <h1 className="text-xl font-semibold">
+                            Share profile
+                          </h1>
+                          <p className="text-sm text-neutral-500 mt-2 tracking-wide">
+                            Please make sure public profile is enabled.
+                          </p>
+                          <div className="mt-5 grid grid-cols-2 gap-2">
+                            <div className="flex flex-col cursor-pointer items-center justify-center rounded-md bg-neutral-50 hover:bg-neutral-100 p-2">
+                              <Icon
+                                height={28}
+                                icon="fluent:arrow-download-20-filled"
+                              />
+                              <p className="text-xs text-neutral-500 mt-2">
+                                Save as pdf
+                              </p>
+                            </div>
+                            <div
+                              onClick={() => ShareProfile()}
+                              className="flex flex-col cursor-pointer items-center justify-center rounded-md bg-neutral-50 hover:bg-neutral-100 p-2"
+                            >
+                              <Icon height={28} icon="system-uicons:forward" />
+                              <p className="text-xs text-neutral-500 mt-2">
+                                Share public link
+                              </p>
+                            </div>
+                            {/* <div className="flex flex-col cursor-pointer items-center justify-center rounded-md bg-neutral-50 hover:bg-neutral-100 p-2">
+                            <Icon height={28} icon="maki:doctor" />
+                            <p className="text-xs text-neutral-500 mt-2">
+                              Share with doctor
+                            </p>
+                          </div> */}
+                          </div>
+                          <div className="mt-5">
+                            <p className="text-xs text-neutral-500 mt-2 leading-6">
+                              <span className="text-neutral-700">Note:</span>{" "}
+                              The pdf will include all the information about
+                              your pet including vaccinations, dewormings.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {/* <div className="overflow-x-auto px-7 mt-7">
                     <div className="w-fit mx-auto">
                       <Tabs
