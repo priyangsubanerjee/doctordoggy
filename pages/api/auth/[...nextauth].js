@@ -1,3 +1,4 @@
+import { sendNotification } from "@/helper/telegram/sendNotification";
 import { create_user, get_user } from "@/prisma/user";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
@@ -30,6 +31,9 @@ export const authOptions = {
           session.user.email
         );
         userDB = createdUser;
+        sendNotification(
+          `New user: ${session.user.name} ${session.user.email} joined !`
+        );
       }
 
       return {

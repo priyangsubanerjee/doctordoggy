@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import ScheduleFirstDeworming from "@/components/FirstAction/ScheduleFirstDeworming";
 import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
+import { sendNotification } from "@/helper/telegram/sendNotification";
 
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
@@ -112,6 +113,9 @@ function Deworming() {
         );
         if (scheduleRequest.data.success) {
           updatedModal(true, "Scheduled 🎉");
+          sendNotification(
+            `${session?.data?.user?.name}, ${session?.data?.user?.email} has scheduled a deworming for ${selectedPet.name} !`
+          );
           router.push(
             router.query.redirect ? router.query.redirect : "/deworming"
           );

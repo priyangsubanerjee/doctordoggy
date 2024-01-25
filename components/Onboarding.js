@@ -9,6 +9,7 @@ import confetti from "canvas-confetti";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { sendNotification } from "@/helper/telegram/sendNotification";
 
 function Onboarding() {
   let router = useRouter();
@@ -61,6 +62,9 @@ function Onboarding() {
       );
       setStep(2);
       handleConfetti();
+      sendNotification(
+        `${session?.data?.user?.name}, ${session?.data?.user?.email} has completed their onboarding !`
+      );
       setIsLoading(false);
       setNeedsRefresh(true);
     } catch (error) {

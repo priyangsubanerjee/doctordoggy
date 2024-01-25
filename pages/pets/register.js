@@ -17,6 +17,7 @@ import {
   AutocompleteItem,
 } from "@nextui-org/react";
 import { useRouter } from "next/router";
+import { sendNotification } from "@/helper/telegram/sendNotification";
 
 function RegisterPet({ canine = [], feline = [] }) {
   const router = useRouter();
@@ -106,6 +107,9 @@ function RegisterPet({ canine = [], feline = [] }) {
           setLoading(false);
           toast.remove();
           toast.success(registerRequest.data.message);
+          sendNotification(
+            `${session.data.user.name}, (${session.data.user.email}) has registered a new pet,%0A${registerProp.name},%0A${registerProp.breed},%0A${registerProp.sex},%0A${registerProp.dateOfBirth} !`
+          );
           router.push("/pets");
         } else {
           setLoading(false);
