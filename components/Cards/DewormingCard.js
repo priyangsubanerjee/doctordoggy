@@ -101,6 +101,19 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
     );
   };
 
+  const decideStatus = (dueDate, status) => {
+    let due = new Date(dueDate);
+    let today = new Date();
+
+    if (status == "DONE") {
+      return "DONE";
+    } else if (due < today) {
+      return "OVERDUE";
+    } else if (due >= today) {
+      return "DUE";
+    }
+  };
+
   const handleConfirmDelete = async () => {
     try {
       setLoading(true);
@@ -146,11 +159,16 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
         <p className="text-xs ml-2 text-neutral-500">{deworming.name}</p>
         <p
           style={{
-            background: deworming.status == "DUE" ? "#000" : "rgb(37 99 235)",
+            background:
+              decideStatus(deworming.dueDate, deworming.status) == "DUE"
+                ? "#000"
+                : decideStatus(deworming.dueDate, deworming.status) == "OVERDUE"
+                ? "rgb(230,0,0)"
+                : "rgb(37 99 235)",
           }}
           className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
         >
-          {deworming.status}
+          {decideStatus(deworming.dueDate, deworming.status)}
         </p>
         <Dropdown>
           <DropdownTrigger>

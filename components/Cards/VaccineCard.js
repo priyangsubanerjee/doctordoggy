@@ -108,6 +108,18 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
     }
   };
 
+  const decideStatus = (dueDate, status) => {
+    let due = new Date(dueDate);
+    let today = new Date();
+
+    if (status == "DONE") {
+      return "DONE";
+    } else if (due < today) {
+      return "OVERDUE";
+    } else if (due >= today) {
+      return "DUE";
+    }
+  };
   return (
     <div className="border rounded-md p-4 h-full">
       <div className="flex items-center">
@@ -119,11 +131,16 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
         <p className="text-xs ml-2 text-neutral-800">{vaccine.name}</p>
         <p
           style={{
-            background: vaccine.status == "DUE" ? "#000" : "rgb(37 99 235)",
+            background:
+              decideStatus(vaccine.dueDate, vaccine.status) == "DUE"
+                ? "#000"
+                : decideStatus(vaccine.dueDate, vaccine.status) == "OVERDUE"
+                ? "rgb(230,0,0)"
+                : "rgb(37 99 235)",
           }}
           className="text-white text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
         >
-          {vaccine.status}
+          {decideStatus(vaccine.dueDate, vaccine.status)}
         </p>
         <Dropdown>
           <DropdownTrigger>
