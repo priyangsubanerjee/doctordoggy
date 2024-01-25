@@ -59,7 +59,7 @@ export async function sendBulkMail(
   try {
     await transporter.sendMail({
       from: '"Doctor Doggy" <no-reply@doctordoggy.vet>', // sender address
-      to,
+      bcc: to,
       subject,
       text,
       html,

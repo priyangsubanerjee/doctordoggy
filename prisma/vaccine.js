@@ -285,6 +285,35 @@ export const getVaccinesDueToday = async () => {
   return emails;
 };
 
+export const getOverDueVaccines = async () => {
+  let emails = [];
+  let vaccines = [];
+  let today = new Date();
+  let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1));
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+  vaccines = await prisma.vaccination.findMany({
+    where: {
+      status: "DUE",
+      dueDate: {
+        lte: yesterday,
+      },
+      petId: {
+        not: null,
+      },
+    },
+  });
+
+  if (vaccines.length > 0) {
+    vaccines.forEach(async (vaccine) => {
+      emails.includes(vaccine.parentEmail) == false &&
+        emails.push(vaccine.parentEmail);
+    });
+  }
+
+  return emails;
+};
+
 export const updateVaccineById = async (
   id,
   status,
