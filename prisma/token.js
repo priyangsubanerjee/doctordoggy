@@ -20,7 +20,7 @@ export const getAllTokens = async () => {
   };
 };
 
-export const getFCMTokens = async (email) => {
+export const getFCMTokens = async (email = "") => {
   let tokens =
     email.length == 0 || email == undefined
       ? await prisma.token.findMany()

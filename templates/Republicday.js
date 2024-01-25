@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+export const Republicday = () => {
+  return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -128,3 +129,5 @@
     </div>
   </body>
 </html>
+`;
+};

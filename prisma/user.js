@@ -38,3 +38,12 @@ export const update_user_phone_zip = async (email, phone, zipCode, address) => {
   });
   return user;
 };
+
+export const GetAllUsers = async () => {
+  let emails = [];
+  const users = await prisma.user.findMany({});
+  users.forEach((user) => {
+    emails.push(user.email);
+  });
+  return emails;
+};
