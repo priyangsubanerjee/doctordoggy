@@ -46,6 +46,10 @@ function Today() {
   }, [session.status]);
 
   useEffect(() => {
+    setArrayGrid([...vaccinations, ...dewormings]);
+  }, [vaccinations, dewormings]);
+
+  useEffect(() => {
     switch (selected) {
       case "all":
         setArrayGrid([...vaccinations, ...dewormings]);

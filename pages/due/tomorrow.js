@@ -46,6 +46,10 @@ function Tomorrow() {
   }, [session.status]);
 
   useEffect(() => {
+    setArrayGrid([...vaccinations, ...dewormings]);
+  }, [vaccinations, dewormings]);
+
+  useEffect(() => {
     switch (selected) {
       case "all":
         setArrayGrid([...vaccinations, ...dewormings]);
@@ -93,7 +97,7 @@ function Tomorrow() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-16 max-w-6xl lg:mx-auto mx-5">
             {arrayGrid.map((due, index) => {
               return due.type == "vaccine" ? (
-                <div className="relative h-full">
+                <div key={index} className="relative h-full">
                   <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 text-xs tracking-widest bg-white px-4">
                     {due.type == "vaccine"
                       ? "Vaccination"
@@ -108,7 +112,7 @@ function Tomorrow() {
                   />
                 </div>
               ) : (
-                <div className="relative">
+                <div key={index} className="relative">
                   <span className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 text-xs tracking-widest bg-white px-4">
                     {due.type == "vaccine"
                       ? "Vaccination"
