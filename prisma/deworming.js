@@ -253,6 +253,37 @@ export const getDueDewormingsToday = async () => {
   }
 };
 
+export const getOverDueDewormings = async () => {
+  let emails = [];
+  let today = new Date();
+  let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
+  try {
+    const dewormings = await prisma.deworming.findMany({
+      where: {
+        dueDate: {
+          lte: yesterday,
+        },
+        petId: {
+          not: null,
+        },
+        status: "DUE",
+      },
+    });
+
+    for (let i = 0; i < dewormings.length; i++) {
+      if (!emails.includes(dewormings[i].parentEmail)) {
+        emails.push(dewormings[i].parentEmail);
+      }
+    }
+
+    return emails;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 export const updateDewormingStatusById = async (id, status) => {
   try {
     const deworming = await prisma.deworming.update({
