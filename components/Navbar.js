@@ -191,9 +191,9 @@ function Navbar() {
           </Link>
         </div>
         <ul className="hidden md:flex items-center space-x-12 text-sm">
-          <li className="cursor-pointer" onClick={() => router.push("/")}>
-            Home
-          </li>
+          <Link href="/">
+            <li className="cursor-pointer">Home</li>
+          </Link>
           {/* <li
             className="cursor-pointer"
             onClick={() => router.push("/join-waitlist?ref=about-navbar")}
@@ -206,18 +206,17 @@ function Navbar() {
           >
             Services
           </li>
-          <li onClick={() => router.push("/pets")} className="cursor-pointer">
-            Pets
-          </li>
+          <Link href="/pets">
+            <li onClick={() => router.push("/pets")} className="cursor-pointer">
+              Pets
+            </li>
+          </Link>
           <Link href="/vaccination">
             <li className="cursor-pointer">Vaccination</li>
           </Link>
-          <li
-            onClick={() => router.push("/deworming")}
-            className="cursor-pointer"
-          >
-            Deworming
-          </li>
+          <Link href="/deworming">
+            <li className="cursor-pointer">Deworming</li>
+          </Link>
           <li>
             <Dropdown>
               <DropdownTrigger>
@@ -230,16 +229,15 @@ function Navbar() {
                 onAction={(key) => {
                   switch (key) {
                     case "dtm":
-                      router.push("/due/tomorrow");
                       break;
                     case "ps":
-                      router.push("/prescription");
+                      router.replace("/prescription");
                       break;
                     case "dt":
-                      router.push("/due/today");
+                      router.replace("/due/today");
                       break;
                     case "pa":
-                      router.push("/pathology");
+                      router.replace("/pathology");
                       break;
                     default:
                       break;
