@@ -20,7 +20,7 @@ function Today() {
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
-      router.push("/signin?next=/vaccination");
+      router.push("/signin?next=/due/today");
       return;
     } else if (session.status == "loading") {
       return;

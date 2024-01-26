@@ -75,7 +75,7 @@ function DewormingRepository() {
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
-      router.push("/signin?next=/vaccination");
+      router.push("/signin?next=/deworming");
       return;
     } else if (session.status == "loading") {
       return;

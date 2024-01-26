@@ -40,7 +40,7 @@ function Pets() {
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
-      router.push("/signin?next=/vaccination");
+      router.push("/signin?next=/pets");
       return;
     } else if (session.status == "loading") {
       return;

@@ -45,7 +45,7 @@ function Pathology() {
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
-      router.push("/signin?next=/vaccination");
+      router.push("/signin?next=/pathology");
       return;
     } else if (session.status == "loading") {
       return;

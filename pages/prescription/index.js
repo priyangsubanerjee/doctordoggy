@@ -48,7 +48,7 @@ function Prescriptions() {
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
-      router.push("/signin?next=/vaccination");
+      router.push("/signin?next=/prescription");
       return;
     } else if (session.status == "loading") {
       return;
