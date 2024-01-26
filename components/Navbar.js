@@ -11,10 +11,10 @@ import {
   DropdownSection,
   DropdownItem,
 } from "@nextui-org/react";
-import { Link } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import { set } from "lodash";
+import Link from "next/link";
 
 function Navbar() {
   var s = useRef(null);
@@ -209,12 +209,9 @@ function Navbar() {
           <li onClick={() => router.push("/pets")} className="cursor-pointer">
             Pets
           </li>
-          <li
-            onClick={() => router.push("/vaccination")}
-            className="cursor-pointer"
-          >
-            Vaccination
-          </li>
+          <Link href="/vaccination">
+            <li className="cursor-pointer">Vaccination</li>
+          </Link>
           <li
             onClick={() => router.push("/deworming")}
             className="cursor-pointer"
