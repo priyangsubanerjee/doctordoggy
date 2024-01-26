@@ -54,12 +54,7 @@ function VaccinationHistory({}) {
 
   useEffect(() => {
     if (session.status == "loading" || session.status == "unauthenticated")
-      return {
-        redirect: {
-          destination: "/signin?next=/vaccination",
-          permanent: false,
-        },
-      };
+      return router.push("/signin?next=/vaccination");
     FetchVaccinations(session.data.user.email).then((data) => {
       if (data == null) {
         toast.error("Something went wrong");
