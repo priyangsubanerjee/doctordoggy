@@ -118,10 +118,11 @@ function Navbar() {
             </DropdownTrigger>
 
             <DropdownMenu
-              onAction={(key) => {
+              onAction={async (key) => {
                 switch (key) {
                   case "logout":
-                    signOut();
+                    await signOut();
+                    location.reload();
                     break;
                   case "account":
                     window.location.href = "/account";

@@ -47,20 +47,6 @@ export const authOptions = {
         },
       };
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      let userDB = await get_user(token.email);
-      if (!userDB) {
-        let createdUser = await create_user(
-          session.user.name,
-          session.user.email
-        );
-        userDB = createdUser;
-      }
-      return {
-        ...token,
-        onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
-      };
-    },
   },
   secret: process.env.NEXT_AUTH_SECRET,
 };
