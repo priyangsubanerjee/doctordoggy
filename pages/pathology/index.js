@@ -19,24 +19,24 @@ import PathologyCard from "@/components/Cards/PathologyCard";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin?next=/pathology",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/signin?next=/pathology",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      auth: true,
-    },
-  };
-}
+//   return {
+//     props: {
+//       auth: true,
+//     },
+//   };
+// }
 
 function Pathology() {
   const session = useSession();
@@ -44,7 +44,12 @@ function Pathology() {
   const [pathologyReports, setPathologyReports] = React.useState([]);
 
   useEffect(() => {
-    if (session.status == "authenticated") {
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
+      return;
+    } else if (session.status == "loading") {
+      return;
+    } else if (session.status == "authenticated") {
       (async () => {
         let pathologyRequest = await axios.post(
           "/api/pathology/get",

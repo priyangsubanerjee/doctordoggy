@@ -13,24 +13,24 @@ import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin?next=/pets",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/signin?next=/pets",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      auth: true,
-    },
-  };
-}
+//   return {
+//     props: {
+//       auth: true,
+//     },
+//   };
+// }
 
 function Pets() {
   const session = useSession();
@@ -39,29 +39,33 @@ function Pets() {
   const [pageLoaded, setPageLoaded] = React.useState(false);
 
   useEffect(() => {
-    if (session.status == "loading" || session.status == "unauthenticated")
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
       return;
-
-    (async () => {
-      let petsRequest = await axios.post(
-        "/api/pet/get_rf",
-        {
-          email: session?.data?.user?.email,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    } else if (session.status == "loading") {
+      return;
+    } else if (session.status == "authenticated") {
+      (async () => {
+        let petsRequest = await axios.post(
+          "/api/pet/get_rf",
+          {
+            email: session?.data?.user?.email,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      if (petsRequest.data.success) {
-        setPets(petsRequest.data.pets);
-        setPageLoaded(true);
-      } else {
-        toast.error(petsRequest.data.message);
-      }
-    })();
+        if (petsRequest.data.success) {
+          setPets(petsRequest.data.pets);
+          setPageLoaded(true);
+        } else {
+          toast.error(petsRequest.data.message);
+        }
+      })();
+    }
   }, [session.status]);
 
   const PetCard = ({ name, age, image, id }) => {

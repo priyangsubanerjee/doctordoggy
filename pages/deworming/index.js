@@ -74,9 +74,14 @@ function DewormingRepository() {
   };
 
   useEffect(() => {
-    if (session.status === "unauthenticated" || session.status == "loading")
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
       return;
-    FDBES();
+    } else if (session.status == "loading") {
+      return;
+    } else if (session.status == "authenticated") {
+      FDBES();
+    }
   }, [session.status]);
 
   useEffect(() => {

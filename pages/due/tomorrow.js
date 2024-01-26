@@ -19,7 +19,12 @@ function Tomorrow() {
   const [arrayGrid, setArrayGrid] = React.useState([]);
 
   useEffect(() => {
-    if (session.status == "authenticated") {
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
+      return;
+    } else if (session.status == "loading") {
+      return;
+    } else if (session.status == "authenticated") {
       (async () => {
         let dueRquest = await axios.post(
           "/api/due/tomorrow",

@@ -22,24 +22,24 @@ import PrescriptionCard from "@/components/Cards/PrescriptionCard";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin?next=/prescription",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/signin?next=/prescription",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      auth: true,
-    },
-  };
-}
+//   return {
+//     props: {
+//       auth: true,
+//     },
+//   };
+// }
 
 function Prescriptions() {
   const router = useRouter();
@@ -47,11 +47,16 @@ function Prescriptions() {
   const [prescriptions, setPrescriptions] = React.useState(null);
 
   useEffect(() => {
-    if (session.status == "loading" || session.status == "unauthenticated")
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
       return;
-    FetchPrescriptions(session?.data?.user?.email).then((data) => {
-      setPrescriptions(data);
-    });
+    } else if (session.status == "loading") {
+      return;
+    } else if (session.status == "authenticated") {
+      FetchPrescriptions(session?.data?.user?.email).then((data) => {
+        setPrescriptions(data);
+      });
+    }
   }, [session.status]);
 
   return (

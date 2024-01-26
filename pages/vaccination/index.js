@@ -26,24 +26,24 @@ import VaccineCard from "@/components/Cards/VaccineCard";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
-export async function getServerSideProps(context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
+// export async function getServerSideProps(context) {
+//   const session = await getServerSession(context.req, context.res, authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/signin?next=/vaccination",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/signin?next=/vaccination",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      auth: true,
-    },
-  };
-}
+//   return {
+//     props: {
+//       auth: true,
+//     },
+//   };
+// }
 
 function VaccinationHistory({}) {
   const router = useRouter();
@@ -58,15 +58,16 @@ function VaccinationHistory({}) {
       return;
     } else if (session.status == "loading") {
       return;
+    } else if (session.status == "authenticated") {
+      FetchVaccinations(session.data.user.email).then((data) => {
+        if (data == null) {
+          toast.error("Something went wrong");
+          return;
+        }
+        setVaccinations(data);
+        setMappedVaccinations(data);
+      });
     }
-    FetchVaccinations(session.data.user.email).then((data) => {
-      if (data == null) {
-        toast.error("Something went wrong");
-        return;
-      }
-      setVaccinations(data);
-      setMappedVaccinations(data);
-    });
   }, [session.status]);
 
   useEffect(() => {
