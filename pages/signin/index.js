@@ -16,7 +16,7 @@ function SignIn() {
         <Button
           onClick={() => {
             let next = new URL(window.location.href).searchParams.get("next");
-            let callbackUrl = `${window.location.origin}${next}`;
+            let callbackUrl = `${window.location.origin}${next ? next : "/"}`;
             signIn("google", {
               callbackUrl,
             });
