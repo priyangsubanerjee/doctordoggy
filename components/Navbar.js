@@ -11,10 +11,10 @@ import {
   DropdownSection,
   DropdownItem,
 } from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import { set } from "lodash";
-import Link from "next/link";
 
 function Navbar() {
   var s = useRef(null);
@@ -121,9 +121,7 @@ function Navbar() {
               onAction={(key) => {
                 switch (key) {
                   case "logout":
-                    signOut({
-                      callbackUrl: "/signin",
-                    });
+                    signOut();
                     break;
                   case "account":
                     window.location.href = "/account";
@@ -193,9 +191,9 @@ function Navbar() {
           </Link>
         </div>
         <ul className="hidden md:flex items-center space-x-12 text-sm">
-          <Link href="/">
-            <li className="cursor-pointer">Home</li>
-          </Link>
+          <li className="cursor-pointer" onClick={() => router.push("/")}>
+            Home
+          </li>
           {/* <li
             className="cursor-pointer"
             onClick={() => router.push("/join-waitlist?ref=about-navbar")}
@@ -208,17 +206,21 @@ function Navbar() {
           >
             Services
           </li>
-          <Link href="/pets">
-            <li onClick={() => router.push("/pets")} className="cursor-pointer">
-              Pets
-            </li>
-          </Link>
-          <Link href="/vaccination">
-            <li className="cursor-pointer">Vaccination</li>
-          </Link>
-          <Link href="/deworming">
-            <li className="cursor-pointer">Deworming</li>
-          </Link>
+          <li onClick={() => router.push("/pets")} className="cursor-pointer">
+            Pets
+          </li>
+          <li
+            onClick={() => router.push("/vaccination")}
+            className="cursor-pointer"
+          >
+            Vaccination
+          </li>
+          <li
+            onClick={() => router.push("/deworming")}
+            className="cursor-pointer"
+          >
+            Deworming
+          </li>
           <li>
             <Dropdown>
               <DropdownTrigger>
@@ -231,6 +233,7 @@ function Navbar() {
                 onAction={(key) => {
                   switch (key) {
                     case "dtm":
+                      router.push("/due/tomorrow");
                       break;
                     case "ps":
                       router.push("/prescription");

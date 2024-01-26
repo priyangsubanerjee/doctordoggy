@@ -19,9 +19,7 @@ export async function middleware(req) {
     if (session) {
       return NextResponse.next();
     } else {
-      return NextResponse.redirect(
-        new URL(`/signin?next=${req.nextUrl.pathname}`, req.url)
-      );
+      return NextResponse.redirect(new URL(`/signin`, req.url));
     }
   }
 }
