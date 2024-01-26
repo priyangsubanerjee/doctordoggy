@@ -53,7 +53,7 @@ function VaccinationHistory({}) {
   const [vaccinations, setVaccinations] = React.useState(null);
 
   useEffect(() => {
-    if (session.status == "loading" || session.status == "unauthenticated")
+    if (session.status == "unauthenticated")
       return router.push("/signin?next=/vaccination");
     FetchVaccinations(session.data.user.email).then((data) => {
       if (data == null) {
