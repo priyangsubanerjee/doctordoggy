@@ -2,8 +2,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import {
@@ -25,21 +23,27 @@ import { FetchVaccinations } from "@/hooks/fetch";
 import ScheduleFirstVaccination from "@/components/FirstAction/ScheduleFirstVaccination";
 import toast from "react-hot-toast";
 import VaccineCard from "@/components/Cards/VaccineCard";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 
-// export async function getServerSideProps(context) {
-//   const session = await getServerSession(context.req, context.res, authOptions);
-//   let vaccinations = [];
-//   if (session) {
-//     vaccinations = await getVaccinesByEmail(session?.user?.email);
-//     vaccinations = JSON.parse(JSON.stringify(vaccinations));
-//   }
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
 
-//   return {
-//     props: {
-//       vaccinations,
-//     },
-//   };
-// }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin?next=/vaccination",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      auth: true,
+    },
+  };
+}
 
 function VaccinationHistory({}) {
   const router = useRouter();

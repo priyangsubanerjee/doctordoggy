@@ -4,8 +4,6 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
 import { getPrescriptionsByEmail } from "@/prisma/prescription";
 import {
   Dropdown,
@@ -21,6 +19,27 @@ import { FetchPrescriptions } from "@/hooks/fetch";
 import { useRouter } from "next/router";
 import UploadFirstPrescription from "@/components/FirstAction/UploadFirstPrescription";
 import PrescriptionCard from "@/components/Cards/PrescriptionCard";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin?next=/prescription",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      auth: true,
+    },
+  };
+}
 
 function Prescriptions() {
   const router = useRouter();

@@ -231,13 +231,13 @@ function Navbar() {
                     case "dtm":
                       break;
                     case "ps":
-                      router.replace("/prescription");
+                      router.push("/prescription");
                       break;
                     case "dt":
-                      router.replace("/due/today");
+                      router.push("/due/today");
                       break;
                     case "pa":
-                      router.replace("/pathology");
+                      router.push("/pathology");
                       break;
                     default:
                       break;

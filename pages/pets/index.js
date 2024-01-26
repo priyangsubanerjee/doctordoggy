@@ -10,6 +10,27 @@ import { useSession } from "next-auth/react";
 import { Button, Spinner } from "@nextui-org/react";
 import axios from "axios";
 import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin?next=/pets",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      auth: true,
+    },
+  };
+}
 
 function Pets() {
   const session = useSession();

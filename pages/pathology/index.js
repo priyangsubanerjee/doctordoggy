@@ -2,8 +2,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import { Icon } from "@iconify/react";
 import React, { useEffect } from "react";
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
 import {
   Dropdown,
   DropdownItem,
@@ -18,21 +16,27 @@ import axios from "axios";
 import UploadFirstPathology from "@/components/FirstAction/UploadFirstPathology";
 import PathologyCard from "@/components/Cards/PathologyCard";
 
-// export async function getServerSideProps(context) {
-//   const session = await getServerSession(context.req, context.res, authOptions);
-//   let pathologyReports = [];
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 
-//   if (session) {
-//     pathologyReports = await getPathologyReportsByEmail(session?.user?.email);
-//     pathologyReports = JSON.parse(JSON.stringify(pathologyReports));
-//   }
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
 
-//   return {
-//     props: {
-//       pathologyReports,
-//     },
-//   };
-// }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin?next=/pathology",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      auth: true,
+    },
+  };
+}
 
 function Pathology() {
   const session = useSession();

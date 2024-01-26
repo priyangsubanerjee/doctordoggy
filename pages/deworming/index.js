@@ -2,8 +2,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
-import { authOptions } from "pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import {
@@ -25,6 +23,27 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ScheduleFirstDeworming from "@/components/FirstAction/ScheduleFirstDeworming";
 import DewormingCard from "@/components/Cards/DewormingCard";
+import { authOptions } from "pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
+
+export async function getServerSideProps(context) {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/signin?next=/deworming",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      auth: true,
+    },
+  };
+}
 
 function DewormingRepository() {
   const router = useRouter();
