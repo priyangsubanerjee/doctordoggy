@@ -53,8 +53,12 @@ function VaccinationHistory({}) {
   const [vaccinations, setVaccinations] = React.useState(null);
 
   useEffect(() => {
-    if (session.status == "loading" || session.status == "unauthenticated")
+    if (session.status == "unauthenticated") {
+      router.push("/signin?next=/vaccination");
       return;
+    } else if (session.status == "loading") {
+      return;
+    }
     FetchVaccinations(session.data.user.email).then((data) => {
       if (data == null) {
         toast.error("Something went wrong");
