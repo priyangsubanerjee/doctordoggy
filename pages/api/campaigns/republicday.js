@@ -12,11 +12,11 @@ export default async function handler(req, res) {
     "We wish you a very happy republic day. We are proud to be an Indian.";
   const fcms = await getFCMTokens();
   let emails = await GetAllUsers();
-  await sendBulkNotification(fcms, title, body);
+  //await sendBulkNotification(fcms, title, body);
   await sendBulkMail(
     process.env.ZOHO_MAIL,
     process.env.ZOHO_PASS,
-    emails,
+    ["devpriyangsu@gmail.com"],
     "Happy Republic Day 🇮🇳",
     Republicday()
   );
