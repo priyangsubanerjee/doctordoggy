@@ -14,7 +14,13 @@ function SignIn() {
       </p>
       <div className="flex flex-col lg:flex-row items-center justify-center mt-10 gap-3">
         <Button
-          onClick={() => signIn("google")}
+          onClick={() => {
+            let next = new URL(window.location.href).searchParams.get("next");
+            let callbackUrl = `${window.location.origin}${next}`;
+            signIn("google", {
+              callbackUrl,
+            });
+          }}
           className="border bg-transparent flex items-center justify-center space-x-3 h-16 outline-none"
         >
           <Icon height={28} icon="devicon:google" />
