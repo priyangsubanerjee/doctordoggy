@@ -121,7 +121,9 @@ function Navbar() {
               onAction={(key) => {
                 switch (key) {
                   case "logout":
-                    signOut();
+                    signOut({
+                      callbackUrl: "/signin",
+                    });
                     break;
                   case "account":
                     window.location.href = "/account";
