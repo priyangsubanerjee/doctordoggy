@@ -99,7 +99,7 @@ export const GeneralMessage = (title, text) => {
       </div>
       <section>
         <img
-          src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1705236418/doctor-doggy/Footer_jfwdjx.png"
+          src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1706277253/emails/Footer_e4skrr.png"
           alt=""
         />
         <footer>

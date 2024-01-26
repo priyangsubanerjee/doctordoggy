@@ -89,7 +89,7 @@ export const Republicday = () => {
         />
         <a href="https://doctordoggy.vet">
           <img
-            src="https://res.cloudinary.com/db9kd4qbi/image/upload/v1705236418/doctor-doggy/Footer_jfwdjx.png"
+            src="https://res.cloudinary.com/ddn3h4a2b/image/upload/v1706277253/emails/Footer_e4skrr.png"
             alt=""
           />
         </a>
@@ -109,7 +109,7 @@ export const Republicday = () => {
                 class="icon"
               />
             </a>
-            <a class="icon-wrapper" href="">
+            <a class="icon-wrapper" href="https://www.instagram.com/doctordoggy.vet/">
               <img
                 src="https://ci3.googleusercontent.com/meips/ADKq_NamTTG-lnfPcr9SkGBvN2woDgDpPZBk7m5o8FvLiPK5aIs5e6KBQ65G_Kj9rVrzurwwHHqaI-7rpXBTd41pzgZn-fPa_MRNS57IlLY7a-B6aNSai2NO0JIu3C3RiHI2StwSwhXfpxsCar6tA-WqgZaAshSA8W5DNKf26erPVwnXbSdqNtWQysM5lTg=s0-d-e1-ft#https://eu1-dashboard-beepluginuploads3bucket-174u3y07szypz.s3.amazonaws.com/images/R95-W5Z-Z45Z/Instagram_icon_1.png"
                 alt=""
