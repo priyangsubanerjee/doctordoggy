@@ -13,8 +13,6 @@ import toast from "react-hot-toast";
 import { searchMenu } from "@/static/searchMenu";
 import { has } from "lodash";
 
-// TODO: Make the search bar functional
-// TODO: Migrate all the static data to static.js file
 // TODO: Migrate all the images to Cloudinary
 
 function HeroSection() {
@@ -82,8 +80,11 @@ function HeroSection() {
         } else {
           setIsPermissionLayoutVisible(true);
         }
+      } else {
+        setIsPermissionLayoutVisible(false);
       }
     } else {
+      setIsPermissionLayoutVisible(false);
     }
   };
 
