@@ -3,12 +3,17 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
 export const sendSMS = async (number, message) => {
-  await client.messages.create({
-    body: message,
-    from: process.env.TWILIO_NUMBER,
-    to: number,
-  });
-  return true;
+  try {
+    await client.messages.create({
+      body: message,
+      from: process.env.TWILIO_NUMBER,
+      to: number,
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };
 // client.messages
 //   .create({

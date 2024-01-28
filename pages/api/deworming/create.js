@@ -14,10 +14,12 @@ export default async function handler(req, res) {
     day: "numeric",
   });
   if (success) {
-    await sendSMS(
-      `+91${deworming.parentPhone}`,
-      `Deworming scheduled 📆\n\nDear pet parent, ${deworming.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet/deworming`
-    );
+    try {
+      await sendSMS(
+        `+91${deworming.parentPhone}`,
+        `Deworming scheduled 📆\n\nDear pet parent, ${deworming.name} is due for vaccination on ${date} (Indian Standard Time). Please check the app for more details. \n\n- DoctorDoggy\nhttps://doctordoggy.vet/deworming`
+      );
+    } catch (error) {}
     await sendMail(
       process.env.ZOHO_MAIL,
       process.env.ZOHO_PASS,
