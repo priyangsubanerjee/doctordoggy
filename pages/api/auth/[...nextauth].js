@@ -19,8 +19,6 @@ export const authOptions = {
     async session({ session, user, token }) {
       if (!session) return;
 
-      // TODO: Add database logic here to check if the user's account is already created
-
       let isPhoneEmpty = false;
       let isZipEmpty = false;
 
@@ -45,20 +43,6 @@ export const authOptions = {
           zipCode: userDB.zipCode,
           address: userDB.address,
         },
-      };
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      let userDB = await get_user(token.email);
-      if (!userDB) {
-        let createdUser = await create_user(
-          session.user.name,
-          session.user.email
-        );
-        userDB = createdUser;
-      }
-      return {
-        ...token,
-        onBoardingSuccess: !userDB.phone || !userDB.zipCode ? false : true,
       };
     },
   },
