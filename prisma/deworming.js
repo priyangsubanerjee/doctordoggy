@@ -267,6 +267,9 @@ export const getOverDueDewormings = async () => {
         petId: {
           not: null,
         },
+        parentEmail: {
+          not: null,
+        },
         status: "DUE",
       },
     });

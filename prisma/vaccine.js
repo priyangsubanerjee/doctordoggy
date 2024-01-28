@@ -301,6 +301,9 @@ export const getOverDueVaccines = async () => {
       petId: {
         not: null,
       },
+      parentEmail: {
+        not: null,
+      },
     },
   });
 
