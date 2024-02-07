@@ -31,7 +31,7 @@ import PathologyCard from "@/components/Cards/PathologyCard";
 function Profile() {
   const session = useSession();
   const [pageLoaded, setPageLoaded] = React.useState(false);
-  const [shareMenuOpen, setShareMenuOpen] = React.useState(true);
+  const [shareMenuOpen, setShareMenuOpen] = React.useState(false);
   const [pet, setPet] = React.useState({
     name: "",
   });
