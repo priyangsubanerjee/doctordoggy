@@ -78,6 +78,7 @@ model User {
   dewormings    Deworming[]
   pathologies   Pathology[]
   tokens        Token[]
+  sharedPets    String[]
 }
 
 model Pet {
@@ -99,6 +100,7 @@ model Pet {
   prescriptions Prescription[]
   dewormings    Deworming[]
   pathologies   Pathology[]
+  sharedWith    String[]
 }
 
 model Vaccination {

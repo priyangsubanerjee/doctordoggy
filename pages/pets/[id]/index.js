@@ -8,6 +8,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Input,
   Skeleton,
   Spinner,
   Switch,
@@ -30,7 +31,7 @@ import PathologyCard from "@/components/Cards/PathologyCard";
 function Profile() {
   const session = useSession();
   const [pageLoaded, setPageLoaded] = React.useState(false);
-  const [shareMenuOpen, setShareMenuOpen] = React.useState(false);
+  const [shareMenuOpen, setShareMenuOpen] = React.useState(true);
   const [pet, setPet] = React.useState({
     name: "",
   });
@@ -47,6 +48,7 @@ function Profile() {
   const [selectedTab, setSelectedTab] = React.useState("General");
   const [tabChooserOpen, setTabChooserOpen] = React.useState(false);
   const [confirmDelete, setconfirmDelete] = React.useState(false);
+  const [newShareEmail, setNewShareEmail] = React.useState("");
 
   const [tabOptions, setTabOptions] = React.useState([
     "General",
@@ -203,38 +205,6 @@ function Profile() {
     );
     toast.remove();
     toast.success("Profile visibility updated");
-  };
-
-  const handleConfirmDeletePet = async () => {
-    setLoading(true);
-    toast.loading("Deleting pet...");
-    try {
-      let deleteRequest = await axios.post(
-        "/api/pet/delete",
-        {
-          id: router.query.id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      toast.remove();
-      if (deleteRequest.data.success) {
-        toast.success(deleteRequest.data.message);
-        router.push("/pets");
-      } else {
-        toast.error(deleteRequest.data.message);
-        setLoading(false);
-        setconfirmDelete(false);
-      }
-    } catch (error) {
-      toast.remove();
-      toast.error(error.message);
-      setLoading(false);
-      setconfirmDelete(false);
-    }
   };
 
   const Capitalize = (str) => {
@@ -737,6 +707,64 @@ function Profile() {
     }
   };
 
+  const handleAddSubParent = async () => {
+    toast.loading("Adding sub parent...");
+    let addSubParentRequest = await axios.post(
+      "/api/pet/addSubParent",
+      {
+        email: newShareEmail,
+        petId: pet.id,
+        parentEmail: session.data.user.email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (addSubParentRequest.data.success) {
+      toast.dismiss();
+      toast.success(addSubParentRequest.data.message);
+      setNewShareEmail("");
+      setPet({
+        ...pet,
+        sharedWith: pet.sharedWith.concat(newShareEmail),
+      });
+    } else {
+      toast.dismiss();
+      toast.error(addSubParentRequest.data.message);
+    }
+  };
+
+  const handleRemoveSubParent = async (email) => {
+    toast.loading("Removing sub parent...");
+    let removeSubParentRequest = await axios.post(
+      "/api/pet/removeSubParent",
+      {
+        email: email,
+        petId: pet.id,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (removeSubParentRequest.data.success) {
+      toast.dismiss();
+      toast.success(removeSubParentRequest.data.message);
+      setPet({
+        ...pet,
+        sharedWith: pet.sharedWith.filter((e) => e != email),
+      });
+    } else {
+      toast.dismiss();
+      toast.error(removeSubParentRequest.data.message);
+    }
+  };
+
   return (
     <div>
       {pageLoaded ? (
@@ -872,6 +900,61 @@ function Profile() {
                               your pet including vaccinations, dewormings.
                             </p>
                           </div>
+
+                          {pet.parentEmail == session.data.user.email && (
+                            <div className="mt-10">
+                              <div className="flex items-center space-x-2">
+                                <Icon icon="ph:user-duotone" height="20" />
+                                <h3 className="text-sm font-medium">
+                                  Manage access
+                                </h3>
+                              </div>
+                              <div className="flex items-center relative w-full border rounded overflow-hidden mt-3">
+                                <input
+                                  type="text"
+                                  value={newShareEmail}
+                                  onChange={(e) =>
+                                    setNewShareEmail(e.target.value)
+                                  }
+                                  placeholder="abc@gmail.com"
+                                  className="px-4 py-3 text-sm w-full bg-transparent focus:outline-none"
+                                  name=""
+                                  id=""
+                                />
+                                <Button
+                                  radius="none"
+                                  isDisabled={newShareEmail.length == 0}
+                                  onPress={() => handleAddSubParent()}
+                                  className={`h-full py-[10px] mr-[2px] rounded ${
+                                    newShareEmail.length > 0
+                                      ? "bg-black text-white"
+                                      : "bg-neutral-100 text-neutral-500"
+                                  } `}
+                                >
+                                  Share
+                                </Button>
+                              </div>
+                              <div className="mt-5 px-2 space-y-2">
+                                {pet.sharedWith.map((email, index) => (
+                                  <div key={index} className="grid grid-cols-2">
+                                    <p className="text-xs text-neutral-500">
+                                      {email}
+                                    </p>
+                                    <div className="flex items-center justify-end">
+                                      <button
+                                        onClick={() =>
+                                          handleRemoveSubParent(email)
+                                        }
+                                        className="text-xs text-red-600 hover:bg-red-50 px-2 py-1 rounded"
+                                      >
+                                        Remove
+                                      </button>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

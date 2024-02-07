@@ -235,3 +235,151 @@ export const getBirthdaysToday = async () => {
     };
   }
 };
+
+export const addSubParent = async (email, petId) => {
+  let pet = await prisma.pet.findUnique({
+    where: {
+      id: petId,
+    },
+  });
+
+  let user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if (user == null) {
+    return {
+      success: false,
+      message: "User not found",
+    };
+  } else {
+    if (pet == null) {
+      return {
+        success: false,
+        message: "Pet not found",
+      };
+    } else {
+      if (pet.parentEmail == email) {
+        return {
+          success: false,
+          message: "User is already a parent",
+        };
+      } else {
+        if (pet.sharedWith.includes(email)) {
+          return {
+            success: false,
+            message: "User is already a parent",
+          };
+        } else {
+          let sharedWith = pet.sharedWith || [];
+          let sharedPets = user.sharedPets || [];
+          sharedPets.push(petId);
+          sharedWith.push(email);
+          try {
+            await prisma.pet.update({
+              where: {
+                id: petId,
+              },
+              data: {
+                sharedWith: sharedWith,
+              },
+            });
+            await prisma.user.update({
+              where: {
+                email: email,
+              },
+              data: {
+                sharedPets: sharedPets,
+              },
+            });
+            return {
+              success: true,
+              message: "Parent added successfully",
+            };
+          } catch (error) {
+            return {
+              success: false,
+              message: error.message,
+            };
+          }
+        }
+      }
+    }
+  }
+};
+
+export const removeSubParent = async (email, petId) => {
+  let pet = await prisma.pet.findUnique({
+    where: {
+      id: petId,
+    },
+  });
+
+  let user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+
+  if (user == null) {
+    return {
+      success: false,
+      message: "User not found",
+    };
+  } else {
+    if (pet == null) {
+      return {
+        success: false,
+        message: "Pet not found",
+      };
+    } else {
+      if (pet.parentEmail == email) {
+        return {
+          success: false,
+          message: "User is the main parent",
+        };
+      } else {
+        if (pet.sharedWith.includes(email)) {
+          let sharedWith = pet.sharedWith || [];
+          let sharedPets = user.sharedPets || [];
+          sharedPets = sharedPets.filter((id) => id !== petId);
+          sharedWith = sharedWith.filter((id) => id !== email);
+          try {
+            await prisma.pet.update({
+              where: {
+                id: petId,
+              },
+              data: {
+                sharedWith: sharedWith,
+              },
+            });
+            await prisma.user.update({
+              where: {
+                email: email,
+              },
+              data: {
+                sharedPets: sharedPets,
+              },
+            });
+            return {
+              success: true,
+              message: "Parent removed successfully",
+            };
+          } catch (error) {
+            return {
+              success: false,
+              message: error.message,
+            };
+          }
+        } else {
+          return {
+            success: false,
+            message: "User is not a parent",
+          };
+        }
+      }
+    }
+  }
+};
