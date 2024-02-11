@@ -348,26 +348,28 @@ function Profile() {
   const GeneralTab = ({}) => {
     return (
       <div className="max-w-3xl px-3 mx-auto pb-16 mt-10 lg:mt-7 ">
-        <div className="flex items-center justify-between mt-10 border rounded-md p-5">
-          <div>
-            <p className="text-neutral-800 text-base">Public profile?</p>
-            <Link
-              href="/pets/register"
-              className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
-            >
-              <span>Learn about public profiles</span>
-              <span className="translate-y-[1px]">
-                <Icon icon="formkit:right" />
-              </span>
-            </Link>
+        {isParent && (
+          <div className="flex items-center justify-between mt-10 border rounded-md p-5">
+            <div>
+              <p className="text-neutral-800 text-base">Public profile?</p>
+              <Link
+                href="/pets/register"
+                className="flex items-center text-blue-600 space-x-2 text-xs hover:underline mt-1"
+              >
+                <span>Learn about public profiles</span>
+                <span className="translate-y-[1px]">
+                  <Icon icon="formkit:right" />
+                </span>
+              </Link>
+            </div>
+            <Switch
+              isSelected={isPublic}
+              onValueChange={() => {
+                UPV();
+              }}
+            />
           </div>
-          <Switch
-            isSelected={isPublic}
-            onValueChange={() => {
-              UPV();
-            }}
-          />
-        </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-3 mt-6">
           <div className="border h-16 rounded-md relative flex items-center px-4">
             <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">

@@ -44,11 +44,39 @@ export const getPersonalPet = async (sessionEmail) => {
 
 export const getPersonalPet_rf = async (sessionEmail) => {
   try {
-    const pets = await prisma.pet.findMany({
+    let pets = await prisma.pet.findMany({
       where: {
         parentEmail: sessionEmail,
       },
     });
+
+    pets = pets.map((pet) => {
+      return {
+        ...pet,
+        shared: false,
+      };
+    });
+
+    let userAccount = await prisma.user.findUnique({
+      where: {
+        email: sessionEmail,
+      },
+    });
+
+    if (userAccount.sharedPets) {
+      for (let i = 0; i < userAccount.sharedPets.length; i++) {
+        let pet = await prisma.pet.findUnique({
+          where: {
+            id: userAccount.sharedPets[i],
+          },
+        });
+        pets.push({
+          ...pet,
+          shared: true,
+        });
+      }
+    }
+
     return {
       success: true,
       message: "Pets fetched successfully",

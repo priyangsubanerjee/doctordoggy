@@ -148,6 +148,22 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
     }
   };
 
+  const disabledKeys = () => {
+    if (deworming.parentEmail == session.data.user.email) {
+      if (deworming.status == "DUE") {
+        return ["certificate"];
+      } else {
+        return [];
+      }
+    } else {
+      if (deworming.status == "DUE") {
+        return ["delete", "done", "due"];
+      } else {
+        return ["delete", "certificate", "done", "due"];
+      }
+    }
+  };
+
   return (
     <div className="border rounded-md p-4">
       <div className="flex items-center">
@@ -177,7 +193,7 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
             </button>
           </DropdownTrigger>
           <DropdownMenu
-            disabledKeys={deworming.status == "DUE" ? ["certificate"] : []}
+            disabledKeys={disabledKeys()}
             onAction={(key) => {
               switch (key) {
                 case "delete":
