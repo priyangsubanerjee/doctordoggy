@@ -2,6 +2,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { addSubParent } from "@/prisma/pet";
 import { GeneralMessage } from "@/templates/General";
+import { sendMail } from "@/helper/sendMail";
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
