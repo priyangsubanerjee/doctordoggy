@@ -1,6 +1,7 @@
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 import { addSubParent } from "@/prisma/pet";
+import { GeneralMessage } from "@/templates/General";
 
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
@@ -12,6 +13,18 @@ export default async function handler(req, res) {
     req.body.email,
     req.body.petId
   );
+  if (success) {
+    await sendMail(
+      process.env.ZOHO_MAIL,
+      process.env.ZOHO_PASS,
+      req.body.email,
+      "Pet added to your account 🐾",
+      GeneralMessage(
+        `Pet added`,
+        `Dear pet parent, A pet has been added to your account. Please check the app for more details.`
+      )
+    );
+  }
   res.status(200).json({
     success: success,
     message: message,
