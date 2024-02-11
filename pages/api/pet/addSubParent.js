@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       req.body.email,
       "Pet added to your account 🐾",
       GeneralMessage(
-        `Pet added`,
+        `Shared pet added to your account`,
         `Dear pet parent, A pet has been added to your account. Please check the app for more details.`
       )
     );
