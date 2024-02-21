@@ -215,7 +215,7 @@ function Account() {
 
       <div className="mt-20">
         <h1 className="text-xl lg:text-2xl mb-2 font-medium">Account pin</h1>
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-neutral-500 leading-6">
           Your account pin is a unique identifier for your account & pets
         </p>
 
@@ -226,7 +226,7 @@ function Account() {
                 navigator.clipboard.writeText(session?.data?.user?.accountPin);
                 toast.success("Copied to clipboard");
               }}
-              className="w-fit cursor-text px-6 py-3 tracking-widest bg-sky-50 border border-dashed border-sky-200"
+              className="w-fit cursor-text px-6 py-3 tracking-widest bg-slate-50 border border-dashed border-slate-300"
             >
               {session?.data?.user?.accountPin}
             </div>
