@@ -43,7 +43,32 @@ function Onboarding() {
     });
   };
 
+  const generateRandomPin = async () => {
+    let alphabets =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345689";
+    let alphanumneric6Pin = "";
+    for (let i = 0; i < 6; i++) {
+      alphanumneric6Pin += alphabets.charAt(
+        Math.floor(Math.random() * alphabets.length)
+      );
+    }
+
+    let checkPresent = await axios.post("/api/user/duplicatePin", {
+      pin: alphanumneric6Pin.toUpperCase(),
+    });
+
+    if (checkPresent.data.success) {
+      return alphanumneric6Pin.toUpperCase();
+    } else {
+      generateRandomPin();
+    }
+  };
+
   const handleSubmit = async () => {
+    let accountPin =
+      session.data.user.accountPin == null
+        ? await generateRandomPin()
+        : session.data.user.accountPin;
     try {
       setIsLoading(true);
       await axios.post(
@@ -53,6 +78,7 @@ function Onboarding() {
           phone,
           zipcode,
           address,
+          accountPin,
         },
         {
           headers: {

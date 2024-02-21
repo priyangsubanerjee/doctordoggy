@@ -5,12 +5,13 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "POST":
-      const { email, phone, zipcode, address } = req.body;
+      const { email, phone, zipcode, address, accountPin } = req.body;
       const response = await update_user_phone_zip(
         email,
         phone,
         zipcode,
-        address
+        address,
+        accountPin
       );
 
       return res.json(response);

@@ -19,9 +19,6 @@ export const authOptions = {
     async session({ session, user, token }) {
       if (!session) return;
 
-      let isPhoneEmpty = false;
-      let isZipEmpty = false;
-
       let userDB = await get_user(session.user.email);
       if (!userDB) {
         let createdUser = await create_user(
@@ -42,6 +39,7 @@ export const authOptions = {
           phone: userDB.phone,
           zipCode: userDB.zipCode,
           address: userDB.address,
+          accountPin: userDB.accountPin,
         },
       };
     },

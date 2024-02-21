@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function Account() {
   const session = useSession();
@@ -209,6 +210,27 @@ function Account() {
             Why cant I edit my name and email?
           </button>
           <Statemanager />
+        </div>
+      </div>
+
+      <div className="mt-20">
+        <h1 className="text-xl lg:text-2xl mb-2 font-medium">Account pin</h1>
+        <p className="text-sm text-neutral-500">
+          Your account pin is a unique identifier for your account & pets
+        </p>
+
+        <div className="mt-8">
+          {session.data.user.accountPin && (
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(session.data.user.accountPin);
+                toast.success("Copied to clipboard");
+              }}
+              className="w-fit cursor-text px-6 py-3 tracking-widest bg-sky-50 border border-dashed border-sky-200"
+            >
+              {session.data.user.accountPin}
+            </div>
+          )}
         </div>
       </div>
 

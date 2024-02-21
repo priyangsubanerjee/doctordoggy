@@ -35,6 +35,7 @@ model User {
   sharedPets    String[]
   bookings      Booking[]
   appointments  Appointments[]
+  accountPin    String?
 }
 
 model Pet {
