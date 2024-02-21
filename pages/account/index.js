@@ -220,15 +220,15 @@ function Account() {
         </p>
 
         <div className="mt-8">
-          {session.data.user.accountPin && (
+          {session?.data?.user?.accountPin && (
             <div
               onClick={() => {
-                navigator.clipboard.writeText(session.data.user.accountPin);
+                navigator.clipboard.writeText(session?.data?.user?.accountPin);
                 toast.success("Copied to clipboard");
               }}
               className="w-fit cursor-text px-6 py-3 tracking-widest bg-sky-50 border border-dashed border-sky-200"
             >
-              {session.data.user.accountPin}
+              {session?.data?.user?.accountPin}
             </div>
           )}
         </div>
