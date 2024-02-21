@@ -238,7 +238,7 @@ function Account() {
 
       <div>
         <h1 className="text-2xl lg:text-3xl font-medium">Feedback</h1>
-        <p className="mt-3 text-neutral-600 text-xs lg:text-sm">
+        <p className="mt-3 text-neutral-600 text-sm leading-7">
           Help us get better. Together we can make the world a better place for
           our pets.
         </p>
