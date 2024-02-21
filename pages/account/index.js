@@ -227,7 +227,7 @@ function Account() {
           Your account pin is a unique identifier for your account & pets
         </p>
 
-        <div className="mt-8">
+        <div className="mt-8 flex items-center">
           {session?.data?.user?.accountPin && (
             <div
               onClick={() => {
@@ -239,6 +239,13 @@ function Account() {
               {session?.data?.user?.accountPin}
             </div>
           )}
+
+          <Button
+            onClick={() => toast.error("This feature is not ready")}
+            className="rounded-none bg-neutral-800 h-12 text-white ml-4"
+          >
+            <a>Generate new pin</a>
+          </Button>
         </div>
       </div>
 
