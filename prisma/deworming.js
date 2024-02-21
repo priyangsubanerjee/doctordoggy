@@ -257,6 +257,7 @@ export const getOverDueDewormings = async () => {
   let emails = [];
   let today = new Date();
   let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  yesterday.setHours(0, 0, 0, 0);
 
   try {
     const dewormings = await prisma.deworming.findMany({

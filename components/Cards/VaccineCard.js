@@ -112,6 +112,9 @@ function VaccineCard({ vaccine, vaccinations, setVaccinations }) {
     let due = new Date(dueDate);
     let today = new Date();
 
+    today.setHours(0, 0, 0, 0);
+    due.setHours(0, 0, 0, 0);
+
     if (status == "DONE") {
       return "DONE";
     } else if (due < today) {

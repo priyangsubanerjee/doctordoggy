@@ -104,6 +104,8 @@ function DewormingCard({ deworming, dewormings, setDewormings }) {
   const decideStatus = (dueDate, status) => {
     let due = new Date(dueDate);
     let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    due.setHours(0, 0, 0, 0);
 
     if (status == "DONE") {
       return "DONE";

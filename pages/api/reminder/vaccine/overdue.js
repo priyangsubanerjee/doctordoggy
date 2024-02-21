@@ -9,12 +9,13 @@ import {
 import { VaccinationDue, VaccinationOverDue } from "@/templates/Reminer";
 
 export default async function handler(req, res) {
+  console.log("Vaccine reminder");
   let tokens = [];
   let messageTitle = "Vaccinations overdue";
   let messageBody =
     "You have overdue vaccinations for your pets. Please check the app for more details.";
   const emails = await getOverDueVaccines();
-
+  console.log(emails);
   if (emails.length > 0) {
     await sendBulkMail(
       process.env.ZOHO_MAIL,
