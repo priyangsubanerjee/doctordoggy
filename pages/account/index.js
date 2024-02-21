@@ -109,23 +109,31 @@ function Account() {
 
   const handleSave = async () => {
     try {
-      setIsLoading(true);
-      await axios.post(
-        "/api/user/update",
-        {
-          email: session?.data?.user?.email,
-          phone: accountProp.phone,
-          zipcode: accountProp.zipcode,
-          address: accountProp.address,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+      if (accountProp.phone.length < 10) {
+        toast.error("Phone number must be 10 digits");
+        return;
+      } else if (accountProp.zipcode.length == 0) {
+        toast.error("Zipcode is required");
+        return;
+      } else {
+        setIsLoading(true);
+        await axios.post(
+          "/api/user/update",
+          {
+            email: session?.data?.user?.email,
+            phone: accountProp.phone,
+            zipcode: accountProp.zipcode,
+            address: accountProp.address,
           },
-        }
-      );
-      setIsLoading(false);
-      setState("view");
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setIsLoading(false);
+        setState("view");
+      }
     } catch (error) {
       console.log(error);
       setIsLoading(false);
