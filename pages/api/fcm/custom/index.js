@@ -5,9 +5,8 @@ import { getFCMTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
   //parse params from request url
-  const { to, title, body } = req.query;
-  console.log(to, title, body);
-  const fcms = await getFCMTokens(to);
+  const { to = "", title = "", body = "" } = req.query;
+  const fcms = await getFCMTokens(to == "all" ? "" : to);
   if (!fcms) return res.status(200).json({ message: "No token found" });
   if (fcms.length == 0)
     return res.status(200).json({ message: "No token found" });
