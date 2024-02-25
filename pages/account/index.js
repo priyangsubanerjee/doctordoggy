@@ -222,7 +222,15 @@ function Account() {
       </div>
 
       <div className="mt-20">
-        <h1 className="text-xl lg:text-2xl mb-2 font-medium">Account pin</h1>
+        <div className="flex items-center">
+          <h1 className="text-xl lg:text-2xl mb-2 font-medium">Account pin</h1>
+          <Icon
+            icon="uis:lock"
+            width="28"
+            height="28"
+            className="-translate-y-1 ml-3"
+          />
+        </div>
         <p className="text-sm text-neutral-500 leading-7">
           Your account pin is a unique identifier for your account & pets
         </p>
