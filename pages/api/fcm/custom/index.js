@@ -4,7 +4,11 @@ import { sendBulkNotification } from "@/helper/fcm/notifications";
 import { getFCMTokens } from "@/prisma/token";
 
 export default async function handler(req, res) {
-  const { email, title, body } = req.body;
+  //parse params from request url
+  const email = req.query.email;
+  const title = req.query.title;
+  const body = req.query.body;
+
   console.log(email, title, body);
   return res.status(200).json({ message: "Notification sent" });
   const fcms = await getFCMTokens(email);
