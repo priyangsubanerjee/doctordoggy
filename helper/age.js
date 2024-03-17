@@ -1,4 +1,4 @@
-const calculateAge = (dateOfBirth, presentDate) => {
+const calculateAge = (dateOfBirth, presentDate = null) => {
   let dob = new Date(dateOfBirth);
   var dobYear = dob.getYear();
   var dobMonth = dob.getMonth();

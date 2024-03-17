@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     record = await JSON.parse(JSON.stringify(record));
     if (record) {
       pet = await getPetById(record.petId);
-      pet = await JSON.parse(JSON.stringify(pet));
+      pet = await JSON.parse(JSON.stringify(pet.pet));
       if (session?.user?.email == record.parentEmail) {
         isParent = true;
         statusCode == 100;
@@ -76,7 +76,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
                 </div>
               </div>
               <h1 className="font-semibold text-xl text-center mt-4">
-                Delete this pathology ?
+                Delete this report ?
               </h1>
               <p className="text-xs text-neutral-500 text-center leading-6 mt-2">
                 Are you sure you want to delete this pathology pathology? This
@@ -147,7 +147,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
     <>
       {statusCode == 100 ? (
         <div>
-          <p className="text-center mt-20 text-sm lg:mt-16 text-neutral-500">
+          <p className="text-center mt-10 text-sm lg:mt-16 text-neutral-500">
             Pathology uploaded for
           </p>
           <div className="w-fit mx-auto relative">
@@ -173,120 +173,107 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
               <span className="text-blue-600">Report</span>
             </button>
           </div>
-          <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-16 ">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-3">
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Name of test
-                </span>
-                <p>{record?.testName}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Date of test
-                </span>
-                <p>
-                  {new Date(record?.date).toDateString({
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Refered by
-                </span>
-                <p>Dr. {Capitalize(record?.refererredBy)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Species
-                </span>
-                <p>{Capitalize(pet?.species)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Breed
-                </span>
-                <p>{Capitalize(pet?.breed)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Age on the day of test
-                </span>
-                <p>{calculateAge(pet?.dateOfBirth, record.date)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Colour
-                </span>
-                <p>{Capitalize(pet?.color)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Sex
-                </span>
-                <p>{Capitalize(pet?.sex)}</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Temperature
-                </span>
-                <p>{Capitalize(record.temperature)} ℉</p>
-              </div>
-              <div className="border h-16 rounded-md relative flex items-center px-4">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Body weight
-                </span>
-                <p>{Capitalize(record?.bodyWeight)} Kg</p>
-              </div>
-              <div className="border h-24 rounded-md relative flex py-4 px-4 col-span-2">
-                <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
-                  Notes
-                </span>
-                <p>{Capitalize(record?.notes)}</p>
-              </div>
-            </div>
-            <div className=" my-16"></div>
-            <div>
-              <h1 className="text-xl font-semibold text-neutral-700">
-                Attached documents
-              </h1>
 
-              <div className="space-y-3 mt-4">
-                {record?.files?.map((file, index) => {
-                  return (
-                    <a
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 flex items-center hover:underline"
-                      href={file}
-                    >
-                      <Icon icon="uiw:paper-clip" />{" "}
-                      <span className="ml-2">View document</span>
-                    </a>
-                  );
-                })}
+          <div className="w-full p-3 mt-10 lg:mt-16 mb-7">
+            <div className="max-w-3xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Name of test
+                  </span>
+                  <p>{record?.testName}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Date of test
+                  </span>
+                  <p>
+                    {new Date(record?.date).toDateString({
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Refered by
+                  </span>
+                  <p>Dr. {Capitalize(record?.refererredBy)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Species
+                  </span>
+                  <p>{Capitalize(pet?.species)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Breed
+                  </span>
+                  <p>{Capitalize(pet?.breed)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Age on the day of test
+                  </span>
+                  <p>{calculateAge(pet?.dateOfBirth, record?.date)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Colour
+                  </span>
+                  <p>{Capitalize(pet?.color)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Sex
+                  </span>
+                  <p>{Capitalize(pet?.sex)}</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Temperature
+                  </span>
+                  <p>{Capitalize(record.temperature)} ℉</p>
+                </div>
+                <div className="border h-16 rounded-md relative flex items-center px-4">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Body weight
+                  </span>
+                  <p>{Capitalize(record?.bodyWeight)} Kg</p>
+                </div>
+                <div className="border h-24 rounded-md relative flex py-4 px-4 md:col-span-2">
+                  <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
+                    Notes
+                  </span>
+                  <p>{Capitalize(record?.notes)}</p>
+                </div>
               </div>
+
+              {isParent && (
+                <div className="p-5 rounded-md mt-16 border">
+                  <h1>Danger zone</h1>
+                  <p className="text-xs text-neutral-500 mt-2">
+                    This action is irreversible & will delete this record
+                    completely.
+                  </p>
+                  <Button
+                    onPress={() => setconfirmDelete(true)}
+                    radius="full"
+                    className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
+                  >
+                    Delete
+                  </Button>
+                  <ConfirmDeleteModal />
+                </div>
+              )}
             </div>
-            {isParent && (
-              <div className="p-5 rounded-md mt-24 border">
-                <h1>Danger zone</h1>
-                <p className="text-xs text-neutral-500 mt-2">
-                  This action is irreversible & will delete this record
-                  completely.
-                </p>
-                <Button
-                  onPress={() => setconfirmDelete(true)}
-                  radius="full"
-                  className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
-                >
-                  Delete
-                </Button>
-                <ConfirmDeleteModal />
-              </div>
-            )}
           </div>
+
+          <></>
+
+          <ConfirmDeleteModal />
         </div>
       ) : statusCode == 101 ? (
         <p className="text-center text-sm mx-5 leading-6 mt-16">
