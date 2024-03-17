@@ -218,8 +218,8 @@ export default function Prescription() {
                       <Icon height={13} icon="ic:round-share" />
                     </button>
                   </div>
-                  <div className="max-w-3xl mx-3 lg:mx-auto pb-16 mt-10 lg:mt-16 ">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                  <div className="max-w-3xl mx-3 md:mx-auto pb-16 mt-10 lg:mt-16 ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3">
                       <div className="border h-16 rounded-md relative flex items-center px-4">
                         <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
                           Reason for visit
@@ -288,7 +288,7 @@ export default function Prescription() {
                         </span>
                         <p>{Capitalize(record?.bodyWeight)} Kg</p>
                       </div>
-                      <div className="border h-24 rounded-md relative flex py-4 px-4 col-span-2">
+                      <div className="border h-24 rounded-md relative flex py-4 px-4 md:col-span-2">
                         <span className="absolute top-0 text-neutral-400 -translate-y-1/2 left-2 text-xs px-2 bg-white">
                           Notes
                         </span>
