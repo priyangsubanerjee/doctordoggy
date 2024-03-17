@@ -54,7 +54,7 @@ function Pathology() {
         let pathologyRequest = await axios.post(
           "/api/pathology/get",
           {
-            email: session?.user?.email,
+            email: session?.data?.user?.email,
           },
           {
             headers: {
