@@ -8,7 +8,7 @@ import { getPrescriptionById } from "@/prisma/prescription";
 import calculateAge from "@/helper/age";
 import { getPetById } from "@/prisma/pet";
 import { Icon } from "@iconify/react";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button, Spinner, Tooltip } from "@nextui-org/react";
 import Router, { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import axios from "axios";
@@ -177,7 +177,7 @@ export default function Prescription() {
             <>
               {isAllowed ? (
                 <div>
-                  <p className="text-center mt-10 text-sm lg:mt-16 text-neutral-500">
+                  <p className="text-center mt-10 text-sm lg:mt-10 text-neutral-500">
                     Prescription uploaded for
                   </p>
 
@@ -198,25 +198,45 @@ export default function Prescription() {
                   <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-4">
                     {record.name}
                   </h1>
-                  <div className="flex items-center justify-center mt-6 space-x-2">
-                    <button
-                      onClick={() => {
-                        try {
-                          navigator.share({
-                            title: "Petmeds",
-                            text: `Check out this prescription for ${pet?.name} on DoctorDoggy`,
-                            url: window.location.href,
-                          });
-                        } catch (error) {
-                          navigator.clipboard.writeText(window.location.href);
-                          toast.success("Link copied to clipboard");
-                        }
-                      }}
-                      className="text-xs py-1 px-3 border rounded-full space-x-2 bg-neutral-50 flex items-center"
-                    >
-                      <span>Share</span>
-                      <Icon height={13} icon="ic:round-share" />
-                    </button>
+                  <div className="flex items-center justify-center px-10 gap-3 mt-8 max-w-sm mx-auto">
+                    <Tooltip delay={500} content="Share pet profile">
+                      <Button
+                        onPress={() => {
+                          try {
+                            if (navigator.share) {
+                              navigator.share({
+                                title: `Prescription for ${pet?.name}`,
+                                text: `View ${pet?.name}'s prescription on PetSutra`,
+                                url: `https://doctordoggy.vet/prescription/${router.query.pid}`,
+                              });
+                            } else {
+                              navigator.clipboard.writeText(
+                                `https://doctordoggy.vet/prescription/${router.query.pid}`
+                              );
+                              toast.success("Link copied to clipboard");
+                            }
+                          } catch (error) {}
+                        }}
+                        isIconOnly
+                        className="h-12 w-12 border text-neutral-600 hover:text-blue-600 bg-transparent rounded-md flex items-center justify-center"
+                      >
+                        <Icon height={26} icon="basil:forward-solid" />
+                      </Button>
+                    </Tooltip>
+
+                    {isParent && (
+                      <>
+                        <Tooltip delay={500} content="Delete pet profile">
+                          <Button
+                            onPress={() => setconfirmDelete(true)}
+                            isIconOnly
+                            className="h-12 w-12 border text-neutral-600 hover:text-red-600 bg-transparent rounded-md flex items-center justify-center"
+                          >
+                            <Icon height={22} icon="basil:trash-solid" />
+                          </Button>
+                        </Tooltip>
+                      </>
+                    )}
                   </div>
                   <div className="max-w-3xl mx-3 md:mx-auto pb-16 mt-10 lg:mt-16 ">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3">
@@ -316,23 +336,7 @@ export default function Prescription() {
                       </div>
                       <div className="space-y-3 mt-4"></div>
                     </div>
-                    {isParent && (
-                      <div className="p-5 rounded-md mt-24 border">
-                        <h1>Danger zone</h1>
-                        <p className="text-xs text-neutral-500 mt-2">
-                          This action is irreversible & will delete this record
-                          completely.
-                        </p>
-                        <Button
-                          onPress={() => setconfirmDelete(true)}
-                          radius="full"
-                          className="px-6 py-2 bg-red-600 text-sm text-white mt-5"
-                        >
-                          Delete
-                        </Button>
-                        <ConfirmDeleteModal />
-                      </div>
-                    )}
+                    <ConfirmDeleteModal />
                   </div>
                 </div>
               ) : (
@@ -350,7 +354,7 @@ export default function Prescription() {
         </>
       ) : (
         <div>
-          <div className="flex flex-col items-center justify-center mt-16">
+          <div className="flex flex-col items-center justify-center mt-8">
             <h2 className="text-2xl font-semibold">Loading prescription</h2>
             <p className="text-sm text-neutral-500 mt-4">
               Please wait while we load additional data for your pet

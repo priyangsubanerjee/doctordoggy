@@ -147,7 +147,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
     <>
       {statusCode == 100 ? (
         <div>
-          <p className="text-center mt-10 text-sm lg:mt-16 text-neutral-500">
+          <p className="text-center mt-10 text-sm lg:mt-10 text-neutral-500">
             Pathology uploaded for
           </p>
           <div className="w-fit mx-auto relative">
@@ -276,7 +276,7 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
           <ConfirmDeleteModal />
         </div>
       ) : statusCode == 101 ? (
-        <p className="text-center text-sm mx-5 leading-6 mt-16">
+        <p className="text-center text-sm mx-5 leading-6 mt-10">
           This record is private and can only be viewed by the parent. Ask
           parent to make their pet&apos;s profile public.
         </p>
