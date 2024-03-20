@@ -21,7 +21,7 @@ const quickNavOptions = [
     title: "Appointments",
     icon: "https://cdn-icons-png.flaticon.com/512/809/809957.png",
     buttonText: "Schedule now",
-    href: "/join-waitlist?ref=appointments",
+    href: "/appointment/online/schedule",
   },
   {
     title: "Deworming",
