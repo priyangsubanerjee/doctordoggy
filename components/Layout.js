@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Onboarding from "./Onboarding";
 import toast, { Toaster } from "react-hot-toast";
@@ -8,6 +8,7 @@ import InstallApp from "./InstallApp";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
 import { subscribe } from "@/helper/subscribe";
+import CheckConnecion from "./CheckConnecion";
 
 function Layout({ children }) {
   const session = useSession();
@@ -54,11 +55,14 @@ function Layout({ children }) {
     }
   }, []);
 
+  // navigator online check
+
   return (
     <div className="pt-[104px] lg:pt-28 h-fit">
       <Onboarding />
       <InstallApp />
       <Navbar />
+      <CheckConnecion />
       {children}
       <Toaster
         position="top-center"

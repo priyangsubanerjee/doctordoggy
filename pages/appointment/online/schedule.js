@@ -12,7 +12,7 @@ function Schedule() {
         Doctor at your home, at your time - its that simple!
       </p>
 
-      <div className="max-w-4xl px-6 md:px-0 mx-auto h-12 mt-12">
+      <div className="max-w-4xl px-6 lg:px-0 mx-auto h-12 mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Select radius="none" label="Choose pet">
             <SelectItem key="Laddoo" value="Laddoo">
@@ -56,14 +56,14 @@ function Schedule() {
           />
         </div>
         <div className="md:flex items-center justify-between mt-10">
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 shrink-0">
             <Icon icon="lets-icons:time-atack-light" width="24" height="24" />
             <p className="text-sm text-neutral-500">
               You appointment is capped to 15 minutes
             </p>
           </div>
           <Button
-            className="px-10 w-full mt-10 md:mt-0 lg:w-fit bg-black text-white rounded-md"
+            className="px-10 w-full mt-10 md:mt-0 md:w-fit bg-black text-white rounded-md"
             radius="none"
           >
             Submit request
