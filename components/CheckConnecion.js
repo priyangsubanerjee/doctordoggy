@@ -4,19 +4,19 @@ import toast from "react-hot-toast";
 import { AnimatePresence, motion } from "framer-motion";
 
 function CheckConnecion() {
-  const [isOffline, setIsOffline] = useState(true);
+  const [isOffline, setIsOffline] = useState(false);
 
-  //   useEffect(() => {
-  //     if (typeof window !== "undefined") {
-  //       window.addEventListener("online", () => {
-  //         setIsOffline && toast.success("You are back online");
-  //         setIsOffline(false);
-  //       });
-  //       window.addEventListener("offline", () => {
-  //         setIsOffline(true);
-  //       });
-  //     }
-  //   }, []);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("online", () => {
+        setIsOffline && toast.success("You are back online");
+        setIsOffline(false);
+      });
+      window.addEventListener("offline", () => {
+        setIsOffline(true);
+      });
+    }
+  }, []);
 
   return (
     <>
