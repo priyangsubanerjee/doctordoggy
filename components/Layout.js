@@ -8,7 +8,6 @@ import InstallApp from "./InstallApp";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import firebaseApp from "@/firebase/app";
 import { subscribe } from "@/helper/subscribe";
-import CheckConnecion from "./CheckConnecion";
 
 function Layout({ children }) {
   const session = useSession();
@@ -62,7 +61,6 @@ function Layout({ children }) {
       <Onboarding />
       <InstallApp />
       <Navbar />
-      <CheckConnecion />
       {children}
       <Toaster
         position="top-center"

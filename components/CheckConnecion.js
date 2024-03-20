@@ -5,11 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 
 function CheckConnecion() {
   const [isOffline, setIsOffline] = useState(false);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("online", () => {
+        setIsOffline && toast.success("You are back online");
         setIsOffline(false);
-        toast.success("You are back online");
       });
       window.addEventListener("offline", () => {
         setIsOffline(true);
@@ -26,9 +27,14 @@ function CheckConnecion() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-neutral-600 text-white text-center py-3 text-xs h-fit flex items-center justify-center"
+            className="bg-neutral-800 z-0 absolute inset-0 text-white text-center py-3 text-xs h-full flex items-center justify-center"
           >
-            <Icon icon="mingcute:wifi-line" width="20" height="20" />
+            <Icon
+              icon="ph:wifi-slash"
+              className="text-white"
+              width="20"
+              height="20"
+            />
             <span className="ml-2 tracking-wide">
               Seems you lost your internet connection
             </span>

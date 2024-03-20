@@ -15,6 +15,9 @@ import { Link } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import GlobalStates from "@/context/GlobalState";
 import { set } from "lodash";
+import { AnimatePresence, motion } from "framer-motion";
+import toast from "react-hot-toast";
+import CheckConnecion from "./CheckConnecion";
 
 function Navbar() {
   var s = useRef(null);
@@ -25,6 +28,19 @@ function Navbar() {
   const [hideInfoBar, setHideInfoBar] = React.useState(false);
 
   const [state, setState] = React.useState(0);
+  const [isOffline, setIsOffline] = React.useState(false);
+
+  //   useEffect(() => {
+  //     const handleKeyDown = (event) => {
+  //       if (event.key === "N") {
+  //         setIsOffline((p) => !p);
+  //       }
+  //     };
+  //     window.addEventListener("keydown", handleKeyDown);
+  //     return () => {
+  //       window.removeEventListener("keydown", handleKeyDown);
+  //     };
+  //   }, []);
 
   const infoBarContents = [
     <>
@@ -185,7 +201,7 @@ function Navbar() {
 
   return (
     <nav className="fixed top-0 inset-x-0 z-20">
-      <div className="h-12 px-6 lg:px-44 lg:h-14 flex items-center justify-between bg-white backdrop-blur-2xl">
+      <div className="h-12 px-6 relative z-20 lg:px-44 lg:h-14 flex items-center justify-between bg-white backdrop-blur-2xl">
         <div>
           <Link aria-label="home" href={"/"}>
             <img src="/logoDark.png" className="lg:h-9 h-7" alt="" />
@@ -269,7 +285,11 @@ function Navbar() {
           </button>
         </div>
       </div>
-      <InfoBar />
+
+      <div className="relative z-10">
+        <InfoBar />
+        <CheckConnecion />
+      </div>
     </nav>
   );
 }
