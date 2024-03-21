@@ -251,6 +251,27 @@ export default function Prescription({ record, pet, statusCode, isParent }) {
                 </div>
               </div>
 
+              <div className="mt-10">
+                <h1 className="text-xl font-semibold text-neutral-700">
+                  Attached documents
+                </h1>
+
+                <div className="space-y-3 mt-4">
+                  {record?.files?.map((file, index) => {
+                    return (
+                      <a
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 flex items-center hover:underline"
+                        href={file}
+                      >
+                        <Icon icon="uiw:paper-clip" />{" "}
+                        <span className="ml-2">View document</span>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+
               {isParent && (
                 <div className="p-5 rounded-md mt-16 border">
                   <h1>Danger zone</h1>
