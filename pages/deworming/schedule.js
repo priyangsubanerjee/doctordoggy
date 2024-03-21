@@ -244,7 +244,7 @@ function Deworming() {
                       Dosage
                     </span>
                     <input
-                      type="tel"
+                      type="number"
                       placeholder="0"
                       onChange={(event) => {
                         setDosage({
