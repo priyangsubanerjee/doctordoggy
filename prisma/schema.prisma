@@ -257,6 +257,8 @@ model Appointments {
 
 model Meeting {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  parentEmail  String
+  doctorEmail  String
   date         DateTime
   time         String
   status       String   @default("upcoming")

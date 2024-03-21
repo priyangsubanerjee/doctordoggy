@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
+import GlobalStates from "@/context/GlobalState";
 import { Icon } from "@iconify/react";
 import {
   Button,
@@ -11,11 +12,14 @@ import {
 } from "@nextui-org/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
 function Schedule() {
   const session = useSession();
+  const router = useRouter();
+  const { updatedModal } = useContext(GlobalStates);
   const [pets, setPets] = React.useState([]);
   const [pageLoaded, setPageLoaded] = React.useState(false);
   const [meetProps, setMeetProps] = React.useState({
@@ -63,7 +67,6 @@ function Schedule() {
         if (petsRequest.data.success) {
           setPets(petsRequest.data.pets);
           setPageLoaded(true);
-          console.log(petsRequest.data.pets);
         } else {
           toast.error(petsRequest.data.message);
         }
@@ -72,6 +75,7 @@ function Schedule() {
   }, [session.status]);
 
   const handleSubmit = async () => {
+    updatedModal(true, "Scheduling appointment");
     let payload = {
       ...meetProps,
       participants: [
@@ -89,17 +93,27 @@ function Schedule() {
       ],
     };
 
-    await axios.post("/api/consultation/schedule", payload, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    let scheduleRequest = await axios.post(
+      "/api/consultation/schedule",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (scheduleRequest.data.success) {
+      updatedModal(false, "Scheduling appointment");
+      toast.success(scheduleRequest.data.message);
+      router.push("/appointments");
+    }
   };
 
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
-        Schedule an appointment
+        Schedule online appointment
       </h1>
       <p className="text-sm text-neutral-500 text-center mt-3">
         Doctor at your home, at your time - its that simple!
