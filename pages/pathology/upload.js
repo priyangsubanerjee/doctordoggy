@@ -50,7 +50,7 @@ function UploadPathology() {
   const [pathProps, setpathProps] = React.useState({
     testName: "",
     referredBy: "",
-    testedOn: "",
+    testedOn: new Date().toISOString().split("T")[0],
     bodyWeight: selectedPet?.bodyWeight || "",
     temperature: "",
     notes: "",
@@ -171,7 +171,7 @@ function UploadPathology() {
 
   return (
     <div className="pb-16">
-      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-20 lg:mt-16">
+      <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
         Upload Pathology Record
       </h1>
 
@@ -286,7 +286,7 @@ function UploadPathology() {
                     className="rounded-none "
                   />
 
-                  <div className="flex items-center justify-between h-[56px] bg-neutral-100 px-3">
+                  <div className="flex items-center md:justify-between h-[56px] bg-neutral-100 px-3">
                     <span className="text-sm h-full flex items-center text-neutral-500 shrink-0 border-r border-neutral-200 pr-4">
                       Tested on
                     </span>
@@ -299,7 +299,7 @@ function UploadPathology() {
                         });
                       }}
                       value={pathProps.testedOn}
-                      className="bg-transparent text-sm w-full pl-4 appearance-none outline-none"
+                      className="bg-transparent w-fit text-sm md:w-full pl-4 appearance-none outline-none"
                       name=""
                       id="datPicker"
                     />
