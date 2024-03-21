@@ -258,8 +258,10 @@ model Appointments {
 model Meeting {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   date         DateTime
-  status       String
-  participants String[]
+  time         String
+  status       String   @default("upcoming")
+  participants Json
   code         String
+  reason       String?
   createdAt    DateTime @default(now())
 }
