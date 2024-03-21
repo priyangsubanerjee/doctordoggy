@@ -1,28 +1,48 @@
+import { ScheduleAppointment } from "@/prisma/meeting";
+import { get_user } from "@/prisma/user";
+
 export default async function handler(req, res) {
-  let data = req.body;
-  let parents = [];
-  let doctors = [];
+  let method = req.method;
 
-  parents = data.participants.filter(
-    (participant) => participant.type == "parent"
-  );
+  if (method == "POST") {
+    let data = req.body;
+    let parents = [];
+    let doctors = [];
 
-  // TODO: get doctors email from ID & users ID from email
-
-  for (let i = 0; i < data.participants.length; i++) {
-    let participant = data.participants[i];
-    if (participant.type == "doctor") {
-      doctors.push({
-        ...participant,
-        email: "priyangsu26@gmail.com",
-      });
+    for (let i = 0; i < data.participants.length; i++) {
+      let participant = data.participants[i];
+      if (participant.type == "doctor") {
+        doctors.push({
+          ...participant,
+          email: "priyangsu26@gmail.com",
+        });
+      } else if (participant.type == "parent") {
+        let user = await get_user(participant.email);
+        if (user) {
+          parents.push({
+            ...participant,
+            id: user.id,
+          });
+        }
+      }
     }
-  }
 
-  res.json({
-    message: "Consultation server is up",
-    time: new Date().toISOString(),
-    ip: req.headers["x-real-ip"] || req.socket.remoteAddress || "unknown",
-    protocol: req.protocol,
-  });
+    let participants = parents.concat(doctors);
+    let code = Math.random().toString(36).substring(7);
+    let date = new Date(data.date);
+    let time = data.time;
+    let reason = data.reason;
+
+    let { success, message } = await ScheduleAppointment(
+      code,
+      participants,
+      date,
+      time,
+      reason
+    );
+
+    res.status(200).json({ success, message });
+  } else {
+    res.status(405).json({ message: "Protected method" });
+  }
 }

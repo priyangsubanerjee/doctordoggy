@@ -7,10 +7,25 @@ export const ScheduleAppointment = async (
   time,
   reason
 ) => {
-  await prisma.meeting.create({
-    data: {
-      name: "John Doe",
-      email: "",
-    },
-  });
+  try {
+    await prisma.meeting.create({
+      data: {
+        date,
+        time,
+        participants,
+        code,
+        reason,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Appointment scheduled successfully",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Error scheduling appointment",
+    };
+  }
 };
