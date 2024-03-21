@@ -254,3 +254,12 @@ model Appointments {
   doctorId    String?
   createdAt   DateTime @default(now())
 }
+
+model Meeting {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  date         DateTime
+  status       String
+  participants String[]
+  code         String
+  createdAt    DateTime @default(now())
+}
