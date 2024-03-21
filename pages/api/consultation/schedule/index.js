@@ -1,4 +1,4 @@
-export async function handler(req, res) {
+export default async function handler(req, res) {
   res.json({
     message: "Consultation server is up",
     time: new Date().toISOString(),
