@@ -75,26 +75,21 @@ function Schedule() {
   }, [session.status]);
 
   const handleSubmit = async () => {
+    console.log(meetProps);
     updatedModal(true, "Scheduling appointment");
     let payload = {
-      ...meetProps,
-      participants: [
-        {
-          email: session.data.user.email,
-          name: session.data.user.name,
-          type: "parent",
-        },
-        {
-          id: meetProps.doctorId,
-          name: doctorsStatic.find((doctor) => doctor.id == meetProps.doctorId)
-            .name,
-          type: "doctor",
-        },
-      ],
+      petId: meetProps.petId,
+      doctorId: meetProps.doctorId,
+      parentEmail: session.data.user.email,
+      date: meetProps.date,
+      time: meetProps.time,
+      reason: meetProps.reason,
     };
 
+    return;
+
     let scheduleRequest = await axios.post(
-      "/api/consultation/schedule",
+      "/api/appointments/schedule/onlineConsultation",
       payload,
       {
         headers: {
@@ -107,6 +102,9 @@ function Schedule() {
       updatedModal(false, "Scheduling appointment");
       toast.success(scheduleRequest.data.message);
       router.push("/appointments");
+    } else {
+      updatedModal(false, "Scheduling appointment");
+      toast.error(scheduleRequest.data.message);
     }
   };
 

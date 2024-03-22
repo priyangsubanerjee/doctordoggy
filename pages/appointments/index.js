@@ -78,23 +78,23 @@ function Appointments() {
             }}
             aria-label="Custom item styles"
           >
-            <DropdownItem className="rounded" key="online-vet">
+            <DropdownItem className="rounded-lg" key="online-vet">
               Online vet consultation
             </DropdownItem>
 
-            <DropdownItem className="rounded" key="account">
+            <DropdownItem className="rounded-lg" key="account">
               In-person vet consultation
             </DropdownItem>
-            <DropdownItem className="rounded" key="notifications">
+            <DropdownItem className="rounded-lg" key="notifications">
               Grooming & Spa
             </DropdownItem>
-            <DropdownItem className="rounded" key="edit">
+            <DropdownItem className="rounded-lg" key="edit">
               Boarding
             </DropdownItem>
-            <DropdownItem className="rounded" key="logout">
+            <DropdownItem className="rounded-lg" key="logout">
               Dog Walking
             </DropdownItem>
-            <DropdownItem className="rounded" key="logout">
+            <DropdownItem className="rounded-lg" key="logout">
               Training
             </DropdownItem>
           </DropdownMenu>
