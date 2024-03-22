@@ -24,6 +24,7 @@ import ScheduleFirstDeworming from "@/components/FirstAction/ScheduleFirstDeworm
 import RegisterFirstPet from "@/components/FirstAction/RegisterFirstPet";
 import { sendNotification } from "@/helper/telegram/sendNotification";
 
+// ** migrated to clint side data fetching
 // export async function getServerSideProps(context) {
 //   const session = await getServerSession(context.req, context.res, authOptions);
 //   let pets = [];
@@ -112,14 +113,14 @@ function Deworming() {
           }
         );
         if (scheduleRequest.data.success) {
-          updatedModal(true, "Scheduled 🎉");
+          toast.success("Scheduled deworming 🎉");
+          updatedModal(false, "Scheduled 🎉");
           sendNotification(
             `${session?.data?.user?.name}, ${session?.data?.user?.email} has scheduled a deworming for ${selectedPet.name} !`
           );
           router.push(
             router.query.redirect ? router.query.redirect : "/deworming"
           );
-          updatedModal(false, "Scheduled 🎉");
         } else {
           updatedModal(false, "");
           toast.error(scheduleRequest.data.message);
@@ -156,10 +157,6 @@ function Deworming() {
       }
     })();
   }, [session.status]);
-
-  useEffect(() => {
-    console.log(selectedDate);
-  }, [selectedDate]);
 
   return (
     <div className="pb-16">
