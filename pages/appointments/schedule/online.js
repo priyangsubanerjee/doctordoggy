@@ -86,7 +86,7 @@ function Schedule() {
     };
 
     let scheduleRequest = await axios.post(
-      "/api/appointments/create/online-consultation",
+      "/api/appointments/online/create",
       payload,
       {
         headers: {

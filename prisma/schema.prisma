@@ -34,6 +34,7 @@ model User {
   tokens        Token[]
   sharedPets    String[]
   accountPin    String?
+  appointments  Appointment[]
 }
 
 model Pet {
@@ -242,6 +243,9 @@ model Appointment{
     id            String        @id @default(auto()) @map("_id") @db.ObjectId
     pet           Pet?          @relation(fields: [petId], references: [id])
     petId         String?       @db.ObjectId
+    parent        User?         @relation(fields: [parentEmail], references: [email])
+    parentEmail   String?
+    doctorId      String?      
     date          DateTime?
     time          String?
     status        String        @default("pending")

@@ -1,10 +1,20 @@
 import prisma from "./prisma";
 
-export const ScheduleOnlineConsulation = async (petId) => {
+export const ScheduleOnlineConsulation = async (
+  petId,
+  doctorId,
+  parentEmail,
+  date,
+  time,
+  reason
+) => {
   try {
     await prisma.appointment.create({
       data: {
         petId,
+        parentEmail,
+        date: new Date(date).toISOString(),
+        time,
       },
     });
 
