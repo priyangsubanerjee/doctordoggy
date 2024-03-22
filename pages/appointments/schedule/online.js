@@ -75,7 +75,6 @@ function Schedule() {
   }, [session.status]);
 
   const handleSubmit = async () => {
-    console.log(meetProps);
     updatedModal(true, "Scheduling appointment");
     let payload = {
       petId: meetProps.petId,
