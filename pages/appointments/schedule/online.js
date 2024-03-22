@@ -23,8 +23,8 @@ function Schedule() {
   const [pets, setPets] = React.useState([]);
   const [pageLoaded, setPageLoaded] = React.useState(false);
   const [meetProps, setMeetProps] = React.useState({
-    petId: "",
-    doctorId: "",
+    petId: null,
+    doctorId: null,
     participants: [],
     date: new Date().toISOString().split("T")[0],
     time: "12:00",
@@ -127,7 +127,7 @@ function Schedule() {
             <div className="max-w-4xl px-6 lg:px-0 mx-auto h-12 mt-12">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Select
-                  selectedKeys={[meetProps.petId]}
+                  selectedKeys={meetProps.petId && [meetProps.petId]}
                   onChange={(e) => {
                     setMeetProps({
                       ...meetProps,
@@ -145,7 +145,7 @@ function Schedule() {
                 </Select>
                 <Select
                   radius="none"
-                  selectedKeys={[meetProps.doctorId]}
+                  selectedKeys={meetProps.doctorId && [meetProps.doctorId]}
                   onChange={(e) => {
                     setMeetProps({
                       ...meetProps,
