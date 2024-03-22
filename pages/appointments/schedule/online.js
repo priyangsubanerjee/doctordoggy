@@ -85,10 +85,8 @@ function Schedule() {
       reason: meetProps.reason,
     };
 
-    return;
-
     let scheduleRequest = await axios.post(
-      "/api/appointments/schedule/onlineConsultation",
+      "/api/appointments/create/online-consultation",
       payload,
       {
         headers: {
