@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
+import AppointmentCard from "@/components/Cards/AppointmentCard";
 import { Icon } from "@iconify/react";
 import {
   Dropdown,
@@ -103,6 +104,26 @@ function Appointments() {
           </span>
         </button>
       </div>
+      <>
+        {pageLoaded ? (
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 md:mt-12 max-w-6xl lg:mx-auto px-5">
+              {appointments.map((appointment, index) => (
+                <AppointmentCard
+                  key={index}
+                  appointment={appointment}
+                  appointments={appointments}
+                  setAppointments={setAppointments}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center mt-8">
+            <p className="text-gray-500">Loading appointments...</p>
+          </div>
+        )}
+      </>
     </div>
   );
 }

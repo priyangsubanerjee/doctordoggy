@@ -39,6 +39,29 @@ export async function GetAppointmentsByEmail(email) {
       where: {
         parentEmail: email,
       },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        startDate: true,
+        startTime: true,
+        reason: true,
+        type: true,
+        mode: true,
+        status: true,
+        code: true,
+        pet: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+        doctor: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     return {

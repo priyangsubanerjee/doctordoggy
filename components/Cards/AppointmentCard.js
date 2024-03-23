@@ -107,6 +107,11 @@ function AppointmentCard({
     );
   };
 
+  const Capitalize = (str) => {
+    if (str == null) return "--";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   //   const decideStatus = (dueDate, status) => {
   //     let due = new Date(dueDate);
   //     let today = new Date();
@@ -157,43 +162,20 @@ function AppointmentCard({
   };
 
   const disabledKeys = () => {
-    if (appointment.parentEmail == session.data.user.email) {
-      if (appointment.status == "DUE") {
-        return ["certificate"];
-      } else {
-        return [];
-      }
-    } else {
-      if (appointment.status == "DUE") {
-        return ["delete", "done", "due"];
-      } else {
-        return ["delete", "certificate", "done", "due"];
-      }
-    }
+    return [];
   };
 
   return (
     <div className="border rounded-md p-4">
       <div className="flex items-center">
         <img
-          src={appointment.image}
+          src={appointment.pet.image}
           className="h-6 w-6 rounded-full object-cover"
           alt=""
         />
-        <p className="text-xs ml-2 text-neutral-500">{appointment.name}</p>
-        <p
-          style={{
-            background:
-              decideStatus(appointment.dueDate, appointment.status) == "DUE"
-                ? "#000"
-                : decideStatus(appointment.dueDate, appointment.status) ==
-                  "OVERDUE"
-                ? "rgb(230,0,0)"
-                : "rgb(37 99 235)",
-          }}
-          className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2"
-        >
-          {decideStatus(appointment.dueDate, appointment.status)}
+        <p className="text-xs ml-2 text-neutral-500">{appointment.pet.name}</p>
+        <p className="text-white bg-neutral-800 text-xs px-4 py-1 rounded-full font-medium ml-auto mr-2">
+          {appointment.status}
         </p>
         <Dropdown>
           <DropdownTrigger>
@@ -220,55 +202,52 @@ function AppointmentCard({
             }}
             aria-label="Static Actions"
           >
-            {appointment.status == "DUE" ? (
-              <DropdownItem key="done">Mark as done</DropdownItem>
-            ) : (
-              <DropdownItem key="due">Mark as due</DropdownItem>
-            )}
-
+            <DropdownItem key="done">Get details</DropdownItem>
             <DropdownItem key="delete" className="text-danger" color="danger">
-              Delete record
+              Cancel appointment
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>
       <div className="mt-3">
         <h1 className="text-base font-semibold text-neutral-700">
-          {appointment.medicineName}
+          {appointment.title} - {appointment.reason}
         </h1>
 
-        {appointment.status == "DONE" ? (
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              Done on{" "}
-              <span className="text-neutral-700">
-                {new Date(appointment.doneDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
-          </div>
-        ) : (
-          <div className="flex items-center mt-3">
-            <Icon icon="solar:calendar-line-duotone" />
-            <p className="text-sm text-neutral-500 ml-2">
-              Due on{" "}
-              <span className="text-neutral-700">
-                {new Date(appointment.dueDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </p>
-          </div>
-        )}
         <div className="flex items-center mt-3">
-          <Icon icon="icon-park-solid:medicine-bottle-one" />
-          <p className="text-sm text-neutral-500 ml-2">{appointment.dosage}</p>
+          <Icon icon="solar:calendar-line-duotone" />
+          <p className="text-sm text-neutral-500 ml-2">
+            <span className="text-neutral-700">
+              {new Date(appointment.startDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+              ,
+            </span>
+            <span className="text-neutral-700 ml-2">
+              {appointment.startTime} Hrs
+            </span>
+          </p>
+        </div>
+
+        <div className="flex items-center mt-3">
+          <Icon icon="ic:round-mode-standby" />
+          <p className="text-sm text-neutral-500 ml-2">
+            {Capitalize(appointment.mode)}
+          </p>
+        </div>
+
+        <div className="mt-3 flex justify-between items-center">
+          <div className="flex items-center">
+            <Icon icon="uil:user" />
+            <p className="text-sm text-neutral-500 ml-2">
+              {appointment.doctor.name}
+            </p>
+          </div>
+          <Button size="sm" radius="sm">
+            Join button
+          </Button>
         </div>
       </div>
       <ConfirmDeleteModal />
