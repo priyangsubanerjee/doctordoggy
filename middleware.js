@@ -37,5 +37,7 @@ export const config = {
     "/pathology/:path*",
     "/deworming/:path*",
     "/due/:path*",
+    "/appointments/:path*",
+    "/meet/:path*",
   ],
 };
