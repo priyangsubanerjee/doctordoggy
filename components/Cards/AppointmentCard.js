@@ -189,13 +189,13 @@ function AppointmentCard({
             onAction={(key) => {
               switch (key) {
                 case "delete":
-                  setconfirmDelete(true);
+                  //setconfirmDelete(true);
                   break;
                 case "done":
-                  UDS(appointment.id, "DONE");
+                  //UDS(appointment.id, "DONE");
                   break;
                 case "due":
-                  UDS(appointment.id, "DUE");
+                  //UDS(appointment.id, "DUE");
                   break;
                 default:
                   break;
