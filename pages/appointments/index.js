@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { Icon } from "@iconify/react";
 import {
@@ -7,48 +8,41 @@ import {
   DropdownSection,
   DropdownTrigger,
 } from "@nextui-org/react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function Appointments() {
+  const session = useSession();
   const router = useRouter();
-  const servicesList = [
-    {
-      title: "Grooming & Spa",
-      description:
-        "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
-      image: "https://cdn-icons-png.flaticon.com/512/8817/8817469.png",
-      buttonText: "Coming soon",
-      buttonLink: `/join-waitlist?ref=Grooming&Spa`,
-    },
-    {
-      title: "Boarding",
-      description:
-        "Provide your pets with the gift of a professional grooming and spa session, expertly administered by our trained team of grooming professionals. We utilize top-of-the-line equipment and cosmetics to ensure the delivery of high-quality services at budget-friendly rates.",
-      image: "https://cdn-icons-png.flaticon.com/512/10811/10811682.png",
-      buttonText: "Coming soon",
-      buttonLink: `/join-waitlist?ref=Boarding`,
-    },
-    {
-      title: "Dog Walking",
-      description:
-        "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
-      image: "https://cdn-icons-png.flaticon.com/512/7699/7699724.png",
-      buttonText: "Coming soon",
-      buttonLink: `/join-waitlist?ref=Dog-Walking`,
-    },
+  const [appointments, setAppointments] = useState([]);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-    {
-      title: "Training",
-      description:
-        "If you're short on time for regular pet walks, arrange a designated time slot and have it taken care of hassle-free. Our approach relies on positive reinforcement, assuring that your pet&apo;ss energy is channelled constructively, preventing disruptions to your living space and keeping boredom at bay.",
-      image: "https://cdn-icons-png.flaticon.com/512/6381/6381356.png",
-      buttonText: "Coming soon",
-      buttonLink: `/join-waitlist?ref=Training`,
-    },
-  ];
+  const FetchAppointments = async () => {
+    console.log(session.data.user.email);
+    let fetchRequest = await axios.post("/api/appointments/get", {
+      email: session.data.user.email,
+    });
+    if (fetchRequest.data.success) {
+      console.log(fetchRequest.data.appointments);
+      setAppointments(fetchRequest.data.appointments);
+      setPageLoaded(true);
+    } else {
+      toast.error(fetchRequest.data.message);
+    }
+  };
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      console.log("Session authenticated");
+      FetchAppointments();
+    }
+  }, [session.status]);
+
   return (
     <div className="pb-16">
       <h1 className="text-2xl lg:text-3xl font-semibold text-center mt-10 lg:mt-16">
