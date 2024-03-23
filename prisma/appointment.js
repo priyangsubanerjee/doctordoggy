@@ -21,6 +21,8 @@ export const ScheduleOnlineConsulation = async (
         type: "consultation",
         mode: "online",
         code,
+        title: "Online Consultation",
+        description: `Online Consultation with on ${date} at ${time} for ${reason}`,
       },
     });
 
