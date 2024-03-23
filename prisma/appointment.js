@@ -75,7 +75,7 @@ export async function GetAppointmentsByEmail(email) {
   }
 }
 
-export async function GetAppointmentByCode(code) {
+export async function CheckParentSession(code, email) {
   try {
     const appointment = await prisma.appointment.findFirst({
       where: {
