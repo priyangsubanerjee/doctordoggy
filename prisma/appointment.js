@@ -74,3 +74,26 @@ export async function GetAppointmentsByEmail(email) {
     return { success: false, message: error.message };
   }
 }
+
+export async function GetAppointmentByCode(code) {
+  try {
+    const appointment = await prisma.appointment.findFirst({
+      where: {
+        code: code,
+        status: "upcoming",
+      },
+    });
+
+    if (!appointment) {
+      return { success: false, message: "Appointment not found" };
+    } else {
+      return {
+        success: true,
+        message: "Appointment fetched successfully",
+      };
+    }
+  } catch (error) {
+    console.log(error.message);
+    return { success: false, message: error.message };
+  }
+}

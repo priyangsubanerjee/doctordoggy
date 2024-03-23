@@ -9,6 +9,7 @@ import {
 } from "@nextui-org/react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import toast from "react-hot-toast";
@@ -245,9 +246,11 @@ function AppointmentCard({
               {appointment.doctor.name}
             </p>
           </div>
-          <Button size="sm" radius="sm">
-            Join button
-          </Button>
+          <Link href={`/meet/${appointment.code}`}>
+            <Button size="sm" radius="sm">
+              Join meeting
+            </Button>
+          </Link>
         </div>
       </div>
       <ConfirmDeleteModal />
