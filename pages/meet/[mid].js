@@ -27,6 +27,10 @@ function OnlineMeet() {
       scenario: {
         mode: ZegoUIKitPrebuilt.VideoConference,
       },
+      preJoinViewConfig: {
+        title: "Online Consultation",
+      },
+
       onLeaveRoom: () => {
         setConstEnded(true);
         router.push("/appointments");
