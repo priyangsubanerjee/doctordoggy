@@ -82,15 +82,26 @@ export async function GetAppointmentByCode(code) {
         code: code,
         status: "upcoming",
       },
+      select: {
+        parent: {
+          select: {
+            email: true,
+          },
+        },
+      },
     });
 
     if (!appointment) {
       return { success: false, message: "Appointment not found" };
     } else {
-      return {
-        success: true,
-        message: "Appointment fetched successfully",
-      };
+      if (appointment.parent.email === email) {
+        return {
+          success: true,
+          message: "Appointment fetched successfully",
+        };
+      } else {
+        return { success: false, message: "Appointment not found" };
+      }
     }
   } catch (error) {
     console.log(error.message);

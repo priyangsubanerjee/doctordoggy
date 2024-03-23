@@ -41,6 +41,7 @@ function OnlineMeet() {
     } else {
       let checkReq = await axios.post("/api/appointments/v-code", {
         code: mid,
+        email: session.data.user.email,
       });
       if (!checkReq.data.success) {
         router.push("/appointments");
