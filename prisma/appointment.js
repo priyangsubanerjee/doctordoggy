@@ -6,15 +6,21 @@ export const ScheduleOnlineConsulation = async (
   parentEmail,
   date,
   time,
-  reason
+  reason,
+  code
 ) => {
   try {
     await prisma.appointment.create({
       data: {
         petId,
         parentEmail,
-        date: new Date(date).toISOString(),
-        time,
+        doctorId,
+        startDate: new Date(date).toISOString(),
+        startTime: time,
+        reason,
+        type: "consultation",
+        mode: "online",
+        code,
       },
     });
 

@@ -21,6 +21,7 @@ function Schedule() {
   const router = useRouter();
   const { updatedModal } = useContext(GlobalStates);
   const [pets, setPets] = React.useState([]);
+  const [doctors, setDoctors] = React.useState([]);
   const [pageLoaded, setPageLoaded] = React.useState(false);
   const [meetProps, setMeetProps] = React.useState({
     petId: null,
@@ -30,19 +31,6 @@ function Schedule() {
     time: "12:00",
     reason: "",
   });
-
-  const doctorsStatic = [
-    {
-      id: "1as8qexi8nxn",
-      name: "Dr. Mrinal Kanti Dey",
-      specialization: "General Physician",
-    },
-    {
-      id: "do0p9quwjhd83xb8",
-      name: "Dr. Souradeep Adhikary",
-      specialization: "General Physician",
-    },
-  ];
 
   useEffect(() => {
     if (session.status == "unauthenticated") {
@@ -64,6 +52,12 @@ function Schedule() {
           }
         );
 
+        let doctorsRequest = await axios.get("/api/doctors/get");
+        if (doctorsRequest.data.success) {
+          setDoctors(doctorsRequest.data.doctors);
+        } else {
+          toast.error(doctorsRequest.data.message);
+        }
         if (petsRequest.data.success) {
           setPets(petsRequest.data.pets);
           setPageLoaded(true);
@@ -119,7 +113,7 @@ function Schedule() {
           {pets.length == 0 ? (
             <RegisterFirstPet />
           ) : (
-            <div className="max-w-4xl px-6 lg:px-0 mx-auto h-12 mt-12">
+            <div className="max-w-4xl px-6 lg:px-0 mx-auto mt-12 mb-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Select
                   selectedKeys={meetProps.petId && [meetProps.petId]}
@@ -149,7 +143,7 @@ function Schedule() {
                   }}
                   label="Choose doctor"
                 >
-                  {doctorsStatic.map((doctor) => (
+                  {doctors.map((doctor) => (
                     <SelectItem key={doctor.id} value={doctor.name}>
                       {doctor.name}
                     </SelectItem>
