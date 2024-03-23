@@ -64,7 +64,10 @@ function OnlineMeet() {
   return (
     <div>
       {authenticated && (
-        <div className="h-full w-full fixed inset-0 z-30" ref={startCon} />
+        <div
+          className="h-full w-full fixed inset-0 z-30 bg-white"
+          ref={startCon}
+        />
       )}
       {constEnded && <div className="fixed inset-0 bg-white z-50"></div>}
     </div>
