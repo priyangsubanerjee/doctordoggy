@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import AppointmentCard from "@/components/Cards/AppointmentCard";
+import ScheduleFirstAppointment from "@/components/FirstAction/ScheduleFirstAppointment";
 import { Icon } from "@iconify/react";
 import {
   Dropdown,
@@ -51,7 +52,7 @@ function Appointments() {
       </h1>
       <div className="flex items-center justify-center space-x-4 mt-4">
         <Dropdown className="rounded-xl z-30">
-          <DropdownTrigger className="outline-none">
+          <DropdownTrigger id="scheduleTrigger" className="outline-none">
             <button className="flex items-center text-blue-600 space-x-2 text-sm hover:underline cursor-pointer">
               <span>Schedule new</span>
               <span className="translate-y-[1px]">
@@ -117,6 +118,8 @@ function Appointments() {
                 />
               ))}
             </div>
+
+            {appointments.length === 0 && <ScheduleFirstAppointment />}
           </div>
         ) : (
           <div className="flex items-center justify-center mt-8">

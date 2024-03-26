@@ -10,7 +10,7 @@ export const ScheduleOnlineConsulation = async (
   code
 ) => {
   try {
-    await prisma.appointment.create({
+    let appointment_obj = await prisma.appointment.create({
       data: {
         petId,
         parentEmail,
@@ -24,9 +24,34 @@ export const ScheduleOnlineConsulation = async (
         title: "Online Consultation",
         description: `Online Consultation with on ${date} at ${time} for ${reason}`,
       },
+
+      include: {
+        parent: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        doctor: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        pet: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
     });
 
-    return { success: true, message: "Appointment scheduled successfully" };
+    return {
+      success: true,
+      message: "Appointment scheduled successfully",
+      appointment: appointment_obj,
+    };
   } catch (error) {
     console.log(error.message);
     return { success: false, message: error.message };
@@ -103,6 +128,21 @@ export async function CheckParentSession(code, email) {
         return { success: false, message: "Appointment not found" };
       }
     }
+  } catch (error) {
+    console.log(error.message);
+    return { success: false, message: error.message };
+  }
+}
+
+export async function DeleteAppointment(id) {
+  try {
+    await prisma.appointment.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return { success: true, message: "Appointment deleted successfully" };
   } catch (error) {
     console.log(error.message);
     return { success: false, message: error.message };

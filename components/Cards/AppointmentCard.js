@@ -133,7 +133,7 @@ function AppointmentCard({
       setLoading(true);
       toast.loading("Deleting appointment record...");
       let deleteRequest = await axios.post(
-        "/api/appointment/delete",
+        "/api/appointments/delete",
         {
           id: appointment.id,
         },
@@ -189,7 +189,7 @@ function AppointmentCard({
             onAction={(key) => {
               switch (key) {
                 case "delete":
-                  //setconfirmDelete(true);
+                  setconfirmDelete(true);
                   break;
                 case "done":
                   //UDS(appointment.id, "DONE");
