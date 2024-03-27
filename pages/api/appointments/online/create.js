@@ -45,14 +45,14 @@ export default async function handler(req, res) {
     "Appointment Scheduled",
     GeneralMessage(
       "Appointment Scheduled",
-      `You have an appointment with ${appointment.parent.name} on ${date} at ${time}, for ${appointment.pet.name}. Please be available at the scheduled time. You will be notified if the meeting is canceled by parent. <br/> <br/> Click here to join the meet <a href="https://doctors.doctordoggy.vet/meet/${appointment.code}">Join Meet</a> <br/> <br/>`
+      `You have an appointment with ${appointment.pet.name}'s parents on ${date} at ${time}, topic: ${appointment.reason}. Please be available at the scheduled time. You will be notified if the meeting is canceled by parent. <br/> <br/> Click here to join the meet <a href="https://doctors.doctordoggy.vet/meet/${appointment.code}">Join Meet</a> <br/> <br/>`
     )
   );
 
   await sendBulkNotification(
     d_tokens,
     "Appointment Scheduled",
-    `You have an appointment with ${appointment.parent.name} on ${date} at ${time},`
+    `You have an appointment with ${appointment.pet.name}'s parents on ${date} at ${time},`
   );
 
   res.status(200).json({ success, message });
