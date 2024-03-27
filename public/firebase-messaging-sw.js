@@ -21,7 +21,7 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.data.body,
     icon: "./logoDark.png",
-    tag: "notification-1",
+    tag: new Date().getTime(),
   };
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
